@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>find &mdash; Linux guide 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Linux guide 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Useful Command Line Utilities" href="../append/appendix1.html" />
+    <link rel="next" title="free" href="free.html" />
+    <link rel="prev" title="file" href="file.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="find">
+<span id="command-find"></span><h1>find<a class="headerlink" href="#find" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="name">
+<h2>Name<a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h2>
+<p>find&nbsp;&#8211;&nbsp; search for files in a directory hierarchy</p>
+</div>
+<div class="section" id="synopsis">
+<h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<p><strong>find</strong> [path...] [expression]</p>
+</div>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>find searches the directory tree rooted at each given file name by
+evaluating the given expression from left to right, according to
+the rules of precedence (see section OPERATORS), until the outcome
+is known (the left hand side is false for and operations, true for
+or), at which point find moves on to the next file name.</p>
+</div>
+<div class="section" id="expressions">
+<h2>Expressions<a class="headerlink" href="#expressions" title="Permalink to this headline">¶</a></h2>
+<p>The expression is made up of options (which affect overall
+operation rather than the processing of a specific file, and always
+return true), tests (which return a true or false value), and
+actions (which have side effects and return a true or false value),
+all separated by operators. -and is assumed where the operator is
+omitted. If the expression contains no actions other than -prune,
+-print is performed on all files for which the expression is true.</p>
+</div>
+<div class="section" id="frequently-used-options">
+<h2>Frequently used options<a class="headerlink" href="#frequently-used-options" title="Permalink to this headline">¶</a></h2>
+<p>It is best to place options at the beginning of the expression.</p>
+<dl class="docutils">
+<dt>-mindepth levels</dt>
+<dd>Do not apply any tests or actions at levels less than levels (a
+non-negative integer).</dd>
+<dt>-maxdepth levels</dt>
+<dd>Descend at most levels (a non-negative integer) levels of
+directories below the command line arguments.</dd>
+</dl>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-f<var>ollow</var></span></kbd></td>
+<td>Dereference symbolic links. Implies -noleaf.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="frequently-used-tests">
+<h2>Frequently used tests<a class="headerlink" href="#frequently-used-tests" title="Permalink to this headline">¶</a></h2>
+<p>Numeric arguments can be specified as:</p>
+<p>+n for greater than n</p>
+<p>-n for less than n</p>
+<p>n for exactly n</p>
+<dl class="docutils">
+<dt>-type c</dt>
+<dd><p class="first">File is of type c:</p>
+<div class="last highlight-python"><div class="highlight"><pre>b      block (buffered) special
+
+c      character (unbuffered) special
+
+d      directory
+
+p      named pipe (FIFO)
+
+f      regular file
+
+l      symbolic link
+</pre></div>
+</div>
+</dd>
+<dt>-name pattern</dt>
+<dd>Base of file name (the path with the leading directories removed)
+matches shell pattern pattern.</dd>
+<dt>-atime n</dt>
+<dd>File was last accessed n*24 hours ago.</dd>
+<dt>-amin n</dt>
+<dd>File was last accessed n minutes ago.</dd>
+<dt>-anewer file</dt>
+<dd>File was last accessed more recently than file was modified.</dd>
+<dt>-ctime n</dt>
+<dd>File&#8217;s status was last changed n*24 hours ago.</dd>
+<dt>-cmin n</dt>
+<dd>File&#8217;s status was last changed n minutes ago.</dd>
+</dl>
+</div>
+<div class="section" id="frequently-used-actions">
+<h2>Frequently used actions<a class="headerlink" href="#frequently-used-actions" title="Permalink to this headline">¶</a></h2>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-p<var>rint</var></span></kbd></td>
+<td>print the full file name on the standard output, followed by a
+newline.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-l<var>s</var></span></kbd></td>
+<td>list current file in `ls -dils&#8217; format on standard output.</td></tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>-exec command</dt>
+<dd>Execute command; true if 0 status is returned. All following
+arguments to find are taken to be arguments to the command until an
+argument consisting of `;&#8217; is encountered.</dd>
+<dt>-ok command</dt>
+<dd>Like -exec but ask the user first</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">find</a><ul>
+<li><a class="reference internal" href="#name">Name</a></li>
+<li><a class="reference internal" href="#synopsis">Synopsis</a></li>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#expressions">Expressions</a></li>
+<li><a class="reference internal" href="#frequently-used-options">Frequently used options</a></li>
+<li><a class="reference internal" href="#frequently-used-tests">Frequently used tests</a></li>
+<li><a class="reference internal" href="#frequently-used-actions">Frequently used actions</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../append/index.html">Appendices</a><ul>
+  <li><a href="../append/appendix1.html">Useful Command Line Utilities</a><ul>
+      <li>Previous: <a href="file.html" title="previous chapter">file</a></li>
+      <li>Next: <a href="free.html" title="next chapter">free</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/commands/find.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="../_sources/commands/find.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

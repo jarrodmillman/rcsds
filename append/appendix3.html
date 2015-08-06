@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Shell Customization &mdash; Linux guide 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Linux guide 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Appendices" href="index.html" />
+    <link rel="prev" title="File System Layout" href="appendix2.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="shell-customization">
+<h1>Shell Customization<a class="headerlink" href="#shell-customization" title="Permalink to this headline">¶</a></h1>
+<p>There will come a time when some modification of the shell
+environment will be desired. Fortunately, in bash this is very
+easily done.</p>
+<p><strong>Table C-1. Bash Configuration File</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="43%" />
+<col width="57%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">File</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>/etc/profile</em></td>
+<td>System login environment</td>
+</tr>
+<tr class="row-odd"><td><em>/etc/bashrc</em></td>
+<td>System environment</td>
+</tr>
+<tr class="row-even"><td><em>~/. bash_profile</em></td>
+<td>User login environment</td>
+</tr>
+<tr class="row-odd"><td><em>~/. bashrc</em></td>
+<td>User environment</td>
+</tr>
+<tr class="row-even"><td><em>~/. bash_logout</em></td>
+<td>User logout script</td>
+</tr>
+</tbody>
+</table>
+<p>If no .bash_profile, then .bash_login, then, profile.</p>
+<div class="highlight-python"><div class="highlight"><pre># global airc binaries
+if [ &quot;$UID&quot; != &quot;0&quot; ]; then
+  export FSLDIR=/usr/fmri/lib64/fsl/4.1.4
+  export PATH=$PATH:/usr/fmri/bin:/usr/fmri/bin/afni:/usr/fmri/bin/caret/bin_linux:/usr/fmri/lib64/matlab/2007a/bin:${FSLDIR}/bin
+  export FREESURFER_HOME=/usr/fmri/lib64/freesurfer/4.4.0
+  source $FREESURFER_HOME/SetUpFreeSurfer.sh &gt; /dev/null
+  source ${FSLDIR}/etc/fslconf/fsl.sh
+
+  alias matlab-spm2=&#39;(PATH=/usr/fmri/lib/matlab/2007a/bin:$PATH ; matlab -nojvm -arch=glnx86)&#39;
+fi
+</pre></div>
+</div>
+<p><strong>Table C-2. Prompt String Customization</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="88%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Meaning</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>\d</em></td>
+<td>The date in &#8220;Weekday Month Day&#8221; format</td>
+</tr>
+<tr class="row-odd"><td><em>\H</em></td>
+<td>The hostname</td>
+</tr>
+<tr class="row-even"><td><em>\h</em></td>
+<td>The hostname up to the firlst &#8221;.&#8221;</td>
+</tr>
+<tr class="row-odd"><td><em>\n</em></td>
+<td>A carriage return and line feed</td>
+</tr>
+<tr class="row-even"><td><em>\T</em></td>
+<td>The current time in 12-hour HH:MM:SS format</td>
+</tr>
+<tr class="row-odd"><td><em>\t</em></td>
+<td>The current time in HH:MM:SS format</td>
+</tr>
+<tr class="row-even"><td><em>\&#64;</em></td>
+<td>The current time in 12-hour am/pm format</td>
+</tr>
+<tr class="row-odd"><td><em>\u</em></td>
+<td>The username of the current user</td>
+</tr>
+<tr class="row-even"><td><em>\w</em></td>
+<td>The current working directory</td>
+</tr>
+<tr class="row-odd"><td><em>\W</em></td>
+<td>The basename of the current working directory</td>
+</tr>
+<tr class="row-even"><td><em>\#</em></td>
+<td>The command number of the current command</td>
+</tr>
+<tr class="row-odd"><td><em>\!</em></td>
+<td>The history number of the current command</td>
+</tr>
+<tr class="row-even"><td><em>\$</em></td>
+<td>If the effective UID is 0 print a #, otherwise print a $</td>
+</tr>
+<tr class="row-odd"><td><em>\\</em></td>
+<td>Print a backslash</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Don&#8217;t use editor, use <a class="reference internal" href="../commands/echo.html#command-echo"><span>echo</span></a>  and command editing</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Appendices</a><ul>
+      <li>Previous: <a href="appendix2.html" title="previous chapter">File System Layout</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/append/appendix3.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="../_sources/append/appendix3.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

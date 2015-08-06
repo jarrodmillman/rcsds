@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>File System Layout &mdash; Linux guide 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Linux guide 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Appendices" href="index.html" />
+    <link rel="next" title="Shell Customization" href="appendix3.html" />
+    <link rel="prev" title="xargs" href="../commands/xargs.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="file-system-layout">
+<h1>File System Layout<a class="headerlink" href="#file-system-layout" title="Permalink to this headline">¶</a></h1>
+<p>The File System Hierarchy.</p>
+<p><strong>Table B-1. Linux Filesystem Hierarchy</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Directory</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>/bin</em></td>
+<td>OS specific, vendor supplied general use binaries</td>
+</tr>
+<tr class="row-odd"><td><em>/dev</em></td>
+<td>Hardware devices</td>
+</tr>
+<tr class="row-even"><td><em>/etc</em></td>
+<td>System configuration files</td>
+</tr>
+<tr class="row-odd"><td><em>/home</em></td>
+<td>Local disk user space</td>
+</tr>
+<tr class="row-even"><td><em>/lib</em></td>
+<td>OS specific vendor supplied libraries</td>
+</tr>
+<tr class="row-odd"><td><em>/mnt</em></td>
+<td>Mount point for user mounted file systems</td>
+</tr>
+<tr class="row-even"><td><em>/proc</em></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><em>/tmp</em></td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><em>/usr</em></td>
+<td>Root location for system binaries</td>
+</tr>
+<tr class="row-odd"><td><em>/usr/local</em></td>
+<td>Local to the host stuff</td>
+</tr>
+<tr class="row-even"><td><em>/var</em></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table B-1. FMRI specific Filesystem Hierarchy</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Directory</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>/r</em></td>
+<td>Automount mount point for all remote filesystems</td>
+</tr>
+<tr class="row-odd"><td><em>/r/d0</em></td>
+<td>Data directories</td>
+</tr>
+<tr class="row-even"><td><em>/r/d1</em></td>
+<td>Data directories</td>
+</tr>
+<tr class="row-odd"><td><em>/r/fmri</em></td>
+<td>top-level for shared fmri resources</td>
+</tr>
+<tr class="row-even"><td><em>/r/fmri/bin</em></td>
+<td>shared fmri stuff binaries</td>
+</tr>
+<tr class="row-odd"><td><em>/r/fmri/lib</em></td>
+<td>shared fmri 32bit libraries</td>
+</tr>
+<tr class="row-even"><td><em>/r/fmri/lib64</em></td>
+<td>shared fmri 64bit libraries</td>
+</tr>
+<tr class="row-odd"><td><em>/usr/fmri</em></td>
+<td>symbolic link to /r/fmri</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre>|-bin
+|-- afni -&gt; ../lib64/afni/2009_12_31_1431
+|-- mricron -&gt; ../lib64/mricro/12-2009/mricron
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>|-lib
+|---caret
+|-----5.51
+|-----5.6
+|-----5.61
+|-----5.613
+|---matlab
+|-----2007a
+|-------toolbox
+|---------images
+|---------signal
+|---------spm2
+|---------stats
+|-----2007a.old
+|-------toolbox
+|---------msu
+|---------new_spm
+|---------spm2
+|---------spm2_test
+|---------spm5
+|---------spm99
+|-----6.5
+|-------toolbox
+|---------spm2
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>|-lib64
+|---afni
+|-----2008_07_18_1710
+|-----2009_12_31_1431
+|---caret
+|-----5.6
+|---freesurfer
+|-----4.4.0
+|---fsl
+|-----4.1.4
+|---matlab
+|-----2007a
+|-------toolbox
+|---------images
+|---------signal
+|---------spm2
+|---------spm5
+|---------stats
+|-----2007a-spm2
+|-------toolbox
+|---------images
+|---------signal
+|---------spm2
+|---------stats
+|---mricro
+|-----07-2009
+|-----12-2009
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Appendices</a><ul>
+      <li>Previous: <a href="../commands/xargs.html" title="previous chapter">xargs</a></li>
+      <li>Next: <a href="appendix3.html" title="next chapter">Shell Customization</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/append/appendix2.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="../_sources/append/appendix2.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

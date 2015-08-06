@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Standard Topics &mdash; Linux guide 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Linux guide 0.1 documentation" href="../index.html" />
+    <link rel="next" title="Introduction to the Shell" href="shell-intro.html" />
+    <link rel="prev" title="Linux guide" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="standard-topics">
+<h1>Standard Topics<a class="headerlink" href="#standard-topics" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="shell-intro.html">Introduction to the Shell</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="shell-intro.html#the-interactive-shell">The Interactive Shell</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#logging-in">Logging In</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#shell-variables">Shell Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#entering-commands">Entering Commands</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shell-intro.html#general-syntax">General Syntax</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shell-intro.html#command-sequences">Command Sequences</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#command-history-and-editing">Command History and Editing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#command-completion-and-substitution">Command Completion and Substitution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#shortcuts">Shortcuts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shell-intro.html#basic-file-management">Basic File Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#files">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#navigation">Navigation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#manipulation">Manipulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#filename-globbing">Filename Globbing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#quoting">Quoting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="more-on-the-shell.html">More on the Shell</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="more-on-the-shell.html#streams-pipes-and-redirects">Streams, Pipes, and Redirects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="more-on-the-shell.html#default-file-descriptors">Default File Descriptors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="more-on-the-shell.html#io-redirection">IO Redirection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="more-on-the-shell.html#standard-redirection">Standard Redirection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="more-on-the-shell.html#pipes">Pipes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="more-on-the-shell.html#the-xargs-and-tee-command">The <strong>xargs</strong> and <strong>tee</strong> Command</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="more-on-the-shell.html#creating-monitoring-and-killing-processes">Creating, Monitoring, and Killing Processes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="more-on-the-shell.html#processes">Processes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="more-on-the-shell.html#monitoring-processes">Monitoring Processes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="more-on-the-shell.html#signaling-processes">Signaling Processes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="more-on-the-shell.html#shell-job-control">Shell Job Control</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="file-transfer.html">File Transfer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file-transfer.html#interactive">Interactive</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="file-transfer.html#ftp-and-sftp"><strong>ftp</strong> and <strong>sftp</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="file-transfer.html#scp-and-wget"><strong>scp</strong> and <strong>wget</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file-transfer.html#ssh-tar-pipe">SSH Tar pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-transfer.html#using-rsync-to-mirror-remote-directories">Using rsync to mirror remote directories</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="file-transfer.html#what-is-rsync">What is rsync?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="file-transfer.html#basic-mirroring-between-two-unix-systems-using-ssh">Basic mirroring between two UNIX systems using <code class="docutils literal"><span class="pre">ssh</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="file-transfer.html#better-remote-shell-options-with-ssh">Better remote shell options with <code class="docutils literal"><span class="pre">ssh</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="file-transfer.html#example">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data-manipulation.html">Data Manipulation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data-manipulation.html#finding-files">Finding Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-manipulation.html#regular-expressions">Regular Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-manipulation.html#ed-and-grep"><strong>ed</strong> and <strong>grep</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-manipulation.html#sed-and-awk"><strong>sed</strong> and <strong>awk</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-manipulation.html#perl"><strong>perl</strong></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../index.html" title="previous chapter">Linux guide</a></li>
+      <li>Next: <a href="shell-intro.html" title="next chapter">Introduction to the Shell</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/standard/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="../_sources/standard/index.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

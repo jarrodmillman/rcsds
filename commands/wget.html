@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>wget &mdash; Linux guide 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Linux guide 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Useful Command Line Utilities" href="../append/appendix1.html" />
+    <link rel="next" title="whatis" href="whatis.html" />
+    <link rel="prev" title="wc" href="wc.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="wget">
+<span id="command-wget"></span><h1>wget<a class="headerlink" href="#wget" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="name">
+<h2>Name<a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h2>
+<p>wget&nbsp;&#8211;&nbsp;GNU Wget Manual</p>
+</div>
+<div class="section" id="synopsis">
+<h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<p><strong>wget</strong> [option...] [URL...]</p>
+</div>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>GNU Wget is a free utility for non-interactive download of files
+from the Web. It supports HTTP, HTTPS, and FTP protocols, as well
+as retrieval through HTTP proxies.</p>
+</div>
+<div class="section" id="frequently-used-download-options">
+<h2>Frequently used download options<a class="headerlink" href="#frequently-used-download-options" title="Permalink to this headline">¶</a></h2>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-n<var>c</var></span>, <span class="option">--no-clobber</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>If a file is downloaded more than once in the same directory,
+Wget&#8217;s behavior depends on a few options, including -nc. In certain
+cases, the local file will be clobbered, or overwritten, upon
+repeated download. In other cases it will be preserved.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-c</span>, <span class="option">--continue</span></kbd></td>
+<td>Continue getting a partially-downloaded file. This is useful when
+you want to finish up a download started by a previous instance of
+Wget, or by another program.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="frequently-used-directory-options">
+<h2>Frequently used directory options<a class="headerlink" href="#frequently-used-directory-options" title="Permalink to this headline">¶</a></h2>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-n<var>d</var></span>, <span class="option">--no-directories</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Do not create a hierarchy of directories when retrieving
+recursively.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="frequently-used-http-options">
+<h2>Frequently used HTTP options<a class="headerlink" href="#frequently-used-http-options" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="frequently-used-ftp-options">
+<h2>Frequently used FTP options<a class="headerlink" href="#frequently-used-ftp-options" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>-g on/off, &#8211;glob=on/off</dt>
+<dd>Turn FTP globbing on or off. Globbing means you may use the
+shell-like special characters (wildcards), like *, ?, [ and ] to
+retrieve more than one file from the same directory at once.</dd>
+</dl>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-p<var>assive-ftp</var></span></kbd></td>
+<td>Use the passive FTP retrieval scheme, in which the client initiates
+the data connection.</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-r<var>etr-symlinks</var></span></kbd></td>
+<td>When &#8211;retr-symlinks is specified, however, symbolic links are
+traversed and the pointed-to files are retrieved.</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="frequently-used-recursive-retrieval-options">
+<h2>Frequently used recursive retrieval options<a class="headerlink" href="#frequently-used-recursive-retrieval-options" title="Permalink to this headline">¶</a></h2>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-r</span>, <span class="option">--recursive</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Turn on recursive retrieving.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-l <var>DEPTH</var></span>, <span class="option">--level=<var>DEPTH</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Specify recursion maximum depth level DEPTH.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-k</span>, <span class="option">--convert-links</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>After the download is complete, convert the links in the document
+to make them suitable for local viewing.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">wget</a><ul>
+<li><a class="reference internal" href="#name">Name</a></li>
+<li><a class="reference internal" href="#synopsis">Synopsis</a></li>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#frequently-used-download-options">Frequently used download options</a></li>
+<li><a class="reference internal" href="#frequently-used-directory-options">Frequently used directory options</a></li>
+<li><a class="reference internal" href="#frequently-used-http-options">Frequently used HTTP options</a></li>
+<li><a class="reference internal" href="#frequently-used-ftp-options">Frequently used FTP options</a></li>
+<li><a class="reference internal" href="#frequently-used-recursive-retrieval-options">Frequently used recursive retrieval options</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../append/index.html">Appendices</a><ul>
+  <li><a href="../append/appendix1.html">Useful Command Line Utilities</a><ul>
+      <li>Previous: <a href="wc.html" title="previous chapter">wc</a></li>
+      <li>Next: <a href="whatis.html" title="next chapter">whatis</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/commands/wget.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="../_sources/commands/wget.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
