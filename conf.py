@@ -49,7 +49,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Linux guide'
-copyright = u'2015, K. Jarrod Millman'
+copyright = u'2009-2015, K. Jarrod Millman'
 author = u'K. Jarrod Millman'
 
 # The version info for the project you're documenting, acts as replacement for

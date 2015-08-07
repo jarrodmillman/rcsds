@@ -1,0 +1,29 @@
+.. _command-cd:
+
+cd
+==
+
+Name
+----
+
+cd -- Change the current working directory to *directory*.
+
+Synopsis
+--------
+
+**cd** [options...] [directory]
+
+Description
+-----------
+
+Change the current working directory to *directory*.
+
+Frequently used options
+-----------------------
+
+-p 
+    Do not follow symbolic links
+
+-l 
+    Do follow symbolic links
+
