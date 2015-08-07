@@ -6,40 +6,30 @@ Introduction to the Shell
 
 .. contents::
 
-In order to be of interest to the user, a computer must have a
-*human interface component*. If you come from the world of Windows
-or MacOS, you should be familiar with the
-*graphical user interface (GUI)*.
-*Windows, Icons, Menus and Pointing device (WIMP)* are the basic
-components of a GUI. The are advantages to the GUI--most important,
-of which, is the "intuitive" nature of this interface.
-
-In UNIX, there is another interface which reigns supreme: the
-*command line interface (CLI)*. If you have ever used DOS, you have
-all ready encountered a CLI; but, you probably have not been
-convinced of its usefulness. Simply put, a CLI is a text based
-interface. The user is given a *prompt* to indicate the computers
-reeadiness to accept *input*. The user enters or types a *command*
-on the line (or lines) following the prompt. The computer,
-consequently, executes or interprets the command and prompts the
-user when its finished.
+In order to be of interest to the user, a computer must have a *human interface
+component*. If you come from the world of Windows or MacOS, you should be
+familiar with the *graphical user interface (GUI)*.  In UNIX, there is another
+interface which reigns supreme: the *command line interface (CLI)*. If you have
+ever used DOS, you have all ready encountered a CLI; but, you probably have not
+been convinced of its usefulness. Simply put, a CLI is a text based interface.
+The user is given a *prompt* to indicate the computers reeadiness to accept
+*input*. The user enters or types a *command* on the line (or lines) following
+the prompt. The computer, consequently, executes or interprets the command and
+prompts the user when its finished.
 
 The Interactive Shell
 =====================
 
-The program which prompts the user and interprets the user's
-commands is called a *shell*. The original UNIX shell was written
-by Steve Bourne and called simply **sh**. Today's shells have been
-greatly enhanced. Since Linux' default shell is the GNU's **bash**
-(or the Bourne Again Shell), I will focus on it. However, the basic
-ideas are applicable to any of UNIX's shells.
+The program which prompts the user and interprets the user's commands is called
+a *shell*. Since Linux' default shell is GNU's **bash** (or the Bourne Again
+Shell), I will focus on it. However, the basic ideas are applicable to any of
+UNIX's shells.
 
-The shell is an amazingly powerful programming environment--more
-powerful than most non-UNIX users are accustomed to. From it you
-can interactively control almost any aspect of the OS and more
-importantly you can automate it. As you will see, **bash** has a
-very extensive set of capabalities intended to make both
-interactive as well as automated control simple, effective, and
+The shell is an amazingly powerful programming environment---more powerful than
+most non-UNIX users are accustomed to. From it you can interactively control
+almost any aspect of the OS and more importantly you can automate it. As you
+will see, **bash** has a very extensive set of capabalities intended to make
+both interactive as well as automated control simple, effective, and
 customizable.
 
 Logging In
@@ -55,13 +45,8 @@ Shell Variables
 
 **Useful Commands**
 
-* :ref:`command-apropos` -- search the whatis database for strings
 * :ref:`command-echo` -- display a line of text
 * :ref:`command-which` -- shows the full path of (shell) commands.
-* :ref:`command-whereis` -- locate the binary, source, and manual
-                            page files for a command
-* :ref:`command-whatis` -- search the whatis database for complete
-                            words.
 * :ref:`command-man` -- format and display the on-line manual pages
                      PS1, PATH, CDPATH
 
@@ -99,103 +84,6 @@ Shell Variables
     $ which echo
     /bin/echo
       
-
-type-type-all
-
-**Example 2-5. Learning more about **echo** with **whereis**, **whatis**, and **man****
-
-::
-
-    $ whereis echo
-    echo: /bin/echo /usr/share/man/man1/echo.1.bz2 /usr/share/man/man3/echo.3x.bz2
-    $ whatis echo
-    echo                 (1)  - display a line of text
-    echo                 (3x)  - curses input options
-    echo [builtins]      (1)  - bash built-in commands, see bash(1)
-    echo [cbreak]        (3x)  - curses input options
-    echo [curs_inopts]   (3x)  - curses input options
-    echo [halfdelay]     (3x)  - curses input options
-    echo [intrflush]     (3x)  - curses input options
-    echo [keypad]        (3x)  - curses input options
-    echo [meta]          (3x)  - curses input options
-    echo [nocbreak]      (3x)  - curses input options
-    echo [nodelay]       (3x)  - curses input options
-    echo [noecho]        (3x)  - curses input options
-    echo [noqiflush]     (3x)  - curses input options
-    echo [noraw]         (3x)  - curses input options
-    echo [notimeout]     (3x)  - curses input options
-    echo [qiflush]       (3x)  - curses input options
-    echo [raw]           (3x)  - curses input options
-    echo [timeout]       (3x)  - curses input options
-    echo [typeahead]     (3x)  - curses input options
-    echo [wtimeout]      (3x)  - curses input options
-    $ man echo
-    ECHO(1)                        FSF                        ECHO(1)
-    
-    NAME
-       echo - display a line of text
-
-    SYNOPSIS
-       echo [OPTION]... [STRING]...
-
-    DESCRIPTION
-       Echo the STRING(s) to standard output.
-
-       -n     do not output the trailing newline
-
-       -e     enable interpretation of the backslash-escaped characters listed below
-
-       -E     disable interpretation of those sequences in STRINGs
-
-       --help display this help and exit (should be alone)
-
-       --version
-          output version information and exit (should be alone)
-
-       Without -E, the following sequences are recognized and interpolated:
-
-       \NNN   the character whose ASCII code is NNN (octal)
-
-       \\     backslash
-
-       \a     alert (BEL)
-
-       \b     backspace
-
-       \c     suppress trailing newline
-
-       \f     form feed
-
-       \n     new line
-
-       \r     carriage return
-
-       \t     horizontal tab
-
-       \v     vertical tab
-
-    AUTHOR
-       Written by FIXME unknown.
-
-    REPORTING BUGS
-       Report bugs to <bug-sh-utils@gnu.org>.
-
-    COPYRIGHT
-       Copyright � 2000 Free Software Foundation, Inc.
-       This  is  free  software;  see  the  source  for copying conditions.  There is NO warranty; not even for MER�
-       CHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-    SEE ALSO
-       The full documentation for echo is maintained as a Texinfo manual.  If the info and echo programs  are  prop�
-       erly installed at your site, the command
-
-          info echo
-
-       should give you access to the complete manual.
-
-    GNU sh-utils 2.0.11         March 2002                    ECHO(1)
-    lines 1-69/69 (END)
-        
       
 
 Entering Commands
@@ -288,17 +176,17 @@ Command History and Editing
 
 **Table 2-1. Command History Expansion**
 
-==================   ==========================================================
-Designator           Description
-==================   ==========================================================
-*!!*                 Last command
-*!n*                 Command numbered *n* in the history
-*!-n*                Command *n* previous
-*!string*            Last command starting with *string*
-*!?string*           Last command containing *string*
-*^string1^string2*   Execute the previous command with *string2*
-                     substituted for *string1*
-==================   ==========================================================
+====================   ==========================================================
+Designator             Description
+====================   ==========================================================
+``!!``                 Last command
+``!n``                 Command numbered *n* in the history
+``!-n``                Command *n* previous
+``!string``            Last command starting with *string*
+``!?string``           Last command containing *string*
+``^string1^string2``   Execute the previous command with *string2*
+                       substituted for *string1*
+====================   ==========================================================
 
 Command Completion and Substitution
 -----------------------------------
@@ -430,15 +318,9 @@ Navigation
 
 * :ref:`command-cd` -- Change the current working directory to
                      *directory*.
-* :ref:`command-dirs` -- Display the list of currently remembered
-                         directories.
-* :ref:`command-popd` --  Remove the top entry from the directory
-                          stack, and cd to the new top directory.
-* :ref:`command-pushd` -- Save the current directory on the top of
-                           the directory stack and then cd to dir.
 * :ref:`command-pwd` -- print name of current/working directory
 
-**Example 2-13. Moving Around the Filesystem with **cd**, **pushd**, ~,and **pwd****
+**Example 2-13. Moving Around the Filesystem with **cd**, ~,and **pwd****
 
 ::
 
@@ -446,19 +328,6 @@ Navigation
     $ pwd
     /home/user1
     
-    $ pushd src/doc/
-    ~/src/doc ~
-    
-    $ pwd
-    /home/user1/src/doc
-    
-    $ pushd
-    ~ ~/src/doc
-    
-    $ pwd
-    /home/user1
-        
-      
 
 Manipulation
 ------------
@@ -468,10 +337,6 @@ Manipulation
 * :ref:`command-cat` -- concatenate files and print on the standard output
 * :ref:`command-cp`-- copy files and directories
 * :ref:`command-diff`-- find differences between two files
-* :ref:`command-diff3`-- find differences between three files
-* :ref:`command-sdiff`-- find differences between two files and merge interactively
-* :ref:`command-comm` -- Compare two sorted files line by line
-* :ref:`command-cmp` --  compare two files or byte ranges
 * :ref:`command-head` -- output the first part of files
 * :ref:`command-less` -- opposite of more
 * :ref:`command-more` --  file perusal filter for crt viewing
@@ -518,22 +383,22 @@ Filename Globbing
 
 **Table 2-3. File-Naming Wildcards**
 
-=========================== ==================================================
-Wildcard                    Function
-=========================== ==================================================
-*\\*                        Match zero or more characters.
-*?*                         Match exactly one character.
-*[characters]*              Match any single character from among *characters*
-                            listed between brackets.
-*[!characters]*             Match any single character other than *characters*
-                            listed between brackets.
-*[a-z]*                     Match any single character from among the range of
-                            characters listed between brackets.
-*[!a-z]*                    Match any single character from among the characters
-                            not in the range listed between brackets
-*{frag1, frag2, frag3,...}* Brace expansion: create strings frag1, frag2, and
-                            frag3, etc.
-=========================== ==================================================
+============================== ==================================================
+Wildcard                       Function
+============================== ==================================================
+``*``                          Match zero or more characters.
+``?``                          Match exactly one character.
+``[characters]``               Match any single character from among *characters*
+                                 listed between brackets.
+``[!characters]``              Match any single character other than *characters*
+                                 listed between brackets.
+``[a-z]``                      Match any single character from among the range of
+                                 characters listed between brackets.
+``[!a-z]``                     Match any single character from among the characters
+                                 not in the range listed between brackets
+``{frag1, frag2, frag3,...}``  Brace expansion: create strings frag1, frag2, and
+                                 frag3, etc.
+============================== ==================================================
 
 **Example 2-15. Using brace expansion**
 
@@ -551,7 +416,7 @@ Quoting
 =================    ====================================
 Types of Quoting     Description
 =================    ====================================
-*' '*                hard quote - no substitution allowed
-*" "*                soft quote - allow substitution
-*` `*                execute immediately
+``' '``              hard quote - no substitution allowed
+``" "``              soft quote - allow substitution
+``` ```              execute immediately
 =================    ====================================
