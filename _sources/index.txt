@@ -1,5 +1,5 @@
-Linux guide
-===========
+Reproducible and Collaborative Statistical Data Science
+=======================================================
 
 Contents:
 

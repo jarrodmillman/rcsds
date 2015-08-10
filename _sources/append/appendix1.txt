@@ -9,16 +9,12 @@ Useful Command Line Utilities
     bg -- background <../commands/bg.rst>
     bzip2 -- a block-sorting file compressor <../commands/bzip2.rst>
     cat -- concatenate files and print on the standard output <../commands/cat.rst>
-    cdrecord -- record audio or data Compact Discs from a master <../commands/cdrecord.rst>
     cd -- Change the current working directory to *directory*.  <../commands/cd.rst>
     chmod -- change file access permissions <../commands/chmod.rst>
     clear -- clear the terminal screen <../commands/clear.rst>
-    cmp --  compare two files or byte ranges <../commands/cmp.rst>
-    comm -- Compare two sorted files line by line <../commands/comm.rst>
     cp -- copy files and directories <../commands/cp.rst>
     date -- print or set the system date and time <../commands/date.rst>
     df -- report filesystem disk space usage <../commands/df.rst>
-    diff3 -- find differences between three files <../commands/diff3.rst>
     diff -- find differences between two files <../commands/diff.rst>
     dirs -- Display the list of currently remembered directories.  <../commands/dirs.rst>
     du --  estimate file space usage <../commands/du.rst>
@@ -47,16 +43,13 @@ Useful Command Line Utilities
     nohup -- Run a command immune to hangups, with output to a non-tty <../commands/nohup.rst>
     paste -- merge lines of files <../commands/paste.rst>
     pine -- a Program for Internet News and Email <../commands/pine.rst>
-    popd --  Remove the top entry from the directory stack, and cd to <../commands/popd.rst>
     ps --  report process status <../commands/ps.rst>
     pstree -- display a tree of processes <../commands/pstree.rst>
-    pushd -- Save the current directory on the top of the directory <../commands/pushd.rst>
     pwd -- print name of current/working directory <../commands/pwd.rst>
     quota -- display disk usage and limits <../commands/quota.rst>
     rmdir -- remove empty directories <../commands/rmdir.rst>
     rm -- remove files or directories <../commands/rm.rst>
     scp -- secure copy <../commands/scp.rst>
-    sdiff -- find differences between two files and merge interactively <../commands/sdiff.rst>
     sftp -- Secure file transfer program <../commands/sftp.rst>
     sleep -- delay for a specified amount of time <../commands/sleep.rst>
     sort -- sort lines of text files.  <../commands/sort.rst>
@@ -79,7 +72,5 @@ Useful Command Line Utilities
     watch -- execute a program periodically, showing output fullscreen <../commands/watch.rst>
     wc --  print the number of bytes, words, and lines in files <../commands/wc.rst>
     wget -- GNU Wget Manual <../commands/wget.rst>
-    whatis -- search the whatis database for complete words.  <../commands/whatis.rst>
-    whereis -- locate the binary, source, and manual page files for a <../commands/whereis.rst>
     which -- shows the full path of (shell) commands.  <../commands/which.rst>
     xargs --  build and execute command lines from standard input <../commands/xargs.rst>

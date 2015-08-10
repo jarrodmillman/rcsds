@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>More on the Shell &mdash; Linux guide 0.1 documentation</title>
+    <title>Advanced Bash &mdash; RCSDS 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -24,10 +24,10 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Linux guide 0.1 documentation" href="../index.html" />
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
     <link rel="up" title="Standard Topics" href="index.html" />
     <link rel="next" title="File Transfer" href="file-transfer.html" />
-    <link rel="prev" title="Introduction to the Shell" href="shell-intro.html" />
+    <link rel="prev" title="Git introduction" href="git-intro.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -40,12 +40,12 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="more-on-the-shell">
-<span id="more-shell"></span><h1><a class="toc-backref" href="#id1">More on the Shell</a><a class="headerlink" href="#more-on-the-shell" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="advanced-bash">
+<span id="more-shell"></span><h1><a class="toc-backref" href="#id1">Advanced Bash</a><a class="headerlink" href="#advanced-bash" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#more-on-the-shell" id="id1">More on the Shell</a><ul>
+<li><a class="reference internal" href="#advanced-bash" id="id1">Advanced Bash</a><ul>
 <li><a class="reference internal" href="#streams-pipes-and-redirects" id="id2">Streams, Pipes, and Redirects</a><ul>
 <li><a class="reference internal" href="#default-file-descriptors" id="id3">Default File Descriptors</a></li>
 <li><a class="reference internal" href="#io-redirection" id="id4">IO Redirection</a><ul>
@@ -336,47 +336,38 @@ output to a non-tty</li>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">More on the Shell</a><ul>
-<li><a class="reference internal" href="#streams-pipes-and-redirects">Streams, Pipes, and Redirects</a><ul>
-<li><a class="reference internal" href="#default-file-descriptors">Default File Descriptors</a></li>
-<li><a class="reference internal" href="#io-redirection">IO Redirection</a><ul>
-<li><a class="reference internal" href="#standard-redirection">Standard Redirection</a></li>
-<li><a class="reference internal" href="#pipes">Pipes</a></li>
-<li><a class="reference internal" href="#the-xargs-and-tee-command">The <strong>xargs</strong> and <strong>tee</strong> Command</a></li>
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Standard Topics</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="git-intro.html">Git introduction</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Advanced Bash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-transfer.html">File Transfer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data-manipulation.html">Data Manipulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-advanced.html">Git revisited</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python.html">Python review</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy.html">NumPy, SciPy, and matplolib</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
 </ul>
-</li>
-<li><a class="reference internal" href="#creating-monitoring-and-killing-processes">Creating, Monitoring, and Killing Processes</a><ul>
-<li><a class="reference internal" href="#processes">Processes</a></li>
-<li><a class="reference internal" href="#monitoring-processes">Monitoring Processes</a></li>
-<li><a class="reference internal" href="#signaling-processes">Signaling Processes</a></li>
-<li><a class="reference internal" href="#shell-job-control">Shell Job Control</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<div class="relations">
-<h3>Related Topics</h3>
+
+
+<hr />
 <ul>
-  <li><a href="../index.html">Documentation overview</a><ul>
-  <li><a href="index.html">Standard Topics</a><ul>
-      <li>Previous: <a href="shell-intro.html" title="previous chapter">Introduction to the Shell</a></li>
-      <li>Next: <a href="file-transfer.html" title="next chapter">File Transfer</a></li>
-  </ul></li>
-  </ul></li>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
 </ul>
-</div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/standard/more-on-the-shell.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">

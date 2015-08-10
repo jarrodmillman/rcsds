@@ -1,8 +1,8 @@
 .. _more-shell:
 
-*****************
-More on the Shell
-*****************
+*************
+Advanced Bash
+*************
 
 .. contents::
 

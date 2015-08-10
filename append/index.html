@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Appendices &mdash; Linux guide 0.1 documentation</title>
+    <title>Appendices &mdash; RCSDS 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -24,9 +24,9 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="Linux guide 0.1 documentation" href="../index.html" />
-    <link rel="next" title="Useful Command Line Utilities" href="appendix1.html" />
-    <link rel="prev" title="Data Manipulation" href="../standard/data-manipulation.html" />
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+    <link rel="next" title="Introduction to the Shell" href="shell-intro.html" />
+    <link rel="prev" title="NumPy, SciPy, and matplolib" href="../standard/numpy.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -44,6 +44,30 @@
 <h1>Appendices<a class="headerlink" href="#appendices" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="shell-intro.html">Introduction to the Shell</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="shell-intro.html#the-interactive-shell">The Interactive Shell</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#logging-in">Logging In</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#shell-variables">Shell Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#entering-commands">Entering Commands</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="shell-intro.html#general-syntax">General Syntax</a></li>
+<li class="toctree-l4"><a class="reference internal" href="shell-intro.html#command-sequences">Command Sequences</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#command-history-and-editing">Command History and Editing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#command-completion-and-substitution">Command Completion and Substitution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#shortcuts">Shortcuts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shell-intro.html#basic-file-management">Basic File Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#files">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#navigation">Navigation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#manipulation">Manipulation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#filename-globbing">Filename Globbing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#quoting">Quoting</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="appendix1.html">Useful Command Line Utilities</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../commands/apropos.html"> apropos&nbsp;&#8211;&nbsp;search the whatis database for strings</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../commands/apropos.html#name">Name</a></li>
@@ -71,13 +95,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../commands/cat.html#frequently-used-options">Frequently used options</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../commands/cdrecord.html"> cdrecord&nbsp;&#8211;&nbsp;record audio or data Compact Discs from a master</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../commands/cdrecord.html#name">Name</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/cdrecord.html#synopsis">Synopsis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/cdrecord.html#description">Description</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/cdrecord.html#frequently-used-options">Frequently used options</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="../commands/cd.html"> cd&nbsp;&#8211;&nbsp;Change the current working directory to *directory*.</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../commands/cd.html#name">Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../commands/cd.html#synopsis">Synopsis</a></li>
@@ -96,20 +113,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../commands/clear.html#name">Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../commands/clear.html#synopsis">Synopsis</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../commands/clear.html#description">Description</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../commands/cmp.html"> cmp&nbsp;&#8211;&nbsp; compare two files or byte ranges</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../commands/cmp.html#name">Name</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/cmp.html#synopsis">Synopsis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/cmp.html#description">Description</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/cmp.html#frequently-used-options">Frequently used options</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../commands/comm.html"> comm&nbsp;&#8211;&nbsp;Compare two sorted files line by line</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../commands/comm.html#name">Name</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/comm.html#synopsis">Synopsis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/comm.html#description">Description</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/comm.html#frequently-used-options">Frequently used options</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../commands/cp.html"> cp&nbsp;&#8211;&nbsp;copy files and directories</a><ul>
@@ -131,13 +134,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../commands/df.html#synopsis">Synopsis</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../commands/df.html#description">Description</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../commands/df.html#frequently-used-options">Frequently used options</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../commands/diff3.html"> diff3&nbsp;&#8211;&nbsp;find differences between three files</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../commands/diff3.html#name">Name</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/diff3.html#synopsis">Synopsis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/diff3.html#description">Description</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/diff3.html#frequently-used-options">Frequently used options</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../commands/diff.html"> diff&nbsp;&#8211;&nbsp;find differences between two files</a><ul>
@@ -339,13 +335,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../commands/pine.html#frequently-used-options">Frequently used options</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../commands/popd.html"> popd&nbsp;&#8211;&nbsp; Remove the top entry from the directory stack, and cd to</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../commands/popd.html#name">Name</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/popd.html#synopsis">Synopsis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/popd.html#description">Description</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/popd.html#frequently-used-options">Frequently used options</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="../commands/ps.html"> ps&nbsp;&#8211;&nbsp; report process status</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../commands/ps.html#name">Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../commands/ps.html#synopsis">Synopsis</a></li>
@@ -358,13 +347,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../commands/pstree.html#synopsis">Synopsis</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../commands/pstree.html#description">Description</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../commands/pstree.html#frequently-used-options">Frequently used options</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../commands/pushd.html"> pushd&nbsp;&#8211;&nbsp;Save the current directory on the top of the directory</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../commands/pushd.html#name">Name</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/pushd.html#synopsis">Synopsis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/pushd.html#description">Description</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/pushd.html#frequently-used-options">Frequently used options</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../commands/pwd.html"> pwd&nbsp;&#8211;&nbsp;print name of current/working directory</a><ul>
@@ -400,13 +382,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../commands/scp.html#synopsis">Synopsis</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../commands/scp.html#description">Description</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../commands/scp.html#frequently-used-options">Frequently used options</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../commands/sdiff.html"> sdiff&nbsp;&#8211;&nbsp;find differences between two files and merge interactively</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../commands/sdiff.html#name">Name</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/sdiff.html#synopsis">Synopsis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/sdiff.html#description">Description</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/sdiff.html#frequently-used-options">Frequently used options</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../commands/sftp.html"> sftp&nbsp;&#8211;&nbsp;Secure file transfer program</a><ul>
@@ -567,20 +542,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../commands/wget.html#frequently-used-recursive-retrieval-options">Frequently used recursive retrieval options</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../commands/whatis.html"> whatis&nbsp;&#8211;&nbsp;search the whatis database for complete words.</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../commands/whatis.html#name">Name</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/whatis.html#synopsis">Synopsis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/whatis.html#description">Description</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/whatis.html#frequently-used-options">Frequently used options</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../commands/whereis.html"> whereis&nbsp;&#8211;&nbsp;locate the binary, source, and manual page files for a</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../commands/whereis.html#name">Name</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/whereis.html#synopsis">Synopsis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/whereis.html#description">Description</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../commands/whereis.html#frequently-used-options">Frequently used options</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="../commands/which.html"> which&nbsp;&#8211;&nbsp;shows the full path of (shell) commands.</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../commands/which.html#name">Name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../commands/which.html#synopsis">Synopsis</a></li>
@@ -608,22 +569,36 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="../standard/data-manipulation.html" title="previous chapter">Data Manipulation</a></li>
-      <li>Next: <a href="appendix1.html" title="next chapter">Useful Command Line Utilities</a></li>
-  </ul></li>
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Standard Topics</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Appendices</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="shell-intro.html">Introduction to the Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix1.html">Useful Command Line Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix2.html">File System Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix3.html">Shell Customization</a></li>
 </ul>
-</div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/append/index.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
+</li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
