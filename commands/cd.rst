@@ -3,27 +3,20 @@
 cd
 ==
 
-Name
-----
+**Name**
 
-cd -- Change the current working directory to *directory*.
+``cd - Change the current working directory to *directory*``
 
-Synopsis
---------
+**Synopsis**
 
-**cd** [options...] [directory]
+``cd [options...] [directory]``
 
-Description
------------
+**Description**
 
 Change the current working directory to *directory*.
-
-Frequently used options
------------------------
 
 -p 
     Do not follow symbolic links
 
 -l 
     Do follow symbolic links
-

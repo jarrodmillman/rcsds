@@ -3,23 +3,17 @@
 chmod
 =====
 
-Name
-----
+**Name**
 
-chmod -- change file access permissions
+``chmod - change file access permissions``
 
-Synopsis
---------
+**Synopsis**
 
-**chmod** [options...] {mode} [files...]
+``chmod [options...] {mode} [files...]``
 
-Description
------------
+**Description**
 
 Change the mode of each FILE to MODE.
-
-Frequently used options
------------------------
 
 -c, --changes
     like verbose but report only when a change is made

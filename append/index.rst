@@ -5,8 +5,9 @@ Appendices
 **********
 
 .. toctree::
+   :maxdepth: 1
 
-   shell-intro.rst
+   file-transfer.rst
    appendix1.rst
    appendix2.rst
    appendix3.rst

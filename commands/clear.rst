@@ -3,18 +3,10 @@
 clear
 =====
 
-Name
-----
+**Name**
 
-clear -- clear the terminal screen
+``clear - clear the terminal screen``
 
-Synopsis
---------
-
-**clear**
-
-Description
------------
+**Description**
 
 clear clears your screen if this is possible.
-

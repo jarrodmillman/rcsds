@@ -6,11 +6,11 @@ Standard Topics
 
    course-intro.rst
    git-intro.rst
-   documentation-tools.rst
+   bash-advanced.rst
    fmri-intro.rst
-   more-on-the-shell.rst
-   file-transfer.rst
-   data-manipulation.rst
-   git-advanced.rst
    python.rst
    numpy.rst
+   git-advanced.rst
+   eda.rst
+   organize-automate.rst
+   statistics.rst
