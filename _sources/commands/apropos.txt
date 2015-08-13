@@ -3,18 +3,15 @@
 apropos
 =======
 
-Name
-----
+**Name**
 
-apropos -- search the whatis database for strings
+``apropos - search the whatis database for strings``
 
-Synopsis
---------
+**Synopsis**
 
-**apropos** {keywords...}
+``apropos keywords ...``
 
-Description
------------
+**Description**
 
 apropos searches a set of database files containing short
 descriptions of system commands for keywords and displays the

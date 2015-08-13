@@ -3,23 +3,15 @@
 bzip2
 =====
 
-Name
-----
+**Name**
 
-bzip2 -- a block-sorting file compressor
+``bzip2 - a block-sorting file compressor``
 
-Synopsis
---------
+**Synopsis**
 
-**bzip2** [option] [filename...]
+``bzip2 [ filenames ... ]``
 
-Description
------------
+**Description**
 
 bzip2 compresses files using the Burrows-Wheeler block sorting text
 compression algorithm, and Huffman coding.
-
-Frequently used options
------------------------
-
-

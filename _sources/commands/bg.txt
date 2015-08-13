@@ -3,22 +3,18 @@
 bg
 ==
 
-Name
-----
+**Name**
 
-bg -- background
+``bg - background``
 
-Synopsis
---------
+**Synopsis**
 
-**bg** [jobspec]
+``bg [jobspec]``
 
-Description
------------
+**Description**
 
-Pleace JOBSPEC in the background, as if it had been started with &.
+Place JOBSPEC in the background, as if it had been started with &.
 If JOBSPEC is not present, then the shell's notion of the
 *current job* is used, as indicated by the plus sign (+) in output
 from the *jobs* command. Using this command on a job that is
 stopped will allow it to run in the background.
-

@@ -3,21 +3,14 @@
 cat
 ===
 
-Name
-----
+**Name**
 
-cat -- concatenate files and print on the standard output
+``cat - concatenate files and print on the standard output``
 
-Synopsis
---------
+**Synopsis**
 
-**cat** [option...] [file...]
+``cat [FILE]...``
 
-Description
------------
+**Description**
 
 Concatenate FILE(s), or standard input, to standard output.
-
-Frequently used options
------------------------
-

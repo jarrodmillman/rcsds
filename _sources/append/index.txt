@@ -5,6 +5,7 @@ Appendices
 **********
 
 .. toctree::
+   :maxdepth: 1
 
    file-transfer.rst
    appendix1.rst
