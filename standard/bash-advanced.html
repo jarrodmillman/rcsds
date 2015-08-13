@@ -1,0 +1,1086 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Advanced Bash &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Standard Topics" href="index.html" />
+    <link rel="next" title="Python introduction" href="python.html" />
+    <link rel="prev" title="Statistical analysis of fMRI data" href="fmri-intro.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="advanced-bash">
+<span id="bash-advanced"></span><h1><a class="toc-backref" href="#id1">Advanced Bash</a><a class="headerlink" href="#advanced-bash" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#advanced-bash" id="id1">Advanced Bash</a><ul>
+<li><a class="reference internal" href="#the-interactive-shell" id="id2">The Interactive Shell</a><ul>
+<li><a class="reference internal" href="#logging-in" id="id3">Logging In</a></li>
+<li><a class="reference internal" href="#shell-variables" id="id4">Shell Variables</a></li>
+<li><a class="reference internal" href="#entering-commands" id="id5">Entering Commands</a><ul>
+<li><a class="reference internal" href="#general-syntax" id="id6">General Syntax</a></li>
+<li><a class="reference internal" href="#command-sequences" id="id7">Command Sequences</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#command-history-and-editing" id="id8">Command History and Editing</a></li>
+<li><a class="reference internal" href="#command-completion-and-substitution" id="id9">Command Completion and Substitution</a></li>
+<li><a class="reference internal" href="#shortcuts" id="id10">Shortcuts</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#basic-file-management" id="id11">Basic File Management</a><ul>
+<li><a class="reference internal" href="#files" id="id12">Files</a></li>
+<li><a class="reference internal" href="#navigation" id="id13">Navigation</a></li>
+<li><a class="reference internal" href="#manipulation" id="id14">Manipulation</a></li>
+<li><a class="reference internal" href="#filename-globbing" id="id15">Filename Globbing</a></li>
+<li><a class="reference internal" href="#quoting" id="id16">Quoting</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-manipulation" id="id17">Data Manipulation</a><ul>
+<li><a class="reference internal" href="#finding-files" id="id18">Finding Files</a></li>
+<li><a class="reference internal" href="#regular-expressions" id="id19">Regular Expressions</a></li>
+<li><a class="reference internal" href="#ed-and-grep" id="id20"><strong>ed</strong> and <strong>grep</strong></a></li>
+<li><a class="reference internal" href="#sed-and-awk" id="id21"><strong>sed</strong> and <strong>awk</strong></a></li>
+<li><a class="reference internal" href="#perl" id="id22"><strong>perl</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#streams-pipes-and-redirects" id="id23">Streams, Pipes, and Redirects</a><ul>
+<li><a class="reference internal" href="#default-file-descriptors" id="id24">Default File Descriptors</a></li>
+<li><a class="reference internal" href="#io-redirection" id="id25">IO Redirection</a><ul>
+<li><a class="reference internal" href="#standard-redirection" id="id26">Standard Redirection</a></li>
+<li><a class="reference internal" href="#pipes" id="id27">Pipes</a></li>
+<li><a class="reference internal" href="#the-xargs-and-tee-command" id="id28">The <strong>xargs</strong> and <strong>tee</strong> Command</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#creating-monitoring-and-killing-processes" id="id29">Creating, Monitoring, and Killing Processes</a><ul>
+<li><a class="reference internal" href="#processes" id="id30">Processes</a></li>
+<li><a class="reference internal" href="#monitoring-processes" id="id31">Monitoring Processes</a></li>
+<li><a class="reference internal" href="#signaling-processes" id="id32">Signaling Processes</a></li>
+<li><a class="reference internal" href="#shell-job-control" id="id33">Shell Job Control</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>In order to be of interest to the user, a computer must have a <em>human interface
+component</em>. If you come from the world of Windows or MacOS, you should be
+familiar with the <em>graphical user interface (GUI)</em>.  In UNIX, there is another
+interface which reigns supreme: the <em>command line interface (CLI)</em>. If you have
+ever used DOS, you have all ready encountered a CLI; but, you probably have not
+been convinced of its usefulness. Simply put, a CLI is a text based interface.
+The user is given a <em>prompt</em> to indicate the computers reeadiness to accept
+<em>input</em>. The user enters or types a <em>command</em> on the line (or lines) following
+the prompt. The computer, consequently, executes or interprets the command and
+prompts the user when its finished.</p>
+<div class="section" id="the-interactive-shell">
+<h2><a class="toc-backref" href="#id2">The Interactive Shell</a><a class="headerlink" href="#the-interactive-shell" title="Permalink to this headline">¶</a></h2>
+<p>The program which prompts the user and interprets the user&#8217;s commands is called
+a <em>shell</em>. Since Linux&#8217; default shell is GNU&#8217;s <strong>bash</strong> (or the Bourne Again
+Shell), I will focus on it. However, the basic ideas are applicable to any of
+UNIX&#8217;s shells.</p>
+<p>The shell is an amazingly powerful programming environment&#8212;more powerful than
+most non-UNIX users are accustomed to. From it you can interactively control
+almost any aspect of the OS and more importantly you can automate it. As you
+will see, <strong>bash</strong> has a very extensive set of capabalities intended to make
+both interactive as well as automated control simple, effective, and
+customizable.</p>
+<div class="section" id="logging-in">
+<h3><a class="toc-backref" href="#id3">Logging In</a><a class="headerlink" href="#logging-in" title="Permalink to this headline">¶</a></h3>
+<p><strong>Useful Commands</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="../commands/su.html#command-su"><span>su</span></a> &#8211;&nbsp;run a shell with substitute user and group IDs</li>
+<li><a class="reference internal" href="../commands/sudo.html#command-sudo"><span>sudo</span></a> &#8211;&nbsp;execute a command as another user</li>
+</ul>
+</div>
+<div class="section" id="shell-variables">
+<h3><a class="toc-backref" href="#id4">Shell Variables</a><a class="headerlink" href="#shell-variables" title="Permalink to this headline">¶</a></h3>
+<p><strong>Useful Commands</strong></p>
+<ul>
+<li><p class="first"><a class="reference internal" href="../commands/echo.html#command-echo"><span>echo</span></a> &#8211;&nbsp;display a line of text</p>
+</li>
+<li><p class="first"><a class="reference internal" href="../commands/which.html#command-which"><span>which</span></a> &#8211;&nbsp;shows the full path of (shell) commands.</p>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference internal" href="../commands/man.html#command-man"><span>man</span></a> &#8211;&nbsp;format and display the on-line manual pages</dt>
+<dd><p class="first last">PS1, PATH, CDPATH</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p><strong>Example 2-1. PS1: Prompt String 1</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>[user1@local1 src]$ echo $PS1
+[\u@\h \W]\$
+</pre></div>
+</div>
+<p><strong>Example 2-2. Changing PS1</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>[user1@local1 src]$ PS1=$
+$ bash
+[user1@local1 src]$ export PS1=$
+$ bash
+$
+</pre></div>
+</div>
+<p><strong>Example 2-3. PATH</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo $PATH
+/bin:/usr/bin:/usr/X11R6/bin:/usr/local/bin
+</pre></div>
+</div>
+<p><strong>Example 2-4. Finding **echo</strong> with <strong>which**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ which echo
+/bin/echo
+</pre></div>
+</div>
+</div>
+<div class="section" id="entering-commands">
+<h3><a class="toc-backref" href="#id5">Entering Commands</a><a class="headerlink" href="#entering-commands" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="general-syntax">
+<h4><a class="toc-backref" href="#id6">General Syntax</a><a class="headerlink" href="#general-syntax" title="Permalink to this headline">¶</a></h4>
+<p><strong>Useful Commands</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="../commands/ls.html#command-ls"><span>ls</span></a> &#8211;&nbsp;list directory contents</li>
+</ul>
+<p>While each command has its own syntax, there are some rules usually
+followed. Generally, a command line consists of 4 things:</p>
+<ol class="arabic simple">
+<li>command</li>
+<li>command options</li>
+<li>arguments</li>
+<li>line acceptance</li>
+</ol>
+<p><strong>Example 2-6. General Command Syntax</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls --all -l
+total 44
+drwxr-xr-x    2 user1   group1          4096 Feb 26 19:06 .
+drwx------   63 user1   group1         12288 Feb 26 19:04 ..
+-rw-r--r--    1 user1   group1         28251 Feb 26 19:01 manual.xml
+
+$ ls -a -l
+total 44
+drwxr-xr-x    2 user1   group1          4096 Feb 26 19:06 .
+drwx------   63 user1   group1         12288 Feb 26 19:04 ..
+-rw-r--r--    1 user1   group1         28251 Feb 26 19:01 manual.xml
+
+$ ls -al
+total 44
+drwxr-xr-x    2 user1   group1          4096 Feb 26 19:06 .
+drwx------   63 user1   group1         12288 Feb 26 19:04 ..
+-rw-r--r--    1 user1   group1         28251 Feb 26 19:01 manual.xml
+
+$ ls -al manual.xml
+-rw-r--r--    1 user1   group1         28251 Feb 26 19:01 manual.xml
+</pre></div>
+</div>
+</div>
+<div class="section" id="command-sequences">
+<h4><a class="toc-backref" href="#id7">Command Sequences</a><a class="headerlink" href="#command-sequences" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="command-history-and-editing">
+<h3><a class="toc-backref" href="#id8">Command History and Editing</a><a class="headerlink" href="#command-history-and-editing" title="Permalink to this headline">¶</a></h3>
+<p><strong>Useful Commands</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="../commands/history.html#command-history"><span>history</span></a> &#8211;&nbsp;lists the history of entered commands</li>
+</ul>
+<p><strong>Example 2-7. Examing your command history with **history**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ history
+  1    echo $PS1
+  2    PS1=$
+  3    bash
+  4    export PS1=$
+  5    bash
+  6    echo $PATH
+  7    which echo
+  8    ls --all -l
+  9    ls -a -l
+  10   ls -al
+  11   ls -al manual.xml
+</pre></div>
+</div>
+<p><strong>Example 2-8. Where is the **history</strong> information kept?**</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo $HISTFILE
+/group1/user1/.bash_history
+$ echo $HISTSIZE
+1000
+</pre></div>
+</div>
+<p><strong>Table 2-1. Command History Expansion</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Designator</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">!!</span></code></td>
+<td>Last command</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">!n</span></code></td>
+<td>Command numbered <em>n</em> in the history</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">!-n</span></code></td>
+<td>Command <em>n</em> previous</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">!string</span></code></td>
+<td>Last command starting with <em>string</em></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">!?string</span></code></td>
+<td>Last command containing <em>string</em></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">^string1^string2</span></code></td>
+<td>Execute the previous command with <em>string2</em>
+substituted for <em>string1</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="command-completion-and-substitution">
+<h3><a class="toc-backref" href="#id9">Command Completion and Substitution</a><a class="headerlink" href="#command-completion-and-substitution" title="Permalink to this headline">¶</a></h3>
+<p><strong>Example 2-9. Command Substitution</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls -l echo
+ls: echo: No such file or directory
+$ ls -l $(which echo)
+-rwxr-xr-x    1 root     root        11704 Mar  7  2002 /bin/echo
+</pre></div>
+</div>
+</div>
+<div class="section" id="shortcuts">
+<h3><a class="toc-backref" href="#id10">Shortcuts</a><a class="headerlink" href="#shortcuts" title="Permalink to this headline">¶</a></h3>
+<p><strong>Useful Commands</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="../commands/clear.html#command-clear"><span>clear</span></a> &#8211;&nbsp;clear the terminal screen</li>
+</ul>
+<p>Aliases &#8211; command shortcuts</p>
+<p>Keyboard shorcuts</p>
+<p><strong>Table 2-2. Keyboard Shortcuts</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Key Strokes</th>
+<th class="head">Descriptions</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Ctrl-a</em></td>
+<td>begin of line</td>
+</tr>
+<tr class="row-odd"><td><em>Ctrl-e</em></td>
+<td>End of file</td>
+</tr>
+<tr class="row-even"><td><em>Ctrl-k</em></td>
+<td>Delete line from cursor forward</td>
+</tr>
+<tr class="row-odd"><td><em>Ctrl-d</em></td>
+<td>EOF; exit</td>
+</tr>
+<tr class="row-even"><td><em>Ctrl-c</em></td>
+<td>Interrupt current command</td>
+</tr>
+<tr class="row-odd"><td><em>Ctrl-z</em></td>
+<td>Suspend current command</td>
+</tr>
+<tr class="row-even"><td><em>Ctrl-l</em></td>
+<td>Clear screen</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="basic-file-management">
+<h2><a class="toc-backref" href="#id11">Basic File Management</a><a class="headerlink" href="#basic-file-management" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="files">
+<h3><a class="toc-backref" href="#id12">Files</a><a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h3>
+<p><strong>Useful Commands</strong></p>
+<ul>
+<li><p class="first"><a class="reference internal" href="../commands/stat.html#command-stat"><span>stat</span></a> &#8211;&nbsp;display file or filesystem status</p>
+</li>
+<li><p class="first"><a class="reference internal" href="../commands/file.html#command-file"><span>file</span></a> &#8211;&nbsp; determine file type</p>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference internal" href="../commands/type.html#command-type"><span>type</span></a> &#8211;&nbsp;For each <em>name</em>, indicate how it would be</dt>
+<dd><p class="first last">interpreted if used as a command name.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><a class="reference internal" href="../commands/ln.html#command-ln"><span>ln</span></a> &#8211;&nbsp;make links between files</p>
+</li>
+<li><p class="first"><a class="reference internal" href="../commands/chmod.html#command-chmod"><span>chmod</span></a> &#8211;&nbsp;change file access permissions</p>
+</li>
+</ul>
+<p>A file typically consist of these attributes:</p>
+<ul class="simple">
+<li>Name.</li>
+<li>Type.</li>
+<li>Location.</li>
+<li>Size.</li>
+<li>Protection.</li>
+<li>Time, date, and user identification.</li>
+</ul>
+<p>Examples: chmod -c -v -R</p>
+<p><strong>Example 2-10. Examining File Attributes with **ls</strong>, <strong>stat</strong>, and <strong>file**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls -l
+total 32
+drwxr-xr-x    3 user1   group1          4096 Mar  3 09:58 db2html-dir
+-rw-r--r--    1 user1   group1         48958 Mar  3 09:58 manual.xml
+
+$ stat manual.xml
+  File: &quot;manual.xml&quot;
+  Size: 48958           Blocks: 96         IO Block: 4096   Regular File
+Device: 7h/7d   Inode: 2204387     Links: 1
+Access: (0644/-rw-r--r--)  Uid: (  503/  user1)   Gid: (  551/     group1)
+Access: Mon Mar  3 09:58:44 2003
+Modify: Mon Mar  3 09:58:43 2003
+Change: Mon Mar  3 09:58:43 2003
+
+$ file manual.xml
+manual.xml: exported SGML document text
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last"><strong>Be aware of Magic:</strong>
+The <em>file</em> command relies on many sources
+of information to determine what a file contains. The easiest part
+to explain is <em>magic</em>. Specifically, the <em>file</em> command examines
+the content of the file and compares it with information found in
+the <em>/usr/share/magic/</em> directory.</p>
+</div>
+<p><strong>Example 2-11. Creating Symbolic Links with **ln**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ ln -s db2html-dir unix_users_guide
+$ ls -l
+total 32
+drwxr-xr-x    3 user1   group1          4096 Mar  3 09:58 db2html-dir
+-rw-r--r--    1 user1   group1         48958 Mar  3 09:58 manual.xml
+lrwxrwxrwx    1 user1   group1            11 Mar  3 10:06 unix_users_guide -&gt; db2html-dir
+</pre></div>
+</div>
+<p><strong>Example 2-12. Changing File Attributes with **chmod**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ chmod g+w manual.xml
+$ ls -l manual.xml
+-rw-rw-r--    1 user1   group1         49889 Mar  3 10:09 manual.xml
+</pre></div>
+</div>
+</div>
+<div class="section" id="navigation">
+<h3><a class="toc-backref" href="#id13">Navigation</a><a class="headerlink" href="#navigation" title="Permalink to this headline">¶</a></h3>
+<p><strong>Useful Commands</strong></p>
+<ul>
+<li><dl class="first docutils">
+<dt><a class="reference internal" href="../commands/cd.html#command-cd"><span>cd</span></a> &#8211;&nbsp;Change the current working directory to</dt>
+<dd><p class="first last"><em>directory</em>.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><a class="reference internal" href="../commands/pwd.html#command-pwd"><span>pwd</span></a> &#8211;&nbsp;print name of current/working directory</p>
+</li>
+</ul>
+<p><strong>Example 2-13. Moving Around the Filesystem with **cd</strong>, ~,and <strong>pwd**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd ~
+$ pwd
+/home/user1
+</pre></div>
+</div>
+</div>
+<div class="section" id="manipulation">
+<h3><a class="toc-backref" href="#id14">Manipulation</a><a class="headerlink" href="#manipulation" title="Permalink to this headline">¶</a></h3>
+<p><strong>Useful Commands</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="../commands/cat.html#command-cat"><span>cat</span></a> &#8211;&nbsp;concatenate files and print on the standard output</li>
+<li><a class="reference internal" href="../commands/cp.html#command-cp"><span>cp</span></a>&#8211;&nbsp;copy files and directories</li>
+<li><a class="reference internal" href="../commands/diff.html#command-diff"><span>diff</span></a>&#8211;&nbsp;find differences between two files</li>
+<li><a class="reference internal" href="../commands/head.html#command-head"><span>head</span></a> &#8211;&nbsp;output the first part of files</li>
+<li><a class="reference internal" href="../commands/less.html#command-less"><span>less</span></a> &#8211;&nbsp;opposite of more</li>
+<li><a class="reference internal" href="../commands/more.html#command-more"><span>more</span></a> &#8211;&nbsp; file perusal filter for crt viewing</li>
+<li><a class="reference internal" href="../commands/mv.html#command-mv"><span>mv</span></a> &#8211;&nbsp;move (rename) files</li>
+<li><a class="reference internal" href="../commands/paste.html#command-paste"><span>paste</span></a> &#8211;&nbsp;merge lines of files</li>
+<li><a class="reference internal" href="../commands/rm.html#command-rm"><span>rm</span></a> &#8211;&nbsp;remove files or directories</li>
+<li><a class="reference internal" href="../commands/rmdir.html#command-rmdir"><span>rmdir</span></a> &#8211;&nbsp;remove empty directories</li>
+<li><a class="reference internal" href="../commands/sort.html#command-sort"><span>sort</span></a> &#8211;&nbsp;sort lines of text files.</li>
+<li><a class="reference internal" href="../commands/split.html#command-split"><span>split</span></a> &#8211;&nbsp;split a file into pieces</li>
+<li><a class="reference internal" href="../commands/tac.html#command-tac"><span>tac</span></a> &#8211;&nbsp;concatenate and print files in reverse</li>
+<li><a class="reference internal" href="../commands/tail.html#command-tail"><span>tail</span></a> &#8211;&nbsp;output the last part of files</li>
+<li><a class="reference internal" href="../commands/touch.html#command-touch"><span>touch</span></a> &#8211;&nbsp;change file timestamps</li>
+<li><a class="reference internal" href="../commands/uniq.html#command-uniq"><span>uniq</span></a> &#8211;&nbsp; remove duplicate lines from a sorted file</li>
+</ul>
+<p>Examples: touch, cp, mv, rename...</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls
+dest.txt
+$ cp dest.txt{,.bak}
+$ ls
+dest.txt  dest.txt.bak
+</pre></div>
+</div>
+<p><strong>Example 2-14. Manipulating Files with **touch</strong>, <strong>rm</strong>, and <strong>rmdir**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ touch index.rst; rm _build; rmdir _build
+rm: `_build&#39; is a directory
+rmdir: `_build&#39;: Directory not empty
+
+$ rm -Rf _build
+$ ls -l
+total 56
+-rw-rw-r--    1 user1   group1         50939 Mar  3 10:23 index.rst
+lrwxrwxrwx    1 user1   group1            11 Mar  3 10:06 doc -&gt; db2html-dir
+</pre></div>
+</div>
+</div>
+<div class="section" id="filename-globbing">
+<h3><a class="toc-backref" href="#id15">Filename Globbing</a><a class="headerlink" href="#filename-globbing" title="Permalink to this headline">¶</a></h3>
+<p><strong>Table 2-3. File-Naming Wildcards</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="37%" />
+<col width="63%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Wildcard</th>
+<th class="head">Function</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">*</span></code></td>
+<td>Match zero or more characters.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">?</span></code></td>
+<td>Match exactly one character.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">[characters]</span></code></td>
+<td><dl class="first last docutils">
+<dt>Match any single character from among <em>characters</em></dt>
+<dd>listed between brackets.</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">[!characters]</span></code></td>
+<td><dl class="first last docutils">
+<dt>Match any single character other than <em>characters</em></dt>
+<dd>listed between brackets.</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">[a-z]</span></code></td>
+<td><dl class="first last docutils">
+<dt>Match any single character from among the range of</dt>
+<dd>characters listed between brackets.</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">[!a-z]</span></code></td>
+<td><dl class="first last docutils">
+<dt>Match any single character from among the characters</dt>
+<dd>not in the range listed between brackets</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">{frag1,</span> <span class="pre">frag2,</span> <span class="pre">frag3,...}</span></code></td>
+<td><dl class="first last docutils">
+<dt>Brace expansion: create strings frag1, frag2, and</dt>
+<dd>frag3, etc.</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example 2-15. Using brace expansion</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo file{one,two,three}
+fileone filetwo filethree
+</pre></div>
+</div>
+</div>
+<div class="section" id="quoting">
+<h3><a class="toc-backref" href="#id16">Quoting</a><a class="headerlink" href="#quoting" title="Permalink to this headline">¶</a></h3>
+<p><strong>Table 2-4. Quotes</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Types of Quoting</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">'</span> <span class="pre">'</span></code></td>
+<td>hard quote - no substitution allowed</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">&quot;</span> <span class="pre">&quot;</span></code></td>
+<td>soft quote - allow substitution</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">`</span> <span class="pre">`</span></code></td>
+<td>execute immediately</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="data-manipulation">
+<h2><a class="toc-backref" href="#id17">Data Manipulation</a><a class="headerlink" href="#data-manipulation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="finding-files">
+<h3><a class="toc-backref" href="#id18">Finding Files</a><a class="headerlink" href="#finding-files" title="Permalink to this headline">¶</a></h3>
+<p>Useful Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="../commands/find.html#command-find"><span>find</span></a> &#8211;&nbsp; search for files in a directory hierarchy</li>
+</ul>
+<p><strong>Example 4-1. **find**ing files by name, modification time, and type</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ find . -name &#39;*.txt&#39;        # find files named *.txt
+$ find . mtime -2             # find files modified less than 2 days ago
+$ find . type l               # find links
+</pre></div>
+</div>
+</div>
+<div class="section" id="regular-expressions">
+<h3><a class="toc-backref" href="#id19">Regular Expressions</a><a class="headerlink" href="#regular-expressions" title="Permalink to this headline">¶</a></h3>
+<p><strong>Table 4-1. Regular Expressions</strong></p>
+<p>Category</p>
+<p><strong>Position anchors</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="88%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operators</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>^</em></td>
+<td>Match the beginning of a line.</td>
+</tr>
+<tr class="row-odd"><td><em>$</em></td>
+<td>Match the end of a line.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Character sets</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operators</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>[abc]</em></td>
+<td>Match any single character from from the listed characters</td>
+</tr>
+<tr class="row-odd"><td><em>[a-z]</em></td>
+<td>Match any single character from the range of characters</td>
+</tr>
+<tr class="row-even"><td><em>[^abc]</em></td>
+<td>Match any single character not among listed characters</td>
+</tr>
+<tr class="row-odd"><td><em>[^a-z]</em></td>
+<td>Match any single character not among listed range of characters</td>
+</tr>
+<tr class="row-even"><td><em>\&lt; word\&gt;</em></td>
+<td>Match <em>words</em> bounded by whitespace.</td>
+</tr>
+<tr class="row-odd"><td><em>.</em></td>
+<td>Match any single character expcept a <em>newline</em></td>
+</tr>
+<tr class="row-even"><td><em>\</em></td>
+<td>Turn off (escape) the special meaning of a metacharacter</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Modifiers</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operators</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>*</em></td>
+<td>Match zero or more of the character that precedes it.</td>
+</tr>
+<tr class="row-odd"><td><em>?</em></td>
+<td>Match zero or one instace of the preceding <em>regex</em>.</td>
+</tr>
+<tr class="row-even"><td><em>+</em></td>
+<td>Match one or more instances of the preceding <em>regex</em>.</td>
+</tr>
+<tr class="row-odd"><td><em>\{n,m\}</em></td>
+<td>Match a range of occurrences of the single character or <em>regex</em>
+that precedes this construct.</td>
+</tr>
+<tr class="row-even"><td><em>|</em></td>
+<td>Match the character or expression to the left or right of the
+vertical bar.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last"><strong>Globs vs. Regex:</strong>
+Be sure you understand the difference between filename globbing (see
+<a class="reference external" href="basic-file-management.html#FILENAMEGLOBS">the Section called *Filename Globbing* in Chapter 2</a>)
+and regular expressions.</p>
+</div>
+</div>
+<div class="section" id="ed-and-grep">
+<h3><a class="toc-backref" href="#id20"><strong>ed</strong> and <strong>grep</strong></a><a class="headerlink" href="#ed-and-grep" title="Permalink to this headline">¶</a></h3>
+<p>Useful Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="../commands/grep.html#command-grep"><span>grep</span></a> &#8211;&nbsp;print lines matching a pattern</li>
+<li><a class="reference internal" href="../commands/tr.html#command-tr"><span>tr</span></a> &#8211;&nbsp;translate or delete characters</li>
+</ul>
+<p><strong>Example 4-2. Translating lowercase to UPPERCASE with **tr**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo &#39;user1&#39;  | tr &#39;a-z&#39; &#39;A-Z&#39;
+USER1
+</pre></div>
+</div>
+</div>
+<div class="section" id="sed-and-awk">
+<h3><a class="toc-backref" href="#id21"><strong>sed</strong> and <strong>awk</strong></a><a class="headerlink" href="#sed-and-awk" title="Permalink to this headline">¶</a></h3>
+<p><strong>sed</strong> (stream editor) derives from <strong>ed</strong>.</p>
+<p><strong>Example 4-3. Printing lines of text with **sed**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ sed -n &#39;1,9p&#39; file.txt       # prints out lines 1-9 of file.txt
+$ sed -n &#39;/^#/p&#39; file.txt       # prints out lines starting with # of file.txt
+</pre></div>
+</div>
+<p><strong>Example 4-4. Deleting lines of text with **sed**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ sed -e &#39;1,9d&#39; file.txt       # deletes lines 1-9 of file.txt
+$ sed -e &#39;/^;/d&#39; -e &#39;/^$/d&#39; file.txt       # deletes lines
+</pre></div>
+</div>
+<p><strong>Example 4-5. Text substitution with **sed**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ sed &#39;s/old_pattern/new_pattern/&#39; file.txt &gt; new_file.txt       # replaces only 1st instance in a line
+$ sed &#39;s/old_pattern/new_pattern/g&#39; file.txt &gt; new_file.txt
+</pre></div>
+</div>
+<p><strong>Example 4-6. Killing **mozilla</strong> with <strong>awk**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ ps
+      PID TTY          TIME CMD
+17043 pts/2    00:00:00 bash
+17073 pts/2    00:00:09 emacs
+17133 pts/2    00:00:02 mozilla-bin
+17140 pts/2    00:00:00 mozilla-bin
+17141 pts/2    00:00:00 mozilla-bin
+17142 pts/2    00:00:00 mozilla-bin
+17144 pts/2    00:00:00 mozilla-bin
+17146 pts/2    00:00:00 ps
+
+$ ps | grep mozilla
+    17133 pts/2    00:00:02 mozilla-bin
+17140 pts/2    00:00:00 mozilla-bin
+17141 pts/2    00:00:00 mozilla-bin
+17142 pts/2    00:00:00 mozilla-bin
+17144 pts/2    00:00:00 mozilla-bin
+
+$ ps | grep mozilla | awk &#39;{ print $2 }&#39;
+    17133
+17140
+17141
+17142
+17144
+
+$ ps | grep mozilla | awk &#39;{ print $2 }&#39; | xargs kill -9
+[2]+  Killed                  mozilla
+</pre></div>
+</div>
+</div>
+<div class="section" id="perl">
+<h3><a class="toc-backref" href="#id22"><strong>perl</strong></a><a class="headerlink" href="#perl" title="Permalink to this headline">¶</a></h3>
+<p><strong>Example 4-7. Text substitution with **perl**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ perl -pi -e &#39;s/old_pattern/new_pattern/g&#39; file.txt
+$ perl -pi -e &#39;s/old_pattern/new_pattern/g&#39; $(find . -name \*.html)
+</pre></div>
+</div>
+<p>The i option tells <strong>perl</strong> to do the global substitution in place.
+You can also substitute the <strong>/</strong> with another character. For
+example:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ perl -pi -e &#39;s:old_pattern:new_pattern:g&#39; file.txt
+</pre></div>
+</div>
+<p><strong>Example 4-8. Summing columns with **perl**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ perl -lane &#39;print $F[0] + $F[1]&#39; file.txt       # sums column 1 and 2 of file.txt
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="streams-pipes-and-redirects">
+<h2><a class="toc-backref" href="#id23">Streams, Pipes, and Redirects</a><a class="headerlink" href="#streams-pipes-and-redirects" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="default-file-descriptors">
+<h3><a class="toc-backref" href="#id24">Default File Descriptors</a><a class="headerlink" href="#default-file-descriptors" title="Permalink to this headline">¶</a></h3>
+<p><strong>Table 3-1. File Descriptors</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="31%" />
+<col width="38%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">I/O</th>
+<th class="head">File Descriptor</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>stdin</td>
+<td>input</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>stdout</td>
+<td>output</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>stderr</td>
+<td>error output</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>user-defined</td>
+<td>input/output</td>
+<td>3-19</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="io-redirection">
+<h3><a class="toc-backref" href="#id25">IO Redirection</a><a class="headerlink" href="#io-redirection" title="Permalink to this headline">¶</a></h3>
+<p><strong>Table 3-2. Common Redirection Operators</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="36%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Redirection Syntax</th>
+<th class="head">Function</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>$ cmd &gt; file</em></td>
+<td>Send <em>stdout</em> to <em>file</em></td>
+</tr>
+<tr class="row-odd"><td><em>$ cmd 1&gt; file</em></td>
+<td>Same as above</td>
+</tr>
+<tr class="row-even"><td><em>$ cmd 2&gt; file</em></td>
+<td>Send <em>stderr</em> to <em>file</em></td>
+</tr>
+<tr class="row-odd"><td><em>$ cmd &gt; file 2&gt;&amp;1</em></td>
+<td>Send both <em>stdout</em> and <em>stderr</em> to <em>file</em></td>
+</tr>
+<tr class="row-even"><td><em>$ cmd &lt; file</em></td>
+<td>Receive <em>stdin</em> from <em>file</em></td>
+</tr>
+<tr class="row-odd"><td><em>$ cmd &gt;&gt; file</em></td>
+<td>Append <em>stdout</em> to <em>file</em>:</td>
+</tr>
+<tr class="row-even"><td><em>$ cmd 1&gt;&gt; file</em></td>
+<td>Same as above</td>
+</tr>
+<tr class="row-odd"><td><em>$ cmd 2&gt;&gt; file</em></td>
+<td>Append <em>stderr</em> to <em>file</em></td>
+</tr>
+<tr class="row-even"><td><em>$ cmd &gt;&gt; file 2&gt;&amp;1</em></td>
+<td>Append both <em>stdout</em> and <em>stderr</em> to <em>file</em></td>
+</tr>
+<tr class="row-odd"><td><em>$ cmd1 | cmd2</em></td>
+<td>Pipe <em>stdout</em> from <em>cmd1</em> to <em>cmd2</em></td>
+</tr>
+<tr class="row-even"><td><em>$ cmd1 2&gt;&amp;1 | cmd2</em></td>
+<td>Pipe <em>stdout</em> and <em>stderr</em> from <em>cmd1</em> to <em>cmd2</em></td>
+</tr>
+<tr class="row-odd"><td><em>$ cmd1 tee file1 | cmd2</em></td>
+<td>Pipe <em>stdout</em> and <em>cmd1</em> to <em>cmd2</em> while
+simultaneously writing it to <em>file1</em>
+using <em>tee</em></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="standard-redirection">
+<h4><a class="toc-backref" href="#id26">Standard Redirection</a><a class="headerlink" href="#standard-redirection" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="pipes">
+<h4><a class="toc-backref" href="#id27">Pipes</a><a class="headerlink" href="#pipes" title="Permalink to this headline">¶</a></h4>
+<p>Useful Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="../commands/wc.html#command-wc"><span>wc</span></a> &#8211;&nbsp; print the number of bytes, words, and lines in
+files</li>
+</ul>
+<p><strong>Example 3-1. A simple pipe to **wc**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo &quot;hey there&quot; | wc -w
+      2
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-xargs-and-tee-command">
+<h4><a class="toc-backref" href="#id28">The <strong>xargs</strong> and <strong>tee</strong> Command</a><a class="headerlink" href="#the-xargs-and-tee-command" title="Permalink to this headline">¶</a></h4>
+<p>Useful Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="../commands/xargs.html#command-xargs"><span>xargs</span></a> &#8211;&nbsp; build and execute command lines from
+standard input</li>
+<li><a class="reference internal" href="../commands/tee.html#command-tee"><span>tee</span></a> &#8211;&nbsp;read from standard input and write to standard
+output and files</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="creating-monitoring-and-killing-processes">
+<h2><a class="toc-backref" href="#id29">Creating, Monitoring, and Killing Processes</a><a class="headerlink" href="#creating-monitoring-and-killing-processes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="processes">
+<h3><a class="toc-backref" href="#id30">Processes</a><a class="headerlink" href="#processes" title="Permalink to this headline">¶</a></h3>
+<p>Processes have the following attributes:</p>
+<ul class="simple">
+<li>A lifetime.</li>
+<li>A PID.</li>
+<li>A UID.</li>
+<li>A GID.</li>
+<li>A parent process.</li>
+<li>An environment.</li>
+<li>A current working directory.</li>
+</ul>
+</div>
+<div class="section" id="monitoring-processes">
+<h3><a class="toc-backref" href="#id31">Monitoring Processes</a><a class="headerlink" href="#monitoring-processes" title="Permalink to this headline">¶</a></h3>
+<p>Useful Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="../commands/ps.html#command-ps"><span>ps</span></a> &#8211;&nbsp; report process status</li>
+<li><a class="reference internal" href="../commands/pstree.html#command-pstree"><span>pstree</span></a> &#8211;&nbsp;display a tree of processes</li>
+<li><a class="reference internal" href="../commands/top.html#command-top"><span>top</span></a> &#8211;&nbsp;display top CPU processes</li>
+</ul>
+<p><strong>Example 3-2. Examining Processes with **ps**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ ps
+  PID TTY          TIME CMD
+29982 pts/1    00:00:00 bash
+30042 pts/1    00:00:00 gvim
+30162 pts/1    00:00:00 ps
+
+$ ps -f
+UID        PID  PPID  C STIME TTY          TIME CMD
+user1   29982 29981  0 17:04 pts/1    00:00:00 /bin/bash
+user1   30042 29982  0 17:05 pts/1    00:00:00 gvim manual.xml
+user1   30161 29982  0 17:11 pts/1    00:00:00 ps -f
+
+$ ps -lf
+  F S UID        PID  PPID  C PRI  NI ADDR    SZ WCHAN  STIME TTY          TIME CMD
+000 S user1   29982 29981  0  75   0    -   712 wait4  17:04 pts/1    00:00:00 /bin/bash
+000 S user1   30042 29982  0  75   0    -  2849 schedu 17:05 pts/1    00:00:01 emacs manual.xml
+000 R user1   30238 29982  0  76   0    -   855 -      17:16 pts/1    00:00:00 ps -lf
+</pre></div>
+</div>
+<p><strong>Example 3-3. Examining Processes with **pstree**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ pstree
+init-+-alarmd
+     |-atd
+     |-bdflush
+     |-crond
+     |-cupsd
+     |-gkrellm
+     |-gpm
+     |-7*[kdeinit]
+     |-kdeinit-+-kdeinit
+     |         |-konsole---bash-+-emacs
+     |         |                `-pstree
+     |         `-soundwrapper---mozilla-bin---mozilla-bin---4*[mozilla-bin]
+     |-kdeinit---cat
+     |-kdm-+-X
+     |     `-kdm---startkde-+-ksmserver
+     |                      `-ssh-agent
+     |-sshd
+     |-syslogd
+     |-xfs
+     |-xinetd
+     `-ypbind---ypbind
+</pre></div>
+</div>
+<p><strong>Example 3-4. Examining Processes with **top**</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ top
+  5:18pm  up 2 days, 13:26,  2 users,  load average: 0.03, 0.03, 0.00
+76 processes: 75 sleeping, 1 running, 0 zombie, 0 stopped
+CPU0 states:  0.4% user,  0.3% system,  0.0% nice, 98.3% idle
+CPU1 states:  0.0% user,  0.4% system,  0.0% nice, 99.1% idle
+Mem:  2068644K av, 1001668K used, 1066976K free,       0K shrd,  218192K buff
+Swap:  401584K av,       0K used,  401584K free                  339532K cached
+
+  PID USER     PRI  NI  SIZE  RSS SHARE STAT %CPU %MEM   TIME COMMAND
+ 1840 root       5 -10  284M  28M  4340 S &lt;   0.9  1.4  10:24 X
+29981 user1    15   0 13504  13M  8120 S     0.7  0.6   0:01 konsole
+30296 user1    15   0  1188 1188   928 R     0.3  0.0   0:00 top
+    1 root      15   0   504  504   440 S     0.0  0.0   0:05 init
+</pre></div>
+</div>
+</div>
+<div class="section" id="signaling-processes">
+<h3><a class="toc-backref" href="#id32">Signaling Processes</a><a class="headerlink" href="#signaling-processes" title="Permalink to this headline">¶</a></h3>
+<p>Useful Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="../commands/kill.html#command-kill"><span>kill</span></a> &#8211;&nbsp;terminate a process</li>
+<li><a class="reference internal" href="../commands/killall.html#command-killall"><span>killall</span></a> &#8211;&nbsp; kill processes by name</li>
+</ul>
+<p><strong>Table 3-3. Common Signals</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="66%" />
+<col width="8%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Signal Number</th>
+<th class="head">Meaning</th>
+<th class="head">HUP</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>Hangup, reread configuration</td>
+<td>INT</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>Interrupt, stop running</td>
+<td>KILL</td>
+</tr>
+<tr class="row-even"><td>9</td>
+<td>Stop immediately</td>
+<td>TERM</td>
+</tr>
+<tr class="row-odd"><td>15</td>
+<td>Terminate nicely</td>
+<td>TSTP</td>
+</tr>
+<tr class="row-even"><td>18</td>
+<td>Stop executing, ready to continue</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="shell-job-control">
+<h3><a class="toc-backref" href="#id33">Shell Job Control</a><a class="headerlink" href="#shell-job-control" title="Permalink to this headline">¶</a></h3>
+<p>Useful Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="../commands/bg.html#command-bg"><span>bg</span></a> &#8211;&nbsp;background</li>
+<li><a class="reference internal" href="../commands/fg.html#command-fg"><span>fg</span></a> &#8211;&nbsp;foreground</li>
+<li><a class="reference internal" href="../commands/jobs.html#command-jobs"><span>jobs</span></a> &#8211;&nbsp;list the active jobs</li>
+<li><a class="reference internal" href="../commands/nohup.html#command-nohup"><span>nohup</span></a> &#8211;&nbsp;Run a command immune to hangups, with
+output to a non-tty</li>
+</ul>
+<p>bg,fg,jobs,Ctrl-C,Ctrl-Z</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Standard Topics</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="course-intro.html">Course introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-intro.html">Git introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation-tools.html">Documentation tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fmri-intro.html">Statistical analysis of fMRI data</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Advanced Bash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python.html">Python introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy.html">Scientific computing with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-advanced.html">Collaborative workflow with Git</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2009-2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/index.txt"
+          rel="nofollow">Page source</a>
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>

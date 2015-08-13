@@ -25,8 +25,8 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
-    <link rel="next" title="Introduction to the Shell" href="shell-intro.html" />
-    <link rel="prev" title="NumPy, SciPy, and matplolib" href="../standard/numpy.html" />
+    <link rel="next" title="File Transfer" href="file-transfer.html" />
+    <link rel="prev" title="Collaborative workflow with Git" href="../standard/git-advanced.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -44,26 +44,18 @@
 <h1>Appendices<a class="headerlink" href="#appendices" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="shell-intro.html">Introduction to the Shell</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="shell-intro.html#the-interactive-shell">The Interactive Shell</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#logging-in">Logging In</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#shell-variables">Shell Variables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#entering-commands">Entering Commands</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="shell-intro.html#general-syntax">General Syntax</a></li>
-<li class="toctree-l4"><a class="reference internal" href="shell-intro.html#command-sequences">Command Sequences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file-transfer.html">File Transfer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file-transfer.html#interactive">Interactive</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="file-transfer.html#ftp-and-sftp"><strong>ftp</strong> and <strong>sftp</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="file-transfer.html#scp-and-wget"><strong>scp</strong> and <strong>wget</strong></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#command-history-and-editing">Command History and Editing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#command-completion-and-substitution">Command Completion and Substitution</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#shortcuts">Shortcuts</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="shell-intro.html#basic-file-management">Basic File Management</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#files">Files</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#navigation">Navigation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#manipulation">Manipulation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#filename-globbing">Filename Globbing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="shell-intro.html#quoting">Quoting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-transfer.html#ssh-tar-pipe">SSH Tar pipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-transfer.html#using-rsync-to-mirror-remote-directories">Using rsync to mirror remote directories</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="file-transfer.html#what-is-rsync">What is rsync?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="file-transfer.html#basic-mirroring-between-two-unix-systems-using-ssh">Basic mirroring between two UNIX systems using <code class="docutils literal"><span class="pre">ssh</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="file-transfer.html#better-remote-shell-options-with-ssh">Better remote shell options with <code class="docutils literal"><span class="pre">ssh</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="file-transfer.html#example">Example</a></li>
 </ul>
 </li>
 </ul>
@@ -583,7 +575,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Standard Topics</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Appendices</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="shell-intro.html">Introduction to the Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file-transfer.html">File Transfer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="appendix1.html">Useful Command Line Utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="appendix2.html">File System Layout</a></li>
 <li class="toctree-l2"><a class="reference internal" href="appendix3.html">Shell Customization</a></li>
