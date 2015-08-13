@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-# Linux guide documentation build configuration file, created by
-# sphinx-quickstart on Thu Aug  6 11:17:47 2015.
-#
 # This file is execfile()d with the current directory set to its
 # containing dir.
 #
@@ -15,6 +12,12 @@
 import sys
 import os
 import shlex
+
+#import alabaster
+
+
+# Alabaster theme + mini-extension
+#html_theme_path = [alabaster.get_path()]
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -30,6 +33,7 @@ import shlex
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+#    'alabaster',
     'sphinx.ext.mathjax',
 ]
 
@@ -48,7 +52,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Linux guide'
+project = u'RCSDS'
 copyright = u'2009-2015, K. Jarrod Millman'
 author = u'K. Jarrod Millman'
 
@@ -116,6 +120,11 @@ html_theme = 'alabaster'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #html_theme_options = {}
+html_theme_options = {
+    'description': 'Fall 2015',
+    'github_button': False,
+    'extra_nav_links': {"Course home": 'http://www.jarrodmillman.com/stat159-fall2015/'},
+}
 
 # Add any paths that contain custom themes here, relative to this directory.
 #html_theme_path = []
@@ -156,6 +165,13 @@ html_static_path = ['_static']
 
 # Custom sidebar templates, maps document names to template names.
 #html_sidebars = {}
+html_sidebars = {
+    '**': [
+        'about.html',
+        'navigation.html',
+        'searchbox.html',
+    ]
+}
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
@@ -202,7 +218,7 @@ html_static_path = ['_static']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Linuxguidedoc'
+htmlhelp_basename = 'rcsdsdoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -224,7 +240,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'Linuxguide.tex', u'Linux guide Documentation',
+  (master_doc, 'rcsds.tex', u'Reproducible and Collaborative Statistical Data Science',
    u'K. Jarrod Millman', 'manual'),
 ]
 
@@ -255,7 +271,7 @@ latex_use_parts = True
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'linuxguide', u'Linux guide Documentation',
+    (master_doc, 'rcsds', u'Reproducible and Collaborative Statistical Data Science',
      [author], 1)
 ]
 
@@ -269,8 +285,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'Linuxguide', u'Linux guide Documentation',
-   author, 'Linuxguide', 'One line description of project.',
+  (master_doc, 'rcsds', u'Reproducible and Collaborative Statistical Data Science',
+   author, 'K. Jarrod Millman', 'One line description of project.',
    'Miscellaneous'),
 ]
 
