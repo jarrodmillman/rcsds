@@ -71,7 +71,30 @@ Shell Variables
 Much of how bash behaves can be customized through the use of variables,
 which consists of names that have values assigned to them.  To access
 the value currently assigned to a variable, you can prepend the name
-with the dollar sign ($).
+with the dollar sign ($).  To print the value you can use the ``echo``
+command.
+
+#. | What is my default shell?
+   | ``$ echo $SHELL``
+
+#. | To change to bash on a one-time basis:
+   | ``$ bash``
+
+#. | To make it your default:
+   | ``$ chsh /bin/bash``
+   | */bin/bash* should be whatever the path to the bash shell is, which
+     you can figure out using ``which bash``
+
+Shell commands can be saved in a file (with extension *.sh*) and this
+file can be executed as if it were a program. To run a shell script
+called *file.sh*, you would type ``./file.sh``. Note that if you just
+typed\ `` file.sh``, the operating system will generally have trouble
+finding the script and recognizing that it is executable. To be sure
+that the operating system knows what shell to use to interpret the
+script, the first line of the script should be ``#!/bin/bash`` (in the
+case that you’re using the bash shell). Also, *file.sh* would need to be
+executable (i.e., to have the ’x’ flag set).
+
 
 To see how this works, let's work with the 
 
@@ -93,17 +116,6 @@ To see how this works, let's work with the
     $ bash
     $
       
-#. | What is my default shell?
-   | ``> echo $SHELL``
-
-#. | To change to bash on a one-time basis:
-   | ``> bash``
-
-#. | To make it your default:
-   | ``> chsh /bin/bash``
-   | */bin/bash* should be whatever the path to the bash shell is, which
-     you can figure out using ``which bash``
-
 Shell commands can be saved in a file (with extension *.sh*) and this
 file can be executed as if it were a program. To run a shell script
 called *file.sh*, you would type ``./file.sh``. Note that if you just

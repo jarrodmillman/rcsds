@@ -159,7 +159,36 @@ As you work through this tutorial, we will see examples of this.</p>
 <p>Much of how bash behaves can be customized through the use of variables,
 which consists of names that have values assigned to them.  To access
 the value currently assigned to a variable, you can prepend the name
-with the dollar sign ($).</p>
+with the dollar sign ($).  To print the value you can use the <code class="docutils literal"><span class="pre">echo</span></code>
+command.</p>
+<ol class="arabic">
+<li><div class="first line-block">
+<div class="line">What is my default shell?</div>
+<div class="line"><code class="docutils literal"><span class="pre">$</span> <span class="pre">echo</span> <span class="pre">$SHELL</span></code></div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line">To change to bash on a one-time basis:</div>
+<div class="line"><code class="docutils literal"><span class="pre">$</span> <span class="pre">bash</span></code></div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line">To make it your default:</div>
+<div class="line"><code class="docutils literal"><span class="pre">$</span> <span class="pre">chsh</span> <span class="pre">/bin/bash</span></code></div>
+<div class="line"><em>/bin/bash</em> should be whatever the path to the bash shell is, which
+you can figure out using <code class="docutils literal"><span class="pre">which</span> <span class="pre">bash</span></code></div>
+</div>
+</li>
+</ol>
+<p>Shell commands can be saved in a file (with extension <em>.sh</em>) and this
+file can be executed as if it were a program. To run a shell script
+called <em>file.sh</em>, you would type <code class="docutils literal"><span class="pre">./file.sh</span></code>. Note that if you just
+typed`` file.sh``, the operating system will generally have trouble
+finding the script and recognizing that it is executable. To be sure
+that the operating system knows what shell to use to interpret the
+script, the first line of the script should be <code class="docutils literal"><span class="pre">#!/bin/bash</span></code> (in the
+case that you’re using the bash shell). Also, <em>file.sh</em> would need to be
+executable (i.e., to have the ’x’ flag set).</p>
 <p>To see how this works, let&#8217;s work with the</p>
 <p><strong>Example 2-1. PS1: Prompt String 1</strong></p>
 <div class="highlight-python"><div class="highlight"><pre>[user1@local1 src]$ echo $PS1
@@ -174,25 +203,6 @@ $ bash
 $
 </pre></div>
 </div>
-<ol class="arabic">
-<li><div class="first line-block">
-<div class="line">What is my default shell?</div>
-<div class="line"><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">echo</span> <span class="pre">$SHELL</span></code></div>
-</div>
-</li>
-<li><div class="first line-block">
-<div class="line">To change to bash on a one-time basis:</div>
-<div class="line"><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">bash</span></code></div>
-</div>
-</li>
-<li><div class="first line-block">
-<div class="line">To make it your default:</div>
-<div class="line"><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">chsh</span> <span class="pre">/bin/bash</span></code></div>
-<div class="line"><em>/bin/bash</em> should be whatever the path to the bash shell is, which
-you can figure out using <code class="docutils literal"><span class="pre">which</span> <span class="pre">bash</span></code></div>
-</div>
-</li>
-</ol>
 <p>Shell commands can be saved in a file (with extension <em>.sh</em>) and this
 file can be executed as if it were a program. To run a shell script
 called <em>file.sh</em>, you would type <code class="docutils literal"><span class="pre">./file.sh</span></code>. Note that if you just
