@@ -6,31 +6,42 @@ Advanced Bash
 
 .. contents::
 
-In order to be of interest to the user, a computer must have a *human interface
-component*. If you come from the world of Windows or MacOS, you should be
-familiar with the *graphical user interface (GUI)*.  In UNIX, there is another
-interface which reigns supreme: the *command line interface (CLI)*. If you have
-ever used DOS, you have all ready encountered a CLI; but, you probably have not
-been convinced of its usefulness. Simply put, a CLI is a text based interface.
-The user is given a *prompt* to indicate the computers reeadiness to accept
-*input*. The user enters or types a *command* on the line (or lines) following
-the prompt. The computer, consequently, executes or interprets the command and
-prompts the user when its finished.
+.. note::
+   This material assumes that you have already worked through
+   the "Basics of UNIX" tutorial and screencast here:
+   http://statistics.berkeley.edu/computing/training/tutorials
 
 The Interactive Shell
 =====================
 
-The program which prompts the user and interprets the user's commands is called
-a *shell*. Since Linux' default shell is GNU's **bash** (or the Bourne Again
-Shell), I will focus on it. However, the basic ideas are applicable to any of
-UNIX's shells.
+In order to be of interest to the user, a computer must have a *human interface
+component*. A CLI is a text based interface.  The user is given a *prompt* to
+indicate the computers reeadiness to accept *input*. The user enters or types a
+*command* on the line (or lines) following the prompt. The computer,
+consequently, executes or interprets the command and prompts the user when its
+finished.
 
-The shell is an amazingly powerful programming environment---more powerful than
-most non-UNIX users are accustomed to. From it you can interactively control
-almost any aspect of the OS and more importantly you can automate it. As you
-will see, **bash** has a very extensive set of capabalities intended to make
-both interactive as well as automated control simple, effective, and
-customizable.
+The program which prompts the user and interprets the user's commands is called
+a *shell*.  When you are working in a terminal window (i.e., a window with the
+command line interface), you’re interacting with a shell.
+
+There are multiple shells (*sh*, *bash*, *csh*, *tcsh*, *zsh*, *fish*).  Since
+We'll assume usage of *bash*, as this is the default for Mac OS X, the BCE VM,
+the SCF machines and most Linux distributions.  However, the basic ideas are
+applicable to any of UNIX's shells.
+
+As you will see the shell is an amazingly powerful programming environment.
+From it you can interactively control almost any aspect of the OS and more
+importantly you can automate it. As you will see, **bash** has a very extensive
+set of capabalities intended to make both interactive as well as automated
+control simple, effective, and customizable.
+
+.. note::
+   It can be difficult to distinguish what is shell-specific and
+   what is just part of UNIX. Some of the material here is not
+   bash-specific but general to UNIX.
+
+   Reference: Newham and Rosenblatt, Learning the bash Shell, 2nd ed.
 
 Logging In
 ----------
@@ -39,6 +50,13 @@ Logging In
 
 * :ref:`command-su` -- run a shell with substitute user and group IDs
 * :ref:`command-sudo` -- execute a command as another user
+
+We assume that you already are able to access a terminal from the BCE VM.
+However, it is occassionally useful to operate as a different user.  For
+instance, you may need to change file permissions or install software.
+As you work through this tutorial, we will see examples of this.
+
+
 
 Shell Variables
 ---------------
@@ -49,6 +67,13 @@ Shell Variables
 * :ref:`command-which` -- shows the full path of (shell) commands.
 * :ref:`command-man` -- format and display the on-line manual pages
                      PS1, PATH, CDPATH
+
+Much of how bash behaves can be customized through the use of variables,
+which consists of names that have values assigned to them.  To access
+the value currently assigned to a variable, you can prepend the name
+with the dollar sign ($).
+
+To see how this works, let's work with the 
 
 **Example 2-1. PS1: Prompt String 1**
 
@@ -68,6 +93,27 @@ Shell Variables
     $ bash
     $
       
+#. | What is my default shell?
+   | ``> echo $SHELL``
+
+#. | To change to bash on a one-time basis:
+   | ``> bash``
+
+#. | To make it your default:
+   | ``> chsh /bin/bash``
+   | */bin/bash* should be whatever the path to the bash shell is, which
+     you can figure out using ``which bash``
+
+Shell commands can be saved in a file (with extension *.sh*) and this
+file can be executed as if it were a program. To run a shell script
+called *file.sh*, you would type ``./file.sh``. Note that if you just
+typed\ `` file.sh``, the operating system will generally have trouble
+finding the script and recognizing that it is executable. To be sure
+that the operating system knows what shell to use to interpret the
+script, the first line of the script should be ``#!/bin/bash`` (in the
+case that you’re using the bash shell). Also, *file.sh* would need to be
+executable (i.e., to have the ’x’ flag set).
+
 
 **Example 2-3. PATH**
 

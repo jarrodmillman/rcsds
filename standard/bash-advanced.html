@@ -96,28 +96,39 @@
 </li>
 </ul>
 </div>
-<p>In order to be of interest to the user, a computer must have a <em>human interface
-component</em>. If you come from the world of Windows or MacOS, you should be
-familiar with the <em>graphical user interface (GUI)</em>.  In UNIX, there is another
-interface which reigns supreme: the <em>command line interface (CLI)</em>. If you have
-ever used DOS, you have all ready encountered a CLI; but, you probably have not
-been convinced of its usefulness. Simply put, a CLI is a text based interface.
-The user is given a <em>prompt</em> to indicate the computers reeadiness to accept
-<em>input</em>. The user enters or types a <em>command</em> on the line (or lines) following
-the prompt. The computer, consequently, executes or interprets the command and
-prompts the user when its finished.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This material assumes that you have already worked through
+the &#8220;Basics of UNIX&#8221; tutorial and screencast here:
+<a class="reference external" href="http://statistics.berkeley.edu/computing/training/tutorials">http://statistics.berkeley.edu/computing/training/tutorials</a></p>
+</div>
 <div class="section" id="the-interactive-shell">
 <h2><a class="toc-backref" href="#id2">The Interactive Shell</a><a class="headerlink" href="#the-interactive-shell" title="Permalink to this headline">¶</a></h2>
+<p>In order to be of interest to the user, a computer must have a <em>human interface
+component</em>. A CLI is a text based interface.  The user is given a <em>prompt</em> to
+indicate the computers reeadiness to accept <em>input</em>. The user enters or types a
+<em>command</em> on the line (or lines) following the prompt. The computer,
+consequently, executes or interprets the command and prompts the user when its
+finished.</p>
 <p>The program which prompts the user and interprets the user&#8217;s commands is called
-a <em>shell</em>. Since Linux&#8217; default shell is GNU&#8217;s <strong>bash</strong> (or the Bourne Again
-Shell), I will focus on it. However, the basic ideas are applicable to any of
-UNIX&#8217;s shells.</p>
-<p>The shell is an amazingly powerful programming environment&#8212;more powerful than
-most non-UNIX users are accustomed to. From it you can interactively control
-almost any aspect of the OS and more importantly you can automate it. As you
-will see, <strong>bash</strong> has a very extensive set of capabalities intended to make
-both interactive as well as automated control simple, effective, and
-customizable.</p>
+a <em>shell</em>.  When you are working in a terminal window (i.e., a window with the
+command line interface), you’re interacting with a shell.</p>
+<p>There are multiple shells (<em>sh</em>, <em>bash</em>, <em>csh</em>, <em>tcsh</em>, <em>zsh</em>, <em>fish</em>).  Since
+We&#8217;ll assume usage of <em>bash</em>, as this is the default for Mac OS X, the BCE VM,
+the SCF machines and most Linux distributions.  However, the basic ideas are
+applicable to any of UNIX&#8217;s shells.</p>
+<p>As you will see the shell is an amazingly powerful programming environment.
+From it you can interactively control almost any aspect of the OS and more
+importantly you can automate it. As you will see, <strong>bash</strong> has a very extensive
+set of capabalities intended to make both interactive as well as automated
+control simple, effective, and customizable.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>It can be difficult to distinguish what is shell-specific and
+what is just part of UNIX. Some of the material here is not
+bash-specific but general to UNIX.</p>
+<p class="last">Reference: Newham and Rosenblatt, Learning the bash Shell, 2nd ed.</p>
+</div>
 <div class="section" id="logging-in">
 <h3><a class="toc-backref" href="#id3">Logging In</a><a class="headerlink" href="#logging-in" title="Permalink to this headline">¶</a></h3>
 <p><strong>Useful Commands</strong></p>
@@ -125,6 +136,10 @@ customizable.</p>
 <li><a class="reference internal" href="../commands/su.html#command-su"><span>su</span></a> &#8211;&nbsp;run a shell with substitute user and group IDs</li>
 <li><a class="reference internal" href="../commands/sudo.html#command-sudo"><span>sudo</span></a> &#8211;&nbsp;execute a command as another user</li>
 </ul>
+<p>We assume that you already are able to access a terminal from the BCE VM.
+However, it is occassionally useful to operate as a different user.  For
+instance, you may need to change file permissions or install software.
+As you work through this tutorial, we will see examples of this.</p>
 </div>
 <div class="section" id="shell-variables">
 <h3><a class="toc-backref" href="#id4">Shell Variables</a><a class="headerlink" href="#shell-variables" title="Permalink to this headline">¶</a></h3>
@@ -141,6 +156,11 @@ customizable.</p>
 </dl>
 </li>
 </ul>
+<p>Much of how bash behaves can be customized through the use of variables,
+which consists of names that have values assigned to them.  To access
+the value currently assigned to a variable, you can prepend the name
+with the dollar sign ($).</p>
+<p>To see how this works, let&#8217;s work with the</p>
 <p><strong>Example 2-1. PS1: Prompt String 1</strong></p>
 <div class="highlight-python"><div class="highlight"><pre>[user1@local1 src]$ echo $PS1
 [\u@\h \W]\$
@@ -154,6 +174,34 @@ $ bash
 $
 </pre></div>
 </div>
+<ol class="arabic">
+<li><div class="first line-block">
+<div class="line">What is my default shell?</div>
+<div class="line"><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">echo</span> <span class="pre">$SHELL</span></code></div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line">To change to bash on a one-time basis:</div>
+<div class="line"><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">bash</span></code></div>
+</div>
+</li>
+<li><div class="first line-block">
+<div class="line">To make it your default:</div>
+<div class="line"><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">chsh</span> <span class="pre">/bin/bash</span></code></div>
+<div class="line"><em>/bin/bash</em> should be whatever the path to the bash shell is, which
+you can figure out using <code class="docutils literal"><span class="pre">which</span> <span class="pre">bash</span></code></div>
+</div>
+</li>
+</ol>
+<p>Shell commands can be saved in a file (with extension <em>.sh</em>) and this
+file can be executed as if it were a program. To run a shell script
+called <em>file.sh</em>, you would type <code class="docutils literal"><span class="pre">./file.sh</span></code>. Note that if you just
+typed`` file.sh``, the operating system will generally have trouble
+finding the script and recognizing that it is executable. To be sure
+that the operating system knows what shell to use to interpret the
+script, the first line of the script should be <code class="docutils literal"><span class="pre">#!/bin/bash</span></code> (in the
+case that you’re using the bash shell). Also, <em>file.sh</em> would need to be
+executable (i.e., to have the ’x’ flag set).</p>
 <p><strong>Example 2-3. PATH</strong></p>
 <div class="highlight-python"><div class="highlight"><pre>$ echo $PATH
 /bin:/usr/bin:/usr/X11R6/bin:/usr/local/bin
