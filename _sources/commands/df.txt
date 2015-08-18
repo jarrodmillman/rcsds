@@ -3,24 +3,18 @@
 df
 ==
 
-Name
-----
+**Name**
 
-df -- report filesystem disk space usage
+``df - report filesystem disk space usage``
 
-Synopsis
---------
+**Synopsis**
 
-**df** [option...] [file...]
+``df [option...] [file...]``
 
-Description
------------
+**Description**
 
 df displays the amount of disk space available on the filesystem
 containing each file name argument.
-
-Frequently used options
------------------------
 
 -h, --human-readable 
     print sizes in human readable format (e.g., 1K 234M 2G)

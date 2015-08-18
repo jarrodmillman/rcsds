@@ -47,7 +47,7 @@
 <ul class="simple">
 <li><a class="reference internal" href="#git-introduction" id="id8">Git introduction</a><ul>
 <li><a class="reference internal" href="#what-is-version-control" id="id9">What is version control?</a></li>
-<li><a class="reference internal" href="#core-git-concepts" id="id10">Core git concepts</a></li>
+<li><a class="reference internal" href="#core-git-concepts" id="id10">Core Git concepts</a></li>
 <li><a class="reference internal" href="#stage-i-local-single-user-linear-workflow" id="id11">Stage I: Local, single-user, linear workflow</a><ul>
 <li><a class="reference internal" href="#git-init-create-an-empty-repository" id="id12"><code class="docutils literal"><span class="pre">git</span> <span class="pre">init</span></code>: create an empty repository</a></li>
 <li><a class="reference internal" href="#git-add-adding-content-to-the-repository" id="id13"><code class="docutils literal"><span class="pre">git</span> <span class="pre">add</span></code>: adding content to the repository</a></li>
@@ -76,20 +76,71 @@ Software</a>.</p>
 </div>
 <div class="section" id="what-is-version-control">
 <h2><a class="toc-backref" href="#id9">What is version control?</a><a class="headerlink" href="#what-is-version-control" title="Permalink to this headline">¶</a></h2>
-<p>The idea is that instead of manually trying to keep track of what
-changes you&#8217;ve made to code, data, documents, you use software to help
-you manage the process. This has several benefits:</p>
+<p>As a statistician, scientist, or engineer, you will work on projects that
+include code, data, and text.  For trivially small and short-lived projects,
+it may suffice to keep track of the various files mentally.  As the size
+and duration of your project grows, you will eventually need to adopt
+a system to track everything.</p>
+<p>Consider the following example:</p>
+<div class="highlight-python"><div class="highlight"><pre>[jarrod@t430u ~]$ tree proj1
+proj1
+├── code
+│   ├── analysis.py
+│   ├── eda.py
+│   └── preprocess.py
+├── data
+│   └── blob.dat
+├── figs
+│   └── diagram.png
+├── paper
+│   ├── Makefile
+│   ├── report.bib
+│   └── report.tex
+└── slides
+    └── presentation.md
+
+5 directories, 9 files
+</pre></div>
+</div>
+<p>Above I&#8217;ve displayed the directory tree for a project. Now suppose that I have
+an idea about an alternative analysis to the one currently implemented in
+<code class="docutils literal"><span class="pre">proj1/code/analysis.py</span></code>.  I could manually backup the current analysis
+script doing something like <code class="docutils literal"><span class="pre">cp</span> <span class="pre">analysis.py</span> <span class="pre">analysis.py.orig</span></code>.  And then
+start implementing the new analysis in <code class="docutils literal"><span class="pre">analysis.py</span></code>.  While I am still
+trying to debug my new analysis script, my advisor suggests a third alternative
+approach, so now I create a third version <code class="docutils literal"><span class="pre">analysis-advisor.py</span></code>.  The new
+analysis methods each require that I conduct different preprocessing
+steps, so now I create the following new files: <code class="docutils literal"><span class="pre">preprocess-new.py</span></code> and
+<code class="docutils literal"><span class="pre">preprocess-advisor.py</span></code>.  Now I just need to remember that
+<code class="docutils literal"><span class="pre">preprocess-new.py</span></code> goes with <code class="docutils literal"><span class="pre">analysis.py</span></code>, <code class="docutils literal"><span class="pre">preprocess.py</span></code> goes with
+<code class="docutils literal"><span class="pre">analysis.py.orig</span></code>, and <code class="docutils literal"><span class="pre">preprocess-advisor.py</span></code> goes with
+<code class="docutils literal"><span class="pre">analysis-advisor.py</span></code>.</p>
+<p>It is easy to further complicate this example.  For instance, what if you are
+working on this project with several colleagues.  Each member will want their
+own copy of the project and you will need a mechanism to share the files with
+one another.  You might consider sharing the project using something like
+Dropbox.  However, this will require care as it can be difficult to determine
+which changes will be synced when two people try editing the same file at the
+same time.</p>
+<p>Instead of manually trying to keep track of the changes you&#8217;ve made to code,
+data, and documents as indicated above, version control software helps you
+automate and manage this process. This has several benefits:</p>
 <ul class="simple">
-<li>easily allowing you to go back to earlier versions</li>
-<li>allowing you to have multiple version you can switch between</li>
-<li>allowing you to share work easily without worrying about conflicts</li>
-<li>providing built-in backup</li>
+<li>allowing you to easily go back to earlier versions;</li>
+<li>allowing you to have multiple version you can switch between;</li>
+<li>allowing you to easily separate tentative new directions into different
+branches of work, which you can later discard or merge back into
+your main line of development;</li>
+<li>allowing you to share work easily without worrying about conflicts; and</li>
+<li>providing built-in backup.</li>
 </ul>
-<p>At a basic level, a simple principle is to have version numbers for all
-your work: code, datasets, manuscripts. Whenever you make a change to a
-dataset, increment the version number. For code and manuscripts,
-increment when you make substantial changes or have obvious breakpoints
-in your workflow.</p>
+<p>To see how this works, we will now consider the basic operation of a popular
+and powerful version control system called Git.  First, we will need to develop
+some basic vocabulary needed to discuss how Git works.  Then we will see how
+to use Git locally as a single-user using a linear workflow.  We will then
+see how to use branches rather than following a simple linear workflow.
+Finally, we will discuss using remotes instead of just working locally.
+Multi-user use will be covered in another tutorial.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <ul class="last simple">
@@ -99,19 +150,44 @@ in your workflow.</p>
 </div>
 </div>
 <div class="section" id="core-git-concepts">
-<h2><a class="toc-backref" href="#id10">Core git concepts</a><a class="headerlink" href="#core-git-concepts" title="Permalink to this headline">¶</a></h2>
-<p>A <strong>commit</strong> is a <strong>snapshot</strong> of work at a point in time</p>
+<h2><a class="toc-backref" href="#id10">Core Git concepts</a><a class="headerlink" href="#core-git-concepts" title="Permalink to this headline">¶</a></h2>
+<p>A <strong>commit</strong> is a <strong>snapshot</strong> of an entire directory tree at a given point in
+time as well as some metadata.  Returning to the above example, you would make
+a <strong>commit</strong> corresponding to the original state of the directory tree, which
+I listed.</p>
 <div class="figure" id="id1">
 <a class="reference internal image-reference" href="../_images/commit_anatomy.png"><img alt="Credit: ProGit book, by Scott Chacon, CC License." src="../_images/commit_anatomy.png" style="width: 80%;" /></a>
 <p class="caption"><span class="caption-text">Credit: ProGit book, by Scott Chacon, CC License.</span></p>
 </div>
-<p>A <strong>repository</strong> is a group of <strong>linked</strong> commits (DAG)</p>
+<p>A <strong>repository</strong> is a group of <strong>linked</strong> commits, which form a directed
+acyclic graph (DAG).  As part of the metadata of each commit, we include
+references to 0 or more parent commits.  The initial commit of each repository
+has 0 parents.  Each subsequent commit is proceeded by 1 or more commits.</p>
+<p>Again returning to our example, the initial <strong>commit</strong> might correspond to the
+the original state of the directory tree, which I listed above.  Now when you
+begin implementing your new analysis method, you don&#8217;t need to make any
+copies of the previous files.  Since they are already committed, you can
+always access the original state of the repository by checking out the
+original commit.  To proceed you would simply make the necessary edits
+to the files in your directory tree and then when you are satisfied with
+your changes you make a new commit.  This new commit will correspond to
+a snapshot of the entire directory tree with all the edits you&#8217;ve made
+to it since the original commit.  To keep track of the history of the
+project, the new commit will include a reference to the original commit
+as its parent.  Now when your advisor suggests the alternative analysis,
+you could checkout the original commit, implement the new method, and
+commit your changes including a reference to the original commit as
+its sole parent.</p>
 <div class="figure" id="id2">
 <a class="reference internal image-reference" href="../_images/threecommits.png"><img alt="Credit: ProGit book, by Scott Chacon, CC License." src="../_images/threecommits.png" style="width: 90%;" /></a>
 <p class="caption"><span class="caption-text">Credit: ProGit book, by Scott Chacon, CC License.</span></p>
 </div>
-<p>A <strong>hash</strong> is</p>
-<p>toy &#8220;implementation&#8221;:</p>
+<p>Finally, we need to understand how Git keeps track of commits. To reference a
+commit, Git uses a <strong>hash</strong>.  Hashing provides a way to have a fixed-length
+identifier for a given set of information, such as a file or set of files. The
+identifier is not guaranteed to be unique, but if the number of items is small,
+it will almost always be unique.</p>
+<p>To make this concrete, consider the following toy &#8220;implementation&#8221;:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">library</span><span class="p">(</span><span class="s">&#39;digest&#39;</span><span class="p">)</span>
 
 <span class="c"># first commit</span>
@@ -131,8 +207,8 @@ in your workflow.</p>
 </div>
 <div class="section" id="stage-i-local-single-user-linear-workflow">
 <h2><a class="toc-backref" href="#id11">Stage I: Local, single-user, linear workflow</a><a class="headerlink" href="#stage-i-local-single-user-linear-workflow" title="Permalink to this headline">¶</a></h2>
-<p>Simply type <code class="docutils literal"><span class="pre">git</span></code> (or <code class="docutils literal"><span class="pre">git</span> <span class="pre">help</span></code>) to see a list of the
-&#8216;core&#8217; commands, which will look like this:</p>
+<p>Simply type <code class="docutils literal"><span class="pre">git</span></code> (or <code class="docutils literal"><span class="pre">git</span> <span class="pre">help</span></code>) to see a list of the &#8216;core&#8217; commands,
+which will look like this:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ git
 usage: git &lt;command&gt; [&lt;args&gt;]
 
@@ -147,9 +223,11 @@ The most commonly used git commands are:
    status     Show the working tree status
 </pre></div>
 </div>
+<p>You will see more commands than this, but these are the ones we cover in the
+remainder of this tutorial.</p>
 <div class="section" id="git-init-create-an-empty-repository">
 <h3><a class="toc-backref" href="#id12"><code class="docutils literal"><span class="pre">git</span> <span class="pre">init</span></code>: create an empty repository</a><a class="headerlink" href="#git-init-create-an-empty-repository" title="Permalink to this headline">¶</a></h3>
-<p>First create an empty repository:</p>
+<p>First create an empty repository using the <code class="docutils literal"><span class="pre">init</span></code> command:</p>
 <div class="highlight-python"><div class="highlight"><pre>cd ~/src
 git init demo
 </pre></div>
@@ -163,9 +241,9 @@ ls -l .git
 </div>
 <div class="section" id="git-add-adding-content-to-the-repository">
 <h3><a class="toc-backref" href="#id13"><code class="docutils literal"><span class="pre">git</span> <span class="pre">add</span></code>: adding content to the repository</a><a class="headerlink" href="#git-add-adding-content-to-the-repository" title="Permalink to this headline">¶</a></h3>
-<p>Now let&#8217;s edit our first file in the test directory with a text
-editor... I&#8217;m doing it programatically here for automation purposes, but
-you&#8217;d normally be editing by hand:</p>
+<p>Now let&#8217;s edit our first file in the test directory with a text editor.  I&#8217;m
+doing it programatically here for automation purposes, but you&#8217;d normally be
+editing by hand:</p>
 <div class="highlight-python"><div class="highlight"><pre>cd ~/src/demo
 echo &quot;My first bit of text&quot; &gt; file1.txt
 </pre></div>
@@ -202,7 +280,7 @@ not your nanny).</p>
 </div>
 <div class="section" id="git-diff-what-have-i-changed">
 <h3><a class="toc-backref" href="#id16"><code class="docutils literal"><span class="pre">git</span> <span class="pre">diff</span></code>: what have I changed?</a><a class="headerlink" href="#git-diff-what-have-i-changed" title="Permalink to this headline">¶</a></h3>
-<p>Let&#8217;s do a little bit more work... Again, in practice you&#8217;ll be editing
+<p>Let&#8217;s do a little bit more work. Again, in practice you&#8217;ll be editing
 the files by hand, here we do it via shell commands for the sake of
 automation (and therefore the reproducibility of this tutorial!)</p>
 <div class="highlight-python"><div class="highlight"><pre>echo &quot;And now some more text...&quot; &gt;&gt; file1.txt
@@ -293,9 +371,9 @@ with the new commits:</p>
 <a class="reference internal image-reference" href="../_images/mergescenario.png"><img alt="Credit: ProGit book, by Scott Chacon, CC License." src="../_images/mergescenario.png" style="width: 60%;" /></a>
 <p class="caption"><span class="caption-text">Credit: ProGit book, by Scott Chacon, CC License.</span></p>
 </div>
-<p>But based on this graph structure, git can compute the necessary
-information to merge the divergent branches back and continue with a
-unified line of development:</p>
+<p>But based on this graph structure, git can compute the necessary information to
+merge the divergent branches back and continue with a unified line of
+development:</p>
 <div class="figure" id="id7">
 <a class="reference internal image-reference" href="../_images/mergeaftermath.png"><img alt="Credit: ProGit book, by Scott Chacon, CC License." src="../_images/mergeaftermath.png" style="width: 80%;" /></a>
 <p class="caption"><span class="caption-text">Credit: ProGit book, by Scott Chacon, CC License.</span></p>

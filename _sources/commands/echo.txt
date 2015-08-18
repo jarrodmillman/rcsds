@@ -3,23 +3,15 @@
 echo
 ====
 
-Name
-----
+**Name**
 
-echo -- display a line of text
+``echo - display a line of text``
 
-Synopsis
---------
+**Synopsis**
 
-**echo** [options...] [strings...]
+``echo [options...] [strings...]``
 
-Description
------------
+**Description**
 
 Echo the STRING(s) to standard output.
-
-Frequently used options
------------------------
-
-
 

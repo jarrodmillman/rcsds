@@ -16,7 +16,6 @@ Useful Command Line Utilities
     date -- print or set the system date and time <../commands/date.rst>
     df -- report filesystem disk space usage <../commands/df.rst>
     diff -- find differences between two files <../commands/diff.rst>
-    dirs -- Display the list of currently remembered directories.  <../commands/dirs.rst>
     du --  estimate file space usage <../commands/du.rst>
     echo -- display a line of text <../commands/echo.rst>
     fg -- foreground <../commands/fg.rst>

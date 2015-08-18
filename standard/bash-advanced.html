@@ -790,10 +790,10 @@ $ find . type l               # find links
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><em>^</em></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">^</span></code></td>
 <td>Match the beginning of a line.</td>
 </tr>
-<tr class="row-odd"><td><em>$</em></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">$</span></code></td>
 <td>Match the end of a line.</td>
 </tr>
 </tbody>
@@ -801,8 +801,8 @@ $ find . type l               # find links
 <p><strong>Character sets</strong></p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="16%" />
-<col width="84%" />
+<col width="18%" />
+<col width="82%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Operators</th>
@@ -810,25 +810,25 @@ $ find . type l               # find links
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><em>[abc]</em></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">[abc]</span></code></td>
 <td>Match any single character from from the listed characters</td>
 </tr>
-<tr class="row-odd"><td><em>[a-z]</em></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">[a-z]</span></code></td>
 <td>Match any single character from the range of characters</td>
 </tr>
-<tr class="row-even"><td><em>[^abc]</em></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">[^abc]</span></code></td>
 <td>Match any single character not among listed characters</td>
 </tr>
-<tr class="row-odd"><td><em>[^a-z]</em></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">[^a-z]</span></code></td>
 <td>Match any single character not among listed range of characters</td>
 </tr>
-<tr class="row-even"><td><em>\&lt; word\&gt;</em></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">&lt;</span> <span class="pre">word&gt;</span></code></td>
 <td>Match <em>words</em> bounded by whitespace.</td>
 </tr>
-<tr class="row-odd"><td><em>.</em></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">.</span></code></td>
 <td>Match any single character expcept a <em>newline</em></td>
 </tr>
-<tr class="row-even"><td><em>\</em></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">\</span></code></td>
 <td>Turn off (escape) the special meaning of a metacharacter</td>
 </tr>
 </tbody>
@@ -845,20 +845,20 @@ $ find . type l               # find links
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><em>*</em></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">*</span></code></td>
 <td>Match zero or more of the character that precedes it.</td>
 </tr>
-<tr class="row-odd"><td><em>?</em></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">?</span></code></td>
 <td>Match zero or one instace of the preceding <em>regex</em>.</td>
 </tr>
-<tr class="row-even"><td><em>+</em></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">+</span></code></td>
 <td>Match one or more instances of the preceding <em>regex</em>.</td>
 </tr>
-<tr class="row-odd"><td><em>\{n,m\}</em></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">{n,m}</span></code></td>
 <td>Match a range of occurrences of the single character or <em>regex</em>
 that precedes this construct.</td>
 </tr>
-<tr class="row-even"><td><em>|</em></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">|</span></code></td>
 <td>Match the character or expression to the left or right of the
 vertical bar.</td>
 </tr>
@@ -1063,40 +1063,40 @@ backticks in a similar manner to that done above:</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><em>$ cmd &gt; file</em></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">$</span> <span class="pre">cmd</span> <span class="pre">&gt;</span> <span class="pre">file</span></code></td>
 <td>Send <em>stdout</em> to <em>file</em></td>
 </tr>
-<tr class="row-odd"><td><em>$ cmd 1&gt; file</em></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">$</span> <span class="pre">cmd</span> <span class="pre">1&gt;</span> <span class="pre">file</span></code></td>
 <td>Same as above</td>
 </tr>
-<tr class="row-even"><td><em>$ cmd 2&gt; file</em></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">$</span> <span class="pre">cmd</span> <span class="pre">2&gt;</span> <span class="pre">file</span></code></td>
 <td>Send <em>stderr</em> to <em>file</em></td>
 </tr>
-<tr class="row-odd"><td><em>$ cmd &gt; file 2&gt;&amp;1</em></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">$</span> <span class="pre">cmd</span> <span class="pre">&gt;</span> <span class="pre">file</span> <span class="pre">2&gt;&amp;1</span></code></td>
 <td>Send both <em>stdout</em> and <em>stderr</em> to <em>file</em></td>
 </tr>
-<tr class="row-even"><td><em>$ cmd &lt; file</em></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">$</span> <span class="pre">cmd</span> <span class="pre">&lt;</span> <span class="pre">file</span></code></td>
 <td>Receive <em>stdin</em> from <em>file</em></td>
 </tr>
-<tr class="row-odd"><td><em>$ cmd &gt;&gt; file</em></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">$</span> <span class="pre">cmd</span> <span class="pre">&gt;&gt;</span> <span class="pre">file</span></code></td>
 <td>Append <em>stdout</em> to <em>file</em>:</td>
 </tr>
-<tr class="row-even"><td><em>$ cmd 1&gt;&gt; file</em></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">$</span> <span class="pre">cmd</span> <span class="pre">1&gt;&gt;</span> <span class="pre">file</span></code></td>
 <td>Same as above</td>
 </tr>
-<tr class="row-odd"><td><em>$ cmd 2&gt;&gt; file</em></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">$</span> <span class="pre">cmd</span> <span class="pre">2&gt;&gt;</span> <span class="pre">file</span></code></td>
 <td>Append <em>stderr</em> to <em>file</em></td>
 </tr>
-<tr class="row-even"><td><em>$ cmd &gt;&gt; file 2&gt;&amp;1</em></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">$</span> <span class="pre">cmd</span> <span class="pre">&gt;&gt;</span> <span class="pre">file</span> <span class="pre">2&gt;&amp;1</span></code></td>
 <td>Append both <em>stdout</em> and <em>stderr</em> to <em>file</em></td>
 </tr>
-<tr class="row-odd"><td><em>$ cmd1 | cmd2</em></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">$</span> <span class="pre">cmd1</span> <span class="pre">|</span> <span class="pre">cmd2</span></code></td>
 <td>Pipe <em>stdout</em> from <em>cmd1</em> to <em>cmd2</em></td>
 </tr>
-<tr class="row-even"><td><em>$ cmd1 2&gt;&amp;1 | cmd2</em></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">$</span> <span class="pre">cmd1</span> <span class="pre">2&gt;&amp;1</span> <span class="pre">|</span> <span class="pre">cmd2</span></code></td>
 <td>Pipe <em>stdout</em> and <em>stderr</em> from <em>cmd1</em> to <em>cmd2</em></td>
 </tr>
-<tr class="row-odd"><td><em>$ cmd1 tee file1 | cmd2</em></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">$</span> <span class="pre">cmd1</span> <span class="pre">tee</span> <span class="pre">file1</span> <span class="pre">|</span> <span class="pre">cmd2</span></code></td>
 <td>Pipe <em>stdout</em> and <em>cmd1</em> to <em>cmd2</em> while
 simultaneously writing it to <em>file1</em>
 using <em>tee</em></td>

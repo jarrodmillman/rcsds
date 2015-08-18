@@ -3,26 +3,18 @@
 file
 ====
 
-Name
-----
+**Name**
 
-file --  determine file type
+``file - determine file type``
 
-Synopsis
---------
+**Synopsis**
 
-**file** [option...] {file}
+``file [option...] {file}``
 
-Description
------------
+**Description**
 
 File tests each argument in an attempt to classify it. There are
 three sets of tests, performed in this order: filesystem tests,
 magic number tests, and language tests. The first test that
 succeeds causes the file type to be printed.
-
-Frequently used options
------------------------
-
-
 

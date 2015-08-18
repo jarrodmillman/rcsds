@@ -3,23 +3,14 @@
 history
 =======
 
-Name
-----
+**Name**
 
-history -- lists the history of entered commands
+``history - lists the history of entered commands``
 
-Synopsis
---------
+**Synopsis**
 
-**history** [options...] [files...]
+``history [options...] [files...]``
 
-Description
------------
+**Description**
 
 display a list of commands entered in the shell
-
-Frequently used options
------------------------
-
-
-

@@ -3,23 +3,17 @@
 du
 ==
 
-Name
-----
+**Name**
 
-du --  estimate file space usage
+``du - estimate file space usage``
 
-Synopsis
---------
+**Synopsis**
 
-**du** [option...] [file...]
+``du [option...] [file...]``
 
-Description
------------
+**Description**
 
 Summarize disk usage of each FILE, recursively for directories.
-
-Frequently used options
------------------------
 
 -s, --summarize 
     display only a total for each argument
