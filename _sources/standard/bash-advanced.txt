@@ -7,6 +7,10 @@ Advanced Bash
 .. contents::
    :depth: 3
 
+.. note:: The content of this tutorial was adapted from Chris Paciorek's
+   `Statistics 243 lecture notes on Bash
+   <https://github.com/berkeley-stat243/stat243-fall-2014/blob/master/units/unit2-bash.pdf>`_.
+
 
 .. note::
    This material assumes that you have already worked through
