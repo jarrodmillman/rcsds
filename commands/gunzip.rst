@@ -3,26 +3,18 @@
 gunzip
 ======
 
-Name
-----
+**Name**
 
-gunzip --  compress or expand files
+``gunzip - compress or expand files``
 
-Synopsis
---------
+**Synopsis**
 
-**gunzip** [option]
+``gunzip [option]``
 
-Description
------------
+**Description**
 
 gunzip takes a list of files on its command line and replaces each
 file whose name ends with .gz, -gz, .z, -z, \_z or .Z and which
 begins with the correct magic number with an uncompressed file
 without the original extension. gunzip can currently decompress
 files created by gzip, zip, compress, compress -H or pack.
-
-Frequently used options
------------------------
-
-

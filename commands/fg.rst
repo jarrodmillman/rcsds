@@ -3,18 +3,15 @@
 fg
 ==
 
-Name
-----
+**Name**
 
-fg -- foreground
+``fg - foreground``
 
-Synopsis
---------
+**Synopsis**
 
-**fg** [jobspec]
+``fg [jobspec]``
 
-Description
------------
+**Description**
 
 This command places the specified job in the foreground, making it
 the current job. If JOBSPEC is not present, then the shell's notion

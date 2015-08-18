@@ -3,23 +3,17 @@
 cp
 ==
 
-Name
-----
+**Name**
 
-cp -- copy files and directories
+``cp - copy files and directories``
 
-Synopsis
---------
+**Synopsis**
 
-**cp** [options...] {source...} {dest}
+``cp [options...] {source...} {dest}``
 
-Description
------------
+**Description**
 
 Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.
-
-Frequently used options
------------------------
 
 -a, --archive
     same as -dpR

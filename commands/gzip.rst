@@ -3,26 +3,20 @@
 gzip
 ====
 
-Name
-----
+**Name**
 
-gzip --  compress or expand files
+``gzip - compress or expand files``
 
-Synopsis
---------
+**Synopsis**
 
-**gzip** [option]
+``gzip [option]``
 
-Description
------------
+**Description**
 
 Gzip reduces the size of the named files using Lempel-Ziv coding
 (LZ77). Whenever possible, each file is replaced by one with the
 extension .gz, while keeping the same ownership modes, access and
 modification times.
-
-Frequently used options
------------------------
 
 -d, --decompress, --uncompress 
     Decompress
@@ -39,6 +33,3 @@ Frequently used options
     there are several input files, the output consists of a sequence of
     independently compressed members. To obtain better compression,
     concatenate all input files before compressing them.
-
-
-

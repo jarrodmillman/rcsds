@@ -53,8 +53,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'RCSDS'
-copyright = u'2009-2015, K. Jarrod Millman, Christopher Paciorek'
-author = u'K. Jarrod Millman, Christopher Paciorek'
+copyright = u'2009-2015, K. Jarrod Millman'
+author = u'K. Jarrod Millman'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -231,6 +231,7 @@ latex_elements = {
 
 # Additional stuff for the LaTeX preamble.
 #'preamble': '',
+'preamble': '\usepackage{pmboxdraw}',
 
 # Latex figure (float) alignment
 #'figure_align': 'htbp',
@@ -241,7 +242,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   (master_doc, 'rcsds.tex', u'Reproducible and Collaborative Statistical Data Science',
-   u'K. Jarrod Millman, Christopher Paciorek', 'manual'),
+   u'K. Jarrod Millman', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -286,7 +287,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   (master_doc, 'rcsds', u'Reproducible and Collaborative Statistical Data Science',
-   author, 'K. Jarrod Millman, Christopher Paciorek', 'One line description of project.',
+   author, 'K. Jarrod Millman', 'One line description of project.',
    'Miscellaneous'),
 ]
 

@@ -3,23 +3,15 @@
 diff
 ====
 
-Name
-----
+**Name**
 
-diff -- find differences between two files
+``diff - find differences between two files``
 
-Synopsis
---------
+**Synopsis**
 
-**diff** [option...] {from-file} {to-file}
+``diff [option...] {from-file} {to-file}``
 
-Description
------------
+**Description**
 
 Concatenate FILE(s), or standard input, to standard output.
-
-Frequently used options
------------------------
-
-
 

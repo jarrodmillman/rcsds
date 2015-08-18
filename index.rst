@@ -1,7 +1,6 @@
 Reproducible and Collaborative Statistical Data Science
 =======================================================
 
-Contents:
 
 .. toctree::
    :maxdepth: 2

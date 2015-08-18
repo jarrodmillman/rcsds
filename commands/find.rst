@@ -3,18 +3,15 @@
 find
 ====
 
-Name
-----
+**Name**
 
-find --  search for files in a directory hierarchy
+``find - search for files in a directory hierarchy``
 
-Synopsis
---------
+**Synopsis**
 
-**find** [path...] [expression]
+``find [path...] [expression]``
 
-Description
------------
+**Description**
 
 find searches the directory tree rooted at each given file name by
 evaluating the given expression from left to right, according to
@@ -22,8 +19,7 @@ the rules of precedence (see section OPERATORS), until the outcome
 is known (the left hand side is false for and operations, true for
 or), at which point find moves on to the next file name.
 
-Expressions
------------
+**Expressions**
 
 The expression is made up of options (which affect overall
 operation rather than the processing of a specific file, and always
@@ -33,8 +29,7 @@ all separated by operators. -and is assumed where the operator is
 omitted. If the expression contains no actions other than -prune,
 -print is performed on all files for which the expression is true.
 
-Frequently used options
------------------------
+**Frequently used options**
 
 It is best to place options at the beginning of the expression.
 
@@ -49,35 +44,27 @@ It is best to place options at the beginning of the expression.
 -follow 
     Dereference symbolic links. Implies -noleaf.
 
-
-Frequently used tests
----------------------
+**Frequently used tests**
 
 Numeric arguments can be specified as:
 
-+n for greater than n
++n
+    for greater than n
 
--n for less than n
+-n
+    for less than n
 
-n for exactly n
-
-
+n
+    for exactly n
 
 -type c 
-    File is of type c:
-
-    ::
+    File is of type c::
 
            b      block (buffered) special
-
            c      character (unbuffered) special
-
            d      directory
-
            p      named pipe (FIFO)
-
            f      regular file
-
            l      symbolic link 
 
 -name pattern
@@ -100,8 +87,7 @@ n for exactly n
     File's status was last changed n minutes ago.
 
 
-Frequently used actions
------------------------
+**Frequently used actions**
 
 -print
     print the full file name on the standard output, followed by a

@@ -3,32 +3,26 @@
 ftp
 ===
 
-Name
-----
+**Name**
 
-ftp -- ARPANET file transfer program
+``ftp - ARPANET file transfer program``
 
-Synopsis
---------
+**Synopsis**
 
-**ftp** [option]
+``ftp [option]``
 
-Description
------------
+**Description**
 
 FTP is the user interface to the ARPANET standard File Transfer
 Protocol. The program allows a user to transfer files to and from a
 remote network site.
 
-Frequently used options
------------------------
+**Frequently used options**
 
 -i 
     Turns off interactive prompting during multiple file transfers.
 
-
-Frequently used commands
-------------------------
+**Frequently used commands**
 
 The client host with which ftp is to communicate may be specified
 on the command line. If this is done, ftp will immediately

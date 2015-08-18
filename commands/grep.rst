@@ -3,26 +3,20 @@
 grep
 ====
 
-Name
-----
+**Name**
 
-grep -- print lines matching a pattern
+``grep - print lines matching a pattern``
 
-Synopsis
---------
+**Synopsis**
 
-**grep** [options] {pattern} [file...]
+``grep [options] {pattern} [file...]``
 
-Description
------------
+**Description**
 
 grep searches the named input *file* (or standard input if no files
 are named, or the file name - is given) for lines containing a
 match to the given *pattern*. By default, grep prints the matching
 lines.
-
-Frequently used options
------------------------
 
 -c NUM, --context=NUM
     Print NUM lines of output context. Places a line containing --

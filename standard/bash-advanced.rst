@@ -7,6 +7,10 @@ Advanced Bash
 .. contents::
    :depth: 3
 
+.. note:: The content of this tutorial was adapted from Chris Paciorek's
+   `Statistics 243 lecture notes on Bash
+   <https://github.com/berkeley-stat243/stat243-fall-2014/blob/master/units/unit2-bash.pdf>`_.
+
 
 .. note::
    This material assumes that you have already worked through
@@ -686,35 +690,35 @@ Category
 =========  ====================================================================
 Operators  Description
 =========  ====================================================================
-*^*          Match the beginning of a line.
-*$*          Match the end of a line.
+``^``      Match the beginning of a line.
+``$``      Match the end of a line.
 =========  ====================================================================
 
 **Character sets**
 
-=============    ====================================================================
-Operators        Description
-=============    ====================================================================
-*[abc]*          Match any single character from from the listed characters
-*[a-z]*          Match any single character from the range of characters
-*[^abc]*         Match any single character not among listed characters
-*[^a-z]*         Match any single character not among listed range of characters
-*\\< word\\>*    Match *words* bounded by whitespace.
-*.*              Match any single character expcept a *newline*
-*\\*             Turn off (escape) the special meaning of a metacharacter
-=============    ====================================================================
+===============    ====================================================================
+Operators          Description
+===============    ====================================================================
+``[abc]``          Match any single character from from the listed characters
+``[a-z]``          Match any single character from the range of characters
+``[^abc]``         Match any single character not among listed characters
+``[^a-z]``         Match any single character not among listed range of characters
+``< word>``        Match *words* bounded by whitespace.
+``.``              Match any single character expcept a *newline*
+``\``              Turn off (escape) the special meaning of a metacharacter
+===============    ====================================================================
 
 **Modifiers**
 
 =============    ====================================================================
 Operators        Description
 =============    ====================================================================
-*\**             Match zero or more of the character that precedes it.
-*?*              Match zero or one instace of the preceding *regex*.
-*+*              Match one or more instances of the preceding *regex*.
-*\\{n,m\\}*      Match a range of occurrences of the single character or *regex*
+``*``            Match zero or more of the character that precedes it.
+``?``            Match zero or one instace of the preceding *regex*.
+``+``            Match one or more instances of the preceding *regex*.
+``{n,m}``        Match a range of occurrences of the single character or *regex*
                  that precedes this construct.
-*\|*             Match the character or expression to the left or right of the
+``|``            Match the character or expression to the left or right of the
                  vertical bar.
 =============    ====================================================================
 
@@ -927,20 +931,20 @@ backticks in a similar manner to that done above:
 ===========================   ===============================================
 Redirection Syntax            Function
 ===========================   ===============================================
-*$ cmd > file*                 Send *stdout* to *file*            
-*$ cmd 1> file*                Same as above
-*$ cmd 2> file*                Send *stderr* to *file*
-*$ cmd > file 2>&1*            Send both *stdout* and *stderr* to *file*
-*$ cmd < file*                 Receive *stdin* from *file*
-*$ cmd >> file*                Append *stdout* to *file*:
-*$ cmd 1>> file*               Same as above
-*$ cmd 2>> file*               Append *stderr* to *file*
-*$ cmd >> file 2>&1*           Append both *stdout* and *stderr* to *file*
-*$ cmd1 \| cmd2*               Pipe *stdout* from *cmd1* to *cmd2*
-*$ cmd1 2>&1 \| cmd2*          Pipe *stdout* and *stderr* from *cmd1* to *cmd2*
-*$ cmd1 tee file1 \| cmd2*     Pipe *stdout* and *cmd1* to *cmd2* while
-                               simultaneously writing it to *file1*
-                               using *tee*
+``$ cmd > file``              Send *stdout* to *file*            
+``$ cmd 1> file``             Same as above
+``$ cmd 2> file``             Send *stderr* to *file*
+``$ cmd > file 2>&1``         Send both *stdout* and *stderr* to *file*
+``$ cmd < file``              Receive *stdin* from *file*
+``$ cmd >> file``             Append *stdout* to *file*:
+``$ cmd 1>> file``            Same as above
+``$ cmd 2>> file``            Append *stderr* to *file*
+``$ cmd >> file 2>&1``        Append both *stdout* and *stderr* to *file*
+``$ cmd1 | cmd2``             Pipe *stdout* from *cmd1* to *cmd2*
+``$ cmd1 2>&1 | cmd2``        Pipe *stdout* and *stderr* from *cmd1* to *cmd2*
+``$ cmd1 tee file1 | cmd2``   Pipe *stdout* and *cmd1* to *cmd2* while
+                              simultaneously writing it to *file1*
+                              using *tee*
 ===========================   ===============================================
 
 Standard Redirection

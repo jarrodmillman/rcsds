@@ -16,7 +16,6 @@ Useful Command Line Utilities
     date -- print or set the system date and time <../commands/date.rst>
     df -- report filesystem disk space usage <../commands/df.rst>
     diff -- find differences between two files <../commands/diff.rst>
-    dirs -- Display the list of currently remembered directories.  <../commands/dirs.rst>
     du --  estimate file space usage <../commands/du.rst>
     echo -- display a line of text <../commands/echo.rst>
     fg -- foreground <../commands/fg.rst>
@@ -35,14 +34,12 @@ Useful Command Line Utilities
     less -- opposite of more <../commands/less.rst>
     ln -- make links between files <../commands/ln.rst>
     ls -- list directory contents <../commands/ls.rst>
-    mail -- send and receive mail <../commands/mail.rst>
     man -- format and display the on-line manual pages <../commands/man.rst>
     more --  file perusal filter for crt viewing <../commands/more.rst>
     mount -- mount a file system <../commands/mount.rst>
     mv -- move (rename) files <../commands/mv.rst>
     nohup -- Run a command immune to hangups, with output to a non-tty <../commands/nohup.rst>
     paste -- merge lines of files <../commands/paste.rst>
-    pine -- a Program for Internet News and Email <../commands/pine.rst>
     ps --  report process status <../commands/ps.rst>
     pstree -- display a tree of processes <../commands/pstree.rst>
     pwd -- print name of current/working directory <../commands/pwd.rst>

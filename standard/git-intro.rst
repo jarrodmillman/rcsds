@@ -13,29 +13,86 @@ Git introduction
 What is version control?
 ========================
 
-The idea is that instead of manually trying to keep track of what
-changes you've made to code, data, documents, you use software to help
-you manage the process. This has several benefits:
+As a statistician, scientist, or engineer, you will work on projects that
+include code, data, and text.  For trivially small and short-lived projects,
+it may suffice to keep track of the various files mentally.  As the size
+and duration of your project grows, you will eventually need to adopt 
+a system to track everything.
 
--  easily allowing you to go back to earlier versions
--  allowing you to have multiple version you can switch between
--  allowing you to share work easily without worrying about conflicts
--  providing built-in backup
+Consider the following example::
 
-At a basic level, a simple principle is to have version numbers for all
-your work: code, datasets, manuscripts. Whenever you make a change to a
-dataset, increment the version number. For code and manuscripts,
-increment when you make substantial changes or have obvious breakpoints
-in your workflow.
+  [jarrod@t430u ~]$ tree proj1
+  proj1
+  ├── code
+  │   ├── analysis.py
+  │   ├── eda.py
+  │   └── preprocess.py
+  ├── data
+  │   └── blob.dat
+  ├── figs
+  │   └── diagram.png
+  ├── paper
+  │   ├── Makefile
+  │   ├── report.bib
+  │   └── report.tex
+  └── slides
+      └── presentation.md
+  
+  5 directories, 9 files
+
+Above I've displayed the directory tree for a project. Now suppose that I have
+an idea about an alternative analysis to the one currently implemented in
+``proj1/code/analysis.py``.  I could manually backup the current analysis
+script doing something like ``cp analysis.py analysis.py.orig``.  And then
+start implementing the new analysis in ``analysis.py``.  While I am still
+trying to debug my new analysis script, my advisor suggests a third alternative
+approach, so now I create a third version ``analysis-advisor.py``.  The new
+analysis methods each require that I conduct different preprocessing
+steps, so now I create the following new files: ``preprocess-new.py`` and
+``preprocess-advisor.py``.  Now I just need to remember that
+``preprocess-new.py`` goes with ``analysis.py``, ``preprocess.py`` goes with
+``analysis.py.orig``, and ``preprocess-advisor.py`` goes with
+``analysis-advisor.py``.
+
+It is easy to further complicate this example.  For instance, what if you are
+working on this project with several colleagues.  Each member will want their
+own copy of the project and you will need a mechanism to share the files with
+one another.  You might consider sharing the project using something like
+Dropbox.  However, this will require care as it can be difficult to determine
+which changes will be synced when two people try editing the same file at the
+same time.
+
+Instead of manually trying to keep track of the changes you've made to code,
+data, and documents as indicated above, version control software helps you
+automate and manage this process. This has several benefits:
+
+-  allowing you to easily go back to earlier versions;
+-  allowing you to have multiple version you can switch between;
+-  allowing you to easily separate tentative new directions into different
+   branches of work, which you can later discard or merge back into
+   your main line of development;
+-  allowing you to share work easily without worrying about conflicts; and
+-  providing built-in backup.
+
+To see how this works, we will now consider the basic operation of a popular
+and powerful version control system called Git.  First, we will need to develop
+some basic vocabulary needed to discuss how Git works.  Then we will see how
+to use Git locally as a single-user using a linear workflow.  We will then
+see how to use branches rather than following a simple linear workflow.
+Finally, we will discuss using remotes instead of just working locally.
+Multi-user use will be covered in another tutorial.
 
 .. note::
   -  Client-server (e.g., CVS, Subversion)
   -  Distributed (e.g., Mercurial, **Git**)
 
-Core git concepts
+Core Git concepts
 =================
 
-A **commit** is a **snapshot** of work at a point in time
+A **commit** is a **snapshot** of an entire directory tree at a given point in
+time as well as some metadata.  Returning to the above example, you would make
+a **commit** corresponding to the original state of the directory tree, which
+I listed.
 
 .. figure:: ../figs/commit_anatomy.png
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
@@ -43,7 +100,26 @@ A **commit** is a **snapshot** of work at a point in time
 
    Credit: ProGit book, by Scott Chacon, CC License.
 
-A **repository** is a group of **linked** commits (DAG)
+A **repository** is a group of **linked** commits, which form a directed
+acyclic graph (DAG).  As part of the metadata of each commit, we include
+references to 0 or more parent commits.  The initial commit of each repository
+has 0 parents.  Each subsequent commit is proceeded by 1 or more commits.
+
+Again returning to our example, the initial **commit** might correspond to the
+the original state of the directory tree, which I listed above.  Now when you
+begin implementing your new analysis method, you don't need to make any
+copies of the previous files.  Since they are already committed, you can
+always access the original state of the repository by checking out the
+original commit.  To proceed you would simply make the necessary edits
+to the files in your directory tree and then when you are satisfied with
+your changes you make a new commit.  This new commit will correspond to
+a snapshot of the entire directory tree with all the edits you've made
+to it since the original commit.  To keep track of the history of the
+project, the new commit will include a reference to the original commit
+as its parent.  Now when your advisor suggests the alternative analysis,
+you could checkout the original commit, implement the new method, and
+commit your changes including a reference to the original commit as
+its sole parent.
 
 .. figure:: ../figs/threecommits.png
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
@@ -51,9 +127,13 @@ A **repository** is a group of **linked** commits (DAG)
 
    Credit: ProGit book, by Scott Chacon, CC License.
 
-A **hash** is 
+Finally, we need to understand how Git keeps track of commits. To reference a
+commit, Git uses a **hash**.  Hashing provides a way to have a fixed-length
+identifier for a given set of information, such as a file or set of files. The
+identifier is not guaranteed to be unique, but if the number of items is small,
+it will almost always be unique.
 
-toy "implementation"::
+To make this concrete, consider the following toy "implementation"::
 
   library('digest')
   
@@ -74,8 +154,8 @@ toy "implementation"::
 Stage I: Local, single-user, linear workflow
 ============================================
 
-Simply type ``git`` (or ``git help``) to see a list of the
-'core' commands, which will look like this::
+Simply type ``git`` (or ``git help``) to see a list of the 'core' commands,
+which will look like this::
 
   $ git
   usage: git <command> [<args>]
@@ -90,11 +170,13 @@ Simply type ``git`` (or ``git help``) to see a list of the
      push       Update remote 
      status     Show the working tree status
 
+You will see more commands than this, but these are the ones we cover in the
+remainder of this tutorial.
 
 ``git init``: create an empty repository
 ----------------------------------------
 
-First create an empty repository::
+First create an empty repository using the ``init`` command::
 
   cd ~/src
   git init demo
@@ -108,9 +190,9 @@ Let's look at what git did::
 ``git add``: adding content to the repository
 ---------------------------------------------
 
-Now let's edit our first file in the test directory with a text
-editor... I'm doing it programatically here for automation purposes, but
-you'd normally be editing by hand::
+Now let's edit our first file in the test directory with a text editor.  I'm
+doing it programatically here for automation purposes, but you'd normally be
+editing by hand::
 
   cd ~/src/demo
   echo "My first bit of text" > file1.txt
@@ -148,7 +230,7 @@ To see a log of the commits::
 ``git diff``: what have I changed?
 ----------------------------------
 
-Let's do a little bit more work... Again, in practice you'll be editing
+Let's do a little bit more work. Again, in practice you'll be editing
 the files by hand, here we do it via shell commands for the sake of
 automation (and therefore the reproducibility of this tutorial!)
 
@@ -256,9 +338,9 @@ This allows the history of both branches to diverge:
 
    Credit: ProGit book, by Scott Chacon, CC License.
 
-But based on this graph structure, git can compute the necessary
-information to merge the divergent branches back and continue with a
-unified line of development:
+But based on this graph structure, git can compute the necessary information to
+merge the divergent branches back and continue with a unified line of
+development:
 
 .. figure:: ../figs/mergeaftermath.png
    :width: 80%

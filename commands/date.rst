@@ -3,22 +3,16 @@
 date
 ====
 
-Name
-----
+**Name**
 
-date -- print or set the system date and time
+``date - print or set the system date and time``
 
-Synopsis
---------
+**Synopsis**
 
-**date** [option...] [+format]
+``date [option...] [+format]``
 
-Description
------------
+**Description**
 
 Display the current time in the given FORMAT, or set the system
 date.
-
-Frequently used options
------------------------
 
