@@ -539,9 +539,8 @@ not inside double quotes will not be:
 So we’ll generally use double quotes. We can always work with a literal
 double quote by escaping it as seen above.
 
-
-Data Manipulation
-=================
+Basic utilities
+---------------
 
 Since files are such an essential aspect of Unix and working from the shell is
 the primary way to work with Unix, there are a large number of useful commands
@@ -581,8 +580,143 @@ Finding files by name, modification time, and type::
     $ find . mtime -2        # find files modified less than 2 days ago
     $ find . type l          # find links
 
+Streams, Pipes, and Redirects
+-----------------------------
+
+UNIX programs that involve input and/or output often operate by reading
+input from a stream known as standard input (*stdin*), and writing their
+results to a stream known as standard output (*stdout*). In addition, a
+third stream known as standard error (*stderr*) receives error messages,
+and other information that’s not part of the program’s results. In the
+usual interactive session, standard output and standard error default to
+your screen, and standard input defaults to your keyboard. You can
+change the place from which programs read and write through redirection.
+The shell provides this service, not the individual programs, so
+redirection will work for all programs. Table 3 shows some examples of
+redirection.
+
+
+Default File Descriptors
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Table 3-1. File Descriptors**
+
+============  ============  ===============
+Name          I/O           File Descriptor
+============  ============  ===============
+stdin         input         0
+stdout        output        1
+stderr        error output  2
+user-defined  input/output  3-19
+============  ============  ===============
+
+IO Redirection
+~~~~~~~~~~~~~~
+
+Note that *cmd* may include options and arguments as seen in the
+previous section.
+
+Operations where output from one command is used as input to another command
+(via the ``|`` operator) are known as pipes; they are made especially useful by
+the convention that many UNIX commands will accept their input through the
+standard input stream when no file name is provided to them.
+
+Here’s an example of finding out how many unique entries there are in
+the 2rd column of a data file whose fields are separated by commas::
+
+  $ cut -d',' -f2 cpds.csv | sort | uniq | wc
+  $ cut -d',' -f2 cpds.csv | sort | uniq > countries.txt
+
+To see if there are any “S” values in certain fields (fixed width) of a
+set of files (note I did this on 22,000 files (5 Gb or so) in about 5
+minutes on my desktop; it would have taken much more time to read the
+data into R):
+
+| ``$ cut -b29,37,45,53,61,69,77,85,93,101,109,117,125,133,141,149,`` 
+| ``157,165,173,181,189,197,205,213,221,229,237,245,253,261,269 USC*.dly | grep S | less``
+
+A closely related, but subtly different, capability is offered by the
+use of backticks (\`). When the shell encounters a command surrounded by
+backticks, it runs the command and replaces the backticked expression
+with the output from the command; this allows something similar to a
+pipe, but is appropriate when a command reads its arguments directly
+from the command line instead of through standard input. For example,
+suppose we are interested in searching for the text *pdf* in the last 4
+R code files (those with suffix *.*\ r or .R) that were modified in the
+current directory. We can find the names of the last 4 files ending in
+“.R” or “.r” which were modified using
+
+| ``$ ls -t *.{R,r} | head -4``
+| and we can search for the required pattern using *grep*. Putting these
+  together with the backtick operator we can solve the problem using
+
+| ``$ grep pdf `ls -t *.{R,r} | head -4```
+| Note that piping the output of the *ls* command into *grep* would not
+  achieve the desired goal, since *grep* reads its filenames from the
+  command line, not standard input.
+
+You can also redirect output as the arguments to another program using
+the *xargs* utility. Here’s an example:
+
+``$ ls -t *.{R,r} | head -4 | xargs grep pdf``
+
+And you can redirect output into a shell variable (see section 9) using
+backticks in a similar manner to that done above:
+
+``$ files=ls -t *.{R,r} | head -4 # NOTE - don’t put any spaces around the =``
+
+``$ echo $files``
+
+``$ grep pdf $files``
+
+**Table 3-2. Common Redirection Operators**
+
+===========================   ===============================================
+Redirection Syntax            Function
+===========================   ===============================================
+``$ cmd > file``              Send *stdout* to *file*            
+``$ cmd 1> file``             Same as above
+``$ cmd 2> file``             Send *stderr* to *file*
+``$ cmd > file 2>&1``         Send both *stdout* and *stderr* to *file*
+``$ cmd < file``              Receive *stdin* from *file*
+``$ cmd >> file``             Append *stdout* to *file*:
+``$ cmd 1>> file``            Same as above
+``$ cmd 2>> file``            Append *stderr* to *file*
+``$ cmd >> file 2>&1``        Append both *stdout* and *stderr* to *file*
+``$ cmd1 | cmd2``             Pipe *stdout* from *cmd1* to *cmd2*
+``$ cmd1 2>&1 | cmd2``        Pipe *stdout* and *stderr* from *cmd1* to *cmd2*
+``$ cmd1 tee file1 | cmd2``   Pipe *stdout* and *cmd1* to *cmd2* while
+                              simultaneously writing it to *file1*
+                              using *tee*
+===========================   ===============================================
+
+Standard Redirection
+~~~~~~~~~~~~~~~~~~~~
+
+Pipes
+~~~~~
+
+* :ref:`wc` --  print the number of bytes, words, and lines in
+  files
+
+**Example 3-1. A simple pipe to **wc****
+
+::
+
+        $ echo "hey there" | wc -w
+              2
+      
+
+The **xargs** and **tee** Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* :ref:`xargs` --  build and execute command lines from
+  standard input
+* :ref:`tee` -- read from standard input and write to standard
+  output and files
+
 Regular Expressions
--------------------
+===================
 
 Regular expressions (regexp) are a domain-specific language for finding patterns and are
 one of the key functionalities in scripting languages such as Perl and Python,
@@ -590,6 +724,9 @@ as well as the UNIX utilities ``sed``, ``awk``, and ``grep`` as we will see
 below. I'll just cover the use of regular expressions in bash, but once you
 know that, it would be easy to use them elsewhere (Python, R, etc.).  At the
 level we’ll consider them, the syntax is quite similar.
+
+Overview and core syntax
+------------------------
 
 The basic idea of regular expressions is that they allow us to find matches of
 strings or patterns in strings, as well as do substitution.  Regular
@@ -630,7 +767,7 @@ single backslash to symbolize certain control characters, such as ``\\n`` for
 newline.
 
 Character sets and character classes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 **Character sets**
 
@@ -712,7 +849,7 @@ non-letters inside a word? E.g., I want to find V1agra or Fancy
 repl!c@ted watches.
 
 Location-specific matches
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 **Position anchors**
 
@@ -738,7 +875,7 @@ and to find it at the end we use ``$``.
 What does this match: ``^[^[:lower:]]$`` ?
 
 Repetitions, Grouping, and References
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 **Modifiers**
 
@@ -893,8 +1030,8 @@ any number of white space characters
     and regular expressions.
 
 
-**ed** and **grep**
--------------------
+``ed``, ``grep``, ``sed``, ``awk``, and ``perl``
+------------------------------------------------
 
 * :ref:`grep` -- print lines matching a pattern
 * :ref:`tr` -- translate or delete characters
@@ -941,9 +1078,8 @@ Explain what the following regular expression matches::
       
 
 **sed** and **awk**
--------------------
+~~~~~~~~~~~~~~~~~~~
 
-**sed** (stream editor) derives from **ed**.
 
 Printing lines of text with ``sed``::
 
@@ -1004,7 +1140,7 @@ replaces all instances in a line (i.e., globally).
       
 
 **perl**
---------
+~~~~~~~~
 
 Text substitution with ``perl``::
 
@@ -1024,140 +1160,6 @@ Summing columns with ``perl``::
 This will sum columns 1 and 2 of ``file.txt``.
 
 
-Streams, Pipes, and Redirects
-=============================
-
-UNIX programs that involve input and/or output often operate by reading
-input from a stream known as standard input (*stdin*), and writing their
-results to a stream known as standard output (*stdout*). In addition, a
-third stream known as standard error (*stderr*) receives error messages,
-and other information that’s not part of the program’s results. In the
-usual interactive session, standard output and standard error default to
-your screen, and standard input defaults to your keyboard. You can
-change the place from which programs read and write through redirection.
-The shell provides this service, not the individual programs, so
-redirection will work for all programs. Table 3 shows some examples of
-redirection.
-
-
-Default File Descriptors
-------------------------
-
-**Table 3-1. File Descriptors**
-
-============  ============  ===============
-Name          I/O           File Descriptor
-============  ============  ===============
-stdin         input         0
-stdout        output        1
-stderr        error output  2
-user-defined  input/output  3-19
-============  ============  ===============
-
-IO Redirection
---------------
-
-Note that *cmd* may include options and arguments as seen in the
-previous section.
-
-Operations where output from one command is used as input to another command
-(via the ``|`` operator) are known as pipes; they are made especially useful by
-the convention that many UNIX commands will accept their input through the
-standard input stream when no file name is provided to them.
-
-Here’s an example of finding out how many unique entries there are in
-the 2rd column of a data file whose fields are separated by commas::
-
-  $ cut -d',' -f2 cpds.csv | sort | uniq | wc
-  $ cut -d',' -f2 cpds.csv | sort | uniq > countries.txt
-
-To see if there are any “S” values in certain fields (fixed width) of a
-set of files (note I did this on 22,000 files (5 Gb or so) in about 5
-minutes on my desktop; it would have taken much more time to read the
-data into R):
-
-| ``$ cut -b29,37,45,53,61,69,77,85,93,101,109,117,125,133,141,149,`` 
-| ``157,165,173,181,189,197,205,213,221,229,237,245,253,261,269 USC*.dly | grep S | less``
-
-A closely related, but subtly different, capability is offered by the
-use of backticks (\`). When the shell encounters a command surrounded by
-backticks, it runs the command and replaces the backticked expression
-with the output from the command; this allows something similar to a
-pipe, but is appropriate when a command reads its arguments directly
-from the command line instead of through standard input. For example,
-suppose we are interested in searching for the text *pdf* in the last 4
-R code files (those with suffix *.*\ r or .R) that were modified in the
-current directory. We can find the names of the last 4 files ending in
-“.R” or “.r” which were modified using
-
-| ``$ ls -t *.{R,r} | head -4``
-| and we can search for the required pattern using *grep*. Putting these
-  together with the backtick operator we can solve the problem using
-
-| ``$ grep pdf `ls -t *.{R,r} | head -4```
-| Note that piping the output of the *ls* command into *grep* would not
-  achieve the desired goal, since *grep* reads its filenames from the
-  command line, not standard input.
-
-You can also redirect output as the arguments to another program using
-the *xargs* utility. Here’s an example:
-
-``$ ls -t *.{R,r} | head -4 | xargs grep pdf``
-
-And you can redirect output into a shell variable (see section 9) using
-backticks in a similar manner to that done above:
-
-``$ files=ls -t *.{R,r} | head -4 # NOTE - don’t put any spaces around the =``
-
-``$ echo $files``
-
-``$ grep pdf $files``
-
-**Table 3-2. Common Redirection Operators**
-
-===========================   ===============================================
-Redirection Syntax            Function
-===========================   ===============================================
-``$ cmd > file``              Send *stdout* to *file*            
-``$ cmd 1> file``             Same as above
-``$ cmd 2> file``             Send *stderr* to *file*
-``$ cmd > file 2>&1``         Send both *stdout* and *stderr* to *file*
-``$ cmd < file``              Receive *stdin* from *file*
-``$ cmd >> file``             Append *stdout* to *file*:
-``$ cmd 1>> file``            Same as above
-``$ cmd 2>> file``            Append *stderr* to *file*
-``$ cmd >> file 2>&1``        Append both *stdout* and *stderr* to *file*
-``$ cmd1 | cmd2``             Pipe *stdout* from *cmd1* to *cmd2*
-``$ cmd1 2>&1 | cmd2``        Pipe *stdout* and *stderr* from *cmd1* to *cmd2*
-``$ cmd1 tee file1 | cmd2``   Pipe *stdout* and *cmd1* to *cmd2* while
-                              simultaneously writing it to *file1*
-                              using *tee*
-===========================   ===============================================
-
-Standard Redirection
-~~~~~~~~~~~~~~~~~~~~
-
-Pipes
-~~~~~
-
-* :ref:`wc` --  print the number of bytes, words, and lines in
-  files
-
-**Example 3-1. A simple pipe to **wc****
-
-::
-
-        $ echo "hey there" | wc -w
-              2
-      
-
-The **xargs** and **tee** Command
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* :ref:`xargs` --  build and execute command lines from
-  standard input
-* :ref:`tee` -- read from standard input and write to standard
-  output and files
 
 
 

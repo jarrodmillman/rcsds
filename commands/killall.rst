@@ -3,24 +3,19 @@
 killall
 =======
 
-Name
-----
+**Name**
 
-killall --  kill processes by name
+``killall - kill processes by name``
 
-Synopsis
---------
+**Synopsis**
 
-**killall** [option]
+``killall [option]``
 
-Description
------------
+**Description**
 
 killall sends a signal to all processes running any of the
 specified commands. If no signal name is specified, SIGTERM is
 sent.
 
-Frequently used options
------------------------
 
 

@@ -3,25 +3,20 @@
 tail
 ====
 
-Name
-----
+**Name**
 
 tail -- output the last part of files
 
-Synopsis
---------
+**Synopsis**
 
 **tail** [option...] [file...]
 
-Description
------------
+**Description**
 
 Print the last 10 lines of each FILE to standard output. With more
 than one FILE, precede each with a header giving the file name.
 With no FILE, or when FILE is -, read standard input.
 
-Frequently used options
------------------------
 
 -c, --bytes=N
     output the last N bytes

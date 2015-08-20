@@ -3,18 +3,15 @@
 top
 ===
 
-Name
-----
+**Name**
 
 top -- display top CPU processes
 
-Synopsis
---------
+**Synopsis**
 
 **top** [option]
 
-Description
------------
+**Description**
 
 top provides an ongoing look at processor activity in real time. It
 displays a listing of the most CPU-intensive tasks on the system,
@@ -23,7 +20,6 @@ processes. It can sort the tasks by CPU usage, memory usage and
 runtime.
 
 Frequently used interactive commands
-------------------------------------
 
 Several single-key commands are recognized while top is running.
 Some are disabled if the s option has been given on the command

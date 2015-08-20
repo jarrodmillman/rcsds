@@ -3,24 +3,19 @@
 telnet
 ======
 
-Name
-----
+**Name**
 
 telnet --  user interface to the TELNET protocol
 
-Synopsis
---------
+**Synopsis**
 
 **telnet** [option]
 
-Description
------------
+**Description**
 
 The telnet command is used to communicate with another host using
 the TELNET protocol.
 
-Frequently used options
------------------------
 
 
 

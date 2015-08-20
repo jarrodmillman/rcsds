@@ -3,23 +3,18 @@
 rmdir
 =====
 
-Name
-----
+**Name**
 
 rmdir -- remove empty directories
 
-Synopsis
---------
+**Synopsis**
 
 **rmdir** [options...] {directory...}
 
-Description
------------
+**Description**
 
 Remove the DIRECTORY(ies), if they are empty.
 
-Frequently used options
------------------------
 
 -p, --parents
     remove DIRECTORY, then try to remove each directory component of

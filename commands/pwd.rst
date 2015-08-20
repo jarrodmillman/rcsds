@@ -3,21 +3,16 @@
 pwd
 ===
 
-Name
-----
+**Name**
 
 pwd -- print name of current/working directory
 
-Synopsis
---------
+**Synopsis**
 
 **pwd** [option]
 
-Description
------------
+**Description**
 
 Print the full filename of the current working directory.
 
-Frequently used options
------------------------
 

@@ -7,7 +7,7 @@ head
 
 ``head - output the first part of files``
 
-Synopsis
+**Synopsis**
 
 ``diff [option...] [file...]``
 
@@ -19,5 +19,3 @@ With no FILE, or when FILE is -, read standard input.
 
 -n, --lines=NUMBER
     print first NUMBER lines instead of first 10
-
-

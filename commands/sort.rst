@@ -3,23 +3,18 @@
 sort
 ====
 
-Name
-----
+**Name**
 
 sort -- sort lines of text files.
 
-Synopsis
---------
+**Synopsis**
 
 **sort** [options...] [file...]
 
-Description
------------
+**Description**
 
 Write sorted concatenation of all FILE(s) to standard output.
 
-Frequently used options
------------------------
 
 
 

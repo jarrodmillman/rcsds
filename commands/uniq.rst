@@ -3,23 +3,18 @@
 uniq
 ====
 
-Name
-----
+**Name**
 
 uniq --  remove duplicate lines from a sorted file
 
-Synopsis
---------
+**Synopsis**
 
 **uniq** [option...] [input] [output]
 
-Description
------------
+**Description**
 
 Discard all but one of successive identical lines from INPUT (or
 standard input), writing to OUTPUT (or standard output).
 
-Frequently used options
------------------------
 
 

@@ -3,25 +3,20 @@
 scp
 ===
 
-Name
-----
+**Name**
 
 scp -- secure copy
 
-Synopsis
---------
+**Synopsis**
 
 **scp** [option]
 
-Description
------------
+**Description**
 
 scp copies files between hosts on a network. It uses ssh(1) for
 data transfer, and uses the same authentication and provides the
 same security as ssh(1).
 
-Frequently used options
------------------------
 
 -r 
     Recursively copy entire directories.

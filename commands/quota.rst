@@ -3,24 +3,19 @@
 quota
 =====
 
-Name
-----
+**Name**
 
 quota -- display disk usage and limits
 
-Synopsis
---------
+**Synopsis**
 
 **quota** [option]
 
-Description
------------
+**Description**
 
 Quota displays users' disk usage and limits. By default only the
 user quotas are printed.
 
-Frequently used options
------------------------
 
 -s 
     flag will make quota(1) try to choose units for showing limits,

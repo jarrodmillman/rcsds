@@ -3,24 +3,19 @@
 wc
 ==
 
-Name
-----
+**Name**
 
 wc --  print the number of bytes, words, and lines in files
 
-Synopsis
---------
+**Synopsis**
 
 **wc** [option...] [command] [file...]
 
-Description
------------
+**Description**
 
 Print newline, word, and byte counts for each FILE, and a total
 line if more than one FILE is specified.
 
-Frequently used options
------------------------
 
 -c, --bytes 
     print the byte counts

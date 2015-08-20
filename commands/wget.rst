@@ -3,25 +3,21 @@
 wget
 ====
 
-Name
-----
+**Name**
 
 wget -- GNU Wget Manual
 
-Synopsis
---------
+**Synopsis**
 
 **wget** [option...] [URL...]
 
-Description
------------
+**Description**
 
 GNU Wget is a free utility for non-interactive download of files
 from the Web. It supports HTTP, HTTPS, and FTP protocols, as well
 as retrieval through HTTP proxies.
 
 Frequently used download options
---------------------------------
 
 -nc, --no-clobber 
     If a file is downloaded more than once in the same directory,
@@ -36,7 +32,6 @@ Frequently used download options
 
 
 Frequently used directory options
----------------------------------
 
 -nd, --no-directories 
     Do not create a hierarchy of directories when retrieving
@@ -44,13 +39,11 @@ Frequently used directory options
 
 
 Frequently used HTTP options
-----------------------------
  
     
 
 
 Frequently used FTP options
----------------------------
 
 -g on/off, --glob=on/off 
     Turn FTP globbing on or off. Globbing means you may use the
@@ -67,7 +60,6 @@ Frequently used FTP options
 
 
 Frequently used recursive retrieval options
--------------------------------------------
 
 -r, --recursive 
     Turn on recursive retrieving.

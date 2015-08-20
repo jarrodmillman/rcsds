@@ -3,23 +3,18 @@
 stat
 ====
 
-Name
-----
+**Name**
 
 stat -- display file or filesystem status
 
-Synopsis
---------
+**Synopsis**
 
 **stat** [option...] {filename}
 
-Description
------------
+**Description**
 
 This command displays information about the specified file(s).
 
-Frequently used options
------------------------
 
 
 

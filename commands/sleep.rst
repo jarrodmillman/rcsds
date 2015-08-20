@@ -3,22 +3,17 @@
 sleep
 =====
 
-Name
-----
+**Name**
 
 sleep -- delay for a specified amount of time
 
-Synopsis
---------
+**Synopsis**
 
 **sleep** {number} [suffix...]
 
-Description
------------
+**Description**
 
 Pause for NUMBER seconds. SUFFIX may be \`s' for seconds (the
 default), \`m' for minutes, \`h' for hours or \`d' for days.
 
-Frequently used options
------------------------
 

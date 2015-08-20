@@ -1,3 +1,5 @@
+all: clean git-intro bash-tutorial
+
 git-intro:
 	pandoc -o git-intro.Rmd git-intro.rst
 	Rscript -e "library(knitr); knit2html('git-intro.Rmd')"

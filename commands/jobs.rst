@@ -3,26 +3,19 @@
 jobs
 ====
 
-Name
-----
+**Name**
 
-jobs -- list the active jobs
+``jobs - list the active jobs``
 
-Synopsis
---------
+**Synopsis**
 
-**jobs** [option...] [jobspec...]
+``jobs [option...] [jobspec...]``
 
-Description
------------
+**Description**
 
 List the active jobs. If JOBSPECS are included, output is
 restricted to information about those jobs.
 
-Frequently used options
------------------------
 
 -l
     Also list PIDs
-
-

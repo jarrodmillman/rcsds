@@ -3,23 +3,18 @@
 umount
 ======
 
-Name
-----
+**Name**
 
 umount -- umount file systems
 
-Synopsis
---------
+**Synopsis**
 
 **umount** [dir]
 
-Description
------------
+**Description**
 
 The umount command detaches the file system(s) mentioned from the
 file hierarchy.
 
-Frequently used options
------------------------
 
 
