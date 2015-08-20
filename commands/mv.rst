@@ -1,4 +1,4 @@
-.. _command-mv:
+.. _mv:
 
 mv
 ==

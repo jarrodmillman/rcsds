@@ -1,4 +1,4 @@
-.. _command-touch:
+.. _touch:
 
 touch
 =====

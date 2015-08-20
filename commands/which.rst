@@ -1,4 +1,4 @@
-.. _command-which:
+.. _which:
 
 which
 =====

@@ -1,4 +1,4 @@
-.. _command-tar:
+.. _tar:
 
 tar
 ===

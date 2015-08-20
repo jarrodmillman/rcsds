@@ -1,4 +1,4 @@
-.. _command-wget:
+.. _wget:
 
 wget
 ====

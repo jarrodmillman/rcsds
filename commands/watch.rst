@@ -1,4 +1,4 @@
-.. _command-watch:
+.. _watch:
 
 watch
 =====

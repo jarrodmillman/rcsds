@@ -1,4 +1,4 @@
-.. _command-file:
+.. _file:
 
 file
 ====

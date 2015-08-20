@@ -1,4 +1,4 @@
-.. _command-bzip2:
+.. _bzip2:
 
 bzip2
 =====

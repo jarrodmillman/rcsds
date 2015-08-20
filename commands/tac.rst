@@ -1,4 +1,4 @@
-.. _command-tac:
+.. _tac:
 
 tac
 ===

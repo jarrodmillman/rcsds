@@ -5,6 +5,7 @@ Useful Command Line Utilities
 .. toctree::
    :maxdepth: 1
 
+    alias -- set aliases <../commands/alias.rst>
     apropos -- search the whatis database for strings <../commands/apropos.rst>
     bg -- background <../commands/bg.rst>
     bzip2 -- a block-sorting file compressor <../commands/bzip2.rst>
@@ -35,11 +36,13 @@ Useful Command Line Utilities
     ln -- make links between files <../commands/ln.rst>
     ls -- list directory contents <../commands/ls.rst>
     man -- format and display the on-line manual pages <../commands/man.rst>
+    mkdir -- make directories <../commands/mkdir.rst>
     more --  file perusal filter for crt viewing <../commands/more.rst>
     mount -- mount a file system <../commands/mount.rst>
     mv -- move (rename) files <../commands/mv.rst>
     nohup -- Run a command immune to hangups, with output to a non-tty <../commands/nohup.rst>
     paste -- merge lines of files <../commands/paste.rst>
+    printenv -- print all or part of environment <../commands/printenv.rst>
     ps --  report process status <../commands/ps.rst>
     pstree -- display a tree of processes <../commands/pstree.rst>
     pwd -- print name of current/working directory <../commands/pwd.rst>

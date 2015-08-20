@@ -1,4 +1,4 @@
-.. _command-ln:
+.. _ln:
 
 ln
 ==

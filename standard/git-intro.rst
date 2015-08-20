@@ -75,57 +75,81 @@ automate and manage this process. This has several benefits:
 -  providing built-in backup.
 
 To see how this works, we will now consider the basic operation of a popular
-and powerful version control system called Git.  First, we will need to develop
-some basic vocabulary needed to discuss how Git works.  Then we will see how
-to use Git locally as a single-user using a linear workflow.  We will then
-see how to use branches rather than following a simple linear workflow.
+and powerful version control system (VCS) called Git.  First, we will need to
+develop some basic vocabulary needed to discuss how Git works.  Then we will
+see how to use Git locally as a single-user using a linear workflow.  We will
+then see how to use branches rather than following a simple linear workflow.
 Finally, we will discuss using remotes instead of just working locally.
 Multi-user use will be covered in another tutorial.
 
 .. note::
-  -  Client-server (e.g., CVS, Subversion)
-  -  Distributed (e.g., Mercurial, **Git**)
+   VCS come in two main architectures: client-server (e.g., CVS, Subversion)
+   and distributed (e.g., Mercurial, **Git**).  In the client-server
+   architecture, there is one master repository and everyone working
+   on the repositor has their own minimal local copy of the master
+   repository.  In the distributed model, every repository is a complete
+   repository and there are mechanisms for incorporating changes
+   from remote repositories into a local repository.
 
 Core Git concepts
 =================
 
 A **commit** is a **snapshot** of an entire directory tree at a given point in
-time as well as some metadata.  Returning to the above example, you would make
-a **commit** corresponding to the original state of the directory tree, which
-I listed.
+time, some metadata (e.g., reference to previous commits, authors name), and an
+identifier (this is called a hash and will be discussed below).  Returning to
+the above example, you would make a **commit** corresponding to the original
+state of the directory tree, which I listed.  Committing the directory tree
+as listed above will allow us to return to this exact state later.
 
 .. figure:: ../figs/commit_anatomy.png
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
    :width: 80%
 
+   Here is a schematic representation of a commit.  The commit, which I
+   refer to as 98ca9.., has some metadata (i.e., author name and committer
+   name) as well as a pointer to the entire directory tree.
+
    Credit: ProGit book, by Scott Chacon, CC License.
 
 A **repository** is a group of **linked** commits, which form a directed
-acyclic graph (DAG).  As part of the metadata of each commit, we include
-references to 0 or more parent commits.  The initial commit of each repository
-has 0 parents.  Each subsequent commit is proceeded by 1 or more commits.
-
-Again returning to our example, the initial **commit** might correspond to the
-the original state of the directory tree, which I listed above.  Now when you
-begin implementing your new analysis method, you don't need to make any
-copies of the previous files.  Since they are already committed, you can
-always access the original state of the repository by checking out the
-original commit.  To proceed you would simply make the necessary edits
-to the files in your directory tree and then when you are satisfied with
-your changes you make a new commit.  This new commit will correspond to
-a snapshot of the entire directory tree with all the edits you've made
-to it since the original commit.  To keep track of the history of the
-project, the new commit will include a reference to the original commit
-as its parent.  Now when your advisor suggests the alternative analysis,
-you could checkout the original commit, implement the new method, and
-commit your changes including a reference to the original commit as
-its sole parent.
+acyclic graph (DAG), as well as a set of references to specific commits (we
+refer to these references to commits as heads).  As part of the metadata of
+each commit, we include references to 0 or more parent commits.  The initial
+commit of each repository has 0 parents.  Each subsequent commit is proceeded
+by 1 or more commits.
 
 .. figure:: ../figs/threecommits.png
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
    :width: 90%
 
+   This is a schematic representation of three commits in a linear
+   workflow.  The first commit 98ca9.. has no parents and Snapshot
+   A contains all the files and directory structure that was in
+   working tree when the project was started.  Additional files
+   were added or changed and a new commit 34ac2.. was made containing
+   all the files and directories corresponding to the new state
+   of the working tree.  This new commit 34ac2.. has one parent
+   98ca9.., which it points to.  Continuing in this manner,
+   a new commit f30ab.. is made on top of the second commit
+   34ac2...
+
    Credit: ProGit book, by Scott Chacon, CC License.
+
+Again returning to our example, the initial **commit** might correspond to the
+the original state of the directory tree, which I listed above.  Now when you
+begin implementing your new analysis method, you don't need to make any copies
+of the previous files (i.e., there is no need to execute ``cp analysis.py
+analysis.py.orig``).  Since they are already committed, you can always access
+the original state of the repository by checking out the original commit.  To
+proceed you would simply make the necessary edits to the files in your
+directory tree and then when you are satisfied with your changes you make a new
+commit.  This new commit will correspond to a snapshot of the entire directory
+tree with all the edits you've made to it since the original commit.  To keep
+track of the history of the project, the new commit will include a reference to
+the original commit as its parent.  Now when your advisor suggests the
+alternative analysis, you could checkout the original commit, implement the new
+method, and commit your changes including a reference to the original commit as
+its sole parent.
 
 Finally, we need to understand how Git keeps track of commits. To reference a
 commit, Git uses a **hash**.  Hashing provides a way to have a fixed-length
@@ -133,29 +157,64 @@ identifier for a given set of information, such as a file or set of files. The
 identifier is not guaranteed to be unique, but if the number of items is small,
 it will almost always be unique.
 
-To make this concrete, consider the following toy "implementation"::
+To make this concrete, consider the following toy "implementation" in R::
 
   library('digest')
   
   # first commit
-  data1 = 'This is the start of my paper2.'
-  meta1 = 'date: 8/20/13'
-  hash1 = digest(c(data1,meta1), algo="sha1")
+  data1 <- 'This is the start of my paper.'
+  meta1 <- 'date: 8/20/15'
+  hash1 <- digest(c(data1, meta1), algo="sha1")
   cat('Hash:', hash1)
   
   # second commit, linked to the first
-  data2 = 'Some more text in my paper...'
-  meta2 = 'date: 8/20/13'
+  data2 <- 'Some more text in my paper...'
+  meta2 <- 'date: 8/20/15'
   # Note we add the parent hash here!
-  hash2 = digest(c(data2,meta2,hash1), algo="sha1")
+  hash2 <- digest(c(data2, meta2, hash1), algo="sha1")
   cat('Hash:', hash2)
+
+And here it is in Python::
+
+  import sha
+
+  # first commit
+  data1 = 'This is the start of my paper.'
+  meta1 = 'date: 8/20/15'
+  hash1 = sha.sha(data1 + meta1).hexdigest()
+  print 'Hash:', hash1
+
+  # second commit, linked to the first
+  data2 = 'Some more text in my paper...'
+  meta2 = 'date: 8/20/15'
+  # Note we add the parent hash here!
+  hash2 = sha.sha(data2 + meta2 + hash1).hexdigest()
+  print 'Hash:', hash2
+
+Now that we have developed some basic vocabulary, let's see start using Git.
+To start with we will use Git in the simplest way possible---as a single-user
+working linearly with no remotes.
+
+.. note::
+   If you haven't done so already, you will want to configure Git before
+   proceeding.  You will want to do something like the following from
+   your Bash shell::
+
+     $ git config --global user.name "Jarrod Millman"
+     $ git config --global user.email "millman@berkeley.edu"
+     $ git config --global core.editor /usr/bin/jed
+
+   The first two lines tell Git who you are (obviously you should use
+   your own name and address rather than mine).  The final command
+   tells Git which text editor you wish to use.  You should use whatever
+   text editor you prefer.  For instance, I use ``/usr/bin/vim``.
 
 
 Stage I: Local, single-user, linear workflow
 ============================================
 
-Simply type ``git`` (or ``git help``) to see a list of the 'core' commands,
-which will look like this::
+From a Bash shell, type ``git`` (or ``git help``) to see a list of the 'core'
+commands, which will look something like this::
 
   $ git
   usage: git <command> [<args>]
@@ -300,23 +359,49 @@ step!).
 Stage II: Local user, branching
 ===============================
 
-What is a branch? Simply a *label for the 'current' commit in a sequence
-of ongoing commits*:
+Before understanding what a Git **branch** is, we need to revist the idea
+of a **head**.  As discussed Git labels every commit with cryptographic
+signature called a hash.  These hashs can be considered to uniquely identify
+every commit and are used to verify that the contents of the commit and
+history of the commit are correct.  While this is extremely important, it
+is unlikely that you will remember these hashes.  This is where heads come
+into play.  A head is an easy to remember label (e.g., ``HEAD``, ``master``,
+``feature1``) that references a commit.
+
 
 .. figure:: ../figs/masterbranch.png
    :width: 90%
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
 
+   By default every repository has a head called ``master``. In this
+   figure ``master`` refers to the commit whose has begins
+   ``f30ab``.  This allows you to refer to the commit by the easy
+   to remember name ``master`` rather than ``f30ab``.
+
    Credit: ProGit book, by Scott Chacon, CC License.
 
-There can be multiple branches alive at any point in time; the working
-directory is the state of a special pointer called HEAD. In this example
-there are two branches, *master* and *testing*, and *testing* is the
-currently active branch since it's what HEAD points to:
+A repository can contain any number of heads.  At any point in time,
+your current working directory will correspond to a specific commmit.
+By convention, we refer to this commit with the name ``HEAD`` (note
+the use of all capital letters to distinguish this from the generic
+notion of head).
+
+In Git, the notions of branch and head are essentially identical. Each
+branch is associated with exactly one head and each head corresponds
+to one branch.  However, we use the term head to refer exclusively
+to a label on exactly one commit; while the term branch may also
+sometimes be used to refer not only to the commit labeled by the
+head but that commit and all the commits that proceed it in the
+repository.
+
 
 .. figure:: ../figs/HEAD_testing.png
    :width: 50%
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
+
+   In this example there are two heads or branches, *master* and *testing*,
+   and *testing* is the currently active branch since it's what *HEAD* points
+   to.
 
    Credit: ProGit book, by Scott Chacon, CC License.
 
@@ -328,6 +413,11 @@ with the new commits:
    :width: 80%
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
 
+   In this example (notice that HEAD is not shown), the branch
+   master and iss53 share a common history up to commit C2.
+   However, the branch iss53 differs from master as it
+   has the additional commit C3.
+
    Credit: ProGit book, by Scott Chacon, CC License.
 
 This allows the history of both branches to diverge:
@@ -336,9 +426,13 @@ This allows the history of both branches to diverge:
    :width: 60%
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
 
+   Here both master and iss53 have a shared history up to
+   the commit C2.  However they both have commits that the
+   other lacks after their shared ancestor.
+
    Credit: ProGit book, by Scott Chacon, CC License.
 
-But based on this graph structure, git can compute the necessary information to
+But based on this graph structure, Git can compute the necessary information to
 merge the divergent branches back and continue with a unified line of
 development:
 
@@ -382,6 +476,16 @@ Now merge experimental branch::
   ls
   git merge experiment
   git slog
+
+.. note::
+   We've seen that Git has multiple ways for referring to a commit.
+
+   #. Using the full hash, which you can find using ``git log``
+   #. Using the first few characters of the hash (as long as there is no
+      ambiquity)
+   #. Using a head label (e.g., ``HEAD`` or ``master``)
+   #. Relative to a specified commit (e.g., ``HEAD^`` is the parent of the
+      current head commit)
 
 Stage III: Using remotes as a single user
 =========================================

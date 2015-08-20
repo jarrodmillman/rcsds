@@ -11,6 +11,6 @@ Core Topics
    python.rst
    numpy.rst
    git-advanced.rst
-   eda.rst
-   organize-automate.rst
-   statistics.rst
+   #eda.rst
+   #organize-automate.rst
+   #statistics.rst

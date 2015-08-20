@@ -2,6 +2,9 @@
 Python introduction
 *******************
 
+.. contents::
+
+
 Brief review of basic Python. To begin, sign onto your GitHub account
 and fork the bootcamp repository:
 https://github.com/jarrodmillman/python-bootcamp-2015.

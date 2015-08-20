@@ -1,4 +1,4 @@
-.. _command-more:
+.. _more:
 
 more
 ====

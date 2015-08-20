@@ -1,4 +1,4 @@
-.. _command-gzip:
+.. _gzip:
 
 gzip
 ====

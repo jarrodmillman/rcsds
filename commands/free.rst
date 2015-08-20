@@ -1,4 +1,4 @@
-.. _command-free:
+.. _free:
 
 free
 ====

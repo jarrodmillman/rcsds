@@ -1,4 +1,4 @@
-.. _command-sudo:
+.. _sudo:
 
 sudo
 ====

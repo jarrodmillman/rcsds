@@ -1,6 +1,9 @@
 Scientific computing with Python
 ================================
 
+.. contents::
+
+
 Introduce Python’s core numerical, scientific, and plotting packages.
 
 -  Fernando Pérez, Brian E. Granger, and John D. Hunter. “Python: an

@@ -1,4 +1,4 @@
-.. _command-cp:
+.. _cp:
 
 cp
 ==

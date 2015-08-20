@@ -1,4 +1,4 @@
-.. _command-stat:
+.. _stat:
 
 stat
 ====

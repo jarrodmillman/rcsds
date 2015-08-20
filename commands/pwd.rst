@@ -1,4 +1,4 @@
-.. _command-pwd:
+.. _pwd:
 
 pwd
 ===

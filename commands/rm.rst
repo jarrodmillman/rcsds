@@ -1,4 +1,4 @@
-.. _command-rm:
+.. _rm:
 
 rm
 ==

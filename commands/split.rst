@@ -1,4 +1,4 @@
-.. _command-split:
+.. _split:
 
 split
 =====

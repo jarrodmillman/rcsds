@@ -1,4 +1,4 @@
-.. _command-uniq:
+.. _uniq:
 
 uniq
 ====

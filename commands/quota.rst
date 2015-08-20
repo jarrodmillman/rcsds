@@ -1,4 +1,4 @@
-.. _command-quota:
+.. _quota:
 
 quota
 =====

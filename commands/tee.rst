@@ -1,4 +1,4 @@
-.. _command-tee:
+.. _tee:
 
 tee
 ===

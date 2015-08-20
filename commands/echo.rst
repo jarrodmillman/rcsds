@@ -1,4 +1,4 @@
-.. _command-echo:
+.. _echo:
 
 echo
 ====

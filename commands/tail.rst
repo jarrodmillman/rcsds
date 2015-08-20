@@ -1,4 +1,4 @@
-.. _command-tail:
+.. _tail:
 
 tail
 ====

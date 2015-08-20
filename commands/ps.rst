@@ -1,4 +1,4 @@
-.. _command-ps:
+.. _ps:
 
 ps
 ==

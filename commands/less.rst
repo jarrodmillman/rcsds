@@ -1,4 +1,4 @@
-.. _command-less:
+.. _less:
 
 less
 ====
