@@ -1,4 +1,4 @@
-.. _command-grep:
+.. _grep:
 
 grep
 ====

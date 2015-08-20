@@ -1,4 +1,4 @@
-.. _command-paste:
+.. _paste:
 
 paste
 =====

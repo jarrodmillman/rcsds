@@ -1,4 +1,4 @@
-.. _command-clear:
+.. _clear:
 
 clear
 =====

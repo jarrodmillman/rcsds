@@ -1,4 +1,4 @@
-.. _command-tr:
+.. _tr:
 
 tr
 ==

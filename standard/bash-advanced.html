@@ -41,89 +41,92 @@
           <div class="body" role="main">
             
   <div class="section" id="advanced-bash">
-<span id="bash-advanced"></span><h1><a class="toc-backref" href="#id1">Advanced Bash</a><a class="headerlink" href="#advanced-bash" title="Permalink to this headline">¶</a></h1>
+<span id="bash-advanced"></span><h1><a class="toc-backref" href="#id4">Advanced Bash</a><a class="headerlink" href="#advanced-bash" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#advanced-bash" id="id1">Advanced Bash</a><ul>
-<li><a class="reference internal" href="#the-interactive-shell" id="id2">The Interactive Shell</a><ul>
-<li><a class="reference internal" href="#logging-in" id="id3">Logging In</a></li>
-<li><a class="reference internal" href="#variables" id="id4">Variables</a></li>
-<li><a class="reference internal" href="#commands" id="id5">Commands</a></li>
-<li><a class="reference internal" href="#shortcuts" id="id6">Shortcuts</a></li>
+<li><a class="reference internal" href="#advanced-bash" id="id4">Advanced Bash</a><ul>
+<li><a class="reference internal" href="#the-interactive-shell" id="id5">The Interactive Shell</a><ul>
+<li><a class="reference internal" href="#logging-in" id="id6">Logging In</a></li>
+<li><a class="reference internal" href="#variables" id="id7">Variables</a></li>
+<li><a class="reference internal" href="#commands" id="id8">Commands</a></li>
+<li><a class="reference internal" href="#shortcuts" id="id9">Shortcuts</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#basic-file-management" id="id7">Basic File Management</a><ul>
-<li><a class="reference internal" href="#files" id="id8">Files</a></li>
-<li><a class="reference internal" href="#navigation" id="id9">Navigation</a></li>
-<li><a class="reference internal" href="#manipulation" id="id10">Manipulation</a></li>
-<li><a class="reference internal" href="#filename-globbing" id="id11">Filename Globbing</a></li>
-<li><a class="reference internal" href="#quoting" id="id12">Quoting</a></li>
+<li><a class="reference internal" href="#basic-file-management" id="id10">Basic File Management</a><ul>
+<li><a class="reference internal" href="#files" id="id11">Files</a></li>
+<li><a class="reference internal" href="#navigation" id="id12">Navigation</a></li>
+<li><a class="reference internal" href="#filename-globbing" id="id13">Filename Globbing</a></li>
+<li><a class="reference internal" href="#quoting" id="id14">Quoting</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#data-manipulation" id="id13">Data Manipulation</a><ul>
-<li><a class="reference internal" href="#finding-files" id="id14">Finding Files</a></li>
-<li><a class="reference internal" href="#regular-expressions" id="id15">Regular Expressions</a></li>
-<li><a class="reference internal" href="#ed-and-grep" id="id16"><strong>ed</strong> and <strong>grep</strong></a></li>
-<li><a class="reference internal" href="#sed-and-awk" id="id17"><strong>sed</strong> and <strong>awk</strong></a></li>
-<li><a class="reference internal" href="#perl" id="id18"><strong>perl</strong></a></li>
+<li><a class="reference internal" href="#data-manipulation" id="id15">Data Manipulation</a><ul>
+<li><a class="reference internal" href="#finding-files" id="id16">Finding Files</a></li>
+<li><a class="reference internal" href="#regular-expressions" id="id17">Regular Expressions</a></li>
+<li><a class="reference internal" href="#ed-and-grep" id="id18"><strong>ed</strong> and <strong>grep</strong></a></li>
+<li><a class="reference internal" href="#sed-and-awk" id="id19"><strong>sed</strong> and <strong>awk</strong></a></li>
+<li><a class="reference internal" href="#perl" id="id20"><strong>perl</strong></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#streams-pipes-and-redirects" id="id19">Streams, Pipes, and Redirects</a><ul>
-<li><a class="reference internal" href="#default-file-descriptors" id="id20">Default File Descriptors</a></li>
-<li><a class="reference internal" href="#io-redirection" id="id21">IO Redirection</a></li>
+<li><a class="reference internal" href="#streams-pipes-and-redirects" id="id21">Streams, Pipes, and Redirects</a><ul>
+<li><a class="reference internal" href="#default-file-descriptors" id="id22">Default File Descriptors</a></li>
+<li><a class="reference internal" href="#io-redirection" id="id23">IO Redirection</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#creating-monitoring-and-killing-processes" id="id22">Creating, Monitoring, and Killing Processes</a><ul>
-<li><a class="reference internal" href="#processes" id="id23">Processes</a></li>
-<li><a class="reference internal" href="#monitoring-processes" id="id24">Monitoring Processes</a></li>
-<li><a class="reference internal" href="#signaling-processes" id="id25">Signaling Processes</a></li>
-<li><a class="reference internal" href="#shell-job-control" id="id26">Shell Job Control</a></li>
+<li><a class="reference internal" href="#creating-monitoring-and-killing-processes" id="id24">Creating, Monitoring, and Killing Processes</a><ul>
+<li><a class="reference internal" href="#processes" id="id25">Processes</a></li>
+<li><a class="reference internal" href="#monitoring-processes" id="id26">Monitoring Processes</a></li>
+<li><a class="reference internal" href="#signaling-processes" id="id27">Signaling Processes</a></li>
+<li><a class="reference internal" href="#shell-job-control" id="id28">Shell Job Control</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#shell-programming" id="id27">Shell programming</a><ul>
-<li><a class="reference internal" href="#functions" id="id28">Functions</a></li>
-<li><a class="reference internal" href="#if-then-else" id="id29">If/then/else</a></li>
-<li><a class="reference internal" href="#for-loops" id="id30">For loops</a></li>
-<li><a class="reference internal" href="#how-much-shell-scripting-should-i-learn" id="id31">How much shell scripting should I learn?</a></li>
+<li><a class="reference internal" href="#shell-programming" id="id29">Shell programming</a><ul>
+<li><a class="reference internal" href="#functions" id="id30">Functions</a></li>
+<li><a class="reference internal" href="#if-then-else" id="id31">If/then/else</a></li>
+<li><a class="reference internal" href="#for-loops" id="id32">For loops</a></li>
+<li><a class="reference internal" href="#how-much-shell-scripting-should-i-learn" id="id33">How much shell scripting should I learn?</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#documentation-tools" id="id32">Documentation tools</a></li>
+<li><a class="reference internal" href="#documentation-tools" id="id34">Documentation tools</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The content of this tutorial was adapted from Chris Paciorek&#8217;s
-<a class="reference external" href="https://github.com/berkeley-stat243/stat243-fall-2014/blob/master/units/unit2-bash.pdf">Statistics 243 lecture notes on Bash</a>.</p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This material assumes that you have already worked through
+<p>Some of the material in this tutorial was adapted from Chris Paciorek&#8217;s
+<a class="reference external" href="https://github.com/berkeley-stat243/stat243-fall-2014/blob/master/units/unit2-bash.pdf">2014 Statistics 243 lecture notes on Bash</a>
+and his <a class="reference external" href="https://github.com/berkeley-stat243/stat243-fall-2014/blob/master/units/unit4-usingR.pdf">2014 Statistics 243 lecture notes on using R</a>.</p>
+<p class="last">Before reading this, you will want to be familiar with the material in
 the &#8220;Basics of UNIX&#8221; tutorial and screencast here:
 <a class="reference external" href="http://statistics.berkeley.edu/computing/training/tutorials">http://statistics.berkeley.edu/computing/training/tutorials</a></p>
 </div>
 <div class="section" id="the-interactive-shell">
-<h2><a class="toc-backref" href="#id2">The Interactive Shell</a><a class="headerlink" href="#the-interactive-shell" title="Permalink to this headline">¶</a></h2>
-<p>In order to be of interest to the user, a computer must have a <em>human interface
-component</em>. A CLI is a text based interface.  The user is given a <em>prompt</em> to
-indicate the computers reeadiness to accept <em>input</em>. The user enters or types a
-<em>command</em> on the line (or lines) following the prompt. The computer,
-consequently, executes or interprets the command and prompts the user when its
-finished.</p>
-<p>The program which prompts the user and interprets the user&#8217;s commands is called
-a <em>shell</em>.  When you are working in a terminal window (i.e., a window with the
-command line interface), you’re interacting with a shell.</p>
-<p>There are multiple shells (<em>sh</em>, <em>bash</em>, <em>csh</em>, <em>tcsh</em>, <em>zsh</em>, <em>fish</em>).  Since
-We&#8217;ll assume usage of <em>bash</em>, as this is the default for Mac OS X, the BCE VM,
-the SCF machines and most Linux distributions.  However, the basic ideas are
-applicable to any of UNIX&#8217;s shells.</p>
-<p>As you will see the shell is an amazingly powerful programming environment.
-From it you can interactively control almost any aspect of the OS and more
-importantly you can automate it. As you will see, <strong>bash</strong> has a very extensive
-set of capabalities intended to make both interactive as well as automated
-control simple, effective, and customizable.</p>
+<h2><a class="toc-backref" href="#id5">The Interactive Shell</a><a class="headerlink" href="#the-interactive-shell" title="Permalink to this headline">¶</a></h2>
+<p>The shell is an interactive computer programming environment. More
+specifically, it is a read-evaluate-print loop (REPL) environment.  R and
+Python also provide REPL environments. A REPL reads a single expression or
+input, parses and evaluates it, prints the results, and then loops.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">I will use a <code class="docutils literal"><span class="pre">$</span></code> prompt for bash, a <code class="docutils literal"><span class="pre">&gt;</span></code> prompt for R, and a <code class="docutils literal"><span class="pre">&gt;&gt;&gt;</span></code>
+for Python, and a <code class="docutils literal"><span class="pre">In</span> <span class="pre">[#]:</span></code> prompt for IPython. By convention, a
+regular user&#8217;s prompt in bash is <code class="docutils literal"><span class="pre">$</span></code>, while the root (or administrative)
+user&#8217;s prompt is <code class="docutils literal"><span class="pre">#</span></code>.  However, it is common practice to never log
+on as the root user.  If you need to run a command with root priveleges,
+you should use the <code class="docutils literal"><span class="pre">sudo</span></code> command (see the section on <em>Logging In</em>
+below for more details).</p>
+</div>
+<p>When you are working in a terminal window (i.e., a window with the command line
+interface), you’re interacting with a shell.  There are multiple shells (<em>sh</em>,
+<em>bash</em>, <em>csh</em>, <em>tcsh</em>, <em>zsh</em>, <em>fish</em>).  I&#8217;ll assume you are using <em>bash</em>, as
+this is the default for Mac OS X, the BCE VM, the SCF machines and most Linux
+distributions.  However, the basic ideas are applicable to any Unix shell.</p>
+<p>The shell is an amazingly powerful programming environment.
+From it you can interactively monitor and control almost any aspect of the OS
+and more importantly you can automate it. As you will see, <strong>bash</strong> has a very
+extensive set of capabalities intended to make both interactive as well as
+automated control simple, effective, and customizable.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>It can be difficult to distinguish what is shell-specific and
@@ -132,29 +135,34 @@ bash-specific but general to UNIX.</p>
 <p class="last">Reference: Newham and Rosenblatt, Learning the bash Shell, 2nd ed.</p>
 </div>
 <div class="section" id="logging-in">
-<h3><a class="toc-backref" href="#id3">Logging In</a><a class="headerlink" href="#logging-in" title="Permalink to this headline">¶</a></h3>
-<p><strong>Useful Commands</strong></p>
+<h3><a class="toc-backref" href="#id6">Logging In</a><a class="headerlink" href="#logging-in" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="../commands/su.html#command-su"><span>su</span></a> &#8211;&nbsp;run a shell with substitute user and group IDs</li>
-<li><a class="reference internal" href="../commands/sudo.html#command-sudo"><span>sudo</span></a> &#8211;&nbsp;execute a command as another user</li>
+<li><a class="reference internal" href="../commands/su.html#su"><span>su</span></a> &#8211;&nbsp;run a shell with substitute user and group IDs</li>
+<li><a class="reference internal" href="../commands/sudo.html#sudo"><span>sudo</span></a> &#8211;&nbsp;execute a command as another user</li>
 </ul>
-<p>We assume that you already are able to access a terminal from the BCE VM.
+<p>You should already be able to access a terminal from the BCE VM.
 However, it is occassionally useful to operate as a different user.  For
 instance, you may need to change file permissions or install software.
 As you work through this tutorial, we will see examples of this.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>Most bash commands have electronic manual pages, which are accessible
+directly from the commandline.  You will be more efficient and effective
+if you become accustomed to using these <code class="docutils literal"><span class="pre">man</span></code> pages.  To view the <code class="docutils literal"><span class="pre">man</span></code>
+page for the command <code class="docutils literal"><span class="pre">su</span></code>, for instance, you would type:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ man su
+</pre></div>
+</div>
+<p class="last">Compare this output to the this <a class="reference internal" href="../commands/su.html#su"><span>su</span></a> page.</p>
+</div>
 </div>
 <div class="section" id="variables">
-<h3><a class="toc-backref" href="#id4">Variables</a><a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
-<p><strong>Useful Commands</strong></p>
+<h3><a class="toc-backref" href="#id7">Variables</a><a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="../commands/echo.html#command-echo"><span>echo</span></a> &#8211;&nbsp;display a line of text</li>
-<li><a class="reference internal" href="../commands/which.html#command-which"><span>which</span></a> &#8211;&nbsp;shows the full path of (shell) commands.</li>
-<li><a class="reference internal" href="../commands/man.html#command-man"><span>man</span></a> &#8211;&nbsp;format and display the on-line manual pages</li>
-<li><code class="docutils literal"><span class="pre">printenv</span></code> &#8211; print all or part of environment</li>
-</ul>
-<p><strong>Standard Variables</strong></p>
-<ul class="simple">
-<li>SHELL, HOME, PS1, PATH</li>
+<li><a class="reference internal" href="../commands/echo.html#echo"><span>echo</span></a> &#8211;&nbsp;display a line of text</li>
+<li><a class="reference internal" href="../commands/which.html#which"><span>which</span></a> &#8211;&nbsp;shows the full path of (shell) commands.</li>
+<li><a class="reference internal" href="../commands/man.html#man"><span>man</span></a> &#8211;&nbsp;format and display the on-line manual pages</li>
+<li><a class="reference internal" href="../commands/printenv.html#printenv"><span>printenv</span></a> &#8211; print all or part of environment</li>
 </ul>
 <p>Much of how bash behaves can be customized through the use of variables,
 which consists of names that have values assigned to them.  To access
@@ -175,91 +183,59 @@ command.</p>
 <li><div class="first line-block">
 <div class="line">To make it your default:</div>
 <div class="line"><code class="docutils literal"><span class="pre">$</span> <span class="pre">chsh</span> <span class="pre">/bin/bash</span></code></div>
-<div class="line"><em>/bin/bash</em> should be whatever the path to the bash shell is, which
-you can figure out using <code class="docutils literal"><span class="pre">which</span> <span class="pre">bash</span></code></div>
 </div>
 </li>
 </ol>
-<p>To see how this works, let&#8217;s work with the</p>
-<p><strong>Example 2-1. PS1: Prompt String 1</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>[user1@local1 src]$ echo $PS1
-[\u@\h \W]\$
+<p>In the last example, <code class="docutils literal"><span class="pre">/bin/bash</span></code> should be whatever the path to the bash shell
+is, which you can figure out using <code class="docutils literal"><span class="pre">which</span> <span class="pre">bash</span></code>.</p>
+<p>To declare a variable, just assign a value to its reference.
+For example, if you want to make a new variable with the name
+<code class="docutils literal"><span class="pre">counter</span></code> with the value <code class="docutils literal"><span class="pre">1</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ counter=1
 </pre></div>
 </div>
-<p><strong>Example 2-2. Changing PS1</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>[user1@local1 src]$ PS1=$
-$ bash
-[user1@local1 src]$ export PS1=$
-$ bash
-$
-</pre></div>
-</div>
-<p>Shell commands can be saved in a file (with extension <em>.sh</em>) and this
-file can be executed as if it were a program. To run a shell script
-called <em>file.sh</em>, you would type <code class="docutils literal"><span class="pre">./file.sh</span></code>. Note that if you just
-typed`` file.sh``, the operating system will generally have trouble
-finding the script and recognizing that it is executable. To be sure
-that the operating system knows what shell to use to interpret the
-script, the first line of the script should be <code class="docutils literal"><span class="pre">#!/bin/bash</span></code> (in the
-case that you’re using the bash shell). Also, <em>file.sh</em> would need to be
-executable (i.e., to have the ’x’ flag set).</p>
-<p><strong>Example 2-3. PATH</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>$ echo $PATH
-/bin:/usr/bin:/usr/X11R6/bin:/usr/local/bin
-</pre></div>
-</div>
-<p><strong>Example 2-4. Finding **echo</strong> with <strong>which**</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>$ which echo
-/bin/echo
-</pre></div>
-</div>
-<p>We can define shell variables that will help us when writing shell
-scripts. Here’s an example of defining a variable:</p>
-<div class="line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">myDir=~/stat243-fall-2014/units</span></code></div>
-<div class="line">The shell may not like it if you leave any spaces around the = sign.
-To see the value of a variable we need to precede it by <em>$</em>:</div>
-</div>
-<p><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">echo</span> <span class="pre">$myDir</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">cd</span> <span class="pre">$myDir</span></code></p>
+<p>Since bash uses spaces to parse the expression you give it as input,
+it is important to note the lack of spaces around the equal sign.
+Try typing the command with and without spaces and note what happens.</p>
 <p>You can also enclose the variable name in curly brackets, which comes in
-handy when we’re embedding a variable within a line of code to make sure
+handy when you&#8217;re embedding a variable within a line of code to make sure
 the shell knows where the variable name ends:</p>
-<p><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">echo</span> <span class="pre">${myDir}</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">touch</span> <span class="pre">${myDir}/tmp.txt</span></code></p>
-<p>There are also special shell variables called environment variables that
-help to control the shell’s behavior. These are generally named in all
-caps. Type <code class="docutils literal"><span class="pre">env</span></code> to see them. You can create your own environment
-variable as follows:</p>
-<div class="line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">export</span> <span class="pre">myDir=~/stat243-fall-2014/units</span></code></div>
-<div class="line">The <em>export</em> command ensures that other shells created by the current
-shell (for example, to run a program) will inherit the variable.
-Without the export command, any shell variables that are set will only
-be modified within the current shell. More generally, if one wants a
-variable to always be accessible, one would include the definition of
-the variable with an <em>export</em> command in your <em>.bashrc</em> file.</div>
+<div class="highlight-python"><div class="highlight"><pre>$ base=/home/jarrod/
+$ echo $basesrc
+$ echo ${base}src
+</pre></div>
 </div>
-<p>Here’s an example of an environment variable that controls what your
-prompt looks like. We can modify it so that it puts the username,
-hostname, and pwd in your prompt. This is handy so you know what machine
-you’re on and where in the filesystem you are. [Note that on the VM, PS1
-is already set in a very similar manner.]</p>
-<p><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">echo</span> <span class="pre">$PS1</span></code></p>
-<dl class="docutils">
-<dt>::</dt>
-<dd>&gt; export <a class="reference external" href="mailto:PS1=u&#37;&#52;&#48;h">PS1=u<span>&#64;</span>h</a>:w&gt;</dd>
-</dl>
-<p>For me, this is one of the most important things to put in my
-<em>.bashrc</em> file. The <strong>\</strong> syntax tells bash what to put in the prompt
-string: <em>u</em> for username, <em>h</em> for hostname, and <em>w</em> for working
-directory.</p>
+<p>Make sure you understand the difference in behavior in the last two lines.</p>
+<p>There are also special shell variables called environment variables that help
+to control the shell&#8217;s behavior. These are generally named in all caps. Type
+<code class="docutils literal"><span class="pre">printenv</span></code> to see them. You can create your own environment variable as
+follows:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ export base=/home/jarrod/
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">export</span></code> command ensures that other shells created by the current shell
+(for example, to run a program) will inherit the variable.  Without the export
+command, any shell variables that are set will only be modified within the
+current shell. More generally, if you want a variable to always be accessible,
+you should include the definition of the variable with an <code class="docutils literal"><span class="pre">export</span></code> command in
+your <code class="docutils literal"><span class="pre">.bashrc</span></code> file.</p>
+<p>You can control the appearance of the bash prompt using the <code class="docutils literal"><span class="pre">PS1</span></code>
+variable:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo $PS1
+</pre></div>
+</div>
+<p>To modify it so that it puts the username, hostname, and current working
+directory in the prompt:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ export PS1=&#39;[\u@\h \W]\$ &#39;
+[user1@local1 ~]$
+</pre></div>
+</div>
+<p><strong>Maybe something about PATH</strong></p>
 </div>
 <div class="section" id="commands">
-<h3><a class="toc-backref" href="#id5">Commands</a><a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h3>
-<p><strong>Useful Commands</strong></p>
+<h3><a class="toc-backref" href="#id8">Commands</a><a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="../commands/ls.html#command-ls"><span>ls</span></a> &#8211;&nbsp;list directory contents</li>
+<li><a class="reference internal" href="../commands/ls.html#ls"><span>ls</span></a> &#8211;&nbsp;list directory contents</li>
 </ul>
 <p>While each command has its own syntax, there are some rules usually
 followed. Generally, a command line consists of 4 things:</p>
@@ -269,44 +245,32 @@ followed. Generally, a command line consists of 4 things:</p>
 <li>arguments</li>
 <li>line acceptance</li>
 </ol>
-<p><strong>Example 2-6. General Command Syntax</strong></p>
+<div class="section" id="exercise">
+<h4>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h4>
+<p>Consider the following examples using the <code class="docutils literal"><span class="pre">ls</span></code> command:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ ls --all -l
-total 44
-drwxr-xr-x    2 user1   group1          4096 Feb 26 19:06 .
-drwx------   63 user1   group1         12288 Feb 26 19:04 ..
--rw-r--r--    1 user1   group1         28251 Feb 26 19:01 manual.xml
-
 $ ls -a -l
-total 44
-drwxr-xr-x    2 user1   group1          4096 Feb 26 19:06 .
-drwx------   63 user1   group1         12288 Feb 26 19:04 ..
--rw-r--r--    1 user1   group1         28251 Feb 26 19:01 manual.xml
-
 $ ls -al
-total 44
-drwxr-xr-x    2 user1   group1          4096 Feb 26 19:06 .
-drwx------   63 user1   group1         12288 Feb 26 19:04 ..
--rw-r--r--    1 user1   group1         28251 Feb 26 19:01 manual.xml
-
-$ ls -al manual.xml
--rw-r--r--    1 user1   group1         28251 Feb 26 19:01 manual.xml
 </pre></div>
+</div>
+<p>Use <code class="docutils literal"><span class="pre">man</span> <span class="pre">ls</span></code> to see what the command options do.  Is there any difference
+in what the three versions of the command invocation above return as
+the result?  What happens if you add a filename to the end of the command?</p>
 </div>
 <div class="section" id="tab-completion">
 <h4>Tab completion<a class="headerlink" href="#tab-completion" title="Permalink to this headline">¶</a></h4>
 <p>When working in the shell, it is often unnecessary to type out an entire
-command or file name, because of a feature known as tab completion. When
-you are entering a command or filename in the shell, you can, at any
-time, hit the tab key, and the shell will try to figure out how to
-complete the name of the command or filename you are typing. If there is
-only one command in the search path and you’re using tab completion with
-the first token of a line, then the shell will display its value and the
-cursor will be one space past the completed name. If there are multiple
-commands that match the partial name, the shell will display as much as
-it can. In this case, hitting tab twice will display a list of choices,
-and redisplay the partial command line for further editing. Similar
-behavior with regard to filenames occurs when tab completion is used on
-anything other than the first token of a command.</p>
+command or file name, because of a feature known as tab completion. When you
+are entering a command or filename in the shell, you can, at any time, hit the
+tab key, and the shell will try to figure out how to complete the name of the
+command or filename you are typing. If there is only one command in the search
+path and you’re using tab completion with the first token of a line, then the
+shell will display its value and the cursor will be one space past the
+completed name. If there are multiple commands that match the partial name, the
+shell will display as much as it can. In this case, hitting tab twice will
+display a list of choices, and redisplay the partial command line for further
+editing. Similar behavior with regard to filenames occurs when tab completion
+is used on anything other than the first token of a command.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Note that R does tab completion for objects (including functions) and
@@ -315,15 +279,14 @@ filenames.</p>
 </div>
 <div class="section" id="command-history-and-editing">
 <h4>Command History and Editing<a class="headerlink" href="#command-history-and-editing" title="Permalink to this headline">¶</a></h4>
-<p><strong>Useful Commands</strong></p>
 <ul class="simple">
-<li><a class="reference internal" href="../commands/history.html#command-history"><span>history</span></a> &#8211;&nbsp;lists the history of entered commands</li>
+<li><a class="reference internal" href="../commands/history.html#history"><span>history</span></a> &#8211;&nbsp;lists the history of entered commands</li>
 </ul>
-<p><strong>Example 2-7. Examing your command history with **history**</strong></p>
 <p>By using the up and down arrows, you can scroll through commands that
 you have entered previously. So if you want to rerun the same command,
 or fix a typo in a command you entered, just scroll up to it and hit
 enter to run it or edit the line and then hit enter.</p>
+<p>To list the history of the commands you entered, use the <code class="docutils literal"><span class="pre">history</span></code> command:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ history
   1    echo $PS1
   2    PS1=$
@@ -338,17 +301,20 @@ enter to run it or edit the line and then hit enter.</p>
   11   ls -al manual.xml
 </pre></div>
 </div>
-<p><strong>Example 2-8. Where is the **history</strong> information kept?**</p>
+<p>The behavior of the <strong>history</strong> command is controlled by a couple of shell
+variables:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ echo $HISTFILE
-/group1/user1/.bash_history
 $ echo $HISTSIZE
-1000
 </pre></div>
 </div>
 <p>You can also rerun previous commands as follows:</p>
-<p><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">!-n</span> <span class="pre">#</span> <span class="pre">runs</span> <span class="pre">the</span> <span class="pre">``\</span> <span class="pre">``n</span></code><code class="docutils literal"><span class="pre">th</span> <span class="pre">previous</span> <span class="pre">command</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">!gi</span> <span class="pre">#</span> <span class="pre">runs</span> <span class="pre">the</span> <span class="pre">last</span> <span class="pre">command</span> <span class="pre">that</span> <span class="pre">started</span> <span class="pre">with</span> <span class="pre">’gi’</span></code></p>
-<p><strong>Table 2-1. Command History Expansion</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>$ !-n # runs the ``\ ``n``\ ``th previous command
+$ !gi # runs the last command that started with &#39;gi&#39;
+</pre></div>
+</div>
+<p>The first example runs the nth previous command and the second one runs the
+last command that started with &#8216;gi&#8217;.</p>
+<p><strong>Table. Command History Expansion</strong></p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="26%" />
@@ -381,69 +347,81 @@ substituted for <em>string1</em></td>
 </tr>
 </tbody>
 </table>
-<p>If you’re not sure what command you’re going to recall, you can append
+<p>If you&#8217;re not sure what command you&#8217;re going to recall, you can append
 <code class="docutils literal"><span class="pre">:p</span></code> at the end of the text you type to do the recall, and the result
 will be printed, but not executed. For example:</p>
-<div class="line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">!gi:p</span></code></div>
-<div class="line">You can then use the up arrow key to bring back that statement for
-editing or execution.</div>
-</div>
-<p>You can also search for commands by doing <code class="docutils literal"><span class="pre">C-r</span></code> and typing a string of
-characters to search for in the search history. You can hit return to
-submit, <code class="docutils literal"><span class="pre">C-c</span></code> to get out, or <code class="docutils literal"><span class="pre">ESC</span></code> to put the result on the regular
-command line for editing.</p>
-</div>
-<div class="section" id="command-completion-and-substitution">
-<h4>Command Completion and Substitution<a class="headerlink" href="#command-completion-and-substitution" title="Permalink to this headline">¶</a></h4>
-<p><strong>Example 2-9. Command Substitution</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>$ ls -l echo
-ls: echo: No such file or directory
-$ ls -l $(which echo)
--rwxr-xr-x    1 root     root        11704 Mar  7  2002 /bin/echo
+<div class="highlight-python"><div class="highlight"><pre>$ !gi:p
 </pre></div>
 </div>
+<p>You can then use the up arrow key to bring back that statement for editing or
+execution.</p>
+<p>You can also search for commands by doing <code class="docutils literal"><span class="pre">Ctrl-r</span></code> and typing a string of
+characters to search for in the search history. You can hit return to submit,
+<code class="docutils literal"><span class="pre">Ctrl-c</span></code> to get out, or <code class="docutils literal"><span class="pre">ESC</span></code> to put the result on the regular command line
+for editing.</p>
+</div>
+<div class="section" id="command-substitution">
+<h4>Command Substitution<a class="headerlink" href="#command-substitution" title="Permalink to this headline">¶</a></h4>
+<p>You may occassionally need to substitute the results of a command for use by
+another command.  For example, if you wanted to use the directory listing
+returned by <code class="docutils literal"><span class="pre">ls</span></code> as the argument to another command, you would type
+<code class="docutils literal"><span class="pre">$(ls)</span></code> in the location you want the result of <code class="docutils literal"><span class="pre">ls</span></code> to appear.</p>
+</div>
+<div class="section" id="id1">
+<h4>Exercise<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<p>Try the following commands:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls -l echo
+$ which echo
+$ ls -l which echo
+$ ls -l $(which echo)
+</pre></div>
+</div>
+<p>Make sure you understand why each command behaves as it does.</p>
 </div>
 </div>
 <div class="section" id="shortcuts">
-<h3><a class="toc-backref" href="#id6">Shortcuts</a><a class="headerlink" href="#shortcuts" title="Permalink to this headline">¶</a></h3>
-<p><strong>Useful Commands</strong></p>
+<h3><a class="toc-backref" href="#id9">Shortcuts</a><a class="headerlink" href="#shortcuts" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="../commands/clear.html#command-clear"><span>clear</span></a> &#8211;&nbsp;clear the terminal screen</li>
+<li><a class="reference internal" href="../commands/alias.html#alias"><span>alias</span></a> &#8211;&nbsp;set aliases</li>
+<li><a class="reference internal" href="../commands/clear.html#clear"><span>clear</span></a> &#8211;&nbsp;clear the terminal screen</li>
 </ul>
-<p>Aliases &#8211; command shortcuts</p>
+<div class="section" id="aliases-command-shortcuts">
+<h4>Aliases &#8211; command shortcuts<a class="headerlink" href="#aliases-command-shortcuts" title="Permalink to this headline">¶</a></h4>
 <p>Aliases allow you to use an abbreviation for a command, to create new
 functionality or to insure that certain options are always used when you
 call an existing command. For example, I’m lazy and would rather type
 <code class="docutils literal"><span class="pre">q</span></code> instead of <code class="docutils literal"><span class="pre">exit</span></code> to terminate a shell window. You could create
-the alias as follow</p>
-<div class="line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">alias</span> <span class="pre">q=exit</span></code></div>
-<div class="line">As another example, suppose you find the <em>-F</em> option of <em>ls</em> (which
-displays <strong>*/*</strong> after directories, <strong>***</strong> after executable files
-and <strong>*&#64;*</strong> after links) to be very useful. The command</div>
+the alias as follow:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ alias q=exit
+</pre></div>
 </div>
-<dl class="docutils">
-<dt>::</dt>
-<dd>&gt; alias ls=ls -F</dd>
-</dl>
-<p>will insure that the <em>-F</em> option will be used whenever you use <em>ls</em>.
+<p>As another example, suppose you find the <code class="docutils literal"><span class="pre">-F</span></code> option of <code class="docutils literal"><span class="pre">ls</span></code> (which
+displays <code class="docutils literal"><span class="pre">/</span></code> after directories, <code class="docutils literal"><span class="pre">\</span></code> after executable files
+and <code class="docutils literal"><span class="pre">&#64;</span></code> after links) to be very useful. The command</p>
+<div class="highlight-python"><div class="highlight"><pre>$ alias ls=ls -F
+</pre></div>
+</div>
+<p>will insure that the <code class="docutils literal"><span class="pre">-F</span></code> option will be used whenever you use <code class="docutils literal"><span class="pre">ls</span></code>.
 If you need to use the unaliased version of something for which you’ve
-created an alias, precede the name with a backslash (<strong>*\*</strong>). For
-example, to use the normal version of <em>ls</em> after you’ve created the
-alias described above, just type</p>
-<p><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">\ls</span></code></p>
+created an alias, precede the name with a backslash (<code class="docutils literal"><span class="pre">\</span></code>). For
+example, to use the normal version of <code class="docutils literal"><span class="pre">ls</span></code> after you’ve created the
+alias described above:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ \ls
+</pre></div>
+</div>
 <p>The real power of aliases is only achieved when they are automatically
 set up whenever you log in to the computer or open a new shell window.
 To achieve that goal with aliases (or any other bash shell commands),
-simply insert the commands in the file <em>.bashrc</em> in your home directory.
-See the <em>example.bashrc</em> file in the repository for some of what’s in my
-<em>.bashrc</em> file.</p>
-<p>Keyboard shorcuts</p>
-<p>Note that you can use emacs-like control sequences (<code class="docutils literal"><span class="pre">C-a</span></code>, <code class="docutils literal"><span class="pre">C-e</span></code>,
-<code class="docutils literal"><span class="pre">C-k</span></code>) to navigate and delete characters, just as you can at the
-prompt in the shell usually.</p>
-<p><strong>Table 2-2. Keyboard Shortcuts</strong></p>
+simply insert the commands in the file <code class="docutils literal"><span class="pre">.bashrc</span></code> in your home directory.</p>
+<p><strong>See the ``example.bashrc`` file in the repository for some of what’s in my
+``.bashrc`` file.</strong></p>
+</div>
+<div class="section" id="keyboard-shorcuts">
+<h4>Keyboard shorcuts<a class="headerlink" href="#keyboard-shorcuts" title="Permalink to this headline">¶</a></h4>
+<p>Note that you can use emacs-like control sequences (<code class="docutils literal"><span class="pre">Ctrl-a</span></code>, <code class="docutils literal"><span class="pre">Ctrl-e</span></code>,
+<code class="docutils literal"><span class="pre">Ctrl-k</span></code>) to navigate and delete characters, just as you can at the prompt in
+the shell usually.</p>
+<p><strong>Table. Keyboard Shortcuts</strong></p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="17%" />
@@ -480,25 +458,32 @@ prompt in the shell usually.</p>
 </table>
 </div>
 </div>
+</div>
 <div class="section" id="basic-file-management">
-<h2><a class="toc-backref" href="#id7">Basic File Management</a><a class="headerlink" href="#basic-file-management" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">Basic File Management</a><a class="headerlink" href="#basic-file-management" title="Permalink to this headline">¶</a></h2>
+<p>In Unix, almost &#8220;Everything is a file.&#8221; This means that a very wide variety
+of input and output resources (e.g., documents, directories, keyboards,
+harddrives, network devices) are streams of bytes available through the
+filesystem interface. This means that the basic file management tools
+are extremely powerful in Unix.  Not only can you use these tools to work
+with files, but you can often use them to monitor and control many aspects
+of your computer.</p>
 <div class="section" id="files">
-<h3><a class="toc-backref" href="#id8">Files</a><a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h3>
-<p><strong>Useful Commands</strong></p>
+<h3><a class="toc-backref" href="#id11">Files</a><a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h3>
 <ul>
-<li><p class="first"><a class="reference internal" href="../commands/stat.html#command-stat"><span>stat</span></a> &#8211;&nbsp;display file or filesystem status</p>
+<li><p class="first"><a class="reference internal" href="../commands/stat.html#stat"><span>stat</span></a> &#8211;&nbsp;display file or filesystem status</p>
 </li>
-<li><p class="first"><a class="reference internal" href="../commands/file.html#command-file"><span>file</span></a> &#8211;&nbsp; determine file type</p>
+<li><p class="first"><a class="reference internal" href="../commands/file.html#file"><span>file</span></a> &#8211;&nbsp; determine file type</p>
 </li>
 <li><dl class="first docutils">
-<dt><a class="reference internal" href="../commands/type.html#command-type"><span>type</span></a> &#8211;&nbsp;For each <em>name</em>, indicate how it would be</dt>
+<dt><a class="reference internal" href="../commands/type.html#type"><span>type</span></a> &#8211;&nbsp;For each <em>name</em>, indicate how it would be</dt>
 <dd><p class="first last">interpreted if used as a command name.</p>
 </dd>
 </dl>
 </li>
-<li><p class="first"><a class="reference internal" href="../commands/ln.html#command-ln"><span>ln</span></a> &#8211;&nbsp;make links between files</p>
+<li><p class="first"><a class="reference internal" href="../commands/ln.html#ln"><span>ln</span></a> &#8211;&nbsp;make links between files</p>
 </li>
-<li><p class="first"><a class="reference internal" href="../commands/chmod.html#command-chmod"><span>chmod</span></a> &#8211;&nbsp;change file access permissions</p>
+<li><p class="first"><a class="reference internal" href="../commands/chmod.html#chmod"><span>chmod</span></a> &#8211;&nbsp;change file access permissions</p>
 </li>
 </ul>
 <p>A file typically consist of these attributes:</p>
@@ -510,122 +495,73 @@ prompt in the shell usually.</p>
 <li>Protection.</li>
 <li>Time, date, and user identification.</li>
 </ul>
-<p>Examples: chmod -c -v -R</p>
-<p><strong>Example 2-10. Examining File Attributes with **ls</strong>, <strong>stat</strong>, and <strong>file**</strong></p>
+<p>Listing file attributes with <code class="docutils literal"><span class="pre">ls</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ ls -l
-total 32
-drwxr-xr-x    3 user1   group1          4096 Mar  3 09:58 db2html-dir
--rw-r--r--    1 user1   group1         48958 Mar  3 09:58 manual.xml
-
-$ stat manual.xml
-  File: &quot;manual.xml&quot;
-  Size: 48958           Blocks: 96         IO Block: 4096   Regular File
-Device: 7h/7d   Inode: 2204387     Links: 1
-Access: (0644/-rw-r--r--)  Uid: (  503/  user1)   Gid: (  551/     group1)
-Access: Mon Mar  3 09:58:44 2003
-Modify: Mon Mar  3 09:58:43 2003
-Change: Mon Mar  3 09:58:43 2003
-
-$ file manual.xml
-manual.xml: exported SGML document text
+</pre></div>
+</div>
+<p>Getting more information with <code class="docutils literal"><span class="pre">stat</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ stat manual.xml
+</pre></div>
+</div>
+<p>Finding out what type of file you have:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ file manual.xml
 </pre></div>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last"><strong>Be aware of Magic:</strong>
-The <em>file</em> command relies on many sources
+<p class="last">The <code class="docutils literal"><span class="pre">file</span></code> command relies on many sources
 of information to determine what a file contains. The easiest part
-to explain is <em>magic</em>. Specifically, the <em>file</em> command examines
+to explain is <em>magic</em>. Specifically, the <code class="docutils literal"><span class="pre">file</span></code> command examines
 the content of the file and compares it with information found in
-the <em>/usr/share/magic/</em> directory.</p>
+the <code class="docutils literal"><span class="pre">/usr/share/magic/</span></code> directory.</p>
 </div>
-<p><strong>Example 2-11. Creating Symbolic Links with **ln**</strong></p>
+<p>Creating symbolic links with <code class="docutils literal"><span class="pre">ln</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ ln -s db2html-dir unix_users_guide
-$ ls -l
-total 32
-drwxr-xr-x    3 user1   group1          4096 Mar  3 09:58 db2html-dir
--rw-r--r--    1 user1   group1         48958 Mar  3 09:58 manual.xml
-lrwxrwxrwx    1 user1   group1            11 Mar  3 10:06 unix_users_guide -&gt; db2html-dir
 </pre></div>
 </div>
-<p><strong>Example 2-12. Changing File Attributes with **chmod**</strong></p>
+<p>Changing file attributes with <code class="docutils literal"><span class="pre">chmod</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ chmod g+w manual.xml
-$ ls -l manual.xml
--rw-rw-r--    1 user1   group1         49889 Mar  3 10:09 manual.xml
 </pre></div>
 </div>
 </div>
 <div class="section" id="navigation">
-<h3><a class="toc-backref" href="#id9">Navigation</a><a class="headerlink" href="#navigation" title="Permalink to this headline">¶</a></h3>
-<p><strong>Useful Commands</strong></p>
+<h3><a class="toc-backref" href="#id12">Navigation</a><a class="headerlink" href="#navigation" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><dl class="first docutils">
-<dt><a class="reference internal" href="../commands/cd.html#command-cd"><span>cd</span></a> &#8211;&nbsp;Change the current working directory to</dt>
+<dt><a class="reference internal" href="../commands/cd.html#cd"><span>cd</span></a> &#8211;&nbsp;Change the current working directory to</dt>
 <dd><p class="first last"><em>directory</em>.</p>
 </dd>
 </dl>
 </li>
-<li><p class="first"><a class="reference internal" href="../commands/pwd.html#command-pwd"><span>pwd</span></a> &#8211;&nbsp;print name of current/working directory</p>
+<li><p class="first"><a class="reference internal" href="../commands/pwd.html#pwd"><span>pwd</span></a> &#8211;&nbsp;print name of current/working directory</p>
 </li>
 </ul>
-<p><strong>Example 2-13. Moving Around the Filesystem with **cd</strong>, ~,and <strong>pwd**</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>$ cd ~
-$ pwd
-/home/user1
+<p>Efficient navigation of the filesystem from the shell is an essential aspect of
+mastering Unix.  Use <code class="docutils literal"><span class="pre">pwd</span></code> to list your current working directory.  If you
+just enter <code class="docutils literal"><span class="pre">cd</span></code> at a prompt, your current working directory will change to
+your home directory.  You can also refer to your home directory using the tilde
+<code class="docutils literal"><span class="pre">~</span></code>.  For example, if you wanted to change your current directory to the
+subdirectory <code class="docutils literal"><span class="pre">src</span></code> in your home directory from any other current directory,
+you could type:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd ~/src
 </pre></div>
 </div>
-</div>
-<div class="section" id="manipulation">
-<h3><a class="toc-backref" href="#id10">Manipulation</a><a class="headerlink" href="#manipulation" title="Permalink to this headline">¶</a></h3>
-<p><strong>Useful Commands</strong></p>
-<ul class="simple">
-<li><a class="reference internal" href="../commands/cat.html#command-cat"><span>cat</span></a> &#8211;&nbsp;concatenate files and print on the standard output</li>
-<li><a class="reference internal" href="../commands/cp.html#command-cp"><span>cp</span></a>&#8211;&nbsp;copy files and directories</li>
-<li><a class="reference internal" href="../commands/diff.html#command-diff"><span>diff</span></a>&#8211;&nbsp;find differences between two files</li>
-<li><a class="reference internal" href="../commands/head.html#command-head"><span>head</span></a> &#8211;&nbsp;output the first part of files</li>
-<li><a class="reference internal" href="../commands/less.html#command-less"><span>less</span></a> &#8211;&nbsp;opposite of more</li>
-<li><a class="reference internal" href="../commands/more.html#command-more"><span>more</span></a> &#8211;&nbsp; file perusal filter for crt viewing</li>
-<li><a class="reference internal" href="../commands/mv.html#command-mv"><span>mv</span></a> &#8211;&nbsp;move (rename) files</li>
-<li><a class="reference internal" href="../commands/paste.html#command-paste"><span>paste</span></a> &#8211;&nbsp;merge lines of files</li>
-<li><a class="reference internal" href="../commands/rm.html#command-rm"><span>rm</span></a> &#8211;&nbsp;remove files or directories</li>
-<li><a class="reference internal" href="../commands/rmdir.html#command-rmdir"><span>rmdir</span></a> &#8211;&nbsp;remove empty directories</li>
-<li><a class="reference internal" href="../commands/sort.html#command-sort"><span>sort</span></a> &#8211;&nbsp;sort lines of text files.</li>
-<li><a class="reference internal" href="../commands/split.html#command-split"><span>split</span></a> &#8211;&nbsp;split a file into pieces</li>
-<li><a class="reference internal" href="../commands/tac.html#command-tac"><span>tac</span></a> &#8211;&nbsp;concatenate and print files in reverse</li>
-<li><a class="reference internal" href="../commands/tail.html#command-tail"><span>tail</span></a> &#8211;&nbsp;output the last part of files</li>
-<li><a class="reference internal" href="../commands/touch.html#command-touch"><span>touch</span></a> &#8211;&nbsp;change file timestamps</li>
-<li><a class="reference internal" href="../commands/uniq.html#command-uniq"><span>uniq</span></a> &#8211;&nbsp; remove duplicate lines from a sorted file</li>
-</ul>
-<p>Examples: touch, cp, mv, rename...</p>
-<div class="highlight-python"><div class="highlight"><pre>$ ls
-dest.txt
-$ cp dest.txt{,.bak}
-$ ls
-dest.txt  dest.txt.bak
+<p>Also if you want to return to the previous directory, you could type:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd -
 </pre></div>
 </div>
-<p><strong>Example 2-14. Manipulating Files with **touch</strong>, <strong>rm</strong>, and <strong>rmdir**</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>$ touch index.rst; rm _build; rmdir _build
-rm: `_build&#39; is a directory
-rmdir: `_build&#39;: Directory not empty
-
-$ rm -Rf _build
-$ ls -l
-total 56
--rw-rw-r--    1 user1   group1         50939 Mar  3 10:23 index.rst
-lrwxrwxrwx    1 user1   group1            11 Mar  3 10:06 doc -&gt; db2html-dir
-</pre></div>
-</div>
+<p>You can use the <code class="docutils literal"><span class="pre">pushd</span></code>, <code class="docutils literal"><span class="pre">popd</span></code>, and <code class="docutils literal"><span class="pre">dirs</span></code> commands if you would
+like to keep a stack of previous working directories rather than just
+the last one.</p>
 </div>
 <div class="section" id="filename-globbing">
-<h3><a class="toc-backref" href="#id11">Filename Globbing</a><a class="headerlink" href="#filename-globbing" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id13">Filename Globbing</a><a class="headerlink" href="#filename-globbing" title="Permalink to this headline">¶</a></h3>
 <p>The shell will expand certain special characters to match patterns of
-file names, before passing those filenames on to a program. Note that
-the programs themselves don’t know anything about wildcards; it is the
-shell that does the expansion, so that programs don’t see the wildcards.
-Table 1 shows some of the special characters that the shell uses for
-expansion:</p>
-<p><strong>Table 2-3. File-Naming Wildcards</strong></p>
+filenames, before passing those filenames on to a program. Note that the
+programs themselves don’t know anything about wildcards; it is the shell that
+does the expansion, so that programs don’t see the wildcards.  Table 1 shows
+some of the special characters that the shell uses for expansion:</p>
+<p><strong>Table. Filename Wildcards</strong></p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="37%" />
@@ -644,82 +580,82 @@ expansion:</p>
 <td>Match exactly one character.</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">[characters]</span></code></td>
-<td><dl class="first last docutils">
-<dt>Match any single character from among <em>characters</em></dt>
-<dd>listed between brackets.</dd>
-</dl>
-</td>
+<td>Match any single character from among <em>characters</em>
+listed between brackets.</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">[!characters]</span></code></td>
-<td><dl class="first last docutils">
-<dt>Match any single character other than <em>characters</em></dt>
-<dd>listed between brackets.</dd>
-</dl>
-</td>
+<td>Match any single character other than <em>characters</em>
+listed between brackets.</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">[a-z]</span></code></td>
-<td><dl class="first last docutils">
-<dt>Match any single character from among the range of</dt>
-<dd>characters listed between brackets.</dd>
-</dl>
-</td>
+<td>Match any single character from among the range of
+characters listed between brackets.</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">[!a-z]</span></code></td>
-<td><dl class="first last docutils">
-<dt>Match any single character from among the characters</dt>
-<dd>not in the range listed between brackets</dd>
-</dl>
-</td>
+<td>Match any single character from among the characters
+not in the range listed between brackets</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">{frag1,</span> <span class="pre">frag2,</span> <span class="pre">frag3,...}</span></code></td>
-<td><dl class="first last docutils">
-<dt>Brace expansion: create strings frag1, frag2, and</dt>
-<dd>frag3, etc.</dd>
-</dl>
-</td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">{frag1,frag2,frag3,...}</span></code></td>
+<td>Brace expansion: create strings frag1, frag2, and
+frag3, etc.</td>
 </tr>
 </tbody>
 </table>
 <p>Here are some examples of using wildcards:</p>
 <ul>
 <li><p class="first">List all files ending with a digit:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; ls *[0-9]
+<div class="highlight-python"><div class="highlight"><pre>$ ls *[0-9]
 </pre></div>
 </div>
 </li>
 <li><p class="first">Make a copy of <em>filename</em> as <em>filename.old</em>:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; cp filename{,.old}
+<div class="highlight-python"><div class="highlight"><pre>$ cp filename{,.old}
 </pre></div>
 </div>
 </li>
 <li><p class="first">Remove all files beginning with <em>a</em> or <em>z</em>:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; rm [az]*
+<div class="highlight-python"><div class="highlight"><pre>$ rm [az]*
 </pre></div>
 </div>
 </li>
 <li><p class="first">List all the R code files with a variety of suffixes:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; ls *.{r,q,R}
+<div class="highlight-python"><div class="highlight"><pre>$ ls *.{r,q,R}
 </pre></div>
 </div>
 </li>
 </ul>
-<p>The <em>echo</em> command can be used to verify that a wildcard expansion will
+<p>The <code class="docutils literal"><span class="pre">echo</span></code> command can be used to verify that a wildcard expansion will
 do what you think it will:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; echo cp filename{,.old} # returns cp filename filename.old
+<div class="highlight-python"><div class="highlight"><pre>$ echo cp filename{,.old} # returns cp filename filename.old
 </pre></div>
 </div>
-<p>If you want to suppress the special meaning of a wildcard in a shell
-command, precede it with a backslash (<strong>*\*</strong>). Note that this is a
-general rule of thumb in many similar situations when a character has a
-special meaning but you just want to treat it as a character.</p>
-<p><strong>Example 2-15. Using brace expansion</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>$ echo file{one,two,three}
-fileone filetwo filethree
+<p>If you want to suppress the special meaning of a wildcard in a shell command,
+precede it with a backslash (<code class="docutils literal"><span class="pre">\</span></code>). Note that this is a general rule of thumb
+in many similar situations when a character has a special meaning but you just
+want to treat it as a character.</p>
+<div class="section" id="id2">
+<h4>Exercise<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>Figure out how to use the <a class="reference internal" href="../commands/mkdir.html#mkdir"><span>mkdir</span></a> command and brace expansion
+to create the following directory structure in one short command:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ tree temp/
+temp/
+├── proj1
+│   ├── code
+│   └── data
+├── proj2
+│   ├── code
+│   └── data
+└── proj3
+    ├── code
+    └── data
+
+9 directories, 0 files
 </pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="quoting">
-<h3><a class="toc-backref" href="#id12">Quoting</a><a class="headerlink" href="#quoting" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14">Quoting</a><a class="headerlink" href="#quoting" title="Permalink to this headline">¶</a></h3>
 <p><strong>Table 2-4. Quotes</strong></p>
 <table border="1" class="docutils">
 <colgroup>
@@ -765,44 +701,89 @@ double quote by escaping it as seen above.</p>
 </div>
 </div>
 <div class="section" id="data-manipulation">
-<h2><a class="toc-backref" href="#id13">Data Manipulation</a><a class="headerlink" href="#data-manipulation" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="finding-files">
-<h3><a class="toc-backref" href="#id14">Finding Files</a><a class="headerlink" href="#finding-files" title="Permalink to this headline">¶</a></h3>
-<p>Useful Contents</p>
+<h2><a class="toc-backref" href="#id15">Data Manipulation</a><a class="headerlink" href="#data-manipulation" title="Permalink to this headline">¶</a></h2>
+<p>Since files are such an essential aspect of Unix and working from the shell is
+the primary way to work with Unix, there are a large number of useful commands
+and tools to view and manipulate files.</p>
 <ul class="simple">
-<li><a class="reference internal" href="../commands/find.html#command-find"><span>find</span></a> &#8211;&nbsp; search for files in a directory hierarchy</li>
+<li><a class="reference internal" href="../commands/cat.html#cat"><span>cat</span></a> &#8211;&nbsp;concatenate files and print on the standard output</li>
+<li><a class="reference internal" href="../commands/cp.html#cp"><span>cp</span></a>&#8211;&nbsp;copy files and directories</li>
+<li><a class="reference internal" href="../commands/diff.html#diff"><span>diff</span></a>&#8211;&nbsp;find differences between two files</li>
+<li><a class="reference internal" href="../commands/head.html#head"><span>head</span></a> &#8211;&nbsp;output the first part of files</li>
+<li><a class="reference internal" href="../commands/less.html#less"><span>less</span></a> &#8211;&nbsp;opposite of more</li>
+<li><a class="reference internal" href="../commands/more.html#more"><span>more</span></a> &#8211;&nbsp; file perusal filter for crt viewing</li>
+<li><a class="reference internal" href="../commands/mv.html#mv"><span>mv</span></a> &#8211;&nbsp;move (rename) files</li>
+<li><a class="reference internal" href="../commands/paste.html#paste"><span>paste</span></a> &#8211;&nbsp;merge lines of files</li>
+<li><a class="reference internal" href="../commands/rm.html#rm"><span>rm</span></a> &#8211;&nbsp;remove files or directories</li>
+<li><a class="reference internal" href="../commands/rmdir.html#rmdir"><span>rmdir</span></a> &#8211;&nbsp;remove empty directories</li>
+<li><a class="reference internal" href="../commands/sort.html#sort"><span>sort</span></a> &#8211;&nbsp;sort lines of text files.</li>
+<li><a class="reference internal" href="../commands/split.html#split"><span>split</span></a> &#8211;&nbsp;split a file into pieces</li>
+<li><a class="reference internal" href="../commands/tac.html#tac"><span>tac</span></a> &#8211;&nbsp;concatenate and print files in reverse</li>
+<li><a class="reference internal" href="../commands/tail.html#tail"><span>tail</span></a> &#8211;&nbsp;output the last part of files</li>
+<li><a class="reference internal" href="../commands/touch.html#touch"><span>touch</span></a> &#8211;&nbsp;change file timestamps</li>
+<li><a class="reference internal" href="../commands/uniq.html#uniq"><span>uniq</span></a> &#8211;&nbsp; remove duplicate lines from a sorted file</li>
 </ul>
-<p><strong>Example 4-1. **find**ing files by name, modification time, and type</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>$ find . -name &#39;*.txt&#39;        # find files named *.txt
-$ find . mtime -2             # find files modified less than 2 days ago
-$ find . type l               # find links
+<p><strong>Exercise</strong></p>
+<p>You&#8217;ve already seen some of the above commands.  Follow the links above and
+while you are reading the abbreviated man pages consider how you might use
+these commands.</p>
+<div class="section" id="finding-files">
+<h3><a class="toc-backref" href="#id16">Finding Files</a><a class="headerlink" href="#finding-files" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="../commands/find.html#find"><span>find</span></a> &#8211;&nbsp; search for files in a directory hierarchy</li>
+</ul>
+<p>Finding files by name, modification time, and type:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ find . -name &#39;*.txt&#39;   # find files named *.txt
+$ find . mtime -2        # find files modified less than 2 days ago
+$ find . type l          # find links
 </pre></div>
 </div>
 </div>
 <div class="section" id="regular-expressions">
-<h3><a class="toc-backref" href="#id15">Regular Expressions</a><a class="headerlink" href="#regular-expressions" title="Permalink to this headline">¶</a></h3>
-<p><strong>Table 4-1. Regular Expressions</strong></p>
-<p>Category</p>
-<p><strong>Position anchors</strong></p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="12%" />
-<col width="88%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Operators</th>
-<th class="head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">^</span></code></td>
-<td>Match the beginning of a line.</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">$</span></code></td>
-<td>Match the end of a line.</td>
-</tr>
-</tbody>
-</table>
+<h3><a class="toc-backref" href="#id17">Regular Expressions</a><a class="headerlink" href="#regular-expressions" title="Permalink to this headline">¶</a></h3>
+<p>Regular expressions (regexp) are a domain-specific language for finding patterns and are
+one of the key functionalities in scripting languages such as Perl and Python,
+as well as the UNIX utilities <code class="docutils literal"><span class="pre">sed</span></code>, <code class="docutils literal"><span class="pre">awk</span></code>, and <code class="docutils literal"><span class="pre">grep</span></code> as we will see
+below. I&#8217;ll just cover the use of regular expressions in bash, but once you
+know that, it would be easy to use them elsewhere (Python, R, etc.).  At the
+level we’ll consider them, the syntax is quite similar.</p>
+<p>The basic idea of regular expressions is that they allow us to find matches of
+strings or patterns in strings, as well as do substitution.  Regular
+expressions are good for tasks such as:</p>
+<ul class="simple">
+<li>extracting pieces of text - for example finding all the links in an
+html document;</li>
+<li>creating variables from information found in text;</li>
+<li>cleaning and transforming text into a uniform format;</li>
+<li>mining text by treating documents as data; and</li>
+<li>scraping the web for data.</li>
+</ul>
+<p>Regular expressions are constructed from three things:</p>
+<ol class="arabic simple">
+<li><em>Literal characters</em> are matched only by the characters themselves,</li>
+<li><em>Character classes</em> are matched by any single member in the class, and</li>
+<li><em>Modifiers</em> operate on either of the above or combinations of them.</li>
+</ol>
+<p>Note that the syntax is very concise, so it’s helpful to break down individual
+regular expressions into the component parts to understand them. Since regexp
+are their own language, it’s a good idea to build up a regexp in pieces as a
+way of avoiding errors just as we would with any computer code. It is also
+helpful to search for common regexp online before trying to craft your own.
+For instance, if you wanted to use a regexp that matches valid email addresses,
+you would need to match anything that complies with the <a class="reference external" href="http://www.ietf.org/rfc/rfc0822.txt?number=822">RFC 822</a> grammar. If you look over that
+document, you will quickly realize that implementing a correct regular expression
+to validate email addresses is extremely complex. So if you are writing a website
+that validates email addresses, it is best to look for a bug-vetted implementation
+rather than rolling your own.</p>
+<p>The special characters (meta-characters) used for defining regular expressions
+are: <code class="docutils literal"><span class="pre">*</span> <span class="pre">.</span> <span class="pre">^</span> <span class="pre">$</span> <span class="pre">+</span> <span class="pre">?</span> <span class="pre">(</span> <span class="pre">)</span> <span class="pre">[</span> <span class="pre">]</span> <span class="pre">{</span> <span class="pre">}</span> <span class="pre">|</span> <span class="pre">\</span></code> . To use these characters literally as
+characters, we have to &#8216;escape&#8217; them. In bash, you escape these characters by
+placing a  single backslash before the character you want to escape.  In R, we
+have to use two backslashes instead of a single backslash because R uses a
+single backslash to symbolize certain control characters, such as <code class="docutils literal"><span class="pre">\\n</span></code> for
+newline.</p>
+<div class="section" id="character-sets-and-character-classes">
+<h4>Character sets and character classes<a class="headerlink" href="#character-sets-and-character-classes" title="Permalink to this headline">¶</a></h4>
 <p><strong>Character sets</strong></p>
 <table border="1" class="docutils">
 <colgroup>
@@ -838,6 +819,97 @@ $ find . type l               # find links
 </tr>
 </tbody>
 </table>
+<p>If we want to search for any one of a set of characters, we use a
+character set, such as <code class="docutils literal"><span class="pre">[13579]</span></code> or <code class="docutils literal"><span class="pre">[abcd]</span></code> or <code class="docutils literal"><span class="pre">[0-9]</span></code> (where the
+dash indicates a sequence) or <code class="docutils literal"><span class="pre">[0-9a-z]</span></code> or <code class="docutils literal"><span class="pre">[</span> <span class="pre">\t]</span></code>. To indicate any
+character not in a set, we place a ^ just inside the first bracket:
+<code class="docutils literal"><span class="pre">[^abcd]</span></code>. The period stands for any character.</p>
+<p>There are a bunch of named character classes so that we don’t have write out
+common sets of characters. The syntax is <code class="docutils literal"><span class="pre">[:CLASS:]</span></code> where <em>CLASS</em> is one of
+the following values &#8220;alnum&#8221;, &#8220;alpha&#8221;, &#8220;ascii&#8221;, &#8220;blank&#8221;, &#8220;cntrl&#8221;, &#8220;digit&#8221;,
+&#8220;graph&#8221;, &#8220;lower&#8221;, &#8220;print&#8221;, &#8220;punct&#8221;, &#8220;space&#8221;, &#8220;upper&#8221;, &#8220;word&#8221; or &#8220;xdigit&#8221;.</p>
+<p>To learn more about regular expressions, you can type:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ man 7 regex
+</pre></div>
+</div>
+<p>To make a character set with a character class you
+need two square brackets, e.g. the digit class: <code class="docutils literal"><span class="pre">[[:digit:]]</span></code>. Or we
+can make a combined character set such as <code class="docutils literal"><span class="pre">[[:alnum:]_]</span></code>. E.g., the
+latter would be useful in looking for email addresses.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">## [1] FALSE  TRUE  TRUE</span>
+</pre></div>
+</div>
+<p>Here are some more examples showing a wide range of string
+functionality:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">## [1] FALSE  TRUE  TRUE</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">## [[1]]</span>
+<span class="c">##      start end</span>
+<span class="c">##</span>
+<span class="c">## [[2]]</span>
+<span class="c">##      start end</span>
+<span class="c">## [1,]     9   9</span>
+<span class="c">##</span>
+<span class="c">## [[3]]</span>
+<span class="c">##      start end</span>
+<span class="c">## [1,]     5   5</span>
+<span class="c">## [2,]    12  12</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">## [[1]]</span>
+<span class="c">## character(0)</span>
+<span class="c">##</span>
+<span class="c">## [[2]]</span>
+<span class="c">## character(0)</span>
+<span class="c">##</span>
+<span class="c">## [[3]]</span>
+<span class="c">## [1] &quot;Juan &quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">## [1] &quot;John&quot;            &quot;Jennifer pierce&quot;</span>
+<span class="c">## [3] &quot;Juan carlos rey&quot;</span>
+</pre></div>
+</div>
+<p><strong>Challenge</strong>: how would we find a spam-like pattern with digits or
+non-letters inside a word? E.g., I want to find V1agra or Fancy
+<a class="reference external" href="mailto:repl!c&#37;&#52;&#48;ted">repl!c<span>&#64;</span>ted</a> watches.</p>
+</div>
+<div class="section" id="location-specific-matches">
+<h4>Location-specific matches<a class="headerlink" href="#location-specific-matches" title="Permalink to this headline">¶</a></h4>
+<p><strong>Position anchors</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="88%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Operators</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">^</span></code></td>
+<td>Match the beginning of a line.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">$</span></code></td>
+<td>Match the end of a line.</td>
+</tr>
+</tbody>
+</table>
+<p>To find a pattern at the beginning of the string, we use <code class="docutils literal"><span class="pre">^</span></code> (note this was
+also used for negation, but in that case occurs only inside square brackets)
+and to find it at the end we use <code class="docutils literal"><span class="pre">$</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">## [1] FALSE FALSE  TRUE</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">## [1] FALSE FALSE FALSE</span>
+</pre></div>
+</div>
+<p>What does this match: <code class="docutils literal"><span class="pre">^[^[:lower:]]$</span></code> ?</p>
+</div>
+<div class="section" id="repetitions-grouping-and-references">
+<h4>Repetitions, Grouping, and References<a class="headerlink" href="#repetitions-grouping-and-references" title="Permalink to this headline">¶</a></h4>
 <p><strong>Modifiers</strong></p>
 <table border="1" class="docutils">
 <colgroup>
@@ -869,6 +941,112 @@ vertical bar.</td>
 </tr>
 </tbody>
 </table>
+<p>Now suppose I wanted to be able to detect phone numbers, email addresses, etc.
+I often need to be able to deal with repetitions of character sets.</p>
+<p>I can indicate repetitions as indicated in these examples:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">[[:digit:]]*</span></code> – any number of digits (zero or more)</li>
+<li><code class="docutils literal"><span class="pre">[[:digit:]]+</span></code> – at least one digit</li>
+<li><code class="docutils literal"><span class="pre">[[:digit:]]?</span></code> – zero or one digits</li>
+<li><code class="docutils literal"><span class="pre">[[:digit:]]{1,3}</span></code> – at least one and no more than three digits</li>
+<li><code class="docutils literal"><span class="pre">[[:digit:]]{2,}</span></code> – two or more digits</li>
+</ul>
+<p>An example is that <code class="docutils literal"><span class="pre">\\[.*\\]</span></code> is the pattern of any number of
+characters (<em>.*</em>) separated by square brackets.</p>
+<p>So a search for US/Canadian/Caribbean phone numbers might become:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">## [[1]]</span>
+<span class="c">## [1] &quot;919-543-3300&quot;</span>
+<span class="c">##</span>
+<span class="c">## [[2]]</span>
+<span class="c">## character(0)</span>
+<span class="c">##</span>
+<span class="c">## [[3]]</span>
+<span class="c">## character(0)</span>
+<span class="c">##</span>
+<span class="c">## [[4]]</span>
+<span class="c">## [1] &quot;919.554.3800&quot;</span>
+</pre></div>
+</div>
+<p><strong>Challenge</strong>: How would I extract an email address from an arbitrary
+text string?</p>
+<p>We often want to be able to look for multi-character patterns and to be able to
+refer back to the patterns that are found. Both are accomplished with
+parentheses. For example, the phone number detection problem could have been
+done a bit more compactly (and more generally, in case the area code is omitted
+or a 1 is included) as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">## [[1]]</span>
+<span class="c">## [1] &quot;919-543-3300&quot;</span>
+<span class="c">##</span>
+<span class="c">## [[2]]</span>
+<span class="c">## character(0)</span>
+<span class="c">##</span>
+<span class="c">## [[3]]</span>
+<span class="c">## character(0)</span>
+<span class="c">##</span>
+<span class="c">## [[4]]</span>
+<span class="c">## [1] &quot;1.919.554.3800&quot;</span>
+<span class="c">##</span>
+<span class="c">## [[5]]</span>
+<span class="c">## [1] &quot;337.4355&quot;</span>
+</pre></div>
+</div>
+<p>Parentheses are also used with a pipe (|) to indicate any one of a set
+of multi-character sequences, such as <code class="docutils literal"><span class="pre">(http|ftp)</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">##      start end</span>
+<span class="c">## [1,]    13  19</span>
+<span class="c">## [2,]    NA  NA</span>
+<span class="c">## [3,]     1   6</span>
+</pre></div>
+</div>
+<p>It’s often helpful to be able to save a pattern as a variable and refer back to
+it. Here’s an example that might have been helpful in dealing with the extra
+commas in the comma-delimited FEC elections data file in PS1:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">## [1] &quot;\&quot;H4NY07011\&quot;,\&quot;ACKERMAN GARY L.\&quot;,\&quot;H\&quot;,\&quot;$13242\&quot;,,,&quot;</span>
+</pre></div>
+</div>
+<p>We can have multiple sets of parentheses, referred to using <code class="docutils literal"><span class="pre">\\1</span></code>,
+<code class="docutils literal"><span class="pre">\\2</span></code>, etc.</p>
+<p><strong>Challenge</strong>: Suppose a text string has dates in the form “Aug-3”,
+“May-9”, etc. and I want them in the form “3 Aug”, “9 May”, etc. How
+would I do this search/replace?</p>
+</div>
+<div class="section" id="greedy-matching">
+<h4>Greedy matching<a class="headerlink" href="#greedy-matching" title="Permalink to this headline">¶</a></h4>
+<p>It turns out the pattern matching is ’greedy’ - it looks for the longest
+match possible.</p>
+<p>Suppose we want to strip out html tags as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">## [1] &quot;Do an internship  course.&quot;</span>
+</pre></div>
+</div>
+<p>What went wrong?</p>
+<p>One solution is to append a ? to the repetition syntax to cause the
+matching to be non-greedy. Here’s an example.</p>
+<p><code class="docutils literal"><span class="pre">&nbsp;&nbsp;</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">## [1] &quot;Do an internship  in place  of  one  course.&quot;</span>
+</pre></div>
+</div>
+<p>However, one can often avoid greedy matching by being more clever.</p>
+<p><strong>Challenge</strong>: How could we change our regexp to avoid the greedy
+matching without using the “?”?</p>
+</div>
+<div class="section" id="regular-expressions-in-other-contexts">
+<h4>Regular expressions in other contexts<a class="headerlink" href="#regular-expressions-in-other-contexts" title="Permalink to this headline">¶</a></h4>
+<p>Regular expression can be used in a variety of places. E.g., to split by
+any number of white space characters</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">## a dog    jumped</span>
+<span class="c">## over     the moon.</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">## [[1]]</span>
+<span class="c">## [1] &quot;a&quot;      &quot;dog&quot;    &quot;jumped&quot; &quot;over&quot;   &quot;the&quot;</span>
+<span class="c">## [6] &quot;moon.&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">## [[1]]</span>
+<span class="c">## [1] &quot;a&quot;            &quot;dog&quot;          &quot;jumped\nover&quot;</span>
+<span class="c">## [4] &quot;the&quot;          &quot;moon.&quot;</span>
+</pre></div>
+</div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last"><strong>Globs vs. Regex:</strong>
@@ -877,37 +1055,77 @@ Be sure you understand the difference between filename globbing (see
 and regular expressions.</p>
 </div>
 </div>
+</div>
 <div class="section" id="ed-and-grep">
-<h3><a class="toc-backref" href="#id16"><strong>ed</strong> and <strong>grep</strong></a><a class="headerlink" href="#ed-and-grep" title="Permalink to this headline">¶</a></h3>
-<p>Useful Contents</p>
+<h3><a class="toc-backref" href="#id18"><strong>ed</strong> and <strong>grep</strong></a><a class="headerlink" href="#ed-and-grep" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="../commands/grep.html#command-grep"><span>grep</span></a> &#8211;&nbsp;print lines matching a pattern</li>
-<li><a class="reference internal" href="../commands/tr.html#command-tr"><span>tr</span></a> &#8211;&nbsp;translate or delete characters</li>
+<li><a class="reference internal" href="../commands/grep.html#grep"><span>grep</span></a> &#8211;&nbsp;print lines matching a pattern</li>
+<li><a class="reference internal" href="../commands/tr.html#tr"><span>tr</span></a> &#8211;&nbsp;translate or delete characters</li>
 </ul>
-<p><strong>Example 4-2. Translating lowercase to UPPERCASE with **tr**</strong></p>
+<p>Before the text editor, there was the line editor.  Rather than presenting you
+with the entire text as a text editor does, a line editor only displays lines
+of text when it is requested to.  The original Unix line editor is called <code class="docutils literal"><span class="pre">ed</span></code>.
+You will likely never use <code class="docutils literal"><span class="pre">ed</span></code> directly, but you will very likely use commands
+that are its ancestor.  For example, the commands <code class="docutils literal"><span class="pre">grep</span></code>, <code class="docutils literal"><span class="pre">sed</span></code>, <code class="docutils literal"><span class="pre">awk</span></code>,
+and <code class="docutils literal"><span class="pre">vim</span></code> are all based directly on <code class="docutils literal"><span class="pre">ed</span></code> (e.g., <code class="docutils literal"><span class="pre">grep</span></code> is a <code class="docutils literal"><span class="pre">ed</span></code> command
+that is now available as a standalone command, while <code class="docutils literal"><span class="pre">sed</span></code> is a streaming
+version of <code class="docutils literal"><span class="pre">ed</span></code>) or inherit much of its syntax (e.g., <code class="docutils literal"><span class="pre">awk</span></code> and <code class="docutils literal"><span class="pre">vim</span></code>
+both heavily borrow from the <code class="docutils literal"><span class="pre">ed</span></code> syntax).  Since <code class="docutils literal"><span class="pre">ed</span></code> was written when
+computing resources were very constrained compared to today, this means that
+the syntax of these commands can be terse.  However, it also means that learning
+the syntax for one of these tools will be rewarded when you need to learn the
+syntax of another of these tools.</p>
+<p>The simplest of these tools is <code class="docutils literal"><span class="pre">grep</span></code>.  As I mentioned, <code class="docutils literal"><span class="pre">ed</span></code> only displays
+lines of text when requested.  One common task was to print all the lines in
+a file matching a specific regular expression.  The command in <code class="docutils literal"><span class="pre">ed</span></code> that
+does this is <code class="docutils literal"><span class="pre">g/&lt;re&gt;/p</span></code>, which stands for globally match all lines containing
+the regular express <code class="docutils literal"><span class="pre">&lt;re&gt;</span></code> and print them out.  Consider the following example:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cat file1.txt
+This is the first line.
+Followed by a this line.
+And then ...
+$ grep is file1.txt
+This is the first line.
+Followed by a this line.
+</pre></div>
+</div>
+<p>Translating lowercase to UPPERCASE with <code class="docutils literal"><span class="pre">tr</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ echo &#39;user1&#39;  | tr &#39;a-z&#39; &#39;A-Z&#39;
 USER1
 </pre></div>
 </div>
+<div class="section" id="id3">
+<h4>Exercise<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>Explain what the following regular expression matches:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ grep &#39;^[^T]*is.*$&#39; file1.txt
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="sed-and-awk">
-<h3><a class="toc-backref" href="#id17"><strong>sed</strong> and <strong>awk</strong></a><a class="headerlink" href="#sed-and-awk" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id19"><strong>sed</strong> and <strong>awk</strong></a><a class="headerlink" href="#sed-and-awk" title="Permalink to this headline">¶</a></h3>
 <p><strong>sed</strong> (stream editor) derives from <strong>ed</strong>.</p>
-<p><strong>Example 4-3. Printing lines of text with **sed**</strong></p>
+<p>Printing lines of text with <code class="docutils literal"><span class="pre">sed</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ sed -n &#39;1,9p&#39; file.txt       # prints out lines 1-9 of file.txt
 $ sed -n &#39;/^#/p&#39; file.txt       # prints out lines starting with # of file.txt
 </pre></div>
 </div>
-<p><strong>Example 4-4. Deleting lines of text with **sed**</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>$ sed -e &#39;1,9d&#39; file.txt       # deletes lines 1-9 of file.txt
-$ sed -e &#39;/^;/d&#39; -e &#39;/^$/d&#39; file.txt       # deletes lines
+<p>The first command prints out lines 1-9 of <code class="docutils literal"><span class="pre">file.txt</span></code>, while the second one
+prints out lines starting with <code class="docutils literal"><span class="pre">#</span></code> of <code class="docutils literal"><span class="pre">file.txt</span></code>.</p>
+<p>Deleting lines of text with <code class="docutils literal"><span class="pre">sed</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sed -e &#39;1,9d&#39; file.txt
+$ sed -e &#39;/^;/d&#39; -e &#39;/^$/d&#39; file.txt
 </pre></div>
 </div>
-<p><strong>Example 4-5. Text substitution with **sed**</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>$ sed &#39;s/old_pattern/new_pattern/&#39; file.txt &gt; new_file.txt       # replaces only 1st instance in a line
+<p>The first line deletes lines 1-9 of <code class="docutils literal"><span class="pre">file.txt</span></code>. What do you think the second
+line does?</p>
+<p>Text substitution with <code class="docutils literal"><span class="pre">sed</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sed &#39;s/old_pattern/new_pattern/&#39; file.txt &gt; new_file.txt
 $ sed &#39;s/old_pattern/new_pattern/g&#39; file.txt &gt; new_file.txt
 </pre></div>
 </div>
+<p>The first line replaces only 1st instance in a line, while the second line
+replaces all instances in a line (i.e., globally).</p>
 <p><strong>Example 4-6. Killing **mozilla</strong> with <strong>awk**</strong></p>
 <div class="highlight-python"><div class="highlight"><pre>$ ps
       PID TTY          TIME CMD
@@ -940,26 +1158,27 @@ $ ps | grep mozilla | awk &#39;{ print $2 }&#39; | xargs kill -9
 </div>
 </div>
 <div class="section" id="perl">
-<h3><a class="toc-backref" href="#id18"><strong>perl</strong></a><a class="headerlink" href="#perl" title="Permalink to this headline">¶</a></h3>
-<p><strong>Example 4-7. Text substitution with **perl**</strong></p>
+<h3><a class="toc-backref" href="#id20"><strong>perl</strong></a><a class="headerlink" href="#perl" title="Permalink to this headline">¶</a></h3>
+<p>Text substitution with <code class="docutils literal"><span class="pre">perl</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ perl -pi -e &#39;s/old_pattern/new_pattern/g&#39; file.txt
 $ perl -pi -e &#39;s/old_pattern/new_pattern/g&#39; $(find . -name \*.html)
 </pre></div>
 </div>
-<p>The i option tells <strong>perl</strong> to do the global substitution in place.
-You can also substitute the <strong>/</strong> with another character. For
+<p>The <code class="docutils literal"><span class="pre">i</span></code> option tells <code class="docutils literal"><span class="pre">perl</span></code> to do the global substitution in place.
+You can also substitute the <code class="docutils literal"><span class="pre">/</span></code> with another character. For
 example:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ perl -pi -e &#39;s:old_pattern:new_pattern:g&#39; file.txt
 </pre></div>
 </div>
-<p><strong>Example 4-8. Summing columns with **perl**</strong></p>
-<div class="highlight-python"><div class="highlight"><pre>$ perl -lane &#39;print $F[0] + $F[1]&#39; file.txt       # sums column 1 and 2 of file.txt
+<p>Summing columns with <code class="docutils literal"><span class="pre">perl</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ perl -lane &#39;print $F[0] + $F[1]&#39; file.txt
 </pre></div>
 </div>
+<p>This will sum columns 1 and 2 of <code class="docutils literal"><span class="pre">file.txt</span></code>.</p>
 </div>
 </div>
 <div class="section" id="streams-pipes-and-redirects">
-<h2><a class="toc-backref" href="#id19">Streams, Pipes, and Redirects</a><a class="headerlink" href="#streams-pipes-and-redirects" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id21">Streams, Pipes, and Redirects</a><a class="headerlink" href="#streams-pipes-and-redirects" title="Permalink to this headline">¶</a></h2>
 <p>UNIX programs that involve input and/or output often operate by reading
 input from a stream known as standard input (<em>stdin</em>), and writing their
 results to a stream known as standard output (<em>stdout</em>). In addition, a
@@ -972,7 +1191,7 @@ The shell provides this service, not the individual programs, so
 redirection will work for all programs. Table 3 shows some examples of
 redirection.</p>
 <div class="section" id="default-file-descriptors">
-<h3><a class="toc-backref" href="#id20">Default File Descriptors</a><a class="headerlink" href="#default-file-descriptors" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id22">Default File Descriptors</a><a class="headerlink" href="#default-file-descriptors" title="Permalink to this headline">¶</a></h3>
 <p><strong>Table 3-1. File Descriptors</strong></p>
 <table border="1" class="docutils">
 <colgroup>
@@ -1007,24 +1226,25 @@ redirection.</p>
 </table>
 </div>
 <div class="section" id="io-redirection">
-<h3><a class="toc-backref" href="#id21">IO Redirection</a><a class="headerlink" href="#io-redirection" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id23">IO Redirection</a><a class="headerlink" href="#io-redirection" title="Permalink to this headline">¶</a></h3>
 <p>Note that <em>cmd</em> may include options and arguments as seen in the
 previous section.</p>
-<p>Operations where output from one command is used as input to another
-command (via the | operator) are known as pipes; they are made
-especially useful by the convention that many UNIX commands will accept
-their input through the standard input stream when no file name is
-provided to them.</p>
+<p>Operations where output from one command is used as input to another command
+(via the <code class="docutils literal"><span class="pre">|</span></code> operator) are known as pipes; they are made especially useful by
+the convention that many UNIX commands will accept their input through the
+standard input stream when no file name is provided to them.</p>
 <p>Here’s an example of finding out how many unique entries there are in
 the 2rd column of a data file whose fields are separated by commas:</p>
-<p><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">cut</span> <span class="pre">-d’,’</span> <span class="pre">-f2</span> <span class="pre">cpds.csv</span> <span class="pre">|</span> <span class="pre">sort</span> <span class="pre">|</span> <span class="pre">uniq</span> <span class="pre">|</span> <span class="pre">wc</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">cut</span> <span class="pre">-d’,’</span> <span class="pre">-f2</span> <span class="pre">cpds.csv</span> <span class="pre">|</span> <span class="pre">sort</span> <span class="pre">|</span> <span class="pre">uniq</span> <span class="pre">&gt;</span> <span class="pre">countries.txt</span></code></p>
+<div class="highlight-python"><div class="highlight"><pre>$ cut -d&#39;,&#39; -f2 cpds.csv | sort | uniq | wc
+$ cut -d&#39;,&#39; -f2 cpds.csv | sort | uniq &gt; countries.txt
+</pre></div>
+</div>
 <p>To see if there are any “S” values in certain fields (fixed width) of a
 set of files (note I did this on 22,000 files (5 Gb or so) in about 5
 minutes on my desktop; it would have taken much more time to read the
 data into R):</p>
 <div class="line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">cut</span> <span class="pre">-b29,37,45,53,61,69,77,85,93,101,109,117,125,133,141,149,</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">$</span> <span class="pre">cut</span> <span class="pre">-b29,37,45,53,61,69,77,85,93,101,109,117,125,133,141,149,</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">157,165,173,181,189,197,205,213,221,229,237,245,253,261,269</span> <span class="pre">USC*.dly</span> <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">S</span> <span class="pre">|</span> <span class="pre">less</span></code></div>
 </div>
 <p>A closely related, but subtly different, capability is offered by the
@@ -1038,24 +1258,24 @@ R code files (those with suffix <em>.</em>r or .R) that were modified in the
 current directory. We can find the names of the last 4 files ending in
 “.R” or “.r” which were modified using</p>
 <div class="line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">ls</span> <span class="pre">-t</span> <span class="pre">*.{R,r}</span> <span class="pre">|</span> <span class="pre">head</span> <span class="pre">-4</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">$</span> <span class="pre">ls</span> <span class="pre">-t</span> <span class="pre">*.{R,r}</span> <span class="pre">|</span> <span class="pre">head</span> <span class="pre">-4</span></code></div>
 <div class="line">and we can search for the required pattern using <em>grep</em>. Putting these
 together with the backtick operator we can solve the problem using</div>
 </div>
 <div class="line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">grep</span> <span class="pre">pdf</span> <span class="pre">`ls</span> <span class="pre">-t</span> <span class="pre">*.{R,r}</span> <span class="pre">|</span> <span class="pre">head</span> <span class="pre">-4`</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">$</span> <span class="pre">grep</span> <span class="pre">pdf</span> <span class="pre">`ls</span> <span class="pre">-t</span> <span class="pre">*.{R,r}</span> <span class="pre">|</span> <span class="pre">head</span> <span class="pre">-4`</span></code></div>
 <div class="line">Note that piping the output of the <em>ls</em> command into <em>grep</em> would not
 achieve the desired goal, since <em>grep</em> reads its filenames from the
 command line, not standard input.</div>
 </div>
 <p>You can also redirect output as the arguments to another program using
 the <em>xargs</em> utility. Here’s an example:</p>
-<p><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">ls</span> <span class="pre">-t</span> <span class="pre">*.{R,r}</span> <span class="pre">|</span> <span class="pre">head</span> <span class="pre">-4</span> <span class="pre">|</span> <span class="pre">xargs</span> <span class="pre">grep</span> <span class="pre">pdf</span></code></p>
+<p><code class="docutils literal"><span class="pre">$</span> <span class="pre">ls</span> <span class="pre">-t</span> <span class="pre">*.{R,r}</span> <span class="pre">|</span> <span class="pre">head</span> <span class="pre">-4</span> <span class="pre">|</span> <span class="pre">xargs</span> <span class="pre">grep</span> <span class="pre">pdf</span></code></p>
 <p>And you can redirect output into a shell variable (see section 9) using
 backticks in a similar manner to that done above:</p>
-<p><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">files=ls</span> <span class="pre">-t</span> <span class="pre">*.{R,r}</span> <span class="pre">|</span> <span class="pre">head</span> <span class="pre">-4</span> <span class="pre">#</span> <span class="pre">NOTE</span> <span class="pre">-</span> <span class="pre">don’t</span> <span class="pre">put</span> <span class="pre">any</span> <span class="pre">spaces</span> <span class="pre">around</span> <span class="pre">the</span> <span class="pre">=</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">echo</span> <span class="pre">$files</span></code></p>
-<p><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">grep</span> <span class="pre">pdf</span> <span class="pre">$files</span></code></p>
+<p><code class="docutils literal"><span class="pre">$</span> <span class="pre">files=ls</span> <span class="pre">-t</span> <span class="pre">*.{R,r}</span> <span class="pre">|</span> <span class="pre">head</span> <span class="pre">-4</span> <span class="pre">#</span> <span class="pre">NOTE</span> <span class="pre">-</span> <span class="pre">don’t</span> <span class="pre">put</span> <span class="pre">any</span> <span class="pre">spaces</span> <span class="pre">around</span> <span class="pre">the</span> <span class="pre">=</span></code></p>
+<p><code class="docutils literal"><span class="pre">$</span> <span class="pre">echo</span> <span class="pre">$files</span></code></p>
+<p><code class="docutils literal"><span class="pre">$</span> <span class="pre">grep</span> <span class="pre">pdf</span> <span class="pre">$files</span></code></p>
 <p><strong>Table 3-2. Common Redirection Operators</strong></p>
 <table border="1" class="docutils">
 <colgroup>
@@ -1113,9 +1333,8 @@ using <em>tee</em></td>
 </div>
 <div class="section" id="pipes">
 <h4>Pipes<a class="headerlink" href="#pipes" title="Permalink to this headline">¶</a></h4>
-<p>Useful Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="../commands/wc.html#command-wc"><span>wc</span></a> &#8211;&nbsp; print the number of bytes, words, and lines in
+<li><a class="reference internal" href="../commands/wc.html#wc"><span>wc</span></a> &#8211;&nbsp; print the number of bytes, words, and lines in
 files</li>
 </ul>
 <p><strong>Example 3-1. A simple pipe to **wc**</strong></p>
@@ -1126,20 +1345,19 @@ files</li>
 </div>
 <div class="section" id="the-xargs-and-tee-command">
 <h4>The <strong>xargs</strong> and <strong>tee</strong> Command<a class="headerlink" href="#the-xargs-and-tee-command" title="Permalink to this headline">¶</a></h4>
-<p>Useful Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="../commands/xargs.html#command-xargs"><span>xargs</span></a> &#8211;&nbsp; build and execute command lines from
+<li><a class="reference internal" href="../commands/xargs.html#xargs"><span>xargs</span></a> &#8211;&nbsp; build and execute command lines from
 standard input</li>
-<li><a class="reference internal" href="../commands/tee.html#command-tee"><span>tee</span></a> &#8211;&nbsp;read from standard input and write to standard
+<li><a class="reference internal" href="../commands/tee.html#tee"><span>tee</span></a> &#8211;&nbsp;read from standard input and write to standard
 output and files</li>
 </ul>
 </div>
 </div>
 </div>
 <div class="section" id="creating-monitoring-and-killing-processes">
-<h2><a class="toc-backref" href="#id22">Creating, Monitoring, and Killing Processes</a><a class="headerlink" href="#creating-monitoring-and-killing-processes" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id24">Creating, Monitoring, and Killing Processes</a><a class="headerlink" href="#creating-monitoring-and-killing-processes" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="processes">
-<h3><a class="toc-backref" href="#id23">Processes</a><a class="headerlink" href="#processes" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id25">Processes</a><a class="headerlink" href="#processes" title="Permalink to this headline">¶</a></h3>
 <p>Processes have the following attributes:</p>
 <ul class="simple">
 <li>A lifetime.</li>
@@ -1152,12 +1370,11 @@ output and files</li>
 </ul>
 </div>
 <div class="section" id="monitoring-processes">
-<h3><a class="toc-backref" href="#id24">Monitoring Processes</a><a class="headerlink" href="#monitoring-processes" title="Permalink to this headline">¶</a></h3>
-<p>Useful Contents</p>
+<h3><a class="toc-backref" href="#id26">Monitoring Processes</a><a class="headerlink" href="#monitoring-processes" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="../commands/ps.html#command-ps"><span>ps</span></a> &#8211;&nbsp; report process status</li>
-<li><a class="reference internal" href="../commands/pstree.html#command-pstree"><span>pstree</span></a> &#8211;&nbsp;display a tree of processes</li>
-<li><a class="reference internal" href="../commands/top.html#command-top"><span>top</span></a> &#8211;&nbsp;display top CPU processes</li>
+<li><a class="reference internal" href="../commands/ps.html#ps"><span>ps</span></a> &#8211;&nbsp; report process status</li>
+<li><a class="reference internal" href="../commands/pstree.html#pstree"><span>pstree</span></a> &#8211;&nbsp;display a tree of processes</li>
+<li><a class="reference internal" href="../commands/top.html#top"><span>top</span></a> &#8211;&nbsp;display top CPU processes</li>
 </ul>
 <p><strong>Example 3-2. Examining Processes with **ps**</strong></p>
 <div class="highlight-python"><div class="highlight"><pre>$ ps
@@ -1222,11 +1439,10 @@ Swap:  401584K av,       0K used,  401584K free                  339532K cached
 </div>
 </div>
 <div class="section" id="signaling-processes">
-<h3><a class="toc-backref" href="#id25">Signaling Processes</a><a class="headerlink" href="#signaling-processes" title="Permalink to this headline">¶</a></h3>
-<p>Useful Contents</p>
+<h3><a class="toc-backref" href="#id27">Signaling Processes</a><a class="headerlink" href="#signaling-processes" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="../commands/kill.html#command-kill"><span>kill</span></a> &#8211;&nbsp;terminate a process</li>
-<li><a class="reference internal" href="../commands/killall.html#command-killall"><span>killall</span></a> &#8211;&nbsp; kill processes by name</li>
+<li><a class="reference internal" href="../commands/kill.html#kill"><span>kill</span></a> &#8211;&nbsp;terminate a process</li>
+<li><a class="reference internal" href="../commands/killall.html#killall"><span>killall</span></a> &#8211;&nbsp; kill processes by name</li>
 </ul>
 <p><strong>Table 3-3. Common Signals</strong></p>
 <table border="1" class="docutils">
@@ -1266,13 +1482,12 @@ Swap:  401584K av,       0K used,  401584K free                  339532K cached
 </table>
 </div>
 <div class="section" id="shell-job-control">
-<h3><a class="toc-backref" href="#id26">Shell Job Control</a><a class="headerlink" href="#shell-job-control" title="Permalink to this headline">¶</a></h3>
-<p>Useful Contents</p>
+<h3><a class="toc-backref" href="#id28">Shell Job Control</a><a class="headerlink" href="#shell-job-control" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="../commands/bg.html#command-bg"><span>bg</span></a> &#8211;&nbsp;background</li>
-<li><a class="reference internal" href="../commands/fg.html#command-fg"><span>fg</span></a> &#8211;&nbsp;foreground</li>
-<li><a class="reference internal" href="../commands/jobs.html#command-jobs"><span>jobs</span></a> &#8211;&nbsp;list the active jobs</li>
-<li><a class="reference internal" href="../commands/nohup.html#command-nohup"><span>nohup</span></a> &#8211;&nbsp;Run a command immune to hangups, with
+<li><a class="reference internal" href="../commands/bg.html#bg"><span>bg</span></a> &#8211;&nbsp;background</li>
+<li><a class="reference internal" href="../commands/fg.html#fg"><span>fg</span></a> &#8211;&nbsp;foreground</li>
+<li><a class="reference internal" href="../commands/jobs.html#jobs"><span>jobs</span></a> &#8211;&nbsp;list the active jobs</li>
+<li><a class="reference internal" href="../commands/nohup.html#nohup"><span>nohup</span></a> &#8211;&nbsp;Run a command immune to hangups, with
 output to a non-tty</li>
 </ul>
 <div class="section" id="starting-a-job">
@@ -1282,14 +1497,14 @@ said to be running in the foreground. When a job is running in the
 foreground, you can’t type additional commands into that shell session,
 but there are two signals that can be sent to the running job through
 the keyboard. To interrupt a program running in the foreground, use
-<code class="docutils literal"><span class="pre">C-c</span></code>; to quit a program, use <code class="docutils literal"><span class="pre">C-\</span></code>. While modern windowed systems
+<code class="docutils literal"><span class="pre">Ctrl-c</span></code>; to quit a program, use <code class="docutils literal"><span class="pre">Ctrl-\</span></code>. While modern windowed systems
 have lessened the inconvenience of tying up a shell with foreground
 processes, there are some situations where running in the foreground is
 not adequate.</p>
 <p>The primary need for an alternative to foreground processing arises when
 you wish to have jobs continue to run after you log off the computer. In
 cases like this you can run a program in the background by simply
-terminating the command with an ampersand (<em>&amp;</em>). However, before putting
+terminating the command with an ampersand (<code class="docutils literal"><span class="pre">&amp;</span></code>). However, before putting
 a job in the background, you should consider how you will access its
 results, since <em>stdout</em> is not preserved when you log off from the
 computer. Thus, redirection (including redirection of <em>stderr</em>) is
@@ -1298,7 +1513,7 @@ suppose that you wish to run an R script, and you don’t want it to
 terminate when you log off. (Note that this can also be done using
 <code class="docutils literal"><span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">BATCH</span></code>, so this is primarily an illustration.)</p>
 <div class="line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">R</span> <span class="pre">--no-save</span> <span class="pre">&lt;</span> <span class="pre">code.R</span> <span class="pre">&gt;</span> <span class="pre">code.Rout</span> <span class="pre">2&gt;&amp;1</span> <span class="pre">&amp;</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">$</span> <span class="pre">R</span> <span class="pre">--no-save</span> <span class="pre">&lt;</span> <span class="pre">code.R</span> <span class="pre">&gt;</span> <span class="pre">code.Rout</span> <span class="pre">2&gt;&amp;1</span> <span class="pre">&amp;</span></code></div>
 <div class="line">If you forget to put a job in the background when you first execute
 it, you can do it while it’s running in the foreground in two steps.
 First, suspend the job using the <code class="docutils literal"><span class="pre">C-z</span></code> signal. After receiving the
@@ -1314,7 +1529,7 @@ you want to terminate a background job you must first determine the
 unique process id (PID) for the process you wish to terminate through
 the use of the <em>ps</em> command. For example, to see all the jobs running on
 a particular computer, you could use a command like:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; ps -aux
+<div class="highlight-python"><div class="highlight"><pre>$ ps -aux
 </pre></div>
 </div>
 <p>Among the output after the header (shown here) might appear a line
@@ -1327,17 +1542,17 @@ paciorek 11998 97.0 39.1 1416644 1204824 pts/16 R+ Jul27 1330:01 /usr/lib64/R/b
 <em>11998</em>, that it has been running for 1330 minutes (!), is using 97%
 of CPU and 39% of memory, and that it started on July 27. You could
 then issue the command:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; kill 11998
+<div class="highlight-python"><div class="highlight"><pre>$ kill 11998
 </pre></div>
 </div>
 <p>or, if that doesn’t work:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; kill -9 11998
+<div class="highlight-python"><div class="highlight"><pre>$ kill -9 11998
 </pre></div>
 </div>
 <p>to terminate the job. Another useful command in this regard is
 <em>killall</em>, which accepts a program name instead of a process id, and
 will kill all instances of the named program:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; killall R
+<div class="highlight-python"><div class="highlight"><pre>$ killall R
 </pre></div>
 </div>
 <p>Of course, it will only kill the jobs that belong to you, so it will
@@ -1371,12 +1586,12 @@ but the compute servers should automatically nice your jobs. Nicing a
 job puts it at a lower priority so that a user working at the keyboard
 has higher priority in using the CPU. Here’s how to do it, giving the
 job a low priority of 19, as required by SCF:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; nice -19 R CMD BATCH --no-save code.R code.Rout &amp;
+<div class="highlight-python"><div class="highlight"><pre>$ nice -19 R CMD BATCH --no-save code.R code.Rout &amp;
 </pre></div>
 </div>
 <p>If you forget and just submit the job without nicing, you can reduce
 the priority by doing:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; renice +19 11998
+<div class="highlight-python"><div class="highlight"><pre>$ renice +19 11998
 </pre></div>
 </div>
 <p>where <em>11998</em> is the PID of your job.</p>
@@ -1384,31 +1599,31 @@ the priority by doing:</p>
 scheduler and enter a queue, which handles the issue of prioritization
 and jobs conflicting. Syntax varies by system and queueing software, but
 may look something like this for submitting an R job:</p>
-<p><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">bsub</span> <span class="pre">-q</span> <span class="pre">long</span> <span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">BATCH</span> <span class="pre">--no-save</span> <span class="pre">code.R</span> <span class="pre">code.Rout</span> <span class="pre">#</span> <span class="pre">just</span> <span class="pre">an</span> <span class="pre">example;</span> <span class="pre">this</span> <span class="pre">will</span> <span class="pre">not</span> <span class="pre">work</span> <span class="pre">on</span> <span class="pre">the</span> <span class="pre">SCF</span> <span class="pre">network</span></code></p>
+<p><code class="docutils literal"><span class="pre">$</span> <span class="pre">bsub</span> <span class="pre">-q</span> <span class="pre">long</span> <span class="pre">R</span> <span class="pre">CMD</span> <span class="pre">BATCH</span> <span class="pre">--no-save</span> <span class="pre">code.R</span> <span class="pre">code.Rout</span> <span class="pre">#</span> <span class="pre">just</span> <span class="pre">an</span> <span class="pre">example;</span> <span class="pre">this</span> <span class="pre">will</span> <span class="pre">not</span> <span class="pre">work</span> <span class="pre">on</span> <span class="pre">the</span> <span class="pre">SCF</span> <span class="pre">network</span></code></p>
 <p>bg,fg,jobs,Ctrl-C,Ctrl-Z</p>
 <p><strong>screen</strong></p>
 </div>
 </div>
 </div>
 <div class="section" id="shell-programming">
-<h2><a class="toc-backref" href="#id27">Shell programming</a><a class="headerlink" href="#shell-programming" title="Permalink to this headline">¶</a></h2>
-<p>Shell commands can be saved in a file (with extension <em>.sh</em>) and this
-file can be executed as if it were a program. To run a shell script
-called <em>file.sh</em>, you would type <code class="docutils literal"><span class="pre">./file.sh</span></code>. Note that if you just
-typed`` file.sh``, the operating system will generally have trouble
-finding the script and recognizing that it is executable. To be sure
-that the operating system knows what shell to use to interpret the
-script, the first line of the script should be <code class="docutils literal"><span class="pre">#!/bin/bash</span></code> (in the
-case that you’re using the bash shell). Also, <em>file.sh</em> would need to be
-executable (i.e., to have the ’x’ flag set).</p>
+<h2><a class="toc-backref" href="#id29">Shell programming</a><a class="headerlink" href="#shell-programming" title="Permalink to this headline">¶</a></h2>
+<p>Shell scripts are files containing shell commands (commonly with the extension
+<code class="docutils literal"><span class="pre">.sh</span></code>) To run a shell script called <code class="docutils literal"><span class="pre">file.sh</span></code>, you would type <code class="docutils literal"><span class="pre">source</span>
+<span class="pre">./file.sh</span></code> or <code class="docutils literal"><span class="pre">.</span> <span class="pre">./file.sh</span></code>. Note that if you just typed <code class="docutils literal"><span class="pre">file.sh</span></code>, the
+operating system will generally have trouble finding the script and recognizing
+that it is executable. To be sure that the operating system knows what shell to
+use to interpret the script, the first line of the script should be
+<code class="docutils literal"><span class="pre">#!/bin/bash</span></code> (in the case that you&#8217;re using the bash shell). Also, if you
+set <code class="docutils literal"><span class="pre">file.sh</span></code> to be executable (i.e., to have the &#8216;x&#8217; flag set) you can
+execute it by just typing <code class="docutils literal"><span class="pre">./file.sh</span></code>.</p>
 <div class="section" id="functions">
-<h3><a class="toc-backref" href="#id28">Functions</a><a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id30">Functions</a><a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
 <p>You can define your own utilities by creating a shell function. This
 allows you to automate things that are more complicated than you can do
 with an alias. One nice thing about shell functions is that the shell
 automatically takes care of function arguments for you. It places the
 arguments given by the user into local variables in the function called
-(in order): <em>$1 $2 $3</em> etc. It also fills <em>$#</em> with the number of
+(in order): <code class="docutils literal"><span class="pre">$1</span> <span class="pre">$2</span> <span class="pre">$3</span></code> etc. It also fills <code class="docutils literal"><span class="pre">$#</span></code> with the number of
 arguments given by the user. Here’s an example of using arguments in a
 function that saves me some typing when I want to copy a file to the SCF
 filesystem:</p>
@@ -1420,20 +1635,20 @@ filesystem:</p>
 <p>To use this function, I just do the following to copy <em>unit1.pdf</em> from
 the current directory on whatever non-SCF machine I’m on to the
 directory <em>~/teaching/243</em> on SCF:</p>
-<div class="highlight-python"><div class="highlight"><pre>&gt; putscf unit1-unix.pdf Desktop/.
+<div class="highlight-python"><div class="highlight"><pre>$ putscf unit1-unix.pdf Desktop/.
 </pre></div>
 </div>
-<p>Of course you’d want to put such functions in your <em>.bashrc</em> file.</p>
+<p>Of course you’d want to put such functions in your <code class="docutils literal"><span class="pre">.bashrc</span></code> file.</p>
 </div>
 <div class="section" id="if-then-else">
-<h3><a class="toc-backref" href="#id29">If/then/else</a><a class="headerlink" href="#if-then-else" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id31">If/then/else</a><a class="headerlink" href="#if-then-else" title="Permalink to this headline">¶</a></h3>
 <p>We can use if-then-else type syntax to control the flow of a shell
 script. For an example, see <em>niceR()</em> in the demo code file <em>niceR.sh</em>
 for this unit.</p>
 <p>For more details, look in Newham&amp;Rosenblatt or search online.</p>
 </div>
 <div class="section" id="for-loops">
-<h3><a class="toc-backref" href="#id30">For loops</a><a class="headerlink" href="#for-loops" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id32">For loops</a><a class="headerlink" href="#for-loops" title="Permalink to this headline">¶</a></h3>
 <p><em>for</em> loops in shell scripting are primarily designed for iterating
 through a set of files or directories. Here’s an example:</p>
 <div class="highlight-python"><div class="highlight"><pre>for file in $(ls *.txt)
@@ -1450,22 +1665,19 @@ starting a series of jobs: see the demo code files in the repository:
 <em>forloopDownload.sh</em> and <em>forloopJobs.sh</em>.</p>
 </div>
 <div class="section" id="how-much-shell-scripting-should-i-learn">
-<h3><a class="toc-backref" href="#id31">How much shell scripting should I learn?</a><a class="headerlink" href="#how-much-shell-scripting-should-i-learn" title="Permalink to this headline">¶</a></h3>
-<p>You can do a fair amount of what you need from within R using the
-<em>system()</em> function. This will enable you to avoid dealing with a lot of
+<h3><a class="toc-backref" href="#id33">How much shell scripting should I learn?</a><a class="headerlink" href="#how-much-shell-scripting-should-i-learn" title="Permalink to this headline">¶</a></h3>
+<p>We&#8217;ve covered most of what you are likely to need to know about the shell. I
+tend to only use bash scripts for simple tasks that require only a few lines of
+bash commands and very little control flow (i.e., conditional statements,
+loops).  For more complicated OS tasks, it is often preferable to use Python.
+You can also do a fair amount of what you need from within R using the
+<code class="docutils literal"><span class="pre">system()</span></code> function. This will enable you to avoid dealing with a lot of
 shell programming syntax (but you’ll still need to know how to use UNIX
-utilities, wildcards, and pipes to be effective). Example: a fellow
-student when I was in grad school programmed a tool in R to extract
-concert information from the web for bands appearing in her iTunes
-library. Not the most elegant solution, but it got the job done.</p>
-<p>For more extensive shell programming, it’s probably worth learning
-Python and doing it there rather than using a shell script. In
-particular iPython makes it very easy to interact with the operating
-system.</p>
+utilities, wildcards, and pipes to be effective).</p>
 </div>
 </div>
 <div class="section" id="documentation-tools">
-<h2><a class="toc-backref" href="#id32">Documentation tools</a><a class="headerlink" href="#documentation-tools" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id34">Documentation tools</a><a class="headerlink" href="#documentation-tools" title="Permalink to this headline">¶</a></h2>
 <p><strong>markdown</strong>, <strong>restructured text</strong>, latex</p>
 <p><strong>pandoc</strong></p>
 <p>Please see the &#8220;Introduction to LaTeX&#8221; tutorial and screencast
@@ -1498,9 +1710,6 @@ here: <a class="reference external" href="http://statistics.berkeley.edu/computi
 <li class="toctree-l2"><a class="reference internal" href="python.html">Python introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="numpy.html">Scientific computing with Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="git-advanced.html">Collaborative workflow with Git</a></li>
-<li class="toctree-l2"><a class="reference internal" href="eda.html">Exploratory data analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="organize-automate.html">Organization and automation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="statistics.html">Statistical analysis</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>

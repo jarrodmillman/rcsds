@@ -1,4 +1,4 @@
-.. _command-history:
+.. _history:
 
 history
 =======

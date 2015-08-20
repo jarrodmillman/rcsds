@@ -1,4 +1,4 @@
-.. _command-wc:
+.. _wc:
 
 wc
 ==

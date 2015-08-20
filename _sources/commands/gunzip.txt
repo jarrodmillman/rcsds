@@ -1,4 +1,4 @@
-.. _command-gunzip:
+.. _gunzip:
 
 gunzip
 ======

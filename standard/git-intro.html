@@ -135,80 +135,137 @@ your main line of development;</li>
 <li>providing built-in backup.</li>
 </ul>
 <p>To see how this works, we will now consider the basic operation of a popular
-and powerful version control system called Git.  First, we will need to develop
-some basic vocabulary needed to discuss how Git works.  Then we will see how
-to use Git locally as a single-user using a linear workflow.  We will then
-see how to use branches rather than following a simple linear workflow.
+and powerful version control system (VCS) called Git.  First, we will need to
+develop some basic vocabulary needed to discuss how Git works.  Then we will
+see how to use Git locally as a single-user using a linear workflow.  We will
+then see how to use branches rather than following a simple linear workflow.
 Finally, we will discuss using remotes instead of just working locally.
 Multi-user use will be covered in another tutorial.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<ul class="last simple">
-<li>Client-server (e.g., CVS, Subversion)</li>
-<li>Distributed (e.g., Mercurial, <strong>Git</strong>)</li>
-</ul>
+<p class="last">VCS come in two main architectures: client-server (e.g., CVS, Subversion)
+and distributed (e.g., Mercurial, <strong>Git</strong>).  In the client-server
+architecture, there is one master repository and everyone working
+on the repositor has their own minimal local copy of the master
+repository.  In the distributed model, every repository is a complete
+repository and there are mechanisms for incorporating changes
+from remote repositories into a local repository.</p>
 </div>
 </div>
 <div class="section" id="core-git-concepts">
 <h2><a class="toc-backref" href="#id10">Core Git concepts</a><a class="headerlink" href="#core-git-concepts" title="Permalink to this headline">¶</a></h2>
 <p>A <strong>commit</strong> is a <strong>snapshot</strong> of an entire directory tree at a given point in
-time as well as some metadata.  Returning to the above example, you would make
-a <strong>commit</strong> corresponding to the original state of the directory tree, which
-I listed.</p>
+time, some metadata (e.g., reference to previous commits, authors name), and an
+identifier (this is called a hash and will be discussed below).  Returning to
+the above example, you would make a <strong>commit</strong> corresponding to the original
+state of the directory tree, which I listed.  Committing the directory tree
+as listed above will allow us to return to this exact state later.</p>
 <div class="figure" id="id1">
 <a class="reference internal image-reference" href="../_images/commit_anatomy.png"><img alt="Credit: ProGit book, by Scott Chacon, CC License." src="../_images/commit_anatomy.png" style="width: 80%;" /></a>
-<p class="caption"><span class="caption-text">Credit: ProGit book, by Scott Chacon, CC License.</span></p>
+<p class="caption"><span class="caption-text">Here is a schematic representation of a commit.  The commit, which I
+refer to as 98ca9.., has some metadata (i.e., author name and committer
+name) as well as a pointer to the entire directory tree.</span></p>
+<div class="legend">
+Credit: ProGit book, by Scott Chacon, CC License.</div>
 </div>
 <p>A <strong>repository</strong> is a group of <strong>linked</strong> commits, which form a directed
-acyclic graph (DAG).  As part of the metadata of each commit, we include
-references to 0 or more parent commits.  The initial commit of each repository
-has 0 parents.  Each subsequent commit is proceeded by 1 or more commits.</p>
-<p>Again returning to our example, the initial <strong>commit</strong> might correspond to the
-the original state of the directory tree, which I listed above.  Now when you
-begin implementing your new analysis method, you don&#8217;t need to make any
-copies of the previous files.  Since they are already committed, you can
-always access the original state of the repository by checking out the
-original commit.  To proceed you would simply make the necessary edits
-to the files in your directory tree and then when you are satisfied with
-your changes you make a new commit.  This new commit will correspond to
-a snapshot of the entire directory tree with all the edits you&#8217;ve made
-to it since the original commit.  To keep track of the history of the
-project, the new commit will include a reference to the original commit
-as its parent.  Now when your advisor suggests the alternative analysis,
-you could checkout the original commit, implement the new method, and
-commit your changes including a reference to the original commit as
-its sole parent.</p>
+acyclic graph (DAG), as well as a set of references to specific commits (we
+refer to these references to commits as heads).  As part of the metadata of
+each commit, we include references to 0 or more parent commits.  The initial
+commit of each repository has 0 parents.  Each subsequent commit is proceeded
+by 1 or more commits.</p>
 <div class="figure" id="id2">
 <a class="reference internal image-reference" href="../_images/threecommits.png"><img alt="Credit: ProGit book, by Scott Chacon, CC License." src="../_images/threecommits.png" style="width: 90%;" /></a>
-<p class="caption"><span class="caption-text">Credit: ProGit book, by Scott Chacon, CC License.</span></p>
+<p class="caption"><span class="caption-text">This is a schematic representation of three commits in a linear
+workflow.  The first commit 98ca9.. has no parents and Snapshot
+A contains all the files and directory structure that was in
+working tree when the project was started.  Additional files
+were added or changed and a new commit 34ac2.. was made containing
+all the files and directories corresponding to the new state
+of the working tree.  This new commit 34ac2.. has one parent
+98ca9.., which it points to.  Continuing in this manner,
+a new commit f30ab.. is made on top of the second commit
+34ac2...</span></p>
+<div class="legend">
+Credit: ProGit book, by Scott Chacon, CC License.</div>
 </div>
+<p>Again returning to our example, the initial <strong>commit</strong> might correspond to the
+the original state of the directory tree, which I listed above.  Now when you
+begin implementing your new analysis method, you don&#8217;t need to make any copies
+of the previous files (i.e., there is no need to execute <code class="docutils literal"><span class="pre">cp</span> <span class="pre">analysis.py</span>
+<span class="pre">analysis.py.orig</span></code>).  Since they are already committed, you can always access
+the original state of the repository by checking out the original commit.  To
+proceed you would simply make the necessary edits to the files in your
+directory tree and then when you are satisfied with your changes you make a new
+commit.  This new commit will correspond to a snapshot of the entire directory
+tree with all the edits you&#8217;ve made to it since the original commit.  To keep
+track of the history of the project, the new commit will include a reference to
+the original commit as its parent.  Now when your advisor suggests the
+alternative analysis, you could checkout the original commit, implement the new
+method, and commit your changes including a reference to the original commit as
+its sole parent.</p>
 <p>Finally, we need to understand how Git keeps track of commits. To reference a
 commit, Git uses a <strong>hash</strong>.  Hashing provides a way to have a fixed-length
 identifier for a given set of information, such as a file or set of files. The
 identifier is not guaranteed to be unique, but if the number of items is small,
 it will almost always be unique.</p>
-<p>To make this concrete, consider the following toy &#8220;implementation&#8221;:</p>
+<p>To make this concrete, consider the following toy &#8220;implementation&#8221; in R:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">library</span><span class="p">(</span><span class="s">&#39;digest&#39;</span><span class="p">)</span>
 
 <span class="c"># first commit</span>
-<span class="n">data1</span> <span class="o">=</span> <span class="s">&#39;This is the start of my paper2.&#39;</span>
-<span class="n">meta1</span> <span class="o">=</span> <span class="s">&#39;date: 8/20/13&#39;</span>
-<span class="n">hash1</span> <span class="o">=</span> <span class="n">digest</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span><span class="n">meta1</span><span class="p">),</span> <span class="n">algo</span><span class="o">=</span><span class="s">&quot;sha1&quot;</span><span class="p">)</span>
+<span class="n">data1</span> <span class="o">&lt;-</span> <span class="s">&#39;This is the start of my paper.&#39;</span>
+<span class="n">meta1</span> <span class="o">&lt;-</span> <span class="s">&#39;date: 8/20/15&#39;</span>
+<span class="n">hash1</span> <span class="o">&lt;-</span> <span class="n">digest</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">meta1</span><span class="p">),</span> <span class="n">algo</span><span class="o">=</span><span class="s">&quot;sha1&quot;</span><span class="p">)</span>
 <span class="n">cat</span><span class="p">(</span><span class="s">&#39;Hash:&#39;</span><span class="p">,</span> <span class="n">hash1</span><span class="p">)</span>
 
 <span class="c"># second commit, linked to the first</span>
-<span class="n">data2</span> <span class="o">=</span> <span class="s">&#39;Some more text in my paper...&#39;</span>
-<span class="n">meta2</span> <span class="o">=</span> <span class="s">&#39;date: 8/20/13&#39;</span>
+<span class="n">data2</span> <span class="o">&lt;-</span> <span class="s">&#39;Some more text in my paper...&#39;</span>
+<span class="n">meta2</span> <span class="o">&lt;-</span> <span class="s">&#39;date: 8/20/15&#39;</span>
 <span class="c"># Note we add the parent hash here!</span>
-<span class="n">hash2</span> <span class="o">=</span> <span class="n">digest</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="n">data2</span><span class="p">,</span><span class="n">meta2</span><span class="p">,</span><span class="n">hash1</span><span class="p">),</span> <span class="n">algo</span><span class="o">=</span><span class="s">&quot;sha1&quot;</span><span class="p">)</span>
+<span class="n">hash2</span> <span class="o">&lt;-</span> <span class="n">digest</span><span class="p">(</span><span class="n">c</span><span class="p">(</span><span class="n">data2</span><span class="p">,</span> <span class="n">meta2</span><span class="p">,</span> <span class="n">hash1</span><span class="p">),</span> <span class="n">algo</span><span class="o">=</span><span class="s">&quot;sha1&quot;</span><span class="p">)</span>
 <span class="n">cat</span><span class="p">(</span><span class="s">&#39;Hash:&#39;</span><span class="p">,</span> <span class="n">hash2</span><span class="p">)</span>
 </pre></div>
+</div>
+<p>And here it is in Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sha</span>
+
+<span class="c"># first commit</span>
+<span class="n">data1</span> <span class="o">=</span> <span class="s">&#39;This is the start of my paper.&#39;</span>
+<span class="n">meta1</span> <span class="o">=</span> <span class="s">&#39;date: 8/20/15&#39;</span>
+<span class="n">hash1</span> <span class="o">=</span> <span class="n">sha</span><span class="o">.</span><span class="n">sha</span><span class="p">(</span><span class="n">data1</span> <span class="o">+</span> <span class="n">meta1</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Hash:&#39;</span><span class="p">,</span> <span class="n">hash1</span>
+
+<span class="c"># second commit, linked to the first</span>
+<span class="n">data2</span> <span class="o">=</span> <span class="s">&#39;Some more text in my paper...&#39;</span>
+<span class="n">meta2</span> <span class="o">=</span> <span class="s">&#39;date: 8/20/15&#39;</span>
+<span class="c"># Note we add the parent hash here!</span>
+<span class="n">hash2</span> <span class="o">=</span> <span class="n">sha</span><span class="o">.</span><span class="n">sha</span><span class="p">(</span><span class="n">data2</span> <span class="o">+</span> <span class="n">meta2</span> <span class="o">+</span> <span class="n">hash1</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Hash:&#39;</span><span class="p">,</span> <span class="n">hash2</span>
+</pre></div>
+</div>
+<p>Now that we have developed some basic vocabulary, let&#8217;s see start using Git.
+To start with we will use Git in the simplest way possible&#8212;as a single-user
+working linearly with no remotes.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you haven&#8217;t done so already, you will want to configure Git before
+proceeding.  You will want to do something like the following from
+your Bash shell:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git config --global user.name &quot;Jarrod Millman&quot;
+$ git config --global user.email &quot;millman@berkeley.edu&quot;
+$ git config --global core.editor /usr/bin/jed
+</pre></div>
+</div>
+<p class="last">The first two lines tell Git who you are (obviously you should use
+your own name and address rather than mine).  The final command
+tells Git which text editor you wish to use.  You should use whatever
+text editor you prefer.  For instance, I use <code class="docutils literal"><span class="pre">/usr/bin/vim</span></code>.</p>
 </div>
 </div>
 <div class="section" id="stage-i-local-single-user-linear-workflow">
 <h2><a class="toc-backref" href="#id11">Stage I: Local, single-user, linear workflow</a><a class="headerlink" href="#stage-i-local-single-user-linear-workflow" title="Permalink to this headline">¶</a></h2>
-<p>Simply type <code class="docutils literal"><span class="pre">git</span></code> (or <code class="docutils literal"><span class="pre">git</span> <span class="pre">help</span></code>) to see a list of the &#8216;core&#8217; commands,
-which will look like this:</p>
+<p>From a Bash shell, type <code class="docutils literal"><span class="pre">git</span></code> (or <code class="docutils literal"><span class="pre">git</span> <span class="pre">help</span></code>) to see a list of the &#8216;core&#8217;
+commands, which will look something like this:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ git
 usage: git &lt;command&gt; [&lt;args&gt;]
 
@@ -346,32 +403,64 @@ step!).</p>
 </div>
 <div class="section" id="stage-ii-local-user-branching">
 <h2><a class="toc-backref" href="#id21">Stage II: Local user, branching</a><a class="headerlink" href="#stage-ii-local-user-branching" title="Permalink to this headline">¶</a></h2>
-<p>What is a branch? Simply a <em>label for the &#8216;current&#8217; commit in a sequence
-of ongoing commits</em>:</p>
+<p>Before understanding what a Git <strong>branch</strong> is, we need to revist the idea
+of a <strong>head</strong>.  As discussed Git labels every commit with cryptographic
+signature called a hash.  These hashs can be considered to uniquely identify
+every commit and are used to verify that the contents of the commit and
+history of the commit are correct.  While this is extremely important, it
+is unlikely that you will remember these hashes.  This is where heads come
+into play.  A head is an easy to remember label (e.g., <code class="docutils literal"><span class="pre">HEAD</span></code>, <code class="docutils literal"><span class="pre">master</span></code>,
+<code class="docutils literal"><span class="pre">feature1</span></code>) that references a commit.</p>
 <div class="figure" id="id3">
 <a class="reference internal image-reference" href="../_images/masterbranch.png"><img alt="Credit: ProGit book, by Scott Chacon, CC License." src="../_images/masterbranch.png" style="width: 90%;" /></a>
-<p class="caption"><span class="caption-text">Credit: ProGit book, by Scott Chacon, CC License.</span></p>
+<p class="caption"><span class="caption-text">By default every repository has a head called <code class="docutils literal"><span class="pre">master</span></code>. In this
+figure <code class="docutils literal"><span class="pre">master</span></code> refers to the commit whose has begins
+<code class="docutils literal"><span class="pre">f30ab</span></code>.  This allows you to refer to the commit by the easy
+to remember name <code class="docutils literal"><span class="pre">master</span></code> rather than <code class="docutils literal"><span class="pre">f30ab</span></code>.</span></p>
+<div class="legend">
+Credit: ProGit book, by Scott Chacon, CC License.</div>
 </div>
-<p>There can be multiple branches alive at any point in time; the working
-directory is the state of a special pointer called HEAD. In this example
-there are two branches, <em>master</em> and <em>testing</em>, and <em>testing</em> is the
-currently active branch since it&#8217;s what HEAD points to:</p>
+<p>A repository can contain any number of heads.  At any point in time,
+your current working directory will correspond to a specific commmit.
+By convention, we refer to this commit with the name <code class="docutils literal"><span class="pre">HEAD</span></code> (note
+the use of all capital letters to distinguish this from the generic
+notion of head).</p>
+<p>In Git, the notions of branch and head are essentially identical. Each
+branch is associated with exactly one head and each head corresponds
+to one branch.  However, we use the term head to refer exclusively
+to a label on exactly one commit; while the term branch may also
+sometimes be used to refer not only to the commit labeled by the
+head but that commit and all the commits that proceed it in the
+repository.</p>
 <div class="figure" id="id4">
 <a class="reference internal image-reference" href="../_images/HEAD_testing.png"><img alt="Credit: ProGit book, by Scott Chacon, CC License." src="../_images/HEAD_testing.png" style="width: 50%;" /></a>
-<p class="caption"><span class="caption-text">Credit: ProGit book, by Scott Chacon, CC License.</span></p>
+<p class="caption"><span class="caption-text">In this example there are two heads or branches, <em>master</em> and <em>testing</em>,
+and <em>testing</em> is the currently active branch since it&#8217;s what <em>HEAD</em> points
+to.</span></p>
+<div class="legend">
+Credit: ProGit book, by Scott Chacon, CC License.</div>
 </div>
 <p>Once new commits are made on a branch, HEAD and the branch label move
 with the new commits:</p>
 <div class="figure" id="id5">
 <a class="reference internal image-reference" href="../_images/branchcommit.png"><img alt="Credit: ProGit book, by Scott Chacon, CC License." src="../_images/branchcommit.png" style="width: 80%;" /></a>
-<p class="caption"><span class="caption-text">Credit: ProGit book, by Scott Chacon, CC License.</span></p>
+<p class="caption"><span class="caption-text">In this example (notice that HEAD is not shown), the branch
+master and iss53 share a common history up to commit C2.
+However, the branch iss53 differs from master as it
+has the additional commit C3.</span></p>
+<div class="legend">
+Credit: ProGit book, by Scott Chacon, CC License.</div>
 </div>
 <p>This allows the history of both branches to diverge:</p>
 <div class="figure" id="id6">
 <a class="reference internal image-reference" href="../_images/mergescenario.png"><img alt="Credit: ProGit book, by Scott Chacon, CC License." src="../_images/mergescenario.png" style="width: 60%;" /></a>
-<p class="caption"><span class="caption-text">Credit: ProGit book, by Scott Chacon, CC License.</span></p>
+<p class="caption"><span class="caption-text">Here both master and iss53 have a shared history up to
+the commit C2.  However they both have commits that the
+other lacks after their shared ancestor.</span></p>
+<div class="legend">
+Credit: ProGit book, by Scott Chacon, CC License.</div>
 </div>
-<p>But based on this graph structure, git can compute the necessary information to
+<p>But based on this graph structure, Git can compute the necessary information to
 merge the divergent branches back and continue with a unified line of
 development:</p>
 <div class="figure" id="id7">
@@ -411,6 +500,18 @@ git slog
 git merge experiment
 git slog
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>We&#8217;ve seen that Git has multiple ways for referring to a commit.</p>
+<ol class="last arabic simple">
+<li>Using the full hash, which you can find using <code class="docutils literal"><span class="pre">git</span> <span class="pre">log</span></code></li>
+<li>Using the first few characters of the hash (as long as there is no
+ambiquity)</li>
+<li>Using a head label (e.g., <code class="docutils literal"><span class="pre">HEAD</span></code> or <code class="docutils literal"><span class="pre">master</span></code>)</li>
+<li>Relative to a specified commit (e.g., <code class="docutils literal"><span class="pre">HEAD^</span></code> is the parent of the
+current head commit)</li>
+</ol>
 </div>
 </div>
 <div class="section" id="stage-iii-using-remotes-as-a-single-user">
@@ -582,9 +683,6 @@ projects</a></li>
 <li class="toctree-l2"><a class="reference internal" href="python.html">Python introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="numpy.html">Scientific computing with Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="git-advanced.html">Collaborative workflow with Git</a></li>
-<li class="toctree-l2"><a class="reference internal" href="eda.html">Exploratory data analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="organize-automate.html">Organization and automation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="statistics.html">Statistical analysis</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>

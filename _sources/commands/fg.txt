@@ -1,4 +1,4 @@
-.. _command-fg:
+.. _fg:
 
 fg
 ==

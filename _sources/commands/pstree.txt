@@ -1,4 +1,4 @@
-.. _command-pstree:
+.. _pstree:
 
 pstree
 ======

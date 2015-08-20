@@ -1,4 +1,4 @@
-.. _command-type:
+.. _type:
 
 type
 ====

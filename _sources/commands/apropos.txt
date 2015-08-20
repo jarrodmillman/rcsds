@@ -1,4 +1,4 @@
-.. _command-apropos:
+.. _apropos:
 
 apropos
 =======

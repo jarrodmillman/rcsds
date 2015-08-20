@@ -1,4 +1,4 @@
-.. _command-mount:
+.. _mount:
 
 mount
 =====

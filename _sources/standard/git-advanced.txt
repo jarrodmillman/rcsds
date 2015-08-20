@@ -2,6 +2,9 @@
 Collaborative workflow with Git
 *******************************
 
+.. contents::
+
+
 In groups, [1]_ I want you to spend about 5 minutes on each of the
 following questions. For most of the questions, you will need to use Git
 and GitHub.

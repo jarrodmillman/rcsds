@@ -12,20 +12,20 @@ following commands are often sufficient.
 
 Useful Contents
 
-* :ref:`command-ftp` -- ARPANET file transfer program
-* :ref:`command-sftp` -- Secure file transfer program
+* :ref:`ftp` -- ARPANET file transfer program
+* :ref:`sftp` -- Secure file transfer program
 
 **scp** and **wget**
 ~~~~~~~~~~~~~~~~~~~~
 
 Useful Contents
 
-* :ref:`command-scp` -- secure copy
-* :ref:`command-wget`-- GNU Wget Manual
+* :ref:`scp` -- secure copy
+* :ref:`wget`-- GNU Wget Manual
 
 However, if you need to transfer a substantial amount
 of data between machines, the weakness of these commands
-(`command-sftp`, `command-scp`, and `command-wget`)
+(`sftp`, `scp`, and `wget`)
 become apparent.
 
 

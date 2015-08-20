@@ -1,4 +1,4 @@
-.. _command-df:
+.. _df:
 
 df
 ==

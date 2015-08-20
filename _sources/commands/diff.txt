@@ -1,4 +1,4 @@
-.. _command-diff:
+.. _diff:
 
 diff
 ====

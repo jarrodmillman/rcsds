@@ -1,4 +1,4 @@
-.. _command-sleep:
+.. _sleep:
 
 sleep
 =====

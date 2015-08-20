@@ -1,4 +1,4 @@
-.. _command-bg:
+.. _bg:
 
 bg
 ==

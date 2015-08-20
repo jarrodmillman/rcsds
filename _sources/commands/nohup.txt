@@ -1,4 +1,4 @@
-.. _command-nohup:
+.. _nohup:
 
 nohup
 =====

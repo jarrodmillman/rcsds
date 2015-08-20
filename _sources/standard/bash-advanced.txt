@@ -7,40 +7,44 @@ Advanced Bash
 .. contents::
    :depth: 3
 
-.. note:: The content of this tutorial was adapted from Chris Paciorek's
-   `Statistics 243 lecture notes on Bash
-   <https://github.com/berkeley-stat243/stat243-fall-2014/blob/master/units/unit2-bash.pdf>`_.
+.. note:: Some of the material in this tutorial was adapted from Chris Paciorek's
+   `2014 Statistics 243 lecture notes on Bash
+   <https://github.com/berkeley-stat243/stat243-fall-2014/blob/master/units/unit2-bash.pdf>`_
+   and his `2014 Statistics 243 lecture notes on using R
+   <https://github.com/berkeley-stat243/stat243-fall-2014/blob/master/units/unit4-usingR.pdf>`_.
 
-
-.. note::
-   This material assumes that you have already worked through
+   Before reading this, you will want to be familiar with the material in
    the "Basics of UNIX" tutorial and screencast here:
    http://statistics.berkeley.edu/computing/training/tutorials
 
 The Interactive Shell
 =====================
 
-In order to be of interest to the user, a computer must have a *human interface
-component*. A CLI is a text based interface.  The user is given a *prompt* to
-indicate the computers reeadiness to accept *input*. The user enters or types a
-*command* on the line (or lines) following the prompt. The computer,
-consequently, executes or interprets the command and prompts the user when its
-finished.
+The shell is an interactive computer programming environment. More
+specifically, it is a read-evaluate-print loop (REPL) environment.  R and
+Python also provide REPL environments. A REPL reads a single expression or
+input, parses and evaluates it, prints the results, and then loops.
 
-The program which prompts the user and interprets the user's commands is called
-a *shell*.  When you are working in a terminal window (i.e., a window with the
-command line interface), you’re interacting with a shell.
+.. tip::
+   I will use a ``$`` prompt for bash, a ``>`` prompt for R, and a ``>>>``
+   for Python, and a ``In [#]:`` prompt for IPython. By convention, a
+   regular user's prompt in bash is ``$``, while the root (or administrative)
+   user's prompt is ``#``.  However, it is common practice to never log
+   on as the root user.  If you need to run a command with root priveleges,
+   you should use the ``sudo`` command (see the section on *Logging In*
+   below for more details).
 
-There are multiple shells (*sh*, *bash*, *csh*, *tcsh*, *zsh*, *fish*).  Since
-We'll assume usage of *bash*, as this is the default for Mac OS X, the BCE VM,
-the SCF machines and most Linux distributions.  However, the basic ideas are
-applicable to any of UNIX's shells.
+When you are working in a terminal window (i.e., a window with the command line
+interface), you’re interacting with a shell.  There are multiple shells (*sh*,
+*bash*, *csh*, *tcsh*, *zsh*, *fish*).  I'll assume you are using *bash*, as
+this is the default for Mac OS X, the BCE VM, the SCF machines and most Linux
+distributions.  However, the basic ideas are applicable to any Unix shell.
 
-As you will see the shell is an amazingly powerful programming environment.
-From it you can interactively control almost any aspect of the OS and more
-importantly you can automate it. As you will see, **bash** has a very extensive
-set of capabalities intended to make both interactive as well as automated
-control simple, effective, and customizable.
+The shell is an amazingly powerful programming environment.
+From it you can interactively monitor and control almost any aspect of the OS
+and more importantly you can automate it. As you will see, **bash** has a very
+extensive set of capabalities intended to make both interactive as well as
+automated control simple, effective, and customizable.
 
 .. note::
    It can be difficult to distinguish what is shell-specific and
@@ -52,31 +56,31 @@ control simple, effective, and customizable.
 Logging In
 ----------
 
-**Useful Commands**
+* :ref:`su` -- run a shell with substitute user and group IDs
+* :ref:`sudo` -- execute a command as another user
 
-* :ref:`command-su` -- run a shell with substitute user and group IDs
-* :ref:`command-sudo` -- execute a command as another user
-
-We assume that you already are able to access a terminal from the BCE VM.
+You should already be able to access a terminal from the BCE VM.
 However, it is occassionally useful to operate as a different user.  For
 instance, you may need to change file permissions or install software.
 As you work through this tutorial, we will see examples of this.
 
+.. tip::
+   Most bash commands have electronic manual pages, which are accessible
+   directly from the commandline.  You will be more efficient and effective
+   if you become accustomed to using these ``man`` pages.  To view the ``man``
+   page for the command ``su``, for instance, you would type::
 
+     $ man su
+
+   Compare this output to the this :ref:`su` page.
 
 Variables
 ---------
 
-**Useful Commands**
-
-* :ref:`command-echo` -- display a line of text
-* :ref:`command-which` -- shows the full path of (shell) commands.
-* :ref:`command-man` -- format and display the on-line manual pages
-* ``printenv`` -- print all or part of environment
-
-**Standard Variables**
-
-* SHELL, HOME, PS1, PATH
+* :ref:`echo` -- display a line of text
+* :ref:`which` -- shows the full path of (shell) commands.
+* :ref:`man` -- format and display the on-line manual pages
+* :ref:`printenv` -- print all or part of environment
 
 Much of how bash behaves can be customized through the use of variables,
 which consists of names that have values assigned to them.  To access
@@ -92,165 +96,100 @@ command.
 
 #. | To make it your default:
    | ``$ chsh /bin/bash``
-   | */bin/bash* should be whatever the path to the bash shell is, which
-     you can figure out using ``which bash``
 
-To see how this works, let's work with the 
+In the last example, ``/bin/bash`` should be whatever the path to the bash shell
+is, which you can figure out using ``which bash``.
 
-**Example 2-1. PS1: Prompt String 1**
+To declare a variable, just assign a value to its reference.  
+For example, if you want to make a new variable with the name
+``counter`` with the value ``1``::
 
-::
+  $ counter=1
 
-    [user1@local1 src]$ echo $PS1
-    [\u@\h \W]\$
-      
-
-**Example 2-2. Changing PS1**
-
-::
-
-    [user1@local1 src]$ PS1=$
-    $ bash
-    [user1@local1 src]$ export PS1=$
-    $ bash
-    $
-      
-Shell commands can be saved in a file (with extension *.sh*) and this
-file can be executed as if it were a program. To run a shell script
-called *file.sh*, you would type ``./file.sh``. Note that if you just
-typed\ `` file.sh``, the operating system will generally have trouble
-finding the script and recognizing that it is executable. To be sure
-that the operating system knows what shell to use to interpret the
-script, the first line of the script should be ``#!/bin/bash`` (in the
-case that you’re using the bash shell). Also, *file.sh* would need to be
-executable (i.e., to have the ’x’ flag set).
-
-
-**Example 2-3. PATH**
-
-::
-
-    $ echo $PATH
-    /bin:/usr/bin:/usr/X11R6/bin:/usr/local/bin
-      
-
-**Example 2-4. Finding **echo** with **which****
-
-::
-
-    $ which echo
-    /bin/echo
-      
-We can define shell variables that will help us when writing shell
-scripts. Here’s an example of defining a variable:
-
-| ``> myDir=~/stat243-fall-2014/units``
-| The shell may not like it if you leave any spaces around the = sign.
-  To see the value of a variable we need to precede it by *$*:
-
-``> echo $myDir``
-
-``> cd $myDir``
+Since bash uses spaces to parse the expression you give it as input,
+it is important to note the lack of spaces around the equal sign.
+Try typing the command with and without spaces and note what happens.
 
 You can also enclose the variable name in curly brackets, which comes in
-handy when we’re embedding a variable within a line of code to make sure
-the shell knows where the variable name ends:
+handy when you're embedding a variable within a line of code to make sure
+the shell knows where the variable name ends::
 
-``> echo ${myDir}``
+  $ base=/home/jarrod/
+  $ echo $basesrc
+  $ echo ${base}src
 
-``> touch ${myDir}/tmp.txt``
+Make sure you understand the difference in behavior in the last two lines.
 
-There are also special shell variables called environment variables that
-help to control the shell’s behavior. These are generally named in all
-caps. Type ``env`` to see them. You can create your own environment
-variable as follows:
+There are also special shell variables called environment variables that help
+to control the shell's behavior. These are generally named in all caps. Type
+``printenv`` to see them. You can create your own environment variable as
+follows::
 
-| ``> export myDir=~/stat243-fall-2014/units``
-| The *export* command ensures that other shells created by the current
-  shell (for example, to run a program) will inherit the variable.
-  Without the export command, any shell variables that are set will only
-  be modified within the current shell. More generally, if one wants a
-  variable to always be accessible, one would include the definition of
-  the variable with an *export* command in your *.bashrc* file.
+  $ export base=/home/jarrod/
 
-Here’s an example of an environment variable that controls what your
-prompt looks like. We can modify it so that it puts the username,
-hostname, and pwd in your prompt. This is handy so you know what machine
-you’re on and where in the filesystem you are. [Note that on the VM, PS1
-is already set in a very similar manner.]
 
-``> echo $PS1``
+The ``export`` command ensures that other shells created by the current shell
+(for example, to run a program) will inherit the variable.  Without the export
+command, any shell variables that are set will only be modified within the
+current shell. More generally, if you want a variable to always be accessible,
+you should include the definition of the variable with an ``export`` command in
+your ``.bashrc`` file.
 
-::
-  > export PS1=\u@\h:\w>
+You can control the appearance of the bash prompt using the ``PS1``
+variable::
 
-For me, this is one of the most important things to put in my
-*.bashrc* file. The **\\** syntax tells bash what to put in the prompt
-string: *u* for username, *h* for hostname, and *w* for working
-directory.
- 
+  $ echo $PS1
+
+To modify it so that it puts the username, hostname, and current working
+directory in the prompt::
+
+  $ export PS1='[\u@\h \W]\$ '
+  [user1@local1 ~]$ 
+
+
+**Maybe something about PATH**
 
 Commands
 --------
 
-**Useful Commands**
-
-* :ref:`command-ls` -- list directory contents
+* :ref:`ls` -- list directory contents
 
 While each command has its own syntax, there are some rules usually
 followed. Generally, a command line consists of 4 things:
 
 #. command
-
 #. command options
-
 #. arguments
-
 #. line acceptance
 
-
-**Example 2-6. General Command Syntax**
-
-::
+Exercise
+~~~~~~~~
+ 
+Consider the following examples using the ``ls`` command::
 
     $ ls --all -l
-    total 44
-    drwxr-xr-x    2 user1   group1          4096 Feb 26 19:06 .
-    drwx------   63 user1   group1         12288 Feb 26 19:04 ..
-    -rw-r--r--    1 user1   group1         28251 Feb 26 19:01 manual.xml
-    
     $ ls -a -l
-    total 44
-    drwxr-xr-x    2 user1   group1          4096 Feb 26 19:06 .
-    drwx------   63 user1   group1         12288 Feb 26 19:04 ..
-    -rw-r--r--    1 user1   group1         28251 Feb 26 19:01 manual.xml
-    
     $ ls -al
-    total 44
-    drwxr-xr-x    2 user1   group1          4096 Feb 26 19:06 .
-    drwx------   63 user1   group1         12288 Feb 26 19:04 ..
-    -rw-r--r--    1 user1   group1         28251 Feb 26 19:01 manual.xml
-    
-    $ ls -al manual.xml
-    -rw-r--r--    1 user1   group1         28251 Feb 26 19:01 manual.xml
-        
+
+Use ``man ls`` to see what the command options do.  Is there any difference
+in what the three versions of the command invocation above return as
+the result?  What happens if you add a filename to the end of the command?
 
 Tab completion
 ~~~~~~~~~~~~~~
       
 When working in the shell, it is often unnecessary to type out an entire
-command or file name, because of a feature known as tab completion. When
-you are entering a command or filename in the shell, you can, at any
-time, hit the tab key, and the shell will try to figure out how to
-complete the name of the command or filename you are typing. If there is
-only one command in the search path and you’re using tab completion with
-the first token of a line, then the shell will display its value and the
-cursor will be one space past the completed name. If there are multiple
-commands that match the partial name, the shell will display as much as
-it can. In this case, hitting tab twice will display a list of choices,
-and redisplay the partial command line for further editing. Similar
-behavior with regard to filenames occurs when tab completion is used on
-anything other than the first token of a command.
+command or file name, because of a feature known as tab completion. When you
+are entering a command or filename in the shell, you can, at any time, hit the
+tab key, and the shell will try to figure out how to complete the name of the
+command or filename you are typing. If there is only one command in the search
+path and you’re using tab completion with the first token of a line, then the
+shell will display its value and the cursor will be one space past the
+completed name. If there are multiple commands that match the partial name, the
+shell will display as much as it can. In this case, hitting tab twice will
+display a list of choices, and redisplay the partial command line for further
+editing. Similar behavior with regard to filenames occurs when tab completion
+is used on anything other than the first token of a command.
 
 .. note::
   Note that R does tab completion for objects (including functions) and
@@ -260,19 +199,14 @@ anything other than the first token of a command.
 Command History and Editing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Useful Commands**  
-
-* :ref:`command-history` -- lists the history of entered commands
-
-**Example 2-7. Examing your command history with **history****
+* :ref:`history` -- lists the history of entered commands
 
 By using the up and down arrows, you can scroll through commands that
 you have entered previously. So if you want to rerun the same command,
 or fix a typo in a command you entered, just scroll up to it and hit
 enter to run it or edit the line and then hit enter.
 
-
-::
+To list the history of the commands you entered, use the ``history`` command::
 
    $ history
      1    echo $PS1
@@ -287,26 +221,22 @@ enter to run it or edit the line and then hit enter.
      10   ls -al
      11   ls -al manual.xml
         
-      
 
-**Example 2-8. Where is the **history** information kept?**
-
-::
+The behavior of the **history** command is controlled by a couple of shell
+variables::
 
     $ echo $HISTFILE
-    /group1/user1/.bash_history
     $ echo $HISTSIZE
-    1000
       
-You can also rerun previous commands as follows:
+You can also rerun previous commands as follows::
 
-``> !-n # runs the ``\ ``n``\ ``th previous command``
+  $ !-n # runs the ``\ ``n``\ ``th previous command
+  $ !gi # runs the last command that started with 'gi'
 
-``> !gi # runs the last command that started with ’gi’``
+The first example runs the nth previous command and the second one runs the
+last command that started with 'gi'.
 
-
-
-**Table 2-1. Command History Expansion**
+**Table. Command History Expansion**
 
 ====================   ==========================================================
 Designator             Description
@@ -320,79 +250,88 @@ Designator             Description
                        substituted for *string1*
 ====================   ==========================================================
 
-If you’re not sure what command you’re going to recall, you can append
+If you're not sure what command you're going to recall, you can append
 ``:p`` at the end of the text you type to do the recall, and the result
-will be printed, but not executed. For example:
+will be printed, but not executed. For example::
 
-| ``> !gi:p``
-| You can then use the up arrow key to bring back that statement for
-  editing or execution.
+  $ !gi:p
 
-You can also search for commands by doing ``C-r`` and typing a string of
-characters to search for in the search history. You can hit return to
-submit, ``C-c`` to get out, or ``ESC`` to put the result on the regular
-command line for editing.
+You can then use the up arrow key to bring back that statement for editing or
+execution.
 
-Command Completion and Substitution
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+You can also search for commands by doing ``Ctrl-r`` and typing a string of
+characters to search for in the search history. You can hit return to submit,
+``Ctrl-c`` to get out, or ``ESC`` to put the result on the regular command line
+for editing.
 
-**Example 2-9. Command Substitution**
+Command Substitution
+~~~~~~~~~~~~~~~~~~~~
 
-::
+You may occassionally need to substitute the results of a command for use by
+another command.  For example, if you wanted to use the directory listing
+returned by ``ls`` as the argument to another command, you would type
+``$(ls)`` in the location you want the result of ``ls`` to appear.
 
-        $ ls -l echo
-        ls: echo: No such file or directory
-        $ ls -l $(which echo)
-        -rwxr-xr-x    1 root     root        11704 Mar  7  2002 /bin/echo
-      
+Exercise
+~~~~~~~~
+
+Try the following commands::
+ 
+  $ ls -l echo
+  $ which echo
+  $ ls -l which echo
+  $ ls -l $(which echo)
+
+Make sure you understand why each command behaves as it does.
 
 Shortcuts
 ---------
 
-**Useful Commands**  
-
-* :ref:`command-clear` -- clear the terminal screen
+* :ref:`alias` -- set aliases
+* :ref:`clear` -- clear the terminal screen
 
 Aliases -- command shortcuts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 Aliases allow you to use an abbreviation for a command, to create new
 functionality or to insure that certain options are always used when you
 call an existing command. For example, I’m lazy and would rather type
 ``q`` instead of ``exit`` to terminate a shell window. You could create
-the alias as follow
+the alias as follow::
 
-| ``> alias q=exit``
-| As another example, suppose you find the *-F* option of *ls* (which
-  displays ***/*** after directories, ***\**** after executable files
-  and ***@*** after links) to be very useful. The command
+  $ alias q=exit
 
-::
-  > alias ls=ls -F
+As another example, suppose you find the ``-F`` option of ``ls`` (which
+displays ``/`` after directories, ``\`` after executable files
+and ``@`` after links) to be very useful. The command ::
 
-will insure that the *-F* option will be used whenever you use *ls*.
+  $ alias ls=ls -F
+
+will insure that the ``-F`` option will be used whenever you use ``ls``.
 If you need to use the unaliased version of something for which you’ve
-created an alias, precede the name with a backslash (***\\***). For
-example, to use the normal version of *ls* after you’ve created the
-alias described above, just type
+created an alias, precede the name with a backslash (``\``). For
+example, to use the normal version of ``ls`` after you’ve created the
+alias described above::
 
-``> \ls``
+  $ \ls
 
 The real power of aliases is only achieved when they are automatically
 set up whenever you log in to the computer or open a new shell window.
 To achieve that goal with aliases (or any other bash shell commands),
-simply insert the commands in the file *.bashrc* in your home directory.
-See the *example.bashrc* file in the repository for some of what’s in my
-*.bashrc* file.
+simply insert the commands in the file ``.bashrc`` in your home directory.
 
+**See the ``example.bashrc`` file in the repository for some of what’s in my
+``.bashrc`` file.**
 
 Keyboard shorcuts
+~~~~~~~~~~~~~~~~~
 
+Note that you can use emacs-like control sequences (``Ctrl-a``, ``Ctrl-e``,
+``Ctrl-k``) to navigate and delete characters, just as you can at the prompt in
+the shell usually.
 
-Note that you can use emacs-like control sequences (``C-a``, ``C-e``,
-``C-k``) to navigate and delete characters, just as you can at the
-prompt in the shell usually.
-
-**Table 2-2. Keyboard Shortcuts**
+**Table. Keyboard Shortcuts**
 
 ============   ==========================================================
 Key Strokes    Descriptions
@@ -409,166 +348,98 @@ Key Strokes    Descriptions
 Basic File Management
 =====================
 
+In Unix, almost "Everything is a file." This means that a very wide variety
+of input and output resources (e.g., documents, directories, keyboards,
+harddrives, network devices) are streams of bytes available through the
+filesystem interface. This means that the basic file management tools
+are extremely powerful in Unix.  Not only can you use these tools to work
+with files, but you can often use them to monitor and control many aspects
+of your computer.
+
 Files
 -----
 
-**Useful Commands**  
-
-* :ref:`command-stat` -- display file or filesystem status
-* :ref:`command-file` --  determine file type
-* :ref:`command-type` -- For each *name*, indicate how it would be
+* :ref:`stat` -- display file or filesystem status
+* :ref:`file` --  determine file type
+* :ref:`type` -- For each *name*, indicate how it would be
                          interpreted if used as a command name.
-* :ref:`command-ln` -- make links between files
-* :ref:`command-chmod` -- change file access permissions
+* :ref:`ln` -- make links between files
+* :ref:`chmod` -- change file access permissions
 
 A file typically consist of these attributes:
 
 -  Name.
-
 -  Type.
-
 -  Location.
-
 -  Size.
-
 -  Protection.
-
 -  Time, date, and user identification.
 
-
-Examples: chmod -c -v -R
-
-**Example 2-10. Examining File Attributes with **ls**, **stat**, and **file****
-
-::
+Listing file attributes with ``ls``::
 
     $ ls -l
-    total 32
-    drwxr-xr-x    3 user1   group1          4096 Mar  3 09:58 db2html-dir
-    -rw-r--r--    1 user1   group1         48958 Mar  3 09:58 manual.xml
-    
+   
+Getting more information with ``stat``::
+ 
     $ stat manual.xml
-      File: "manual.xml"
-      Size: 48958           Blocks: 96         IO Block: 4096   Regular File
-    Device: 7h/7d   Inode: 2204387     Links: 1
-    Access: (0644/-rw-r--r--)  Uid: (  503/  user1)   Gid: (  551/     group1)
-    Access: Mon Mar  3 09:58:44 2003
-    Modify: Mon Mar  3 09:58:43 2003
-    Change: Mon Mar  3 09:58:43 2003
+
+Finding out what type of file you have::
     
     $ file manual.xml
-    manual.xml: exported SGML document text
-      
 
-.. tip:: **Be aware of Magic:**
-    The *file* command relies on many sources
+.. tip:: 
+    The ``file`` command relies on many sources
     of information to determine what a file contains. The easiest part
-    to explain is *magic*. Specifically, the *file* command examines
+    to explain is *magic*. Specifically, the ``file`` command examines
     the content of the file and compares it with information found in
-    the */usr/share/magic/* directory.
+    the ``/usr/share/magic/`` directory.
 
 
-**Example 2-11. Creating Symbolic Links with **ln****
-
-::
+Creating symbolic links with ``ln``::
 
     $ ln -s db2html-dir unix_users_guide
-    $ ls -l
-    total 32
-    drwxr-xr-x    3 user1   group1          4096 Mar  3 09:58 db2html-dir
-    -rw-r--r--    1 user1   group1         48958 Mar  3 09:58 manual.xml
-    lrwxrwxrwx    1 user1   group1            11 Mar  3 10:06 unix_users_guide -> db2html-dir
-        
-      
 
-**Example 2-12. Changing File Attributes with **chmod****
-
-::
+Changing file attributes with ``chmod``::
 
    $ chmod g+w manual.xml
-   $ ls -l manual.xml
-   -rw-rw-r--    1 user1   group1         49889 Mar  3 10:09 manual.xml
         
       
 
 Navigation
 ----------
 
-**Useful Commands**  
-
-* :ref:`command-cd` -- Change the current working directory to
+* :ref:`cd` -- Change the current working directory to
                      *directory*.
-* :ref:`command-pwd` -- print name of current/working directory
+* :ref:`pwd` -- print name of current/working directory
 
-**Example 2-13. Moving Around the Filesystem with **cd**, ~,and **pwd****
+Efficient navigation of the filesystem from the shell is an essential aspect of
+mastering Unix.  Use ``pwd`` to list your current working directory.  If you
+just enter ``cd`` at a prompt, your current working directory will change to
+your home directory.  You can also refer to your home directory using the tilde
+``~``.  For example, if you wanted to change your current directory to the
+subdirectory ``src`` in your home directory from any other current directory,
+you could type::
 
-::
+  $ cd ~/src
 
-    $ cd ~
-    $ pwd
-    /home/user1
-    
+Also if you want to return to the previous directory, you could type::
 
-Manipulation
-------------
+  $ cd -
 
-**Useful Commands**  
-
-* :ref:`command-cat` -- concatenate files and print on the standard output
-* :ref:`command-cp`-- copy files and directories
-* :ref:`command-diff`-- find differences between two files
-* :ref:`command-head` -- output the first part of files
-* :ref:`command-less` -- opposite of more
-* :ref:`command-more` --  file perusal filter for crt viewing
-* :ref:`command-mv` -- move (rename) files
-* :ref:`command-paste` -- merge lines of files
-* :ref:`command-rm` -- remove files or directories
-* :ref:`command-rmdir` -- remove empty directories
-* :ref:`command-sort` -- sort lines of text files.
-* :ref:`command-split` -- split a file into pieces
-* :ref:`command-tac` -- concatenate and print files in reverse
-* :ref:`command-tail` -- output the last part of files
-* :ref:`command-touch` -- change file timestamps
-* :ref:`command-uniq` --  remove duplicate lines from a sorted file
-
-Examples: touch, cp, mv, rename...
-
-
-::
-
-   $ ls 
-   dest.txt
-   $ cp dest.txt{,.bak}
-   $ ls
-   dest.txt  dest.txt.bak
-
-**Example 2-14. Manipulating Files with **touch**, **rm**, and **rmdir****
-
-::
-
-    $ touch index.rst; rm _build; rmdir _build
-    rm: `_build' is a directory
-    rmdir: `_build': Directory not empty
-    
-    $ rm -Rf _build
-    $ ls -l
-    total 56
-    -rw-rw-r--    1 user1   group1         50939 Mar  3 10:23 index.rst
-    lrwxrwxrwx    1 user1   group1            11 Mar  3 10:06 doc -> db2html-dir
-    
-  
+You can use the ``pushd``, ``popd``, and ``dirs`` commands if you would
+like to keep a stack of previous working directories rather than just
+the last one.
 
 Filename Globbing
 -----------------
 
 The shell will expand certain special characters to match patterns of
-file names, before passing those filenames on to a program. Note that
-the programs themselves don’t know anything about wildcards; it is the
-shell that does the expansion, so that programs don’t see the wildcards.
-Table 1 shows some of the special characters that the shell uses for
-expansion:
+filenames, before passing those filenames on to a program. Note that the
+programs themselves don’t know anything about wildcards; it is the shell that
+does the expansion, so that programs don’t see the wildcards.  Table 1 shows
+some of the special characters that the shell uses for expansion:
 
-**Table 2-3. File-Naming Wildcards**
+**Table. Filename Wildcards**
 
 ============================== ==================================================
 Wildcard                       Function
@@ -576,52 +447,64 @@ Wildcard                       Function
 ``*``                          Match zero or more characters.
 ``?``                          Match exactly one character.
 ``[characters]``               Match any single character from among *characters*
-                                 listed between brackets.
+                               listed between brackets.
 ``[!characters]``              Match any single character other than *characters*
-                                 listed between brackets.
+                               listed between brackets.
 ``[a-z]``                      Match any single character from among the range of
-                                 characters listed between brackets.
+                               characters listed between brackets.
 ``[!a-z]``                     Match any single character from among the characters
-                                 not in the range listed between brackets
-``{frag1, frag2, frag3,...}``  Brace expansion: create strings frag1, frag2, and
-                                 frag3, etc.
+                               not in the range listed between brackets
+``{frag1,frag2,frag3,...}``    Brace expansion: create strings frag1, frag2, and
+                               frag3, etc.
 ============================== ==================================================
 
 Here are some examples of using wildcards:
 
 -  List all files ending with a digit::
 
-   > ls *[0-9]
+   $ ls *[0-9]
 
 -  Make a copy of *filename* as *filename.old*::
 
-   > cp filename{,.old}
+   $ cp filename{,.old}
 
 -  Remove all files beginning with *a* or *z*::
 
-   > rm [az]*
+   $ rm [az]*
 
 -  List all the R code files with a variety of suffixes::
 
-   > ls *.{r,q,R}
+   $ ls *.{r,q,R}
 
-The *echo* command can be used to verify that a wildcard expansion will
+The ``echo`` command can be used to verify that a wildcard expansion will
 do what you think it will::
 
-  > echo cp filename{,.old} # returns cp filename filename.old
+  $ echo cp filename{,.old} # returns cp filename filename.old
 
-If you want to suppress the special meaning of a wildcard in a shell
-command, precede it with a backslash (***\\***). Note that this is a
-general rule of thumb in many similar situations when a character has a
-special meaning but you just want to treat it as a character.
+If you want to suppress the special meaning of a wildcard in a shell command,
+precede it with a backslash (``\``). Note that this is a general rule of thumb
+in many similar situations when a character has a special meaning but you just
+want to treat it as a character.
 
-**Example 2-15. Using brace expansion**
+Exercise
+~~~~~~~~
 
-::
+Figure out how to use the :ref:`mkdir` command and brace expansion
+to create the following directory structure in one short command::
 
-   $ echo file{one,two,three}
-   fileone filetwo filethree
-      
+  $ tree temp/
+  temp/
+  ├── proj1
+  │   ├── code
+  │   └── data
+  ├── proj2
+  │   ├── code
+  │   └── data
+  └── proj3
+      ├── code
+      └── data
+  
+  9 directories, 0 files 
 
 Quoting
 -------
@@ -657,42 +540,97 @@ So we’ll generally use double quotes. We can always work with a literal
 double quote by escaping it as seen above.
 
 
-
 Data Manipulation
 =================
 
+Since files are such an essential aspect of Unix and working from the shell is
+the primary way to work with Unix, there are a large number of useful commands
+and tools to view and manipulate files.  
+
+* :ref:`cat` -- concatenate files and print on the standard output
+* :ref:`cp`-- copy files and directories
+* :ref:`diff`-- find differences between two files
+* :ref:`head` -- output the first part of files
+* :ref:`less` -- opposite of more
+* :ref:`more` --  file perusal filter for crt viewing
+* :ref:`mv` -- move (rename) files
+* :ref:`paste` -- merge lines of files
+* :ref:`rm` -- remove files or directories
+* :ref:`rmdir` -- remove empty directories
+* :ref:`sort` -- sort lines of text files.
+* :ref:`split` -- split a file into pieces
+* :ref:`tac` -- concatenate and print files in reverse
+* :ref:`tail` -- output the last part of files
+* :ref:`touch` -- change file timestamps
+* :ref:`uniq` --  remove duplicate lines from a sorted file
+
+**Exercise**
+
+You've already seen some of the above commands.  Follow the links above and
+while you are reading the abbreviated man pages consider how you might use
+these commands.
 
 Finding Files
 -------------
 
-Useful Contents
+* :ref:`find` --  search for files in a directory hierarchy
 
-* :ref:`command-find` --  search for files in a directory hierarchy
+Finding files by name, modification time, and type::
 
-**Example 4-1. **find**ing files by name, modification time, and type**
-
-::
-
-    $ find . -name '*.txt'        # find files named *.txt
-    $ find . mtime -2             # find files modified less than 2 days ago
-    $ find . type l               # find links
+    $ find . -name '*.txt'   # find files named *.txt
+    $ find . mtime -2        # find files modified less than 2 days ago
+    $ find . type l          # find links
 
 Regular Expressions
 -------------------
 
-**Table 4-1. Regular Expressions**
+Regular expressions (regexp) are a domain-specific language for finding patterns and are
+one of the key functionalities in scripting languages such as Perl and Python,
+as well as the UNIX utilities ``sed``, ``awk``, and ``grep`` as we will see
+below. I'll just cover the use of regular expressions in bash, but once you
+know that, it would be easy to use them elsewhere (Python, R, etc.).  At the
+level we’ll consider them, the syntax is quite similar.
 
-Category
+The basic idea of regular expressions is that they allow us to find matches of
+strings or patterns in strings, as well as do substitution.  Regular
+expressions are good for tasks such as:
 
+-  extracting pieces of text - for example finding all the links in an
+   html document;
+-  creating variables from information found in text;
+-  cleaning and transforming text into a uniform format;
+-  mining text by treating documents as data; and
+-  scraping the web for data.
 
-**Position anchors**
+Regular expressions are constructed from three things:
 
-=========  ====================================================================
-Operators  Description
-=========  ====================================================================
-``^``      Match the beginning of a line.
-``$``      Match the end of a line.
-=========  ====================================================================
+#. *Literal characters* are matched only by the characters themselves,
+#. *Character classes* are matched by any single member in the class, and
+#. *Modifiers* operate on either of the above or combinations of them.
+
+Note that the syntax is very concise, so it’s helpful to break down individual
+regular expressions into the component parts to understand them. Since regexp
+are their own language, it’s a good idea to build up a regexp in pieces as a
+way of avoiding errors just as we would with any computer code. It is also
+helpful to search for common regexp online before trying to craft your own.
+For instance, if you wanted to use a regexp that matches valid email addresses,
+you would need to match anything that complies with the `RFC 822
+<http://www.ietf.org/rfc/rfc0822.txt?number=822>`_ grammar. If you look over that
+document, you will quickly realize that implementing a correct regular expression
+to validate email addresses is extremely complex. So if you are writing a website
+that validates email addresses, it is best to look for a bug-vetted implementation
+rather than rolling your own. 
+
+The special characters (meta-characters) used for defining regular expressions
+are: ``* . ^ $ + ? ( ) [ ] { } | \`` . To use these characters literally as
+characters, we have to 'escape' them. In bash, you escape these characters by
+placing a  single backslash before the character you want to escape.  In R, we
+have to use two backslashes instead of a single backslash because R uses a
+single backslash to symbolize certain control characters, such as ``\\n`` for
+newline.
+
+Character sets and character classes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Character sets**
 
@@ -708,6 +646,100 @@ Operators          Description
 ``\``              Turn off (escape) the special meaning of a metacharacter
 ===============    ====================================================================
 
+If we want to search for any one of a set of characters, we use a
+character set, such as ``[13579]`` or ``[abcd]`` or ``[0-9]`` (where the
+dash indicates a sequence) or ``[0-9a-z]`` or ``[ \t]``. To indicate any
+character not in a set, we place a ^ just inside the first bracket:
+``[^abcd]``. The period stands for any character.
+
+There are a bunch of named character classes so that we don’t have write out
+common sets of characters. The syntax is ``[:CLASS:]`` where *CLASS* is one of
+the following values "alnum", "alpha", "ascii", "blank", "cntrl", "digit",
+"graph", "lower", "print", "punct", "space", "upper", "word" or "xdigit".
+
+To learn more about regular expressions, you can type::
+
+  $ man 7 regex
+
+To make a character set with a character class you
+need two square brackets, e.g. the digit class: ``[[:digit:]]``. Or we
+can make a combined character set such as ``[[:alnum:]_]``. E.g., the
+latter would be useful in looking for email addresses. 
+
+::
+
+    ## [1] FALSE  TRUE  TRUE
+
+Here are some more examples showing a wide range of string
+functionality:
+
+::
+
+    ## [1] FALSE  TRUE  TRUE
+
+::
+
+    ## [[1]]
+    ##      start end
+    ## 
+    ## [[2]]
+    ##      start end
+    ## [1,]     9   9
+    ## 
+    ## [[3]]
+    ##      start end
+    ## [1,]     5   5
+    ## [2,]    12  12
+
+::
+
+    ## [[1]]
+    ## character(0)
+    ## 
+    ## [[2]]
+    ## character(0)
+    ## 
+    ## [[3]]
+    ## [1] "Juan "
+
+::
+
+    ## [1] "John"            "Jennifer pierce"
+    ## [3] "Juan carlos rey"
+
+**Challenge**: how would we find a spam-like pattern with digits or
+non-letters inside a word? E.g., I want to find V1agra or Fancy
+repl!c@ted watches.
+
+Location-specific matches
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Position anchors**
+
+=========  ====================================================================
+Operators  Description
+=========  ====================================================================
+``^``      Match the beginning of a line.
+``$``      Match the end of a line.
+=========  ====================================================================
+
+To find a pattern at the beginning of the string, we use ``^`` (note this was
+also used for negation, but in that case occurs only inside square brackets)
+and to find it at the end we use ``$``.
+
+::
+
+    ## [1] FALSE FALSE  TRUE
+
+::
+
+    ## [1] FALSE FALSE FALSE
+
+What does this match: ``^[^[:lower:]]$`` ?
+
+Repetitions, Grouping, and References
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 **Modifiers**
 
 =============    ====================================================================
@@ -722,6 +754,139 @@ Operators        Description
                  vertical bar.
 =============    ====================================================================
 
+Now suppose I wanted to be able to detect phone numbers, email addresses, etc.
+I often need to be able to deal with repetitions of character sets.
+
+I can indicate repetitions as indicated in these examples:
+
+-  ``[[:digit:]]*`` – any number of digits (zero or more)
+-  ``[[:digit:]]+`` – at least one digit
+-  ``[[:digit:]]?`` – zero or one digits
+-  ``[[:digit:]]{1,3}`` – at least one and no more than three digits
+-  ``[[:digit:]]{2,}`` – two or more digits
+
+An example is that ``\\[.*\\]`` is the pattern of any number of
+characters (*.\**) separated by square brackets.
+
+So a search for US/Canadian/Caribbean phone numbers might become:
+
+::
+
+    ## [[1]]
+    ## [1] "919-543-3300"
+    ## 
+    ## [[2]]
+    ## character(0)
+    ## 
+    ## [[3]]
+    ## character(0)
+    ## 
+    ## [[4]]
+    ## [1] "919.554.3800"
+
+**Challenge**: How would I extract an email address from an arbitrary
+text string?
+
+We often want to be able to look for multi-character patterns and to be able to
+refer back to the patterns that are found. Both are accomplished with
+parentheses. For example, the phone number detection problem could have been
+done a bit more compactly (and more generally, in case the area code is omitted
+or a 1 is included) as:
+
+::
+
+    ## [[1]]
+    ## [1] "919-543-3300"
+    ## 
+    ## [[2]]
+    ## character(0)
+    ## 
+    ## [[3]]
+    ## character(0)
+    ## 
+    ## [[4]]
+    ## [1] "1.919.554.3800"
+    ## 
+    ## [[5]]
+    ## [1] "337.4355"
+
+Parentheses are also used with a pipe (\|) to indicate any one of a set
+of multi-character sequences, such as ``(http|ftp)``.
+
+::
+
+    ##      start end
+    ## [1,]    13  19
+    ## [2,]    NA  NA
+    ## [3,]     1   6
+
+It’s often helpful to be able to save a pattern as a variable and refer back to
+it. Here’s an example that might have been helpful in dealing with the extra
+commas in the comma-delimited FEC elections data file in PS1:
+
+::
+
+    ## [1] "\"H4NY07011\",\"ACKERMAN GARY L.\",\"H\",\"$13242\",,,"
+
+We can have multiple sets of parentheses, referred to using ``\\1``,
+``\\2``, etc.
+
+**Challenge**: Suppose a text string has dates in the form “Aug-3”,
+“May-9”, etc. and I want them in the form “3 Aug”, “9 May”, etc. How
+would I do this search/replace?
+
+Greedy matching
+~~~~~~~~~~~~~~~
+
+It turns out the pattern matching is ’greedy’ - it looks for the longest
+match possible.
+
+Suppose we want to strip out html tags as follows:
+
+::
+
+    ## [1] "Do an internship  course."
+
+What went wrong?
+
+One solution is to append a ? to the repetition syntax to cause the
+matching to be non-greedy. Here’s an example.
+
+``  ``
+
+::
+
+    ## [1] "Do an internship  in place  of  one  course."
+
+However, one can often avoid greedy matching by being more clever.
+
+**Challenge**: How could we change our regexp to avoid the greedy
+matching without using the “?”?
+
+Regular expressions in other contexts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Regular expression can be used in a variety of places. E.g., to split by
+any number of white space characters
+
+::
+
+    ## a dog    jumped
+    ## over     the moon.
+
+::
+
+    ## [[1]]
+    ## [1] "a"      "dog"    "jumped" "over"   "the"   
+    ## [6] "moon."
+
+::
+
+    ## [[1]]
+    ## [1] "a"            "dog"          "jumped\nover"
+    ## [4] "the"          "moon."
+
+
 .. tip:: **Globs vs. Regex:** 
     Be sure you understand the difference between filename globbing (see
     `the Section called *Filename Globbing* in Chapter 2 <basic-file-management.html#FILENAMEGLOBS>`_)
@@ -731,18 +896,48 @@ Operators        Description
 **ed** and **grep**
 -------------------
 
-Useful Contents
+* :ref:`grep` -- print lines matching a pattern
+* :ref:`tr` -- translate or delete characters
 
-* :ref:`command-grep` -- print lines matching a pattern
-* :ref:`command-tr` -- translate or delete characters
+Before the text editor, there was the line editor.  Rather than presenting you
+with the entire text as a text editor does, a line editor only displays lines
+of text when it is requested to.  The original Unix line editor is called ``ed``.
+You will likely never use ``ed`` directly, but you will very likely use commands
+that are its ancestor.  For example, the commands ``grep``, ``sed``, ``awk``,
+and ``vim`` are all based directly on ``ed`` (e.g., ``grep`` is a ``ed`` command
+that is now available as a standalone command, while ``sed`` is a streaming
+version of ``ed``) or inherit much of its syntax (e.g., ``awk`` and ``vim``
+both heavily borrow from the ``ed`` syntax).  Since ``ed`` was written when
+computing resources were very constrained compared to today, this means that
+the syntax of these commands can be terse.  However, it also means that learning
+the syntax for one of these tools will be rewarded when you need to learn the
+syntax of another of these tools.
 
-**Example 4-2. Translating lowercase to UPPERCASE with **tr****
+The simplest of these tools is ``grep``.  As I mentioned, ``ed`` only displays
+lines of text when requested.  One common task was to print all the lines in
+a file matching a specific regular expression.  The command in ``ed`` that
+does this is ``g/<re>/p``, which stands for globally match all lines containing
+the regular express ``<re>`` and print them out.  Consider the following example::
 
-::
+  $ cat file1.txt 
+  This is the first line.
+  Followed by a this line.
+  And then ...
+  $ grep is file1.txt 
+  This is the first line.
+  Followed by a this line.
+
+Translating lowercase to UPPERCASE with ``tr``::
 
     $ echo 'user1'  | tr 'a-z' 'A-Z'
     USER1
         
+Exercise
+~~~~~~~~
+
+Explain what the following regular expression matches::
+
+  $ grep '^[^T]*is.*$' file1.txt
       
 
 **sed** and **awk**
@@ -750,30 +945,30 @@ Useful Contents
 
 **sed** (stream editor) derives from **ed**.
 
-**Example 4-3. Printing lines of text with **sed****
-
-::
+Printing lines of text with ``sed``::
 
     $ sed -n '1,9p' file.txt       # prints out lines 1-9 of file.txt 
     $ sed -n '/^#/p' file.txt       # prints out lines starting with # of file.txt 
-      
 
-**Example 4-4. Deleting lines of text with **sed****
+The first command prints out lines 1-9 of ``file.txt``, while the second one
+prints out lines starting with ``#`` of ``file.txt``.
+  
+Deleting lines of text with ``sed``::
 
-::
+    $ sed -e '1,9d' file.txt
+    $ sed -e '/^;/d' -e '/^$/d' file.txt
 
-    $ sed -e '1,9d' file.txt       # deletes lines 1-9 of file.txt 
-    $ sed -e '/^;/d' -e '/^$/d' file.txt       # deletes lines  
-      
+The first line deletes lines 1-9 of ``file.txt``. What do you think the second
+line does?
 
-**Example 4-5. Text substitution with **sed****
+Text substitution with ``sed``::
 
-::
-
-    $ sed 's/old_pattern/new_pattern/' file.txt > new_file.txt       # replaces only 1st instance in a line 
+    $ sed 's/old_pattern/new_pattern/' file.txt > new_file.txt
     $ sed 's/old_pattern/new_pattern/g' file.txt > new_file.txt
-      
 
+The first line replaces only 1st instance in a line, while the second line
+replaces all instances in a line (i.e., globally).
+ 
 **Example 4-6. Killing **mozilla** with **awk****
 
 ::
@@ -811,28 +1006,22 @@ Useful Contents
 **perl**
 --------
 
-**Example 4-7. Text substitution with **perl****
-
-::
+Text substitution with ``perl``::
 
     $ perl -pi -e 's/old_pattern/new_pattern/g' file.txt
     $ perl -pi -e 's/old_pattern/new_pattern/g' $(find . -name \*.html)
 
-The i option tells **perl** to do the global substitution in place.
-You can also substitute the **/** with another character. For
-example:
-
-::
+The ``i`` option tells ``perl`` to do the global substitution in place.
+You can also substitute the ``/`` with another character. For
+example::
 
     $ perl -pi -e 's:old_pattern:new_pattern:g' file.txt
       
+Summing columns with ``perl``::
 
-**Example 4-8. Summing columns with **perl****
+    $ perl -lane 'print $F[0] + $F[1]' file.txt
 
-::
-
-    $ perl -lane 'print $F[0] + $F[1]' file.txt       # sums column 1 and 2 of file.txt 
-      
+This will sum columns 1 and 2 of ``file.txt``.
 
 
 Streams, Pipes, and Redirects
@@ -871,25 +1060,23 @@ IO Redirection
 Note that *cmd* may include options and arguments as seen in the
 previous section.
 
-Operations where output from one command is used as input to another
-command (via the \| operator) are known as pipes; they are made
-especially useful by the convention that many UNIX commands will accept
-their input through the standard input stream when no file name is
-provided to them.
+Operations where output from one command is used as input to another command
+(via the ``|`` operator) are known as pipes; they are made especially useful by
+the convention that many UNIX commands will accept their input through the
+standard input stream when no file name is provided to them.
 
 Here’s an example of finding out how many unique entries there are in
-the 2rd column of a data file whose fields are separated by commas:
+the 2rd column of a data file whose fields are separated by commas::
 
-``> cut -d’,’ -f2 cpds.csv | sort | uniq | wc``
-
-``> cut -d’,’ -f2 cpds.csv | sort | uniq > countries.txt``
+  $ cut -d',' -f2 cpds.csv | sort | uniq | wc
+  $ cut -d',' -f2 cpds.csv | sort | uniq > countries.txt
 
 To see if there are any “S” values in certain fields (fixed width) of a
 set of files (note I did this on 22,000 files (5 Gb or so) in about 5
 minutes on my desktop; it would have taken much more time to read the
 data into R):
 
-| ``> cut -b29,37,45,53,61,69,77,85,93,101,109,117,125,133,141,149,`` 
+| ``$ cut -b29,37,45,53,61,69,77,85,93,101,109,117,125,133,141,149,`` 
 | ``157,165,173,181,189,197,205,213,221,229,237,245,253,261,269 USC*.dly | grep S | less``
 
 A closely related, but subtly different, capability is offered by the
@@ -903,11 +1090,11 @@ R code files (those with suffix *.*\ r or .R) that were modified in the
 current directory. We can find the names of the last 4 files ending in
 “.R” or “.r” which were modified using
 
-| ``> ls -t *.{R,r} | head -4``
+| ``$ ls -t *.{R,r} | head -4``
 | and we can search for the required pattern using *grep*. Putting these
   together with the backtick operator we can solve the problem using
 
-| ``> grep pdf `ls -t *.{R,r} | head -4```
+| ``$ grep pdf `ls -t *.{R,r} | head -4```
 | Note that piping the output of the *ls* command into *grep* would not
   achieve the desired goal, since *grep* reads its filenames from the
   command line, not standard input.
@@ -915,16 +1102,16 @@ current directory. We can find the names of the last 4 files ending in
 You can also redirect output as the arguments to another program using
 the *xargs* utility. Here’s an example:
 
-``> ls -t *.{R,r} | head -4 | xargs grep pdf``
+``$ ls -t *.{R,r} | head -4 | xargs grep pdf``
 
 And you can redirect output into a shell variable (see section 9) using
 backticks in a similar manner to that done above:
 
-``> files=ls -t *.{R,r} | head -4 # NOTE - don’t put any spaces around the =``
+``$ files=ls -t *.{R,r} | head -4 # NOTE - don’t put any spaces around the =``
 
-``> echo $files``
+``$ echo $files``
 
-``> grep pdf $files``
+``$ grep pdf $files``
 
 **Table 3-2. Common Redirection Operators**
 
@@ -953,9 +1140,7 @@ Standard Redirection
 Pipes
 ~~~~~
 
-Useful Contents
-
-* :ref:`command-wc` --  print the number of bytes, words, and lines in
+* :ref:`wc` --  print the number of bytes, words, and lines in
   files
 
 **Example 3-1. A simple pipe to **wc****
@@ -969,11 +1154,9 @@ Useful Contents
 The **xargs** and **tee** Command
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Useful Contents
-
-* :ref:`command-xargs` --  build and execute command lines from
+* :ref:`xargs` --  build and execute command lines from
   standard input
-* :ref:`command-tee` -- read from standard input and write to standard
+* :ref:`tee` -- read from standard input and write to standard
   output and files
 
 
@@ -1004,11 +1187,9 @@ Processes have the following attributes:
 Monitoring Processes
 --------------------
 
-Useful Contents
-
-* :ref:`command-ps` --  report process status
-* :ref:`command-pstree` -- display a tree of processes
-* :ref:`command-top` -- display top CPU processes
+* :ref:`ps` --  report process status
+* :ref:`pstree` -- display a tree of processes
+* :ref:`top` -- display top CPU processes
 
 **Example 3-2. Examining Processes with **ps****
 
@@ -1086,10 +1267,8 @@ Useful Contents
 Signaling Processes
 -------------------
 
-Useful Contents
-
-* :ref:`command-kill` -- terminate a process
-* :ref:`command-killall` --  kill processes by name
+* :ref:`kill` -- terminate a process
+* :ref:`killall` --  kill processes by name
 
 **Table 3-3. Common Signals**
 
@@ -1115,12 +1294,10 @@ Signal Number Meaning                            HUP
 Shell Job Control
 -----------------
 
-Useful Contents
-
-* :ref:`command-bg` -- background
-* :ref:`command-fg` -- foreground
-* :ref:`command-jobs` -- list the active jobs
-* :ref:`command-nohup` -- Run a command immune to hangups, with
+* :ref:`bg` -- background
+* :ref:`fg` -- foreground
+* :ref:`jobs` -- list the active jobs
+* :ref:`nohup` -- Run a command immune to hangups, with
   output to a non-tty
 
 Starting a job
@@ -1131,7 +1308,7 @@ said to be running in the foreground. When a job is running in the
 foreground, you can’t type additional commands into that shell session,
 but there are two signals that can be sent to the running job through
 the keyboard. To interrupt a program running in the foreground, use
-``C-c``; to quit a program, use ``C-\``. While modern windowed systems
+``Ctrl-c``; to quit a program, use ``Ctrl-\``. While modern windowed systems
 have lessened the inconvenience of tying up a shell with foreground
 processes, there are some situations where running in the foreground is
 not adequate.
@@ -1139,7 +1316,7 @@ not adequate.
 The primary need for an alternative to foreground processing arises when
 you wish to have jobs continue to run after you log off the computer. In
 cases like this you can run a program in the background by simply
-terminating the command with an ampersand (*&*). However, before putting
+terminating the command with an ampersand (``&``). However, before putting
 a job in the background, you should consider how you will access its
 results, since *stdout* is not preserved when you log off from the
 computer. Thus, redirection (including redirection of *stderr*) is
@@ -1148,7 +1325,7 @@ suppose that you wish to run an R script, and you don’t want it to
 terminate when you log off. (Note that this can also be done using
 ``R CMD BATCH``, so this is primarily an illustration.)
 
-| ``> R --no-save < code.R > code.Rout 2>&1 &``
+| ``$ R --no-save < code.R > code.Rout 2>&1 &``
 | If you forget to put a job in the background when you first execute
   it, you can do it while it’s running in the foreground in two steps.
   First, suspend the job using the ``C-z`` signal. After receiving the
@@ -1165,7 +1342,7 @@ unique process id (PID) for the process you wish to terminate through
 the use of the *ps* command. For example, to see all the jobs running on
 a particular computer, you could use a command like::
 
-  > ps -aux
+  $ ps -aux
 
 Among the output after the header (shown here) might appear a line
 that looks like this::
@@ -1178,17 +1355,17 @@ In this example, the *ps* output tells us that this R job has a PID of
 of CPU and 39% of memory, and that it started on July 27. You could
 then issue the command::
 
-  > kill 11998
+  $ kill 11998
 
 or, if that doesn’t work::
 
-  > kill -9 11998
+  $ kill -9 11998
 
 to terminate the job. Another useful command in this regard is
 *killall*, which accepts a program name instead of a process id, and
 will kill all instances of the named program::
 
-  > killall R
+  $ killall R
 
 Of course, it will only kill the jobs that belong to you, so it will
 not affect the jobs of other users. Note that the *ps* and *kill*
@@ -1225,12 +1402,12 @@ job puts it at a lower priority so that a user working at the keyboard
 has higher priority in using the CPU. Here’s how to do it, giving the
 job a low priority of 19, as required by SCF::
 
-  > nice -19 R CMD BATCH --no-save code.R code.Rout &
+  $ nice -19 R CMD BATCH --no-save code.R code.Rout &
 
 If you forget and just submit the job without nicing, you can reduce
 the priority by doing::
 
-  > renice +19 11998
+  $ renice +19 11998
 
 where *11998* is the PID of your job.
 
@@ -1239,7 +1416,7 @@ scheduler and enter a queue, which handles the issue of prioritization
 and jobs conflicting. Syntax varies by system and queueing software, but
 may look something like this for submitting an R job:
 
-``> bsub -q long R CMD BATCH --no-save code.R code.Rout # just an example; this will not work on the SCF network``
+``$ bsub -q long R CMD BATCH --no-save code.R code.Rout # just an example; this will not work on the SCF network``
 
 
 bg,fg,jobs,Ctrl-C,Ctrl-Z
@@ -1249,15 +1426,15 @@ bg,fg,jobs,Ctrl-C,Ctrl-Z
 Shell programming
 =================
 
-Shell commands can be saved in a file (with extension *.sh*) and this
-file can be executed as if it were a program. To run a shell script
-called *file.sh*, you would type ``./file.sh``. Note that if you just
-typed\ `` file.sh``, the operating system will generally have trouble
-finding the script and recognizing that it is executable. To be sure
-that the operating system knows what shell to use to interpret the
-script, the first line of the script should be ``#!/bin/bash`` (in the
-case that you’re using the bash shell). Also, *file.sh* would need to be
-executable (i.e., to have the ’x’ flag set).
+Shell scripts are files containing shell commands (commonly with the extension
+``.sh``) To run a shell script called ``file.sh``, you would type ``source
+./file.sh`` or ``. ./file.sh``. Note that if you just typed ``file.sh``, the
+operating system will generally have trouble finding the script and recognizing
+that it is executable. To be sure that the operating system knows what shell to
+use to interpret the script, the first line of the script should be
+``#!/bin/bash`` (in the case that you're using the bash shell). Also, if you
+set ``file.sh`` to be executable (i.e., to have the 'x' flag set) you can
+execute it by just typing ``./file.sh``.
 
 Functions
 ---------
@@ -1267,7 +1444,7 @@ allows you to automate things that are more complicated than you can do
 with an alias. One nice thing about shell functions is that the shell
 automatically takes care of function arguments for you. It places the
 arguments given by the user into local variables in the function called
-(in order): *$1 $2 $3* etc. It also fills *$#* with the number of
+(in order): ``$1 $2 $3`` etc. It also fills ``$#`` with the number of
 arguments given by the user. Here’s an example of using arguments in a
 function that saves me some typing when I want to copy a file to the SCF
 filesystem::
@@ -1280,9 +1457,9 @@ To use this function, I just do the following to copy *unit1.pdf* from
 the current directory on whatever non-SCF machine I’m on to the
 directory *~/teaching/243* on SCF::
 
-  > putscf unit1-unix.pdf Desktop/.
+  $ putscf unit1-unix.pdf Desktop/.
 
-Of course you’d want to put such functions in your *.bashrc* file.
+Of course you’d want to put such functions in your ``.bashrc`` file.
 
 If/then/else
 ------------
@@ -1315,18 +1492,14 @@ starting a series of jobs: see the demo code files in the repository:
 How much shell scripting should I learn?
 ----------------------------------------
 
-You can do a fair amount of what you need from within R using the
-*system()* function. This will enable you to avoid dealing with a lot of
+We've covered most of what you are likely to need to know about the shell. I
+tend to only use bash scripts for simple tasks that require only a few lines of
+bash commands and very little control flow (i.e., conditional statements,
+loops).  For more complicated OS tasks, it is often preferable to use Python.
+You can also do a fair amount of what you need from within R using the
+``system()`` function. This will enable you to avoid dealing with a lot of
 shell programming syntax (but you’ll still need to know how to use UNIX
-utilities, wildcards, and pipes to be effective). Example: a fellow
-student when I was in grad school programmed a tool in R to extract
-concert information from the web for bands appearing in her iTunes
-library. Not the most elegant solution, but it got the job done.
-
-For more extensive shell programming, it’s probably worth learning
-Python and doing it there rather than using a shell script. In
-particular iPython makes it very easy to interact with the operating
-system.
+utilities, wildcards, and pipes to be effective). 
 
 Documentation tools
 ===================

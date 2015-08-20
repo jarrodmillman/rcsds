@@ -1,4 +1,4 @@
-.. _command-top:
+.. _top:
 
 top
 ===

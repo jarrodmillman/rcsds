@@ -1,25 +1,19 @@
-.. _command-su:
+.. _su:
 
 su
 ==
 
-Name
-----
+**Name**
 
-su -- run a shell with substitute user and group IDs
+``su - run a shell with substitute user and group IDs``
 
-Synopsis
---------
+**Synopsis**
 
-**su** [option...]
+``su [option...]``
 
-Description
------------
+**Description**
 
 Change the effective user id and group id to that of USER.
-
-Frequently used options
------------------------
 
 -, -l, --login 
     make the shell a login shell

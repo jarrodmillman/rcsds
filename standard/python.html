@@ -41,7 +41,92 @@
           <div class="body" role="main">
             
   <div class="section" id="python-introduction">
-<h1>Python introduction<a class="headerlink" href="#python-introduction" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id14">Python introduction</a><a class="headerlink" href="#python-introduction" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#python-introduction" id="id14">Python introduction</a><ul>
+<li><a class="reference internal" href="#introduction" id="id15">Introduction</a><ul>
+<li><a class="reference internal" href="#interpreter" id="id16">Interpreter</a></li>
+<li><a class="reference internal" href="#objects" id="id17">Objects</a></li>
+<li><a class="reference internal" href="#variables" id="id18">Variables</a></li>
+<li><a class="reference internal" href="#modules-files-packages-import" id="id19">Modules, files, packages, import</a></li>
+<li><a class="reference internal" href="#style" id="id20">Style</a><ul>
+<li><a class="reference internal" href="#exercises" id="id21">Exercises</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#python-2-vs-3" id="id22">Python 2 vs. 3</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sec-datastructures-data-structures" id="id23">[sec:datastructures]Data Structures</a><ul>
+<li><a class="reference internal" href="#numbers" id="id24">Numbers</a><ul>
+<li><a class="reference internal" href="#id3" id="id25">Exercises</a></li>
+<li><a class="reference internal" href="#questions" id="id26">Questions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#strings" id="id27">Strings</a><ul>
+<li><a class="reference internal" href="#sequences" id="id28">Sequences</a></li>
+<li><a class="reference internal" href="#string-methods" id="id29">String methods</a></li>
+<li><a class="reference internal" href="#id4" id="id30">Exercises</a></li>
+<li><a class="reference internal" href="#id5" id="id31">Questions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#subsec-tuples-tuples" id="id32">[subsec:tuples]Tuples</a><ul>
+<li><a class="reference internal" href="#id6" id="id33">Exercises</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#list" id="id34">List</a><ul>
+<li><a class="reference internal" href="#id7" id="id35">Exercises</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dictionaries" id="id36">Dictionaries</a></li>
+<li><a class="reference internal" href="#sets" id="id37">Sets</a></li>
+<li><a class="reference internal" href="#and-more" id="id38">And more</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#built-in-functions" id="id39">Built-in functions</a><ul>
+<li><a class="reference internal" href="#zip" id="id40">zip</a></li>
+<li><a class="reference internal" href="#enumerate" id="id41">enumerate</a><ul>
+<li><a class="reference internal" href="#question" id="id42">Question</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#control-flow" id="id43">Control flow</a><ul>
+<li><a class="reference internal" href="#if-then-else" id="id44">If-then-else</a></li>
+<li><a class="reference internal" href="#for-loops-and-list-comprehension" id="id45">For-loops (and list comprehension)</a><ul>
+<li><a class="reference internal" href="#id8" id="id46">Exercises</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#functions" id="id47">Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercise-dna" id="id48">Exercise: DNA</a></li>
+<li><a class="reference internal" href="#classes" id="id49">Classes</a></li>
+<li><a class="reference internal" href="#exercise-cipher" id="id50">Exercise: Cipher</a></li>
+<li><a class="reference internal" href="#data-formats" id="id51">Data formats</a><ul>
+<li><a class="reference internal" href="#csv" id="id52">CSV</a></li>
+<li><a class="reference internal" href="#json" id="id53">JSON</a><ul>
+<li><a class="reference internal" href="#exercise" id="id54">Exercise</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#html" id="id55">HTML</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#standard-library" id="id56">Standard library</a><ul>
+<li><a class="reference internal" href="#batteries-included" id="id57">Batteries included</a></li>
+<li><a class="reference internal" href="#os" id="id58">os</a><ul>
+<li><a class="reference internal" href="#id9" id="id59">Exercise</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#re" id="id60">re</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercise-state-of-the-union-addresses" id="id61">Exercise: State of the Union addresses</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <p>Brief review of basic Python. To begin, sign onto your GitHub account
 and fork the bootcamp repository:
 <a class="reference external" href="https://github.com/jarrodmillman/python-bootcamp-2015">https://github.com/jarrodmillman/python-bootcamp-2015</a>.</p>
@@ -59,7 +144,7 @@ $ cd python-bootcamp-2015
 </pre></div>
 </div>
 <div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference external" href="https://docs.python.org/2/index.html">https://docs.python.org/2/index.html</a></li>
 <li><a class="reference external" href="https://docs.python.org/2/library/index.html">https://docs.python.org/2/library/index.html</a></li>
@@ -68,7 +153,7 @@ $ cd python-bootcamp-2015
 <li><a class="reference external" href="https://docs.python.org/3/howto/pyporting.html">https://docs.python.org/3/howto/pyporting.html</a></li>
 </ul>
 <div class="section" id="interpreter">
-<h3>Interpreter<a class="headerlink" href="#interpreter" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16">Interpreter</a><a class="headerlink" href="#interpreter" title="Permalink to this headline">¶</a></h3>
 <p>For much of the bootcamp, you should type the example code snippets at
 an interactive Python terminal. I recommend using either the IPython
 shell or the IPython notebook. To start an IPython shell, type the
@@ -82,7 +167,7 @@ following at a BASH prompt:</p>
 </div>
 </div>
 <div class="section" id="objects">
-<h3>Objects<a class="headerlink" href="#objects" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id17">Objects</a><a class="headerlink" href="#objects" title="Permalink to this headline">¶</a></h3>
 <p>Everything is an object in Python. Roughly, this means that it can be
 tagged with a variable and passed as an argument to a function. Often it
 means that everything has <em>attributes</em> and <em>methods</em>.</p>
@@ -92,7 +177,7 @@ can be composite (e.g., a list of dictionaries or a dictionary of lists,
 tuples, and strings).</p>
 </div>
 <div class="section" id="variables">
-<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id18">Variables</a><a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
 <p>Recall from last semester that variables are not their values in Python
 (think “I am not my name, I am the person named XXX”). You can think of
 variables as tags on objects. In particular, variables can be bound to
@@ -100,7 +185,7 @@ an object of one type and then reassigned to an object of another type
 without error.</p>
 </div>
 <div class="section" id="modules-files-packages-import">
-<h3>Modules, files, packages, import<a class="headerlink" href="#modules-files-packages-import" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id19">Modules, files, packages, import</a><a class="headerlink" href="#modules-files-packages-import" title="Permalink to this headline">¶</a></h3>
 <p>While you will often explore things from an interactive Python prompt,
 you will save your code in files for reuse as well as to document what
 you’ve done. You can use Python code saved in a plain text file from a
@@ -117,7 +202,7 @@ import it before you want to use the functionality).</p>
 </div>
 </div>
 <div class="section" id="style">
-<h3>Style<a class="headerlink" href="#style" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id20">Style</a><a class="headerlink" href="#style" title="Permalink to this headline">¶</a></h3>
 <p>Adopting standard coding conventions is good practice.</p>
 <ul class="simple">
 <li><a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">https://www.python.org/dev/peps/pep-0008/</a></li>
@@ -175,7 +260,7 @@ Examples
 </pre></div>
 </div>
 <div class="section" id="exercises">
-<h4>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id21">Exercises</a><a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>What happens if you type <code class="docutils literal"><span class="pre">np.ndim??</span></code> (i.e., use two question
 marks)?</li>
@@ -192,7 +277,7 @@ you might use this functionality. Use on them as well.</li>
 </div>
 </div>
 <div class="section" id="python-2-vs-3">
-<h3>Python 2 vs. 3<a class="headerlink" href="#python-2-vs-3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id22">Python 2 vs. 3</a><a class="headerlink" href="#python-2-vs-3" title="Permalink to this headline">¶</a></h3>
 <p>Python 3 is a new version of Python, which is incompatible with Python
 2. We will use Python 2 in this bootcamp, but Python 3 is the future.
 Due to the large installed codebase of Python 2, the transition will
@@ -214,14 +299,14 @@ that then runs similarly on Python 2.6/2.7 and Python 3.3+.”</p>
 </div>
 </div>
 <div class="section" id="sec-datastructures-data-structures">
-<h2>[sec:datastructures]Data Structures<a class="headerlink" href="#sec-datastructures-data-structures" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id23">[sec:datastructures]Data Structures</a><a class="headerlink" href="#sec-datastructures-data-structures" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference external" href="https://docs.python.org/2/library/stdtypes.html">https://docs.python.org/2/library/stdtypes.html</a></li>
 <li><a class="reference external" href="https://docs.python.org/2/tutorial/datastructures.html">https://docs.python.org/2/tutorial/datastructures.html</a></li>
 <li><a class="reference external" href="https://docs.python.org/2/reference/datamodel.html">https://docs.python.org/2/reference/datamodel.html</a></li>
 </ul>
 <div class="section" id="numbers">
-<h3>Numbers<a class="headerlink" href="#numbers" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id24">Numbers</a><a class="headerlink" href="#numbers" title="Permalink to this headline">¶</a></h3>
 <p>Python has integers, floats, and complex numbers with the usual
 operations (beware: division).</p>
 <div class="code python highlight-python"><div class="highlight"><pre>In [1]: 2/3
@@ -296,7 +381,7 @@ math.cosh       math.frexp      math.modf
 </pre></div>
 </div>
 <div class="section" id="id3">
-<h4>Exercises<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id25">Exercises</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <p>Using the section on “Built-in Types” from the official “The Python
 Standard Library” reference (follow the first link at the top of
 §&nbsp;[sec:datastructures]), figure out how to compute:</p>
@@ -309,7 +394,7 @@ Standard Library” reference (follow the first link at the top of
 </ol>
 </div>
 <div class="section" id="questions">
-<h4>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id26">Questions</a><a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic simple">
 <li>How do you get the list of completions for <code class="docutils literal"><span class="pre">x.</span></code>?</li>
 <li>What is the difference in the old and new behavior of division?</li>
@@ -320,10 +405,10 @@ How does this compare to how R handles things?</li>
 </div>
 </div>
 <div class="section" id="strings">
-<h3>Strings<a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id27">Strings</a><a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h3>
 <p>Strings are immutable sequences of (zero or more) characters.</p>
 <div class="section" id="sequences">
-<h4>Sequences<a class="headerlink" href="#sequences" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id28">Sequences</a><a class="headerlink" href="#sequences" title="Permalink to this headline">¶</a></h4>
 <p>Unlike numbers, Python strings are container objects. Specifically, it
 is a sequence. Python has several sequence types including strings,
 tuples, and lists. Sequence types share some common functionality, which
@@ -371,7 +456,7 @@ Out[16]: True
 </ul>
 </div>
 <div class="section" id="string-methods">
-<h4>String methods<a class="headerlink" href="#string-methods" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id29">String methods</a><a class="headerlink" href="#string-methods" title="Permalink to this headline">¶</a></h4>
 <div class="code python highlight-python"><div class="highlight"><pre>In [1]: string1 = &quot;my string&quot;
 
 In [2]: string1.
@@ -443,7 +528,7 @@ string1.__init__          string1.__subclasshook__
 </div>
 </div>
 <div class="section" id="id4">
-<h4>Exercises<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id30">Exercises</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
 <p>At an interactive Python prompt, type
 <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">The</span> <span class="pre">ant</span> <span class="pre">wants</span> <span class="pre">what</span> <span class="pre">all</span> <span class="pre">ants</span> <span class="pre">want.</span></code>. Using string indexing,
 slicing, subsequence testing, and methods, solve the following:</p>
@@ -460,7 +545,7 @@ punctuation and convert all words to lowercase.</li>
 </ol>
 </div>
 <div class="section" id="id5">
-<h4>Questions<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id31">Questions</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic simple">
 <li>How do the string method’s <code class="docutils literal"><span class="pre">split</span></code> and <code class="docutils literal"><span class="pre">rsplit</span></code> differ? [Hint:
 use <code class="docutils literal"><span class="pre">?</span></code> to view the method’s docstrings.]</li>
@@ -474,7 +559,7 @@ sequence?</li>
 </div>
 </div>
 <div class="section" id="subsec-tuples-tuples">
-<h3>[subsec:tuples]Tuples<a class="headerlink" href="#subsec-tuples-tuples" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id32">[subsec:tuples]Tuples</a><a class="headerlink" href="#subsec-tuples-tuples" title="Permalink to this headline">¶</a></h3>
 <p>Tuples are immutable sequences of (zero or more) objects. Functions in
 Python often return tuples.</p>
 <div class="code python highlight-python"><div class="highlight"><pre>In [1]: x = 1; y = 2
@@ -503,7 +588,7 @@ Out[7]: (1, 2)
 </pre></div>
 </div>
 <div class="section" id="id6">
-<h4>Exercises<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id33">Exercises</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic simple">
 <li>Note that <code class="docutils literal"><span class="pre">x,</span> <span class="pre">y</span></code> and <code class="docutils literal"><span class="pre">(x,</span> <span class="pre">y)</span></code> both print the same string. To see
 why that is assign them to variables and check their type.</li>
@@ -513,7 +598,7 @@ would you do this in R?)</li>
 </div>
 </div>
 <div class="section" id="list">
-<h3>List<a class="headerlink" href="#list" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id34">List</a><a class="headerlink" href="#list" title="Permalink to this headline">¶</a></h3>
 <p>Lists are mutable sequences of (zero or more) objects.</p>
 <div class="code python highlight-python"><div class="highlight"><pre>In [1]: dice = [1, 2, 3, 4, 5, 6]
 
@@ -536,7 +621,7 @@ Out[7]: True
 </pre></div>
 </div>
 <div class="section" id="id7">
-<h4>Exercises<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id35">Exercises</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic simple">
 <li>Create a list of numbers. Reverse the order of the items in the list
 using slicing. Now reverse the order of the items using a list
@@ -550,7 +635,7 @@ and sort it. What happened?</li>
 </div>
 </div>
 <div class="section" id="dictionaries">
-<h3>Dictionaries<a class="headerlink" href="#dictionaries" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id36">Dictionaries</a><a class="headerlink" href="#dictionaries" title="Permalink to this headline">¶</a></h3>
 <p>Dictionaries are mutable, unordered collections of key-value pairs.</p>
 <div class="code python highlight-python"><div class="highlight"><pre>In [99]: students = {&quot;Jarrod Millman&quot;: [10, 11, 9],
    ....:             &quot;Thomas Kluyver&quot;:  [11, 9, 10],
@@ -574,7 +659,7 @@ Out[104]: 11
 </div>
 </div>
 <div class="section" id="sets">
-<h3>Sets<a class="headerlink" href="#sets" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id37">Sets</a><a class="headerlink" href="#sets" title="Permalink to this headline">¶</a></h3>
 <p>Sets are immutable, unordered collections of unique elements.</p>
 <div class="code python highlight-python"><div class="highlight"><pre>In [1]: x =  {1, 2, 4, 1, 4}
 
@@ -595,7 +680,7 @@ x.isdisjoint
 </div>
 </div>
 <div class="section" id="and-more">
-<h3>And more<a class="headerlink" href="#and-more" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id38">And more</a><a class="headerlink" href="#and-more" title="Permalink to this headline">¶</a></h3>
 <div class="code python highlight-python"><div class="highlight"><pre>In [1]: import collections
 
 In [2]: collections.
@@ -615,7 +700,7 @@ collections.MutableMapping
 </div>
 </div>
 <div class="section" id="built-in-functions">
-<h2>Built-in functions<a class="headerlink" href="#built-in-functions" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id39">Built-in functions</a><a class="headerlink" href="#built-in-functions" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference external" href="https://docs.python.org/2/library/functions.html">https://docs.python.org/2/library/functions.html</a></li>
 </ul>
@@ -624,14 +709,14 @@ the link above). We’ve already used a few (e.g.,
 <code class="docutils literal"><span class="pre">len(),</span> <span class="pre">type(),</span> <span class="pre">print()</span></code>). Here are a few more that we you will find
 useful.</p>
 <div class="section" id="zip">
-<h3>zip<a class="headerlink" href="#zip" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id40">zip</a><a class="headerlink" href="#zip" title="Permalink to this headline">¶</a></h3>
 <div class="code python highlight-python"><div class="highlight"><pre>In [108]: zip([1, 2], [&quot;a&quot;, &quot;b&quot;])
 Out[108]: [(1, &#39;a&#39;), (2, &#39;b&#39;)]
 </pre></div>
 </div>
 </div>
 <div class="section" id="enumerate">
-<h3>enumerate<a class="headerlink" href="#enumerate" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id41">enumerate</a><a class="headerlink" href="#enumerate" title="Permalink to this headline">¶</a></h3>
 <div class="code python highlight-python"><div class="highlight"><pre>In [109]: enumerate([&quot;a&quot;, &quot;b&quot;])
 Out[109]: &lt;enumerate at 0x7f5e3e018640&gt;
 
@@ -640,7 +725,7 @@ Out[110]: [(0, &#39;a&#39;), (1, &#39;b&#39;)]
 </pre></div>
 </div>
 <div class="section" id="question">
-<h4>Question<a class="headerlink" href="#question" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id42">Question</a><a class="headerlink" href="#question" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>What do the built-in functions <code class="docutils literal"><span class="pre">abs()</span></code>, <code class="docutils literal"><span class="pre">all()</span></code>, <code class="docutils literal"><span class="pre">any()</span></code>,
 <code class="docutils literal"><span class="pre">dict()</span></code>, <code class="docutils literal"><span class="pre">dir()</span></code>, <code class="docutils literal"><span class="pre">id()</span></code>, <code class="docutils literal"><span class="pre">list()</span></code>, and <code class="docutils literal"><span class="pre">set()</span></code> do? Make
@@ -652,12 +737,12 @@ the above link).</li>
 </div>
 </div>
 <div class="section" id="control-flow">
-<h2>Control flow<a class="headerlink" href="#control-flow" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id43">Control flow</a><a class="headerlink" href="#control-flow" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference external" href="https://docs.python.org/2/tutorial/controlflow.html">https://docs.python.org/2/tutorial/controlflow.html</a></li>
 </ul>
 <div class="section" id="if-then-else">
-<h3>If-then-else<a class="headerlink" href="#if-then-else" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id44">If-then-else</a><a class="headerlink" href="#if-then-else" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><a class="reference external" href="https://docs.python.org/2/tutorial/controlflow.html#if-statements">https://docs.python.org/2/tutorial/controlflow.html#if-statements</a></li>
 </ul>
@@ -673,7 +758,7 @@ No
 </div>
 </div>
 <div class="section" id="for-loops-and-list-comprehension">
-<h3>For-loops (and list comprehension)<a class="headerlink" href="#for-loops-and-list-comprehension" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id45">For-loops (and list comprehension)</a><a class="headerlink" href="#for-loops-and-list-comprehension" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><a class="reference external" href="https://docs.python.org/2/tutorial/controlflow.html#for-statements">https://docs.python.org/2/tutorial/controlflow.html#for-statements</a></li>
 <li><a class="reference external" href="https://docs.python.org/2/whatsnew/2.0.html#list-comprehensions">https://docs.python.org/2/whatsnew/2.0.html#list-comprehensions</a></li>
@@ -705,7 +790,7 @@ Out[66]: [(3, 2), (4, 1)]
 </pre></div>
 </div>
 <div class="section" id="id8">
-<h4>Exercises<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id46">Exercises</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
 <ul>
 <li><p class="first">Write a for-loop that produces <code class="docutils literal"><span class="pre">[(3,</span> <span class="pre">2),</span> <span class="pre">(4,</span> <span class="pre">1)]</span></code> from <code class="docutils literal"><span class="pre">x</span></code>. How
 does it compare to the list comprehension above?</p>
@@ -732,7 +817,7 @@ to a list of scalars.</p>
 </div>
 </div>
 <div class="section" id="functions">
-<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id47">Functions</a><a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><a class="reference external" href="https://docs.python.org/2/tutorial/controlflow.html#defining-functions">https://docs.python.org/2/tutorial/controlflow.html#defining-functions</a></li>
 </ul>
@@ -754,11 +839,11 @@ Out[106]: 4
 </div>
 </div>
 <div class="section" id="exercise-dna">
-<h2>Exercise: DNA<a class="headerlink" href="#exercise-dna" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id48">Exercise: DNA</a><a class="headerlink" href="#exercise-dna" title="Permalink to this headline">¶</a></h2>
 <p>For this exercise, please see <code class="docutils literal"><span class="pre">ex1/dna.py</span></code>.</p>
 </div>
 <div class="section" id="classes">
-<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id49">Classes</a><a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference external" href="https://docs.python.org/2/tutorial/classes.html">https://docs.python.org/2/tutorial/classes.html</a></li>
 </ul>
@@ -783,13 +868,13 @@ Out[229]: 50
 </div>
 </div>
 <div class="section" id="exercise-cipher">
-<h2>Exercise: Cipher<a class="headerlink" href="#exercise-cipher" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id50">Exercise: Cipher</a><a class="headerlink" href="#exercise-cipher" title="Permalink to this headline">¶</a></h2>
 <p>For this exercise, please see <code class="docutils literal"><span class="pre">ex2/cipher.py</span></code>.</p>
 </div>
 <div class="section" id="data-formats">
-<h2>Data formats<a class="headerlink" href="#data-formats" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id51">Data formats</a><a class="headerlink" href="#data-formats" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="csv">
-<h3>CSV<a class="headerlink" href="#csv" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id52">CSV</a><a class="headerlink" href="#csv" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><a class="reference external" href="https://docs.python.org/2/library/csv.html">https://docs.python.org/2/library/csv.html</a></li>
 </ul>
@@ -798,7 +883,7 @@ CSV files. This is a somewhat low-level library, so in practice you will
 often use NumPy, SciPy, or Pandas CSV functionality.</p>
 </div>
 <div class="section" id="json">
-<h3>JSON<a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id53">JSON</a><a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><a class="reference external" href="https://docs.python.org/2/library/json.html">https://docs.python.org/2/library/json.html</a></li>
 </ul>
@@ -825,7 +910,7 @@ Out[193]: {u&#39;department&#39;: u&#39;Biostatistics&#39;, u&#39;name&#39;: u&#
 <p>Note that <code class="docutils literal"><span class="pre">cat</span></code> is not a Python statement. IPython is clever enough to
 quess that you want it to call out to the underlying operating system.</p>
 <div class="section" id="exercise">
-<h4>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id54">Exercise</a><a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>One of the nice things above the JSON format is that it so well
 structured that it easy for a machine to parse, but simple enough
@@ -837,7 +922,7 @@ as sort it alphabetically by key.</li>
 </div>
 </div>
 <div class="section" id="html">
-<h3>HTML<a class="headerlink" href="#html" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id55">HTML</a><a class="headerlink" href="#html" title="Permalink to this headline">¶</a></h3>
 <p>We will use Thomas Kluyver’s web scraping example notebook for this
 section. You can view a rendered version of it
 <a class="reference external" href="http://nbviewer.ipython.org/github/dlab-berkeley/python-fundamentals/blob/master/cheat-sheets/Web-Scraping.ipynb">here</a>.
@@ -851,19 +936,19 @@ $ ipython notebook Web-Scraping.ipynb
 </div>
 </div>
 <div class="section" id="standard-library">
-<h2>Standard library<a class="headerlink" href="#standard-library" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id56">Standard library</a><a class="headerlink" href="#standard-library" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference external" href="https://docs.python.org/2/tutorial/stdlib.html">https://docs.python.org/2/tutorial/stdlib.html</a></li>
 </ul>
 <div class="section" id="batteries-included">
-<h3>Batteries included<a class="headerlink" href="#batteries-included" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id57">Batteries included</a><a class="headerlink" href="#batteries-included" title="Permalink to this headline">¶</a></h3>
 <p>Python provides a wealth of functionality in its huge standard library.
 We’ve already seen several (e.g., math, csv, json). If you need some
 functionality the standard library is one of the first places to look.</p>
 <p>Here are a couple packages that you may find useful.</p>
 </div>
 <div class="section" id="os">
-<h3>os<a class="headerlink" href="#os" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id58">os</a><a class="headerlink" href="#os" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><a class="reference external" href="https://docs.python.org/2/tutorial/stdlib.html#operating-system-interface">https://docs.python.org/2/tutorial/stdlib.html#operating-system-interface</a></li>
 </ul>
@@ -877,14 +962,14 @@ Out[149]: u&#39;/home/jarrod&#39;
 </pre></div>
 </div>
 <div class="section" id="id9">
-<h4>Exercise<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id59">Exercise</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>Use <code class="docutils literal"><span class="pre">os?</span></code> and <code class="docutils literal"><span class="pre">dir(os)</span></code> to explore the os package.</li>
 </ul>
 </div>
 </div>
 <div class="section" id="re">
-<h3>re<a class="headerlink" href="#re" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id60">re</a><a class="headerlink" href="#re" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><a class="reference external" href="https://docs.python.org/2/howto/regex.html">https://docs.python.org/2/howto/regex.html</a></li>
 </ul>
@@ -892,7 +977,7 @@ Out[149]: u&#39;/home/jarrod&#39;
 </div>
 </div>
 <div class="section" id="exercise-state-of-the-union-addresses">
-<h2>Exercise: State of the Union addresses<a class="headerlink" href="#exercise-state-of-the-union-addresses" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id61">Exercise: State of the Union addresses</a><a class="headerlink" href="#exercise-state-of-the-union-addresses" title="Permalink to this headline">¶</a></h2>
 <p>For this exercise, you will revisit the State of the Union Addresses,
 which you worked with in Statistics 243 (problem set 3).</p>
 <p>I’ve provided a Python script (<code class="docutils literal"><span class="pre">ex3/munge.py</span></code>) that scraps the web,
@@ -976,9 +1061,6 @@ IPython prompt and in tandem write your script</td></tr>
 <li class="toctree-l2 current"><a class="current reference internal" href="">Python introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="numpy.html">Scientific computing with Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="git-advanced.html">Collaborative workflow with Git</a></li>
-<li class="toctree-l2"><a class="reference internal" href="eda.html">Exploratory data analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="organize-automate.html">Organization and automation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="statistics.html">Statistical analysis</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>

@@ -1,4 +1,4 @@
-.. _command-scp:
+.. _scp:
 
 scp
 ===

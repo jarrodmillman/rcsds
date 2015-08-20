@@ -1,4 +1,4 @@
-.. _command-sort:
+.. _sort:
 
 sort
 ====

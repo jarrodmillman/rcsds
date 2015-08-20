@@ -1,4 +1,4 @@
-.. _command-man:
+.. _man:
 
 man
 ===

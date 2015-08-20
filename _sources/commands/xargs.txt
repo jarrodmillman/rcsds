@@ -1,4 +1,4 @@
-.. _command-xargs:
+.. _xargs:
 
 xargs
 =====

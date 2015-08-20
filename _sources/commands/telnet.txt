@@ -1,4 +1,4 @@
-.. _command-telnet:
+.. _telnet:
 
 telnet
 ======

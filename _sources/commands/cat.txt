@@ -1,4 +1,4 @@
-.. _command-cat:
+.. _cat:
 
 cat
 ===

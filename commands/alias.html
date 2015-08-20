@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>free &mdash; RCSDS 0.1 documentation</title>
+    <title>alias &mdash; RCSDS 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
     <link rel="up" title="Useful Command Line Utilities" href="../append/appendix1.html" />
-    <link rel="next" title="ftp" href="ftp.html" />
-    <link rel="prev" title="find" href="find.html" />
+    <link rel="next" title="apropos" href="apropos.html" />
+    <link rel="prev" title="Useful Command Line Utilities" href="../append/appendix1.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -40,25 +40,20 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="free">
-<span id="id1"></span><h1>free<a class="headerlink" href="#free" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="alias">
+<span id="id1"></span><h1>alias<a class="headerlink" href="#alias" title="Permalink to this headline">¶</a></h1>
 <p><strong>Name</strong></p>
-<p><code class="docutils literal"><span class="pre">free&nbsp;-</span> <span class="pre">Display</span> <span class="pre">amount</span> <span class="pre">of</span> <span class="pre">free</span> <span class="pre">and</span> <span class="pre">used</span> <span class="pre">memory</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">system</span></code></p>
+<p><code class="docutils literal"><span class="pre">alias</span></code></p>
 <p><strong>Synopsis</strong></p>
-<p><code class="docutils literal"><span class="pre">free</span> <span class="pre">[option]</span></code></p>
+<p><code class="docutils literal"><span class="pre">alias</span> <span class="pre">[-p]</span> <span class="pre">[name[=value]</span> <span class="pre">...]</span></code></p>
 <p><strong>Description</strong></p>
-<p>free displays the total amount of free and used physical and swap
-memory in the system, as well as the shared memory and buffers used
-by the kernel.</p>
-<table class="docutils option-list" frame="void" rules="none">
-<col class="option" />
-<col class="description" />
-<tbody valign="top">
-<tr><td class="option-group">
-<kbd><span class="option">-s</span></kbd></td>
-<td>activates continuous polling delay seconds apart.</td></tr>
-</tbody>
-</table>
+<p>Alias with no arguments or with the -p option prints the list of aliases in the
+form alias name=value on standard output.  When arguments  are  supplied,  an
+alias is defined for each name whose value is given.  A trailing space in
+value causes the next word to be checked for alias substitution when the alias
+is expanded.  For each name in the argument list for which no value  is
+supplied,  the name and value of the alias is printed.  Alias returns true
+unless a name is given for which no alias has been defined.</p>
 </div>
 
 

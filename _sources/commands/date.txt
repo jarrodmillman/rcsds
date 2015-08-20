@@ -1,4 +1,4 @@
-.. _command-date:
+.. _date:
 
 date
 ====

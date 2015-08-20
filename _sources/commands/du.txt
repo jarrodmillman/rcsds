@@ -1,4 +1,4 @@
-.. _command-du:
+.. _du:
 
 du
 ==

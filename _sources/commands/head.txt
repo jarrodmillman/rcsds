@@ -1,4 +1,4 @@
-.. _command-head:
+.. _head:
 
 head
 ====
