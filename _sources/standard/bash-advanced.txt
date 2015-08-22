@@ -701,19 +701,19 @@ A simple pipe to ``wc`` to count the number of words in a string::
 Here's an example of finding out how many unique entries there are in the 2nd
 column of a data file whose fields are separated by commas::
 
+  $ wget http://jarrodmillman.com/rcsds/data/cpds.csv
   $ cut -d',' -f2 cpds.csv | sort | uniq | wc
   $ cut -d',' -f2 cpds.csv | sort | uniq > countries.txt
 
-** Where to put cpds.csv? **
-
-Rather than using ``sort | uniq``, you could also use ``sort -u``.
+The first line downloads the data from my website.  Also
+rather than using ``sort | uniq``, you could also use ``sort -u``.
 
 To see if there are any "S" values in certain fields (fixed width) of a set of
 files (note I did this on 22,000 files (5 Gb or so) in about 5 minutes on my
 desktop; it would have taken much more time to read the data into R)::
 
-  $ cut -b29,37,45,53,61,69,77,85,93,101,109,117,125,133,141,149, \\ 
-          157,165,173,181,189,197,205,213,221,229,237,245,253, \\
+  $ cut -b29,37,45,53,61,69,77,85,93,101,109,117,125,133,141,149, \ 
+          157,165,173,181,189,197,205,213,221,229,237,245,253, \
           261,269 USC*.dly | grep S | less
 
 A closely related, but subtly different, capability is offered by the use of
@@ -1214,20 +1214,15 @@ This will sum columns 1 and 2 of ``file.txt``.
 Processes
 =========
 
-Processes have the following attributes:
+A process is a program that is being executed.  Processes have the following
+attributes:
 
 -  A lifetime.
-
 -  A PID.
-
 -  A UID.
-
 -  A GID.
-
 -  A parent process.
-
 -  An environment.
-
 -  A current working directory.
 
 

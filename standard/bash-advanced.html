@@ -876,17 +876,18 @@ standard input stream when no file name is provided to them.</p>
 </div>
 <p>Here&#8217;s an example of finding out how many unique entries there are in the 2nd
 column of a data file whose fields are separated by commas:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ cut -d&#39;,&#39; -f2 cpds.csv | sort | uniq | wc
+<div class="highlight-python"><div class="highlight"><pre>$ wget http://jarrodmillman.com/rcsds/data/cpds.csv
+$ cut -d&#39;,&#39; -f2 cpds.csv | sort | uniq | wc
 $ cut -d&#39;,&#39; -f2 cpds.csv | sort | uniq &gt; countries.txt
 </pre></div>
 </div>
-<p>** Where to put cpds.csv? **</p>
-<p>Rather than using <code class="docutils literal"><span class="pre">sort</span> <span class="pre">|</span> <span class="pre">uniq</span></code>, you could also use <code class="docutils literal"><span class="pre">sort</span> <span class="pre">-u</span></code>.</p>
+<p>The first line downloads the data from my website.  Also
+rather than using <code class="docutils literal"><span class="pre">sort</span> <span class="pre">|</span> <span class="pre">uniq</span></code>, you could also use <code class="docutils literal"><span class="pre">sort</span> <span class="pre">-u</span></code>.</p>
 <p>To see if there are any &#8220;S&#8221; values in certain fields (fixed width) of a set of
 files (note I did this on 22,000 files (5 Gb or so) in about 5 minutes on my
 desktop; it would have taken much more time to read the data into R):</p>
-<div class="highlight-python"><div class="highlight"><pre>$ cut -b29,37,45,53,61,69,77,85,93,101,109,117,125,133,141,149, \\
-        157,165,173,181,189,197,205,213,221,229,237,245,253, \\
+<div class="highlight-python"><div class="highlight"><pre>$ cut -b29,37,45,53,61,69,77,85,93,101,109,117,125,133,141,149, \
+        157,165,173,181,189,197,205,213,221,229,237,245,253, \
         261,269 USC*.dly | grep S | less
 </pre></div>
 </div>
@@ -1379,7 +1380,8 @@ example:</p>
 </div>
 <div class="section" id="processes">
 <h2><a class="toc-backref" href="#id22">Processes</a><a class="headerlink" href="#processes" title="Permalink to this headline">¶</a></h2>
-<p>Processes have the following attributes:</p>
+<p>A process is a program that is being executed.  Processes have the following
+attributes:</p>
 <ul class="simple">
 <li>A lifetime.</li>
 <li>A PID.</li>
