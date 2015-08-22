@@ -6,15 +6,15 @@ Scientific computing with Python
 
 Introduce Python’s core numerical, scientific, and plotting packages.
 
--  Fernando Pérez, Brian E. Granger, and John D. Hunter. “Python: an
-   ecosystem for scientific computing.” *Computing in Science &
+-  Fernando Pérez, Brian E. Granger, and John D. Hunter. "Python: an
+   ecosystem for scientific computing." *Computing in Science &
    Engineering* 13, no. 2 (2011): 13-21.
 
--  Stéfan van der Walt, S. Chris Colbert, and Gael Varoquaux. “The NumPy
-   array: a structure for efficient numerical computation.” *Computing
+-  Stéfan van der Walt, S. Chris Colbert, and Gael Varoquaux. "The NumPy
+   array: a structure for efficient numerical computation." *Computing
    in Science & Engineering* 13, no. 2 (2011): 22-30.
 
--  John D. Hunter. “Matplotlib: A 2D graphics environment.” *Computing
+-  John D. Hunter. "Matplotlib: A 2D graphics environment." *Computing
    in Science & Engineering* 9, no. 3 (2007): 0090-95.
 
 Introduction
@@ -53,12 +53,77 @@ ndarray
 
 -  http://scipy-lectures.github.io/intro/matplotlib/matplotlib.html
 
-Example: random walk redux
---------------------------
+Example: random walk
+--------------------
 
-Recall the random walk simulation from 243.
+Here is::
 
-Here is a version implemented as a class.
+  import numpy as np
+  import matplotlib.pyplot as plt
+  
+  np.random.seed(2)
+  
+  code  = {"up": (0,1),
+           "down": (0,-1),
+           "left": (-1,0),
+           "right": (1,0)}
+  
+  def random_2d_walk(nsteps=100):
+      steps = np.random.choice(code.keys(), nsteps)
+      walk = np.array([code[step] for step in steps])
+      xy = walk.cumsum(axis=0)
+      return xy
+  
+  xy = random_2d_walk()
+  plt.plot(xy[:,0], xy[:,1])
+  plt.savefig("test.png")
+
+And::
+
+  import numpy as np
+  import matplotlib.pyplot as plt
+  
+  class Random2DWalk(object):
+  
+      def __init__(self, start=(0,0)):
+          self.steps = ["start"]
+          self.walk = np.array([start])
+          self._code = {"up": (0,1),
+                       "down": (0,-1),
+                       "left": (-1,0),
+                       "right": (1,0)}
+  
+      def __str__(self):
+          current_position = self.position()[-1]
+          total_steps = len(self.steps) - 1
+          message = "After {0} steps you are at position: {1}"
+          return message.format(total_steps, current_position)
+  
+      def step(self, nsteps=100):
+          steps = np.random.choice(self._code.keys(), nsteps)
+          walk = np.array([self._code[step] for step in steps])
+          self.steps += steps
+          self.walk = np.vstack([self.walk, walk])
+          return None
+  
+      def position(self):
+          return self.walk.cumsum(axis=0)
+  
+      def plot(self):
+          xy = self.position()
+          plt.plot(xy[:,0], xy[:,1])
+          plt.savefig("test.png")
+          return None
+
+  np.random.seed(2)
+  rw = Random2DWalk()
+  print rw
+  rw.step()
+  print rw
+  print rw.steps[:5]
+  print rw.walk[:5]
+  rw.plot()
+
 
 Exercise: Sierpinski triangle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -68,7 +133,7 @@ following algorithm:
 
 #. Choose 3 points in the plane (forming a triangle).
 
-#. Choose another “starting” pointing (current position).
+#. Choose another "starting" pointing (current position).
 
 #. Randomly choose one of the corners of the triangle.
 
@@ -83,9 +148,3 @@ SciPy
 
 -  http://scipy-lectures.github.io/intro/scipy.html
 
-Exercise: State of the Union addresses
---------------------------------------
-
-For this exercise, you will revisit the State of the Union Addresses.
-Load the data, use whatever tools and analysis you want, and use
-matplotlib to make plots.

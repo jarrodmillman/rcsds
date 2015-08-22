@@ -5,12 +5,11 @@ type
 
 **Name**
 
-type -- For each *name*, indicate how it would be interpreted if
-used as a command name.
+``type - how it would be interpreted if used as a command name``
 
 **Synopsis**
 
-**type** [option...] [name...]
+``type [option...] [name...]``
 
 **Description**
 

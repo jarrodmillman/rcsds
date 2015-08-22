@@ -349,8 +349,7 @@ recorded anywhere::
 
 And ``git rm`` works in a similar fashion.
 
-Exercise
---------
+**Exercise**
 
 Add a new file ``file2.txt``, commit it, make some changes to it, commit
 them again, and then remove it (and don't forget to commit this last
