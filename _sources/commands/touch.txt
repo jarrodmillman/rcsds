@@ -3,24 +3,19 @@
 touch
 =====
 
-Name
-----
+**Name**
 
 touch -- change file timestamps
 
-Synopsis
---------
+**Synopsis**
 
 **touch** [options...] {file...}
 
-Description
------------
+**Description**
 
 Update the access and modification times of each FILE to the
 current time.
 
-Frequently used options
------------------------
 
 -a
     change only the access time

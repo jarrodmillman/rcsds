@@ -3,24 +3,19 @@
 ps
 ==
 
-Name
-----
+**Name**
 
 ps --  report process status
 
-Synopsis
---------
+**Synopsis**
 
 **ps** [option]
 
-Description
------------
+**Description**
 
 ps gives a snapshot of the current processes. If you want a
 repetitive update of this status, use top.
 
-Frequently used options
------------------------
 
 -e 
     select all processes

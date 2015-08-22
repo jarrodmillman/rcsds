@@ -17,20 +17,8 @@ File                    Description
 ``~/. bash\_logout``    User logout script
 =====================   =========================
 
-If no .bash\_profile, then .bash\_login, then, profile.  
+If no ``.bash_profile``, then ``.bash_login``, then ``.profile``.  
 
-::
-
-  # global airc binaries
-  if [ "$UID" != "0" ]; then
-    export FSLDIR=/usr/fmri/lib64/fsl/4.1.4
-    export PATH=$PATH:/usr/fmri/bin:/usr/fmri/bin/afni:/usr/fmri/bin/caret/bin_linux:/usr/fmri/lib64/matlab/2007a/bin:${FSLDIR}/bin
-    export FREESURFER_HOME=/usr/fmri/lib64/freesurfer/4.4.0
-    source $FREESURFER_HOME/SetUpFreeSurfer.sh > /dev/null
-    source ${FSLDIR}/etc/fslconf/fsl.sh
-  
-    alias matlab-spm2='(PATH=/usr/fmri/lib/matlab/2007a/bin:$PATH ; matlab -nojvm -arch=glnx86)'
-  fi
 
 **Table C-2. Prompt String Customization**
 

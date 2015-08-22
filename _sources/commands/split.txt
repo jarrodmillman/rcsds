@@ -3,18 +3,15 @@
 split
 =====
 
-Name
-----
+**Name**
 
 split -- split a file into pieces
 
-Synopsis
---------
+**Synopsis**
 
 **split** [options...] {infile} {outfile}
 
-Description
------------
+**Description**
 
 Split INFILE into a specified number of line groups, with output
 going into a succession of files, OUTFILEaa, OUTFILEab, and so on.
@@ -24,8 +21,6 @@ smaller files. This was often done to email large files in smaller
 chunks, because it was at one time considered bad practice to send
 single large email messages.
 
-Frequently used options
------------------------
 
 -n
     Split the INFILE into *n*-line segments. The default is 1000.

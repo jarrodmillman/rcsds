@@ -3,24 +3,19 @@
 pstree
 ======
 
-Name
-----
+**Name**
 
 pstree -- display a tree of processes
 
-Synopsis
---------
+**Synopsis**
 
 **pstree** [option]
 
-Description
------------
+**Description**
 
 ps gives a snapshot of the current processes. If you want a
 repetitive update of this status, use top.
 
-Frequently used options
------------------------
 
 -u 
     Show uid transitions. Whenever the uid of a process differs from

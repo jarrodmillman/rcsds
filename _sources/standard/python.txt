@@ -5,47 +5,19 @@ Python introduction
 .. contents::
 
 
-Brief review of basic Python. To begin, sign onto your GitHub account
-and fork the bootcamp repository:
-https://github.com/jarrodmillman/python-bootcamp-2015.
-
-Now from your BASH terminal clone your fork(ed) repository. If you are
-using HTTP to authenticate, you will do something like this:
-
-::
-
-    $ cd <to where you keep your source repositories>
-    $ git clone  https://github.com/<you>/python-bootcamp-2015.git
-    $ cd python-bootcamp-2015 
-
-For SSH authentication, do something like this:
-
-::
-
-    $ cd <to where you keep your source repositories>
-    $ git clone git@github.com:<you>/python-bootcamp-2015.git
-    $ cd python-bootcamp-2015 
-
 Introduction
 ------------
 
 -  https://docs.python.org/2/index.html
-
 -  https://docs.python.org/2/library/index.html
-
 -  https://scipy-lectures.github.io/
-
 -  http://software-carpentry.org/v4/python/
-
 -  https://docs.python.org/3/howto/pyporting.html
 
-Interpreter
-~~~~~~~~~~~
-
-For much of the bootcamp, you should type the example code snippets at
-an interactive Python terminal. I recommend using either the IPython
-shell or the IPython notebook. To start an IPython shell, type the
-following at a BASH prompt:
+While reading this tutorial, you should type the example code snippets at an
+interactive Python terminal. I recommend using either the IPython shell or the
+IPython notebook. To start an IPython shell, type the following at a BASH
+prompt:
 
 .. code:: bash
 
@@ -60,33 +32,32 @@ To start an IPython notebook, type
 Objects
 ~~~~~~~
 
-Everything is an object in Python. Roughly, this means that it can be
-tagged with a variable and passed as an argument to a function. Often it
-means that everything has *attributes* and *methods*.
+Everything is an object in Python. Roughly, this means that it can be tagged
+with a variable and passed as an argument to a function. Often it means that
+everything has *attributes* and *methods*.
 
-Certain objects in Python are mutable (e.g., lists, dictionaries), while
-other objects are immutable (e.g., tuples, strings, sets). Many objects
-can be composite (e.g., a list of dictionaries or a dictionary of lists,
-tuples, and strings).
+Certain objects in Python are mutable (e.g., lists, dictionaries), while other
+objects are immutable (e.g., tuples, strings, sets). Many objects can be
+composite (e.g., a list of dictionaries or a dictionary of lists, tuples, and
+strings).
 
 Variables
 ~~~~~~~~~
 
-Recall from last semester that variables are not their values in Python
-(think “I am not my name, I am the person named XXX”). You can think of
-variables as tags on objects. In particular, variables can be bound to
-an object of one type and then reassigned to an object of another type
-without error.
+Variables are not their values in Python (think "I am not my name, I am the
+person named XXX"). You can think of variables as tags on objects. In
+particular, variables can be bound to an object of one type and then reassigned
+to an object of another type without error.
 
 Modules, files, packages, import
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-While you will often explore things from an interactive Python prompt,
-you will save your code in files for reuse as well as to document what
-you’ve done. You can use Python code saved in a plain text file from a
-Python prompt or other files by importing it. Typically, this is done at
-the top of a file (if you are working at a prompt, you just need to
-import it before you want to use the functionality).
+While you will often explore things from an interactive Python prompt, you will
+save your code in files for reuse as well as to document what you’ve done. You
+can use Python code saved in a plain text file from a Python prompt or other
+files by importing it. Typically, this is done at the top of a file (if you are
+working at a prompt, you just need to import it before you want to use the
+functionality).
 
 Here are some examples of importing:
 
@@ -104,26 +75,22 @@ Style
 Adopting standard coding conventions is good practice.
 
 -  https://www.python.org/dev/peps/pep-0008/
-
 -  https://docs.python.org/2/tutorial/controlflow.html#intermezzo-coding-style
-
 -  https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt
-
 -  http://matplotlib.org/devel/coding_guide.html
 
-The first link above is the official “Style Guide for Python Code”,
-usually referred to as PEP8 (PEP is an acronym for Python Enhancement
-Proposal). There are a couple of potentially helpful tools for helping
-you conform to the standard. The
-`pep8 <https://pypi.python.org/pypi/pep8>`__ package that provides a
-commandline tool to check your code against some of the PEP8 standard
-conventions. Similarly,
-`autopep8 <https://pypi.python.org/pypi/autopep8>`__ provides a tool to
-automatically format your code so that it conforms to the PEP8
-standards. I have used both a little and they seem to work fairly well.
+The first link above is the official "Style Guide for Python Code", usually
+referred to as PEP8 (PEP is an acronym for Python Enhancement Proposal). There
+are a couple of potentially helpful tools for helping you conform to the
+standard. The `pep8 <https://pypi.python.org/pypi/pep8>`__ package that
+provides a commandline tool to check your code against some of the PEP8
+standard conventions. Similarly, `autopep8
+<https://pypi.python.org/pypi/autopep8>`__ provides a tool to automatically
+format your code so that it conforms to the PEP8 standards. I have used both a
+little and they seem to work fairly well.
 
-The last two links discuss the NumPy docstring [1]_ standard. Let’s
-briefly see how you might benefit from NumPy docstrings in practice.
+The last two links discuss the NumPy docstring [1]_ standard. Let’s briefly see
+how you might benefit from NumPy docstrings in practice.
 
 .. code:: python
 
@@ -163,8 +130,7 @@ briefly see how you might benefit from NumPy docstrings in practice.
     >>> np.ndim(1)
     0
 
-Exercises
-^^^^^^^^^
+**Exercises**
 
 -  What happens if you type ``np.ndim??`` (i.e., use two question
    marks)?
@@ -181,38 +147,34 @@ Exercises
    near the end of the docstring and see whether you can figure out how
    you might use this functionality. Use on them as well.
 
-Python 2 vs. 3
-~~~~~~~~~~~~~~
+.. note:: Python 2 vs. 3
+  Python 3 is a new version of Python, which is incompatible with Python
+  2. We will use Python 2 in this bootcamp, but Python 3 is the future.
+  Due to the large installed codebase of Python 2, the transition will
+  take years.
+  
+  If you are writing new Python code at this point, require Python 2.7 as
+  the minimum support version. You should also import the following
+  functionality from the ``__future__`` module.
+  
+  .. code:: python
+  
+      from __future__ import (absolute_import,
+                              division,
+                              print_function,
+                              unicode_literals)
+  
+  While we will be using Python 2 in this tutorial, in the near future
+  you may consider using the ``future`` package. [2]_ The idea is that by
+  using this package and adding a few imports to the top of your Python
+  modules you can write "predominantly standard, idiomatic Python 3 code
+  that then runs similarly on Python 2.6/2.7 and Python 3.3+."
 
-Python 3 is a new version of Python, which is incompatible with Python
-2. We will use Python 2 in this bootcamp, but Python 3 is the future.
-Due to the large installed codebase of Python 2, the transition will
-take years.
-
-If you are writing new Python code at this point, require Python 2.7 as
-the minimum support version. You should also import the following
-functionality from the ``__future__`` module.
-
-.. code:: python
-
-    from __future__ import (absolute_import,
-                            division,
-                            print_function,
-                            unicode_literals)
-
-While we will be using Python 2 for this bootcamp, in the near future
-you may consider using the ``future`` package. [2]_ The idea is that by
-using this package and adding a few imports to the top of your Python
-modules you can write “predominantly standard, idiomatic Python 3 code
-that then runs similarly on Python 2.6/2.7 and Python 3.3+.”
-
-[sec:datastructures]Data Structures
------------------------------------
+Data Structures
+---------------
 
 -  https://docs.python.org/2/library/stdtypes.html
-
 -  https://docs.python.org/2/tutorial/datastructures.html
-
 -  https://docs.python.org/2/reference/datamodel.html
 
 Numbers
@@ -296,11 +258,10 @@ numerical operations.
     math.cos        math.fmod       math.log1p      
     math.cosh       math.frexp      math.modf
 
-Exercises
-^^^^^^^^^
+**Exercises**
 
-Using the section on “Built-in Types” from the official “The Python
-Standard Library” reference (follow the first link at the top of
+Using the section on "Built-in Types" from the official "The Python
+Standard Library" reference (follow the first link at the top of
 § [sec:datastructures]), figure out how to compute:
 
 #. :math:`3 \le 4`,
@@ -313,15 +274,14 @@ Standard Library” reference (follow the first link at the top of
 
 #. :math:`\sqrt{-1}`.
 
-Questions
-^^^^^^^^^
+**Questions**
 
 #. How do you get the list of completions for ``x.``?
 
 #. What is the difference in the old and new behavior of division?
 
-#. Read the “Truth Value Testing” and “Boolean Operations” subsections
-   at the top of the “Built-in Types” section of the Library reference.
+#. Read the "Truth Value Testing" and "Boolean Operations" subsections
+   at the top of the "Built-in Types" section of the Library reference.
    How does this compare to how R handles things?
 
 Strings
@@ -329,8 +289,7 @@ Strings
 
 Strings are immutable sequences of (zero or more) characters.
 
-Sequences
-^^^^^^^^^
+**Sequences**
 
 Unlike numbers, Python strings are container objects. Specifically, it
 is a sequence. Python has several sequence types including strings,
@@ -380,8 +339,7 @@ we can demonstrate with strings.
        In [16]: '25' not in string.digits
        Out[16]: True
 
-String methods
-^^^^^^^^^^^^^^
+**String methods**
 
 .. code:: python
 
@@ -453,8 +411,7 @@ String methods
     string1.__hash__          string1.__str__
     string1.__init__          string1.__subclasshook__
 
-Exercises
-^^^^^^^^^
+**Exercises**
 
 At an interactive Python prompt, type
 ``x = The ant wants what all ants want.``. Using string indexing,
@@ -475,8 +432,7 @@ slicing, subsequence testing, and methods, solve the following:
 
 #. Do the same thing except using a string method instead.
 
-Questions
-^^^^^^^^^
+**Questions**
 
 #. How do the string method’s ``split`` and ``rsplit`` differ? [Hint:
    use ``?`` to view the method’s docstrings.]
@@ -490,8 +446,8 @@ Questions
 
 #. How do the ``in`` and ``not in`` operators work?
 
-[subsec:tuples]Tuples
-~~~~~~~~~~~~~~~~~~~~~
+Tuples
+~~~~~~
 
 Tuples are immutable sequences of (zero or more) objects. Functions in
 Python often return tuples.
@@ -522,8 +478,7 @@ Python often return tuples.
     In [7]: x, y
     Out[7]: (1, 2)
 
-Exercises
-^^^^^^^^^
+**Exercises**
 
 #. Note that ``x, y`` and ``(x, y)`` both print the same string. To see
    why that is assign them to variables and check their type.
@@ -557,8 +512,7 @@ Lists are mutable sequences of (zero or more) objects.
     In [7]: 1 in dice
     Out[7]: True
 
-Exercises
-^^^^^^^^^
+**Exercises**
 
 #. Create a list of numbers. Reverse the order of the items in the list
    using slicing. Now reverse the order of the items using a list
@@ -668,8 +622,7 @@ enumerate
     In [110]: list(enumerate(["a", "b"]))
     Out[110]: [(0, 'a'), (1, 'b')]
 
-Question
-^^^^^^^^
+**Question**
 
 -  What do the built-in functions ``abs()``, ``all()``, ``any()``,
    ``dict()``, ``dir()``, ``id()``, ``list()``, and ``set()`` do? Make
@@ -734,8 +687,7 @@ handle this task.
     In [66]: [y for y in zip(x, x[::-1]) if y[0] > y[1]]
     Out[66]: [(3, 2), (4, 1)]
 
-Exercises
-^^^^^^^^^
+**Exercises**
 
 -  Write a for-loop that produces ``[(3, 2), (4, 1)]`` from ``x``. How
    does it compare to the list comprehension above?
@@ -781,8 +733,7 @@ Functions
     In [106]: add(3)
     Out[106]: 4
 
-Exercise: DNA
--------------
+**Exercise: DNA**
 
 For this exercise, please see ``ex1/dna.py``.
 
@@ -811,8 +762,7 @@ Classes
     In [229]: x.area()
     Out[229]: 50
 
-Exercise: Cipher
-----------------
+**Exercise: Cipher**
 
 For this exercise, please see ``ex2/cipher.py``.
 
@@ -858,8 +808,7 @@ However the JSON package in the standard library is much more useful.
 Note that ``cat`` is not a Python statement. IPython is clever enough to
 quess that you want it to call out to the underlying operating system.
 
-Exercise
-^^^^^^^^
+**Exercise**
 
 -  One of the nice things above the JSON format is that it so well
    structured that it easy for a machine to parse, but simple enough
@@ -888,9 +837,6 @@ Standard library
 
 -  https://docs.python.org/2/tutorial/stdlib.html
 
-Batteries included
-~~~~~~~~~~~~~~~~~~
-
 Python provides a wealth of functionality in its huge standard library.
 We’ve already seen several (e.g., math, csv, json). If you need some
 functionality the standard library is one of the first places to look.
@@ -912,8 +858,7 @@ os
     In [149]: pwd
     Out[149]: u'/home/jarrod'
 
-Exercise
-^^^^^^^^
+**Exercise**
 
 -  Use ``os?`` and ``dir(os)`` to explore the os package.
 
@@ -924,39 +869,6 @@ re
 
 The ``re`` package provides support for regular expressions.
 
-Exercise: State of the Union addresses
---------------------------------------
-
-For this exercise, you will revisit the State of the Union Addresses,
-which you worked with in Statistics 243 (problem set 3).
-
-I’ve provided a Python script (``ex3/munge.py``) that scraps the web,
-processes the speeches, and saves the processed information to a JSON
-file (``ex3/speeches.json``).
-
-You should write a Python script [3]_ to:
-
-#. Load the data from the JSON file.
-
-#. Count the number of speeches (you may need to do some data cleaning).
-
-#. Create a list with just the names of the presidents.
-
-#. Create a list with just the dates of the speeches.
-
-#. Write a function that takes a speech object a returns the tuple
-   ``(<president>, <number of words>, <date>)``
-
-#. Create a list of tuples by calling your function on all the speech
-   objects.
-
-#. Create a list of the speech dates sorted based on the length of
-   speech.
-
-For the last task you may want to take a look at the Python Sorting How
-To:
-
--  https://wiki.python.org/moin/HowTo/Sorting
 
 .. [1]
    Docstrings are an important part of a Python program:

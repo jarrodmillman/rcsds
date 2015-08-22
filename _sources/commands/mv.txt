@@ -3,23 +3,18 @@
 mv
 ==
 
-Name
-----
+**Name**
 
 mv -- move (rename) files
 
-Synopsis
---------
+**Synopsis**
 
 **mv** [options...] {source} {dest}
 
-Description
------------
+**Description**
 
 Rename SOURCE to DEST, or move SOURCE(s) to DIRECTORY.
 
-Frequently used options
------------------------
 
 -f, --force
     do not prompt before overwriting equivalent to --reply=yes

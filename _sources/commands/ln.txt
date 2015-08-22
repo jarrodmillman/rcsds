@@ -3,18 +3,15 @@
 ln
 ==
 
-Name
-----
+**Name**
 
 ln -- make links between files
 
-Synopsis
---------
+**Synopsis**
 
 **ln** [options...] {target...} [link\_name]
 
-Description
------------
+**Description**
 
 Create a link to the specified TARGET with optional LINK\_NAME. If
 LINK\_NAME is omitted, a link with the same basename as the TARGET
@@ -24,8 +21,6 @@ create links in DIRECTORY to each TARGET. Create hard links by
 default, symbolic links with --symbolic. When creating hard links,
 each TARGET must exist.
 
-Frequently used options
------------------------
 
 -i, --interactive
     prompt whether to remove destinations

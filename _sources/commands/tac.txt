@@ -3,24 +3,19 @@
 tac
 ===
 
-Name
-----
+**Name**
 
 tac -- concatenate and print files in reverse
 
-Synopsis
---------
+**Synopsis**
 
 **tac** [option...] [file...]
 
-Description
------------
+**Description**
 
 Write each FILE to standard output, last line first. With no FILE,
 or when FILE is -, read standard input.
 
-Frequently used options
------------------------
 
 -b, --before
     attach the separator before instead of after

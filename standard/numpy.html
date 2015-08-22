@@ -53,25 +53,24 @@
 <li><a class="reference internal" href="#d-plotting" id="id6">2D plotting</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#example-random-walk-redux" id="id7">Example: random walk redux</a><ul>
+<li><a class="reference internal" href="#example-random-walk" id="id7">Example: random walk</a><ul>
 <li><a class="reference internal" href="#exercise-sierpinski-triangle" id="id8">Exercise: Sierpinski triangle</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#scipy" id="id9">SciPy</a></li>
-<li><a class="reference internal" href="#exercise-state-of-the-union-addresses" id="id10">Exercise: State of the Union addresses</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <p>Introduce Python’s core numerical, scientific, and plotting packages.</p>
 <ul class="simple">
-<li>Fernando Pérez, Brian E. Granger, and John D. Hunter. “Python: an
-ecosystem for scientific computing.” <em>Computing in Science &amp;
+<li>Fernando Pérez, Brian E. Granger, and John D. Hunter. &#8220;Python: an
+ecosystem for scientific computing.&#8221; <em>Computing in Science &amp;
 Engineering</em> 13, no. 2 (2011): 13-21.</li>
-<li>Stéfan van der Walt, S. Chris Colbert, and Gael Varoquaux. “The NumPy
-array: a structure for efficient numerical computation.” <em>Computing
+<li>Stéfan van der Walt, S. Chris Colbert, and Gael Varoquaux. &#8220;The NumPy
+array: a structure for efficient numerical computation.&#8221; <em>Computing
 in Science &amp; Engineering</em> 13, no. 2 (2011): 22-30.</li>
-<li>John D. Hunter. “Matplotlib: A 2D graphics environment.” <em>Computing
+<li>John D. Hunter. &#8220;Matplotlib: A 2D graphics environment.&#8221; <em>Computing
 in Science &amp; Engineering</em> 9, no. 3 (2007): 0090-95.</li>
 </ul>
 <div class="section" id="introduction">
@@ -108,17 +107,83 @@ in Science &amp; Engineering</em> 9, no. 3 (2007): 0090-95.</li>
 </ul>
 </div>
 </div>
-<div class="section" id="example-random-walk-redux">
-<h2><a class="toc-backref" href="#id7">Example: random walk redux</a><a class="headerlink" href="#example-random-walk-redux" title="Permalink to this headline">¶</a></h2>
-<p>Recall the random walk simulation from 243.</p>
-<p>Here is a version implemented as a class.</p>
+<div class="section" id="example-random-walk">
+<h2><a class="toc-backref" href="#id7">Example: random walk</a><a class="headerlink" href="#example-random-walk" title="Permalink to this headline">¶</a></h2>
+<p>Here is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">code</span>  <span class="o">=</span> <span class="p">{</span><span class="s">&quot;up&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+         <span class="s">&quot;down&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+         <span class="s">&quot;left&quot;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+         <span class="s">&quot;right&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)}</span>
+
+<span class="k">def</span> <span class="nf">random_2d_walk</span><span class="p">(</span><span class="n">nsteps</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">steps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">code</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">nsteps</span><span class="p">)</span>
+    <span class="n">walk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">code</span><span class="p">[</span><span class="n">step</span><span class="p">]</span> <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">steps</span><span class="p">])</span>
+    <span class="n">xy</span> <span class="o">=</span> <span class="n">walk</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">xy</span>
+
+<span class="n">xy</span> <span class="o">=</span> <span class="n">random_2d_walk</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xy</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xy</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&quot;test.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="k">class</span> <span class="nc">Random2DWalk</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">steps</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;start&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">walk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">start</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_code</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;up&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                     <span class="s">&quot;down&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+                     <span class="s">&quot;left&quot;</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+                     <span class="s">&quot;right&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)}</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">current_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">total_steps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">steps</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;After {0} steps you are at position: {1}&quot;</span>
+        <span class="k">return</span> <span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">total_steps</span><span class="p">,</span> <span class="n">current_position</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nsteps</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="n">steps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_code</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">nsteps</span><span class="p">)</span>
+        <span class="n">walk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_code</span><span class="p">[</span><span class="n">step</span><span class="p">]</span> <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">steps</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">steps</span> <span class="o">+=</span> <span class="n">steps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">walk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">walk</span><span class="p">,</span> <span class="n">walk</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">walk</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">xy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xy</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xy</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&quot;test.png&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">rw</span> <span class="o">=</span> <span class="n">Random2DWalk</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">rw</span>
+<span class="n">rw</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">rw</span>
+<span class="k">print</span> <span class="n">rw</span><span class="o">.</span><span class="n">steps</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+<span class="k">print</span> <span class="n">rw</span><span class="o">.</span><span class="n">walk</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">rw</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
 <div class="section" id="exercise-sierpinski-triangle">
 <h3><a class="toc-backref" href="#id8">Exercise: Sierpinski triangle</a><a class="headerlink" href="#exercise-sierpinski-triangle" title="Permalink to this headline">¶</a></h3>
 <p>Write a Python script to construct Sierpinski triangle using the
 following algorithm:</p>
 <ol class="arabic simple">
 <li>Choose 3 points in the plane (forming a triangle).</li>
-<li>Choose another “starting” pointing (current position).</li>
+<li>Choose another &#8220;starting&#8221; pointing (current position).</li>
 <li>Randomly choose one of the corners of the triangle.</li>
 <li>Move halfway from your current position to the selected corner.</li>
 <li>Plot the new current position.</li>
@@ -131,12 +196,6 @@ following algorithm:</p>
 <ul class="simple">
 <li><a class="reference external" href="http://scipy-lectures.github.io/intro/scipy.html">http://scipy-lectures.github.io/intro/scipy.html</a></li>
 </ul>
-</div>
-<div class="section" id="exercise-state-of-the-union-addresses">
-<h2><a class="toc-backref" href="#id10">Exercise: State of the Union addresses</a><a class="headerlink" href="#exercise-state-of-the-union-addresses" title="Permalink to this headline">¶</a></h2>
-<p>For this exercise, you will revisit the State of the Union Addresses.
-Load the data, use whatever tools and analysis you want, and use
-matplotlib to make plots.</p>
 </div>
 </div>
 

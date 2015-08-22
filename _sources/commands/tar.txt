@@ -3,18 +3,15 @@
 tar
 ===
 
-Name
-----
+**Name**
 
 tar -- The GNU version of the tar archiving utility
 
-Synopsis
---------
+**Synopsis**
 
 **tar** [options]
 
-Description
------------
+**Description**
 
 tar is an archiving program designed to store and extract files
 from an archive file known as a tarfile. A tarfile may be made on a
@@ -24,8 +21,6 @@ Acdrtux, followed by any optional functions. The final arguments to
 tar are the names of the files or directories which should be
 archived.
 
-Frequently used options
------------------------
 
 -t, --files-from=F
     get names to extract or create from file F

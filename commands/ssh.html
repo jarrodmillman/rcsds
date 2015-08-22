@@ -42,24 +42,21 @@
             
   <div class="section" id="ssh">
 <span id="id1"></span><h1>ssh<a class="headerlink" href="#ssh" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="name">
-<h2>Name<a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h2>
-<p>ssh&nbsp;&#8211;&nbsp;OpenSSH SSH client</p>
-</div>
-<div class="section" id="synopsis">
-<h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
-<p><strong>ssh</strong> [option]</p>
-</div>
-<div class="section" id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p><strong>Name</strong></p>
+<p><code class="docutils literal"><span class="pre">ssh&nbsp;--&nbsp;OpenSSH</span> <span class="pre">SSH</span> <span class="pre">client</span></code></p>
+<p><strong>Synopsis</strong></p>
+<p><code class="docutils literal"><span class="pre">ssh</span> <span class="pre">[user&#64;]hostname</span> <span class="pre">[command]</span></code></p>
+<p><strong>Description</strong></p>
 <p>ssh (SSH client) is a program for logging into a remote machine and
 for executing commands on a remote machine. It is intended to
 replace rlogin and rsh, and provide secure encrypted communications
 between two untrusted hosts over an insecure network.</p>
-</div>
-<div class="section" id="frequently-used-options">
-<h2>Frequently used options<a class="headerlink" href="#frequently-used-options" title="Permalink to this headline">¶</a></h2>
-</div>
+<p>ssh connects and logs into the specified hostname (with optional
+user name).  The user must prove his/her identity to the remote
+machine using one of several methods depending on the protocol
+version used.</p>
+<p>If command is specified, it is executed on the remote host instead
+of a login shell.</p>
 </div>
 
 

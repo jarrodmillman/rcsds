@@ -3,24 +3,19 @@
 rm
 ==
 
-Name
-----
+**Name**
 
 rm -- remove files or directories
 
-Synopsis
---------
+**Synopsis**
 
 **rm** [options...] {file...}
 
-Description
------------
+**Description**
 
 rm removes each specified file. By default, it does not remove
 directories.
 
-Frequently used options
------------------------
 
 -f, --force
     ignore nonexistent files, never prompt

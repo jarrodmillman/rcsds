@@ -57,13 +57,12 @@
 <li><a class="reference internal" href="#the-cycle-of-git-virtue-work-add-commit" id="id17">The cycle of git virtue: work, add, commit, ...</a></li>
 <li><a class="reference internal" href="#git-log-revisited" id="id18"><code class="docutils literal"><span class="pre">git</span> <span class="pre">log</span></code> revisited</a></li>
 <li><a class="reference internal" href="#git-mv-and-rm-moving-and-removing-files" id="id19"><code class="docutils literal"><span class="pre">git</span> <span class="pre">mv</span></code> and <code class="docutils literal"><span class="pre">rm</span></code>: moving and removing files</a></li>
-<li><a class="reference internal" href="#exercise" id="id20">Exercise</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#stage-ii-local-user-branching" id="id21">Stage II: Local user, branching</a></li>
-<li><a class="reference internal" href="#stage-iii-using-remotes-as-a-single-user" id="id22">Stage III: Using remotes as a single user</a></li>
-<li><a class="reference internal" href="#an-important-aside-conflict-management" id="id23">An important aside: conflict management</a></li>
-<li><a class="reference internal" href="#learning-git" id="id24">Learning Git</a></li>
+<li><a class="reference internal" href="#stage-ii-local-user-branching" id="id20">Stage II: Local user, branching</a></li>
+<li><a class="reference internal" href="#stage-iii-using-remotes-as-a-single-user" id="id21">Stage III: Using remotes as a single user</a></li>
+<li><a class="reference internal" href="#an-important-aside-conflict-management" id="id22">An important aside: conflict management</a></li>
+<li><a class="reference internal" href="#learning-git" id="id23">Learning Git</a></li>
 </ul>
 </li>
 </ul>
@@ -393,16 +392,14 @@ git slog
 </pre></div>
 </div>
 <p>And <code class="docutils literal"><span class="pre">git</span> <span class="pre">rm</span></code> works in a similar fashion.</p>
-</div>
-<div class="section" id="exercise">
-<h3><a class="toc-backref" href="#id20">Exercise</a><a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h3>
+<p><strong>Exercise</strong></p>
 <p>Add a new file <code class="docutils literal"><span class="pre">file2.txt</span></code>, commit it, make some changes to it, commit
 them again, and then remove it (and don&#8217;t forget to commit this last
 step!).</p>
 </div>
 </div>
 <div class="section" id="stage-ii-local-user-branching">
-<h2><a class="toc-backref" href="#id21">Stage II: Local user, branching</a><a class="headerlink" href="#stage-ii-local-user-branching" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id20">Stage II: Local user, branching</a><a class="headerlink" href="#stage-ii-local-user-branching" title="Permalink to this headline">¶</a></h2>
 <p>Before understanding what a Git <strong>branch</strong> is, we need to revist the idea
 of a <strong>head</strong>.  As discussed Git labels every commit with cryptographic
 signature called a hash.  These hashs can be considered to uniquely identify
@@ -515,7 +512,7 @@ current head commit)</li>
 </div>
 </div>
 <div class="section" id="stage-iii-using-remotes-as-a-single-user">
-<h2><a class="toc-backref" href="#id22">Stage III: Using remotes as a single user</a><a class="headerlink" href="#stage-iii-using-remotes-as-a-single-user" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id21">Stage III: Using remotes as a single user</a><a class="headerlink" href="#stage-iii-using-remotes-as-a-single-user" title="Permalink to this headline">¶</a></h2>
 <p>We are now going to introduce the concept of a <em>remote repository</em>: a
 pointer to another copy of the repository that lives on a different
 location. This can be simply a different path on the filesystem or a
@@ -581,7 +578,7 @@ git pull
 </div>
 </div>
 <div class="section" id="an-important-aside-conflict-management">
-<h2><a class="toc-backref" href="#id23">An important aside: conflict management</a><a class="headerlink" href="#an-important-aside-conflict-management" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id22">An important aside: conflict management</a><a class="headerlink" href="#an-important-aside-conflict-management" title="Permalink to this headline">¶</a></h2>
 <p>While git is very good at merging, if two different branches modify the
 same file in the same location, it simply can&#8217;t decide which change
 should prevail. At that point, human intervention is necessary to make
@@ -647,7 +644,7 @@ structure, git can work with any of them.</p>
 </div>
 </div>
 <div class="section" id="learning-git">
-<h2><a class="toc-backref" href="#id24">Learning Git</a><a class="headerlink" href="#learning-git" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id23">Learning Git</a><a class="headerlink" href="#learning-git" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference external" href="http://nyuccl.org/pages/GitTutorial/">Git for Scientists: A
 Tutorial</a></li>

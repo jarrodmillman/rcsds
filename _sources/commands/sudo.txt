@@ -3,24 +3,19 @@
 sudo
 ====
 
-Name
-----
+**Name**
 
 sudo -- execute a command as another user
 
-Synopsis
---------
+**Synopsis**
 
 **sudo** [option...]
 
-Description
------------
+**Description**
 
 sudo allows a permitted user to execute a command as the superuser
 or another user, as specified in the sudoers file.
 
-Frequently used options
------------------------
 
 
 

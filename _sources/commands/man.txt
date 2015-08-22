@@ -3,22 +3,17 @@
 man
 ===
 
-Name
-----
+**Name**
 
 man -- format and display the on-line manual pages
 
-Synopsis
---------
+**Synopsis**
 
 **man** {keyword...} {name}
 
-Description
------------
+**Description**
 
 man formats and displays the on-line manual pages.
 
-Frequently used options
------------------------
 
 

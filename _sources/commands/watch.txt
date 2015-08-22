@@ -3,24 +3,19 @@
 watch
 =====
 
-Name
-----
+**Name**
 
 watch -- execute a program periodically, showing output fullscreen
 
-Synopsis
---------
+**Synopsis**
 
 **watch** [option] {command}
 
-Description
------------
+**Description**
 
 watch runs COMMAND repeatedly, displaying its output (the first
 screenfull). This allows you to watch the program output change
 over time.
 
-Frequently used options
------------------------
 
 
