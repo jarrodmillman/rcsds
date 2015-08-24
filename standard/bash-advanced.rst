@@ -30,7 +30,7 @@ input, parses and *evaluates* it, *prints* the results, and then *loops*.
    for Python, and a ``In [1]:`` prompt for IPython. By convention, a
    regular user's prompt in bash is ``$``, while the root (or administrative)
    user's prompt is ``#``.  However, it is common practice to never log
-   on as the root user.  If you need to run a command with root priveleges,
+   on as the root user.  If you need to run a command with root privileges,
    you should use the ``sudo`` command (see the section on *Logging In*
    below for more details).
 
@@ -44,7 +44,7 @@ shell.
 The shell is an amazingly powerful programming environment.
 From it you can interactively monitor and control almost any aspect of the OS
 and more importantly you can automate it. As you will see, **bash** has a very
-extensive set of capabalities intended to make both interactive as well as
+extensive set of capabilities intended to make both interactive as well as
 automated control simple, effective, and customizable.
 
 .. note::
@@ -63,11 +63,24 @@ Logging In
 * :ref:`sudo` -- execute a command as another user
 
 You should already be able to access a terminal from the BCE VM.
-However, it is occassionally useful to operate as a different user.  For
+However, it is occasionally useful to operate as a different user.  For
 instance, you may need to change file permissions or install software.
 As you work through this tutorial, we will see examples of this.
 
-**Examples using sudo and ssh**
+To upgrade all the software on your BCE machine::
+
+  $ sudo apt-get upgrade
+
+To install the text editor `vim` on a BCE machine::
+
+  $ sudo apt-get install vim
+
+To ssh to one of the SCF machines::
+
+  $ ssh scf-ug02.berkeley.edu
+
+To learn more about using ssh to connect to the SCF machines, see:
+  http://statistics.berkeley.edu/computing/ssh
 
 .. tip::
    Most bash commands have electronic manual pages, which are accessible
@@ -151,8 +164,6 @@ directory in the prompt::
   [user1@local1 ~]$ 
 
 
-**Maybe something about PATH**
-
 Commands
 --------
 
@@ -166,8 +177,33 @@ followed. Generally, a command line consists of 4 things:
 #. arguments
 #. line acceptance
 
-Exercise
-~~~~~~~~
+After you type a command at the bash prompt and indicate line acceptance
+with the Return key, bash parses the command and then attempts to execute
+the command.  To determine what to do, bash first checks whether the command
+is a shell function (we will discuss functions below).  If not, it checks
+to see whether it is a builtin (e.g., `ls` is a bash builtin).  Finally,
+if the command is not a shell function nor a builtin, bash uses the
+`PATH` variable.  The `PATH` variable is a list of directories::
+
+  $ echo $PATH
+  /home/jarrod/usr/bin:/usr/local/bin:/bin:/usr/bin:
+
+For example, consider the following command::
+
+  $ grep pdf file.txt
+
+We will discuss `grep` later.  For now, let's ignore what `grep` actually does
+and focus on what bash would do when you press enter after typing the above
+command.  First bash checks whether `grep` a shell function or a builtin.
+Once it determines that `grep` is neither a shell function nor a builtin,
+it will look for an executable file named `grep` first in `/home/jarrod/usr/bin`,
+then in `/usr/local/bin`, and so on until it finds a match or runs out of places
+to look.  You can use `which` to find out where bash would find it::
+
+  $ which grep
+  /bin/grep
+
+**Exercise**
  
 Consider the following examples using the ``ls`` command::
 
@@ -197,8 +233,8 @@ is used on anything other than the first token of a command.
 
 .. note::
   Note that R does tab completion for objects (including functions) and
-  filenames.
-
+  filenames.  While the default Python shell does not perform tab completion,
+  the IPython shell does.
 
 Command History and Editing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -226,8 +262,7 @@ To list the history of the commands you entered, use the ``history`` command::
      11   ls -al manual.xml
         
 
-The behavior of the **history** command is controlled by a couple of shell
-variables::
+The behavior of the ``history`` command is controlled by a shell variables::
 
     $ echo $HISTFILE
     $ echo $HISTSIZE
@@ -271,15 +306,19 @@ for editing.
 Command Substitution
 ~~~~~~~~~~~~~~~~~~~~
 
-You may occassionally need to substitute the results of a command for use by
+You may occasionally need to substitute the results of a command for use by
 another command.  For example, if you wanted to use the directory listing
 returned by ``ls`` as the argument to another command, you would type
 ``$(ls)`` in the location you want the result of ``ls`` to appear.
 
-**What about backticks**
+An older notation for command substitution is to use backticks (e.g., ```ls```
+versus ``$(ls)``).  It is generally preferable to use the new notation, since
+there are many annoyances with the backtick notation.  For example, backslashes
+(``\``) inside of backticks behave in a non-intuitive way, nested quoting is
+more cumbersome inside backticks, nested substitution is more difficult inside
+of backticks, and it is easy to visually mistake backticks for a single quote. 
 
-Exercise
-~~~~~~~~
+**Exercise**
 
 Try the following commands::
  
@@ -371,9 +410,15 @@ Here is an excerpt from my ``.bashrc``::
   alias which='(alias; declare -f) | /usr/bin/which --tty-only \
            --read-alias --read-functions --show-tilde --show-dot'
 
+**Exercise**
 
-Keyboard shorcuts
-~~~~~~~~~~~~~~~~~
+Look over the content of the example ``.bashrc`` and make sure you understand
+what each line does.  For instance, use ``man grep`` to see what the option
+``--color=auto`` does.  Use ``man which`` to figure out what the various
+options passed to it do.
+
+Keyboard shortcuts
+~~~~~~~~~~~~~~~~~~
 
 Note that you can use emacs-like control sequences (``Ctrl-a``, ``Ctrl-e``,
 ``Ctrl-k``) to navigate and delete characters, just as you can at the prompt in
@@ -401,7 +446,7 @@ of input and output resources (e.g., documents, directories, keyboards,
 harddrives, network devices) are streams of bytes available through the
 filesystem interface. This means that the basic file management tools
 are extremely powerful in Unix.  Not only can you use these tools to work
-with files, but you can often use them to monitor and control many aspects
+with files, but you can also use them to monitor and control many aspects
 of your computer.
 
 Files
@@ -484,14 +529,14 @@ Shell file globbing will expand certain special characters (called wildcards)
 to match patterns of filenames, before passing those filenames on to a program.
 Note that the programs themselves don't know anything about wildcards; it is
 the shell that does the expansion, so that programs don't see the wildcards.
-The following Table shows some of the special characters that the shell uses
+The following table shows some of the special characters that the shell uses
 for expansion.
 
 **Table. Filename wildcards**
 
-============================== ==================================================
+============================== ====================================================
 Wildcard                       Function
-============================== ==================================================
+============================== ====================================================
 ``*``                          Match zero or more characters.
 ``?``                          Match exactly one character.
 ``[characters]``               Match any single character from among *characters*
@@ -502,15 +547,14 @@ Wildcard                       Function
                                characters listed between brackets.
 ``[!a-z]``                     Match any single character from among the characters
                                not in the range listed between brackets
-``{frag1,frag2,frag3,...}``    Brace expansion: create strings frag1, frag2, and
-                               frag3, etc.
-============================== ==================================================
+``{frag1,frag2,...}``          Brace expansion: create strings frag1, frag2, etc.
+============================== ====================================================
 
 List all files ending with a digit::
 
    $ ls *[0-9]
 
-Make a copy of *filename* as *filename.old*::
+Make a copy of ``filename`` as ``filename.old``::
 
    $ cp filename{,.old}
 
@@ -537,8 +581,7 @@ To read more about standard globbing patterns, see the man page::
 
   $ man 7 glob
 
-Exercise
-~~~~~~~~
+**Exercise**
 
 Figure out how to use the :ref:`mkdir` command and brace expansion
 to create the following directory structure in one short command::
@@ -572,15 +615,37 @@ Types of Quoting     Description
 
 Finally, a note about using single vs. double quotes in shell code. In general,
 variables inside double quotes will be evaluated, but variables not inside
-double quotes will not be:
+double quotes will not be::
 
-** Where to put cpds.csv? **
+  $ echo "$HOME"
+  /home/jarrod
+  $ echo '$HOME'
+  $HOME
 
-::
+This can be useful, for example, when you have a directory with a space in its
+name (of course, it is better to avoid spaces in file and directory names).
+Since bash uses spaces to parse the elements of the command line, you might
+try escaping the spaces with a backslash::
 
-    ## My name is chris
-    ## My name is $name
-    ## He said, "My name is chris."
+  $ ls $HOME/with\ space
+  ls: cannot access /home/jarrod/with space: No such file or directory
+
+You could fix this error by using triple backslashes, but a cleaner approach
+is to use soft (or double) quotes::
+
+  $ ls "$HOME/with\ space"
+  file1.txt
+
+If you used hard quotes, you will get this error::
+
+  $ ls '$HOME/with\ space'
+  ls: cannot access $HOME/with\ space: No such file or directory
+
+What if you have double quotes in your file or directory name (again, it is
+better to avoid using double quotes in file and directory names)? In this
+case, you will need to escape the quote::
+
+  $ ls "$HOME/\"with\"quote"
 
 So we'll generally use double quotes. We can always work with a literal
 double quote by escaping it as seen above.
@@ -701,35 +766,49 @@ A simple pipe to ``wc`` to count the number of words in a string::
 Here's an example of finding out how many unique entries there are in the 2nd
 column of a data file whose fields are separated by commas::
 
+  $ wget http://jarrodmillman.com/rcsds/data/cpds.csv
   $ cut -d',' -f2 cpds.csv | sort | uniq | wc
   $ cut -d',' -f2 cpds.csv | sort | uniq > countries.txt
 
-** Where to put cpds.csv? **
+The first line downloads the data from my website.  The two main tools for
+downloading network accessible data from the commandline are ``wget`` and
+``curl``.  I tend to use ``wget`` as my commandline downloading tool as it
+is more convenient.
 
-Rather than using ``sort | uniq``, you could also use ``sort -u``.
+The second and third lines use the ``cut`` utility to extract the second field
+(``-f2``) or column of the file ``cpds.csv`` where the fields (or columns) are
+split or delimited by a comma (``-d','``). The standard output of the ``cut``
+command is then piped (via ``|``) to the standard input of the ``sort``
+command.  Then the output of ``sort`` is sent to the input of ``uniq`` to
+remove duplicate entries in the sorted list provided by ``sort``. Rather than
+using ``sort | uniq``, you could also use ``sort -u``.  Finally, the first of
+the  ``cut`` commands prints a word count summary using ``wc``; while the
+second saving the sorted information with duplicates removed in the file
+``countries.txt``. 
 
 To see if there are any "S" values in certain fields (fixed width) of a set of
 files (note I did this on 22,000 files (5 Gb or so) in about 5 minutes on my
 desktop; it would have taken much more time to read the data into R)::
 
-  $ cut -b29,37,45,53,61,69,77,85,93,101,109,117,125,133,141,149, \\ 
-          157,165,173,181,189,197,205,213,221,229,237,245,253, \\
+  $ cut -b29,37,45,53,61,69,77,85,93,101,109,117,125,133,141,149, \ 
+          157,165,173,181,189,197,205,213,221,229,237,245,253, \
           261,269 USC*.dly | grep S | less
 
-A closely related, but subtly different, capability is offered by the use of
-backticks (\`). When the shell encounters a command surrounded by backticks, it
-runs the command and replaces the backticked expression with the output from
-the command; this allows something similar to a pipe, but is appropriate when a
-command reads its arguments directly from the command line instead of through
-standard input. For example, suppose we are interested in searching for the
-text *pdf* in the last 4 R code files (those with suffix *.*\ r or .R) that
-were modified in the current directory. We can find the names of the last 4
-files ending in ".R" or ".r" which were modified using::
+A closely related, but subtly different, capability that we saw above is
+command substitution. Recall that when the shell encounters a command
+surrounded by ``$()`` (or backticks), it runs the command and replaces the
+expression with the output from the command; this allows something
+similar to a pipe, but is appropriate when a command reads its arguments
+directly from the command line instead of through standard input. For example,
+suppose we are interested in searching for the text ``pdf`` in the last 4 R code
+files (those with suffix ``.r`` or ``.R``) that were modified in the current
+directory. We can find the names of the last 4 files ending in ``.R`` or ``.r``
+which were modified using::
 
   $ ls -t *.{R,r} | head -4
 
 and we can search for the required pattern using ``grep`` (we will discuss
-``grep`` again in the section on regular expresssions). Putting these
+``grep`` again in the section on regular expressions). Putting these
 together with the backtick operator we can solve the problem using::
 
   $ grep pdf $(ls -t *.{R,r} | head -4)
@@ -751,26 +830,25 @@ the ``xargs`` utility. Here's an example::
 
   $ ls -t *.{R,r} | head -4 | xargs grep pdf
 
-And you can redirect output into a shell variable using backticks in a similar
-manner to that done above::
+The ``tee`` command let's you create 2 streams from 1. For example, recall the
+previous example::
 
-  $ files=$(ls -t *.{R,r}) | head -4)
-  $ echo $files
-  $ grep pdf $files
+  $ cut -d',' -f2 cpds.csv | sort | uniq | wc
+  $ cut -d',' -f2 cpds.csv | sort | uniq > countries.txt
 
-The ``tee`` command let's you create 2 streams from 1.
+Instead of repeating the command, you could use ``tee`` command::
 
-**FIXME**
+  $ cut -d',' -f2 cpds.csv | sort | uniq | wc | tee countries.txt
 
 Regular Expressions
 ===================
 
-Regular expressions (regex) are a domain-specific language for finding patterns and are
-one of the key functionalities in scripting languages such as Perl and Python,
-as well as the UNIX utilities ``sed``, ``awk``, and ``grep`` as we will see
-below. I'll just cover the use of regular expressions in bash, but once you
-know that, it would be easy to use them elsewhere (Python, R, etc.).  At the
-level we'll consider them, the syntax is quite similar.
+Regular expressions (regex) are a domain-specific language for finding patterns
+and are one of the key functionalities in scripting languages such as Perl and
+Python, as well as the UNIX utilities ``sed``, ``awk``, and ``grep`` as we will
+see below. I'll just cover the basic use of regular expressions in bash, but
+once you know that, it would be easy to use them elsewhere (Python, R, etc.).
+At the level we'll consider them, the syntax is quite similar.
 
 Overview and core syntax
 ------------------------
@@ -835,12 +913,12 @@ Operators          Description
 
 If we want to search for any one of a set of characters, we use a
 character set, such as ``[13579]`` or ``[abcd]`` or ``[0-9]`` (where the
-dash indicates a sequence) or ``[0-9a-z]`` or ``[ \t]``. To indicate any
-character not in a set, we place a ^ just inside the first bracket:
-``[^abcd]``. The period stands for any character.
+dash indicates a sequence) or ``[0-9a-z]``. To indicate any
+character not in a set, we place a ``^`` just inside the first bracket:
+``[^abcd]``.
 
 There are a bunch of named character classes so that we don't have write out
-common sets of characters. The syntax is ``[:CLASS:]`` where *CLASS* is one of
+common sets of characters. The syntax is ``[:CLASS:]`` where ``CLASS`` is one of
 the following values::
 
   "alnum", "alpha", "ascii", "blank", "cntrl", "digit", "graph",
@@ -852,53 +930,7 @@ To learn more about regular expressions, you can type::
 
 To make a character set with a character class you
 need two square brackets, e.g. the digit class: ``[[:digit:]]``. Or we
-can make a combined character set such as ``[[:alnum:]_]``. For example, the
-latter would be useful in looking for email addresses. 
-
-::
-
-    ## [1] FALSE  TRUE  TRUE
-
-Here are some more examples showing a wide range of string
-functionality:
-
-::
-
-    ## [1] FALSE  TRUE  TRUE
-
-::
-
-    ## [[1]]
-    ##      start end
-    ## 
-    ## [[2]]
-    ##      start end
-    ## [1,]     9   9
-    ## 
-    ## [[3]]
-    ##      start end
-    ## [1,]     5   5
-    ## [2,]    12  12
-
-::
-
-    ## [[1]]
-    ## character(0)
-    ## 
-    ## [[2]]
-    ## character(0)
-    ## 
-    ## [[3]]
-    ## [1] "Juan "
-
-::
-
-    ## [1] "John"            "Jennifer pierce"
-    ## [3] "Juan carlos rey"
-
-**Challenge**: how would we find a spam-like pattern with digits or
-non-letters inside a word? For example, I want to find V1agra or Fancy
-repl!c@ted watches.
+can make a combined character set such as ``[[:alnum:]_]``.
 
 Location-specific matches
 -------------------------
@@ -916,16 +948,6 @@ To find a pattern at the beginning of the string, we use ``^`` (note this was
 also used for negation, but in that case occurs only inside square brackets)
 and to find it at the end we use ``$``.
 
-::
-
-    ## [1] FALSE FALSE  TRUE
-
-::
-
-    ## [1] FALSE FALSE FALSE
-
-What does this match: ``^[^[:lower:]]$`` ?
-
 Repetitions, Grouping, and References
 -------------------------------------
 
@@ -935,7 +957,7 @@ Repetitions, Grouping, and References
 Operators        Description
 =============    ====================================================================
 ``*``            Match zero or more of the character that precedes it.
-``?``            Match zero or one instace of the preceding *regex*.
+``?``            Match zero or one instance of the preceding *regex*.
 ``+``            Match one or more instances of the preceding *regex*.
 ``{n,m}``        Match a range of occurrences of the single character or *regex*
                  that precedes this construct.
@@ -954,132 +976,33 @@ I can indicate repetitions as indicated in these examples:
 -  ``[[:digit:]]{1,3}`` – at least one and no more than three digits
 -  ``[[:digit:]]{2,}`` – two or more digits
 
-An example is that ``\\[.*\\]`` is the pattern of any number of
-characters (*.\**) separated by square brackets.
+An example is that ``\[.*\]`` is the pattern of closed square brackets
+with any number of characters (``.*``) inside.
 
-So a search for US/Canadian/Caribbean phone numbers might become:
+We often want to be able to look for multi-character patterns.  For example,
+if you wanted to match phone numbers whether they start with ``1-`` or not
+you could use the following::
 
-::
+  (1-)?[[:digit:]]{3}-[[:digit:]]{4}
 
-    ## [[1]]
-    ## [1] "919-543-3300"
-    ## 
-    ## [[2]]
-    ## character(0)
-    ## 
-    ## [[3]]
-    ## character(0)
-    ## 
-    ## [[4]]
-    ## [1] "919.554.3800"
+The first part of the pattern ``(1-)?`` matches 0 or 1 occurrences of ``1-``.
+Then the pattern ``[[:digit:]]{3}`` matches any 3 digits. Similarly, the
+pattern ``[[:digit:]]{4}`` matches any 4 digits. So the whole pattern
+matches any three digits followed by ``-`` and then followed by four
+digits when it is preceded by 0 or 1 occurrences of ``1-``.
 
-**Challenge**: How would I extract an email address from an arbitrary
-text string?
-
-We often want to be able to look for multi-character patterns and to be able to
-refer back to the patterns that are found. Both are accomplished with
-parentheses. For example, the phone number detection problem could have been
-done a bit more compactly (and more generally, in case the area code is omitted
-or a 1 is included) as:
-
-::
-
-    ## [[1]]
-    ## [1] "919-543-3300"
-    ## 
-    ## [[2]]
-    ## character(0)
-    ## 
-    ## [[3]]
-    ## character(0)
-    ## 
-    ## [[4]]
-    ## [1] "1.919.554.3800"
-    ## 
-    ## [[5]]
-    ## [1] "337.4355"
-
-Parentheses are also used with a pipe (\|) to indicate any one of a set
-of multi-character sequences, such as ``(http|ftp)``.
-
-::
-
-    ##      start end
-    ## [1,]    13  19
-    ## [2,]    NA  NA
-    ## [3,]     1   6
-
-It's often helpful to be able to save a pattern as a variable and refer back to
-it. Here's an example that might have been helpful in dealing with the extra
-commas in the comma-delimited FEC elections data file in PS1:
-
-::
-
-    ## [1] "\"H4NY07011\",\"ACKERMAN GARY L.\",\"H\",\"$13242\",,,"
-
-We can have multiple sets of parentheses, referred to using ``\\1``,
-``\\2``, etc.
-
-**Challenge**: Suppose a text string has dates in the form "Aug-3",
-"May-9", etc. and I want them in the form "3 Aug", "9 May", etc. How
-would I do this search/replace?
-
-Greedy matching
-~~~~~~~~~~~~~~~
-
-It turns out the pattern matching is 'greedy' - it looks for the longest
-match possible.
-
-Suppose we want to strip out html tags as follows:
-
-::
-
-    ## [1] "Do an internship  course."
-
-What went wrong?
-
-One solution is to append a ``?`` to the repetition syntax to cause the
-matching to be non-greedy. Here's an example.
-
-``  ``
-
-::
-
-    ## [1] "Do an internship  in place  of  one  course."
-
-However, one can often avoid greedy matching by being more clever.
-
-**Challenge**: How could we change our regex to avoid the greedy
-matching without using the ``?``?
-
-Regular expressions in other contexts
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Regular expression can be used in a variety of places. For example, to split by
-any number of white space characters
-
-::
-
-    ## a dog    jumped
-    ## over     the moon.
-
-::
-
-    ## [[1]]
-    ## [1] "a"      "dog"    "jumped" "over"   "the"   
-    ## [6] "moon."
-
-::
-
-    ## [[1]]
-    ## [1] "a"            "dog"          "jumped\nover"
-    ## [4] "the"          "moon."
-
+Parentheses are also used with a pipe (``|``) to indicate any one of a set of
+multi-character sequences, such as ``(http|ftp)``.
 
 .. tip:: **Globs vs. Regex:** 
     Be sure you understand the difference between filename globbing (see
-    `the Section called *Filename Globbing* in Chapter 2 <basic-file-management.html#FILENAMEGLOBS>`_)
-    and regular expressions.
+    the Section called *Filename Globbing*) and regular expressions.
+    Filename globbing only works for filenames, while regular expressions
+    are used to match patterns in text more generally.  While they both
+    use the same set of symbols, they mean different things (e.g., ``*``
+    matches 0 or more characters when globbing but matches 0 or more
+    repetitions of the character that precedes it when used in a regular
+    expression).
 
 
 ``ed``, ``grep``, ``sed``, ``awk``, and ``perl``
@@ -1089,7 +1012,7 @@ Before the text editor, there was the line editor.  Rather than presenting you
 with the entire text as a text editor does, a line editor only displays lines
 of text when it is requested to.  The original Unix line editor is called ``ed``.
 You will likely never use ``ed`` directly, but you will very likely use commands
-that are its ancestor.  For example, the commands ``grep``, ``sed``, ``awk``,
+that are its descendants.  For example, the commands ``grep``, ``sed``, ``awk``,
 and ``vim`` are all based directly on ``ed`` (e.g., ``grep`` is a ``ed`` command
 that is now available as a standalone command, while ``sed`` is a streaming
 version of ``ed``) or inherit much of its syntax (e.g., ``awk`` and ``vim``
@@ -1098,6 +1021,11 @@ computing resources were very constrained compared to today, this means that
 the syntax of these commands can be terse.  However, it also means that learning
 the syntax for one of these tools will be rewarded when you need to learn the
 syntax of another of these tools.
+
+.. note::
+   POSIX.2 regular expressions come in two flavors: extended regular expressions
+   and basic (or obsolete) regular expressions.  I will indicate some of the
+   differences below.
 
 ``grep``
 ~~~~~~~~
@@ -1108,15 +1036,60 @@ The simplest of these tools is ``grep``.  As I mentioned, ``ed`` only displays
 lines of text when requested.  One common task was to print all the lines in
 a file matching a specific regular expression.  The command in ``ed`` that
 does this is ``g/<re>/p``, which stands for globally match all lines containing
-the regular express ``<re>`` and print them out.  Consider the following example::
+the regular express ``<re>`` and print them out.
 
-  $ cat file1.txt 
+To start you will need to create a file called ``file1.txt`` with the following
+content::
+
   This is the first line.
   Followed by a this line.
   And then ...
+
+To print all the lines containing ``is``::
+
   $ grep is file1.txt 
   This is the first line.
   Followed by a this line.
+
+To print all the lines **not** containing ``is``::
+
+  $ grep -v is file1.txt 
+  And then ...
+
+Now let's consider a file named ``file2.txt`` with the following
+content::
+
+  Here's my number: 919-543-3300.
+  hi John, good to meet you
+  They bought 731 bananas
+  Please call 1.919.554.3800
+  I think he said it was 337.4355
+
+Let's use the pattern from the section above to print all lines containing
+phone numbers::
+
+  $ grep  '(1-)?[[:digit:]]{3}-[[:digit:]]{4}' file2.txt
+
+You will notice that this doesn't match any lines.  The reason is that the
+group syntax ``(1-)`` and the ``{}`` notation are not part of the extended
+syntax.  To have ``grep`` use the extended syntax, you can either use the
+``-E`` option::
+
+  $ grep -E '(1-)?[[:digit:]]{3}-[[:digit:]]{4}' t.t
+  Here's my number: 919-543-3300.
+
+or use the ``egrep`` command::
+
+  $ egrep  '(1-)?[[:digit:]]{3}-[[:digit:]]{4}' t.t
+  Here's my number: 919-543-3300.
+  
+If we want to match regardless of whether the phone number is separated
+by a minus ``-`` or a period ``.``, we could use the pattern ``[-.]``::
+
+  $ egrep  '(1[-.])?[[:digit:]]{3}[-.][[:digit:]]{4}' file2.txt
+  Here's my number: 919-543-3300.
+  Please call 1.919.554.3800
+  I think he said it was 337.4355
 
 **Exercise**
 
@@ -1127,7 +1100,6 @@ Explain what the following regular expression matches::
 
 ``sed`` and ``awk``
 ~~~~~~~~~~~~~~~~~~~
-
 
 Printing lines of text with ``sed``::
 
@@ -1152,43 +1124,48 @@ Text substitution with ``sed``::
 
 The first line replaces only 1st instance in a line, while the second line
 replaces all instances in a line (i.e., globally).
- 
-**Example 4-6. Killing **mozilla** with **awk****
 
-::
+Awk is a general purpose programming language typically used in data extraction
+tasks and particularly well-suited to one-liners (although it is possible to
+write long programs in it, it is rare).  For our purposes, we will just look
+at a few common one-liners to get a sense of how it works. Basically, awk
+will go through a file line by line and perform some action for each line.
 
-    $ ps
-          PID TTY          TIME CMD
-    17043 pts/2    00:00:00 bash
-    17073 pts/2    00:00:09 emacs
-    17133 pts/2    00:00:02 mozilla-bin
-    17140 pts/2    00:00:00 mozilla-bin 
-    17141 pts/2    00:00:00 mozilla-bin
-    17142 pts/2    00:00:00 mozilla-bin
-    17144 pts/2    00:00:00 mozilla-bin
-    17146 pts/2    00:00:00 ps
-    
-    $ ps | grep mozilla
-        17133 pts/2    00:00:02 mozilla-bin
-    17140 pts/2    00:00:00 mozilla-bin 
-    17141 pts/2    00:00:00 mozilla-bin
-    17142 pts/2    00:00:00 mozilla-bin
-    17144 pts/2    00:00:00 mozilla-bin
-    
-    $ ps | grep mozilla | awk '{ print $2 }'
-        17133
-    17140 
-    17141
-    17142
-    17144
-    
-    $ ps | grep mozilla | awk '{ print $2 }' | xargs kill -9
-    [2]+  Killed                  mozilla
-        
-      
+For example to double space a file, you would read each line, print it, and
+then print a blank line::
+
+  $ awk '{ print } { print "" }' file.txt 
+
+Print every line of a file that is longer than 80 characters::
+
+  $ awk 'length($0) > 80' file.txt
+
+Print the home directory of every user defined in the file ``/etc/passwd``::
+
+  $ awk -F: '{ print $6 }' /etc/passwd
+
+To see what this did, let's look at the first line of ``/etc/passwd``::
+
+  $ head -n 1 /etc/passwd
+  root:x:0:0:root:/root:/bin/bash
+
+As you can see the entries are separated by colons (``:``) and the fifth
+field contains the root user's home directory (``/root``).  The option
+``-F:`` specifies that the colon ``:`` is the field delimiter and ``print $6``
+prints the 6th field of each line.
+
+You don't need to know much ``sed`` or ``awk``, but it is good to know about
+them since you can search the internet for awk or sed one-liners.  If you have
+some file munging task, it can be helpful to do a quick search before writing
+code to perform the task yourself.
 
 ``perl``
 ~~~~~~~~
+
+Perl is another general-purpose programming language that is particular
+useful for one-liner commands to perform data extraction and manipulation
+tasks.  Again even if you don't learn how to program in Perl, it can
+be useful to have a couple one-liners in your toolbox.
 
 Text substitution with ``perl``::
 
@@ -1207,29 +1184,19 @@ Summing columns with ``perl``::
 
 This will sum columns 1 and 2 of ``file.txt``.
 
-
-
-
-
 Processes
 =========
 
-Processes have the following attributes:
+A process is a program that is being executed.  Processes have the following
+attributes:
 
 -  A lifetime.
-
--  A PID.
-
--  A UID.
-
--  A GID.
-
+-  A process ID (PID).
+-  A user ID (UID).
+-  A group ID (GID).
 -  A parent process.
-
 -  An environment.
-
 -  A current working directory.
-
 
 Monitoring
 ----------
@@ -1238,57 +1205,50 @@ Monitoring
 * :ref:`pstree` -- display a tree of processes
 * :ref:`top` -- display top CPU processes
 
-Examining Processes with ``ps``::
+Examining subprocesses of your shell with ``ps``::
 
-        $ ps
-          PID TTY          TIME CMD
-        29982 pts/1    00:00:00 bash
-        30042 pts/1    00:00:00 gvim
-        30162 pts/1    00:00:00 ps
-        
-        $ ps -f
-        UID        PID  PPID  C STIME TTY          TIME CMD
-        user1   29982 29981  0 17:04 pts/1    00:00:00 /bin/bash
-        user1   30042 29982  0 17:05 pts/1    00:00:00 gvim manual.xml
-        user1   30161 29982  0 17:11 pts/1    00:00:00 ps -f
-        
-        $ ps -lf
-          F S UID        PID  PPID  C PRI  NI ADDR    SZ WCHAN  STIME TTY          TIME CMD
-        000 S user1   29982 29981  0  75   0    -   712 wait4  17:04 pts/1    00:00:00 /bin/bash
-        000 S user1   30042 29982  0  75   0    -  2849 schedu 17:05 pts/1    00:00:01 emacs manual.xml
-        000 R user1   30238 29982  0  76   0    -   855 -      17:16 pts/1    00:00:00 ps -lf
+  $ ps
+  PID TTY          TIME CMD
+  19370 pts/3    00:00:00 bash
+  22846 pts/3    00:00:00 ps
+
+Examining in more detail subprocesses of your shell with ``ps``::
+
+  $ ps -f
+  UID        PID  PPID  C STIME TTY          TIME CMD
+  jarrod   19370 19368  0 10:51 pts/3    00:00:00 bash
+  jarrod   22850 19370  0 14:57 pts/3    00:00:00 ps -f
+
+Examining in more detail all processes on your computer::
+
+  $ ps -ef
+  UID        PID  PPID  C STIME TTY          TIME CMD
+  root         1     0  0 Aug21 ?        00:00:05 /usr/lib/systemd
+  root         2     0  0 Aug21 ?        00:00:00 [kthreadd]
+  root         3     2  0 Aug21 ?        00:00:07 [ksoftirqd/0]
+  root         5     2  0 Aug21 ?        00:00:00 [kworker/0:0H]
+     <snip>
+  root     16210     1  0 07:19 ?        00:00:00 login -- jarrod
+  jarrod   16219 16210  0 07:19 tty1     00:00:00 -bash
+  jarrod   16361 16219  0 07:19 tty1     00:00:00 /bin/sh /bin/startx
+     <snip>
 
 To see the hierarchical process structure, you can use the ``pstree`` command.
 
-Examining Processes with ``top``::
+Examining processes with ``top``::
 
   $ top
   top - 13:49:07 up  1:49,  3 users,  load average: 0.10, 0.15, 0.18
   Tasks: 160 total,   1 running, 158 sleeping,   1 stopped,   0 zombie
-  %Cpu(s):  2.5 us,  0.5 sy,  0.0 ni, 96.9 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
-  KiB Mem :  7893644 total,  5951552 free,  1085584 used,   856508 buff/cache
-  KiB Swap:  7897084 total,  7897084 free,        0 used.  6561548 avail Mem 
+  %Cpu(s):  2.5 us, 0.5 sy, 0.0 ni, 96.9 id, 0.0 wa, 0.0 hi, 0.0 si, 0.0 st
+  KiB Mem : 7893644 total, 5951552 free, 1085584 used,  856508 buff/cache
+  KiB Swap: 7897084 total, 7897084 free,       0 used. 6561548 avail Mem 
   
-    PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                           
-   1607 jarrod    20   0 2333568 974888 212944 S  12.5 12.4  11:10.67 firefox                                                                           
-   3366 jarrod    20   0  159828   4312   3624 R   6.2  0.1   0:00.01 top                                                                               
-      1 root      20   0  193892   8484   5636 S   0.0  0.1   0:01.78 systemd 
-  
-          $ top
-            5:18pm  up 2 days, 13:26,  2 users,  load average: 0.03, 0.03, 0.00
-          76 processes: 75 sleeping, 1 running, 0 zombie, 0 stopped
-          CPU0 states:  0.4% user,  0.3% system,  0.0% nice, 98.3% idle
-          CPU1 states:  0.0% user,  0.4% system,  0.0% nice, 99.1% idle
-          Mem:  2068644K av, 1001668K used, 1066976K free,       0K shrd,  218192K buff
-          Swap:  401584K av,       0K used,  401584K free                  339532K cached
-          
-            PID USER     PRI  NI  SIZE  RSS SHARE STAT %CPU %MEM   TIME COMMAND
-           1840 root       5 -10  284M  28M  4340 S <   0.9  1.4  10:24 X
-          29981 user1    15   0 13504  13M  8120 S     0.7  0.6   0:01 konsole
-          30296 user1    15   0  1188 1188   928 R     0.3  0.0   0:00 top
-              1 root      15   0   504  504   440 S     0.0  0.0   0:05 init
-        
-      
+    PID USER     PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND 
+   1607 jarrod   20   0 2333568 974888 212944 S  12.5 12.4  11:10.67 firefox
+   3366 jarrod   20   0  159828   4312   3624 R   6.2  0.1   0:00.01 top
+      1 root     20   0  193892   8484   5636 S   0.0  0.1   0:01.78 systemd 
+ 
 To quit ``top``, type ``q``.
 
 Signaling
@@ -1309,6 +1269,23 @@ Signal Number Meaning                            HUP
 18            Stop executing, ready to continue
 ============= =================================  ====
 
+Let's see how to build up a command to kill firefox using some of the tools
+we've seen.  First let's pipe the output of ``ps -e`` to ``grep`` to select
+the line corresponding to ``firefox``::
+
+  $ ps -e | grep firefox
+  16517 ?        00:10:03 firefox
+
+We can now use ``awk`` to select the first column, which contains the process
+ID corresponding to ``firefox``::
+
+  $ ps -e | grep firefox | awk '{ print $1 }'
+  16517
+
+Finally, we can pipe this to the ``kill`` command using ``xargs``::
+
+  $ ps -e | grep firefox | awk '{ print $1 }' | xargs kill
+ 
 .. _tip: **Zombies:**
     Occasionally, a process monitor like **ps** or **top**
     will list a process as a *zombie*. This is a process with has
@@ -1352,24 +1329,27 @@ suppose that you wish to run an R script, and you don't want it to
 terminate when you log off. (Note that this can also be done using
 ``R CMD BATCH``, so this is primarily an illustration.)
 
-| ``$ R --no-save < code.R > code.Rout 2>&1 &``
-| If you forget to put a job in the background when you first execute
-  it, you can do it while it's running in the foreground in two steps.
-  First, suspend the job using the ``C-z`` signal. After receiving the
-  signal, the program will interrupt execution, but will still have
-  access to all files and other resources. Next, issue the ``bg``
-  command, which will put the stopped job in the background.
+::
+
+  $ R --no-save < code.R > code.Rout 2>&1 &
+
+If you forget to put a job in the background when you first execute
+it, you can do it while it's running in the foreground in two steps.
+First, suspend the job using the ``Ctrl-z`` signal. After receiving the
+signal, the program will interrupt execution, but will still have
+access to all files and other resources. Next, issue the ``bg``
+command, which will put the stopped job in the background.
 
 Listing and killing jobs
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Since only foreground jobs will accept signals through the keyboard, if
-you want to terminate a background job you must first determine the
-unique process id (PID) for the process you wish to terminate through
-the use of the *ps* command. For example, to see all the jobs running on
-a particular computer, you could use a command like::
+Since only foreground jobs will accept signals through the keyboard, if you
+want to terminate a background job you must first determine the unique process
+id (PID) for the process you wish to terminate through the use of the ``ps``
+command. Recall that to see all the processes running on a particular computer,
+you could use a command like::
 
-  $ ps -aux
+  $ ps -ef
 
 Among the output after the header (shown here) might appear a line
 that looks like this::
@@ -1377,8 +1357,8 @@ that looks like this::
   USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
   paciorek 11998 97.0 39.1 1416644 1204824 pts/16 R+ Jul27 1330:01 /usr/lib64/R/bin/exec/R
 
-In this example, the *ps* output tells us that this R job has a PID of
-*11998*, that it has been running for 1330 minutes (!), is using 97%
+In this example, the ``ps`` output tells us that this R job has a PID of
+``11998``, that it has been running for 1330 minutes (!), is using 97%
 of CPU and 39% of memory, and that it started on July 27. You could
 then issue the command::
 
@@ -1389,13 +1369,13 @@ or, if that doesn't work::
   $ kill -9 11998
 
 to terminate the job. Another useful command in this regard is
-*killall*, which accepts a program name instead of a process id, and
+``killall``, which accepts a program name instead of a process id, and
 will kill all instances of the named program::
 
   $ killall R
 
 Of course, it will only kill the jobs that belong to you, so it will
-not affect the jobs of other users. Note that the *ps* and *kill*
+not affect the jobs of other users. Note that the ``ps`` and ``kill``
 commands only apply to the particular computer on which they are
 executed, not to the entire computer network. Thus, if you start a job
 on one machine, you must log back into that same machine in order to
@@ -1404,12 +1384,11 @@ manage your job.
 Monitoring jobs and memory use
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The *top* command also allows you to monitor the jobs on the system and
-in real-time. In particular, it's useful for seeing how much of the CPU
-and how much memory is being used, as well as figuring out a PID as an
-alternative to *ps*. You can also renice jobs (see below) and kill jobs
-from within top: just type *r* or *k*, respectively, and proceed
-from there.
+As we saw above, the ``top`` command also allows you to monitor the jobs on the
+system and in real-time. In particular, it's useful for seeing how much of the
+CPU and how much memory is being used, as well as figuring out a PID as an
+alternative to ``ps``. You can also renice jobs (see below) and kill jobs from
+within top: just type ``r`` or ``k``, respectively, and proceed from there.
 
 One of the main things to watch out for is a job that is using close to
 100% of memory and much less than 100% of CPU. What is generally
@@ -1436,32 +1415,26 @@ the priority by doing::
 
   $ renice +19 11998
 
-where *11998* is the PID of your job.
-
-On many larger UNIX cluster computers, all jobs are submitted via a job
-scheduler and enter a queue, which handles the issue of prioritization
-and jobs conflicting. Syntax varies by system and queueing software, but
-may look something like this for submitting an R job:
-
-``$ bsub -q long R CMD BATCH --no-save code.R code.Rout # just an example; this will not work on the SCF network``
-
-
-bg,fg,jobs,Ctrl-C,Ctrl-Z
-
-**screen**
+where ``11998`` is the PID of your job.
 
 Shell programming
 =================
 
 Shell scripts are files containing shell commands (commonly with the extension
-``.sh``) To run a shell script called ``file.sh``, you would type ``source
-./file.sh`` or ``. ./file.sh``. Note that if you just typed ``file.sh``, the
-operating system will generally have trouble finding the script and recognizing
-that it is executable. To be sure that the operating system knows what shell to
-use to interpret the script, the first line of the script should be
-``#!/bin/bash`` (in the case that you're using the bash shell). Also, if you
-set ``file.sh`` to be executable (i.e., to have the 'x' flag set) you can
-execute it by just typing ``./file.sh``.
+``.sh``) To run a shell script called ``file.sh``, you would type ::
+
+  $ source ./file.sh
+
+or ::
+
+  $ . ./file.sh
+
+Note that if you just typed ``file.sh``, the operating system will generally
+have trouble finding the script and recognizing that it is executable. To be
+sure that the operating system knows what shell to use to interpret the script,
+the first line of the script should be ``#!/bin/bash`` (in the case that you're
+using the bash shell). Also, if you set ``file.sh`` to be executable (i.e., to
+have the 'x' flag set) you can execute it by just typing ``./file.sh``.
 
 Functions
 ---------
@@ -1477,14 +1450,14 @@ function that saves me some typing when I want to copy a file to the SCF
 filesystem::
 
   function putscf() {
-     scp $1 paciorek@radagast.berkeley.edu:~/$2 ``
+     scp $1 millman@scf-ug02.berkeley.edu:$2 ``
   }
 
-To use this function, I just do the following to copy *unit1.pdf* from
+To use this function, I just do the following to copy ``unit1.pdf`` from
 the current directory on whatever non-SCF machine I'm on to the
-directory *~/teaching/243* on SCF::
+directory ``~/teaching/243`` on SCF::
 
-  $ putscf unit1-unix.pdf Desktop/.
+  $ putscf unit1.pdf ~/teaching/243/.
 
 Of course you'd want to put such functions in your ``.bashrc`` file.
 
@@ -1492,8 +1465,31 @@ If/then/else
 ------------
 
 We can use if-then-else type syntax to control the flow of a shell
-script. For an example, see *niceR()* in the demo code file *niceR.sh*
-for this unit.
+script. For an example, here is a shell function ``niceR()`` that
+can be used for nicing R jobs::
+
+  # niceR shortcut for nicing R jobs 
+  # usage: niceR inputRfile outputRfile 
+  # Author: Brian Caffo 
+  # Date: 10/01/03 
+  
+  function niceR(){
+      # submits nice'd R jobs
+  if [ $# != "2" ]
+  then
+     echo "usage: niceR inputRfile outputfile" 
+  elif [ -e "$2" ]
+  then
+     echo "$2 exists, I won't overwrite" 
+  elif [ ! -e "$1" ]
+  then
+     echo "inputRfile $1 does not exist" 
+  else
+     echo "running R on $1" 
+     nice -n 19 R --no-save < $1 &> $2
+  fi
+  }
+
 
 For more details, look in Newham&Rosenblatt or search online.
 
@@ -1511,10 +1507,39 @@ through a set of files or directories. Here's an example::
 
 You could also have done that with ``for file in `ls *.txt```
 
-Another use of *for* loops is automating file downloads: see the demo
-code file. And, in my experience, *for* loops are very useful for
-starting a series of jobs: see the demo code files in the repository:
-*forloopDownload.sh* and *forloopJobs.sh*.
+Another use of *for* loops is automating file downloads::
+
+  # example of bash for loop and wget for downloading a collection of files on the web
+  # usage: ./forloopDownload.sh
+  # Author: Chris Paciorek
+  # Date: July 28, 2011
+
+  url='ftp://ftp3.ncdc.noaa.gov/pub/data/3200'
+  IFS=:  # internal field separator
+  mths=jan:feb:mar:apr
+  for ((yr=1910; yr<=1920; yr++))
+  do
+      for mth in ${mths}
+      do
+          wget ${url}/${yr}/3200${mth}${yr}
+      done
+  done
+
+*for* loops are very useful for starting a series of jobs::
+
+  # example of bash for loop for starting jobs
+  # usage: ./forloopJobs.sh
+  # Author: Chris Paciorek
+  # Date: July 28, 2011
+  
+  n=100 
+  for(( it=1; it<=100; it++));
+  do
+      echo "n=$n; it=$it; source('base.R')" > tmp-$n-$it.R
+      R CMD BATCH --no-save tmp-$n-$it.R sim-n$n-it$it.Rout
+  done
+  # note that base.R should NOT set either 'n' or 'it'
+
 
 How much shell scripting should I learn?
 ----------------------------------------
@@ -1533,7 +1558,12 @@ Documentation tools
 
 * :ref:`pandoc` -- general markup converter
 
-**markdown**, **restructured text**, latex
+There are many plain text file formats (e.g., markdown, reStructuredText,
+LaTeX).  Pandoc is a widely used document converter.  To convert a file
+written in markdown (``report.md``) to a PDF (``report.pdf``), you would
+do something like::
+
+  $ pandoc -o report.pdf report.md
 
 Please see the "Introduction to LaTeX" tutorial and screencast
 here: http://statistics.berkeley.edu/computing/training/tutorials
