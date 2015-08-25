@@ -42,6 +42,7 @@ Useful Command Line Utilities
     more --  file perusal filter for crt viewing <../commands/more.rst>
     mount -- mount a file system <../commands/mount.rst>
     mv -- move (rename) files <../commands/mv.rst>
+    nl -- number lines of files <../commands/nl.rst>
     nohup -- run a command immune to hangups, with output to a non-tty <../commands/nohup.rst>
     pandoc -- general markup converter <../commands/pandoc.rst>
     paste -- merge lines of files <../commands/paste.rst>

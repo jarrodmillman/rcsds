@@ -5,7 +5,9 @@ git-intro:
 	Rscript -e "library(knitr); knit2html('git-intro.Rmd')"
 
 bash-tutorial:
-	pandoc -o bash-advanced.Rmd bash-advanced.rst
+	sed -e '/^\*\ :ref/d' bash-advanced.rst > bash-advanced-clean.rst
+	pandoc -o bash-advanced.Rmd bash-advanced-clean.rst
+	rm bash-advanced-clean.rst
 	Rscript -e "library(knitr); knit2html('bash-advanced.Rmd')"
 
 clean:

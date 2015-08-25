@@ -6,7 +6,7 @@ Core Topics
 
    course-intro.rst
    git-intro.rst
-   bash-advanced.rst
+   bash.rst
    fmri-intro.rst
    python.rst
    numpy.rst

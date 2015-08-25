@@ -1,6 +1,6 @@
-****************
-Git introduction
-****************
+*******************
+Introduction to Git
+*******************
 
 .. contents::
 
@@ -309,6 +309,21 @@ The cycle of git virtue: work, add, commit, ...
   echo "Great progress ..." >> file1.txt
   git add file1.txt
   git commit -m "Great progress on this matter."
+
+Understanding the difference between the working directory, the staging 
+area (or index), and the repository can be confusing at first.
+
+.. figure:: ../figs/git-index.png
+    :alt: Working tree, staging area, and repository. Credit: ProGit book, by Scott Chacon, CC License.
+
+    Working tree, staging area, and repository. Credit: ProGit book, by
+    Scott Chacon, CC License.
+
+The *working directory* or *working tree* is your local directory on the
+filesystem. The staging area (or *index*) reflects your ``git add``, ``git
+rm``, etc. changes that have been staged but not committed. The repository
+reflects your commits.
+
 
 ``git log`` revisited
 ---------------------

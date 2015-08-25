@@ -1,8 +1,8 @@
-.. _bash-advanced:
+.. _bash-shell:
 
-*************
-Advanced Bash
-*************
+********************
+Using the bash shell
+********************
 
 .. contents::
    :depth: 3
@@ -31,7 +31,7 @@ input, parses and *evaluates* it, *prints* the results, and then *loops*.
    regular user's prompt in bash is ``$``, while the root (or administrative)
    user's prompt is ``#``.  However, it is common practice to never log
    on as the root user.  If you need to run a command with root privileges,
-   you should use the ``sudo`` command (see the section on *Logging In*
+   you should use the ``sudo`` command (see the *Getting started* section
    below for more details).
 
 When you are working in a terminal window (i.e., a window with the command line
@@ -54,18 +54,44 @@ automated control simple, effective, and customizable.
 
    Reference: Newham and Rosenblatt, Learning the bash Shell, 2nd ed.
 
-Logging In
-----------
+Getting started
+---------------
 
-* :ref:`man` -- format and display the on-line manual pages
-* :ref:`ssh` -- OpenSSH SSH client
-* :ref:`su` -- run a shell with substitute user and group IDs
-* :ref:`sudo` -- execute a command as another user
+.. * :ref:`man` -- display the on-line reference manuals
+.. * :ref:`ssh` -- OpenSSH SSH client
+.. * :ref:`su` -- run a shell with substitute user and group IDs
+.. * :ref:`sudo` -- execute a command as another user
 
-You should already be able to access a terminal from the BCE VM.
-However, it is occasionally useful to operate as a different user.  For
-instance, you may need to change file permissions or install software.
-As you work through this tutorial, we will see examples of this.
+I assume you already have access to a basic bash shell on a computer with
+network access.  You should also have ssh installed.  SSH provides an encrypted
+mechanism to connect to a remote Unix terminal. To learn more about using
+ssh to connect to the SCF machines and general tips about using ssh on various
+operating systems, see: http://statistics.berkeley.edu/computing/ssh
+
+To ssh to another machine, you need to know its (host)name.  For example, to
+ssh to ``scf-ug01.berkeley.edu``, one of the SCF machines, you would::
+
+  $ ssh scf-ug01.berkeley.edu
+  Password:
+
+At this point you have to type your password.  Alternatively, you can
+set up ssh so that you can use it without typing your password.  To
+learn how to set this up, see: http://statistics.berkeley.edu/computing/ssh-keys
+
+If you have a different username on SCF machines, you will need to specify
+it as well.  For example, to specify the username ``jarrod``, you would::
+
+  $ ssh jarrod@scf-ug01.berkeley.edu
+
+If you want to view graphical applications on your local computer that are
+running on the remote computer you need to use the ``-X`` option::
+
+  $ ssh -X jarrod@scf-ug01.berkeley.edu
+
+Regardless of whether you are working on a local computer or a remote one, it
+is occasionally useful to operate as a different user.  For instance, you may
+need root (or administrative) access to change file permissions or install
+software.
 
 To upgrade all the software on your BCE machine::
 
@@ -74,13 +100,6 @@ To upgrade all the software on your BCE machine::
 To install the text editor `vim` on a BCE machine::
 
   $ sudo apt-get install vim
-
-To ssh to one of the SCF machines::
-
-  $ ssh scf-ug02.berkeley.edu
-
-To learn more about using ssh to connect to the SCF machines, see:
-  http://statistics.berkeley.edu/computing/ssh
 
 .. tip::
    Most bash commands have electronic manual pages, which are accessible
@@ -95,9 +114,9 @@ To learn more about using ssh to connect to the SCF machines, see:
 Variables
 ---------
 
-* :ref:`echo` -- display a line of text
-* :ref:`which` -- shows the full path of (shell) commands.
-* :ref:`printenv` -- print all or part of environment
+.. * :ref:`echo` -- display a line of text
+.. * :ref:`which` -- shows the full path of (shell) commands.
+.. * :ref:`printenv` -- print all or part of environment
 
 Much of how bash behaves can be customized through the use of variables,
 which consists of names that have values assigned to them.  To access
@@ -167,18 +186,22 @@ directory in the prompt::
 Commands
 --------
 
-* :ref:`ls` -- list directory contents
+.. * :ref:`ls` -- list directory contents
 
 While each command has its own syntax, there are some rules usually
-followed. Generally, a command line consists of 4 things:
+followed. Generally, a command line consists of 4 things: a command,
+command options, arguments, and line acceptance.  Consider the following
+example::
 
-#. command
-#. command options
-#. arguments
-#. line acceptance
+  $ ls -l file.txt
+
+In the above example, ``ls`` is the command, ``-l`` is a command option
+specifying to use the long format, ``file.txt`` is the argument, and the
+line acceptance is indicated by hitting the ``Enter`` key at the end
+of the line.
 
 After you type a command at the bash prompt and indicate line acceptance
-with the Return key, bash parses the command and then attempts to execute
+with the ``Enter`` key, bash parses the command and then attempts to execute
 the command.  To determine what to do, bash first checks whether the command
 is a shell function (we will discuss functions below).  If not, it checks
 to see whether it is a builtin (e.g., `ls` is a bash builtin).  Finally,
@@ -239,7 +262,7 @@ is used on anything other than the first token of a command.
 Command History and Editing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* :ref:`history` -- lists the history of entered commands
+.. * :ref:`history` -- lists the history of entered commands
 
 By using the up and down arrows, you can scroll through commands that
 you have entered previously. So if you want to rerun the same command,
@@ -322,18 +345,18 @@ of backticks, and it is easy to visually mistake backticks for a single quote.
 
 Try the following commands::
  
-  $ ls -l echo
-  $ which echo
-  $ ls -l which echo
-  $ ls -l $(which echo)
+  $ ls -l tr
+  $ which tr
+  $ ls -l which tr
+  $ ls -l $(which tr)
 
 Make sure you understand why each command behaves as it does.
 
 Shortcuts
 ---------
 
-* :ref:`alias` -- set aliases
-* :ref:`clear` -- clear the terminal screen
+.. * :ref:`alias` -- set aliases
+.. * :ref:`clear` -- clear the terminal screen
 
 Aliases -- command shortcuts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -351,7 +374,7 @@ As another example, suppose you find the ``-F`` option of ``ls`` (which
 displays ``/`` after directories, ``\`` after executable files
 and ``@`` after links) to be very useful. The command ::
 
-  $ alias ls=ls -F
+  $ alias ls="ls -F"
 
 will insure that the ``-F`` option will be used whenever you use ``ls``.
 If you need to use the unaliased version of something for which you've
@@ -421,8 +444,7 @@ Keyboard shortcuts
 ~~~~~~~~~~~~~~~~~~
 
 Note that you can use emacs-like control sequences (``Ctrl-a``, ``Ctrl-e``,
-``Ctrl-k``) to navigate and delete characters, just as you can at the prompt in
-the shell usually.
+``Ctrl-k``) to navigate and delete characters.
 
 **Table. Keyboard Shortcuts**
 
@@ -452,11 +474,10 @@ of your computer.
 Files
 -----
 
-* :ref:`stat` -- display file or filesystem status
-* :ref:`file` -- determine file type
-* :ref:`type` -- indicate how it would be interpreted if used as a command name
-* :ref:`ln` -- make links between files
-* :ref:`chmod` -- change file access permissions
+.. * :ref:`stat` -- display file or filesystem status
+.. * :ref:`file` -- determine file type
+.. * :ref:`type` -- indicate how it would be interpreted if used as a command name
+.. * :ref:`chmod` -- change file access permissions
 
 A file typically consist of these attributes:
 
@@ -487,10 +508,6 @@ Finding out what type of file you have::
     the ``/usr/share/magic/`` directory.
 
 
-Creating symbolic links with ``ln``::
-
-   $ ln -s db2html-dir unix_users_guide
-
 Changing file attributes with ``chmod``::
 
    $ chmod g+w manual.xml
@@ -501,8 +518,8 @@ screencast here: http://statistics.berkeley.edu/computing/training/tutorials
 Navigation
 ----------
 
-* :ref:`cd` -- change the current working directory to directory
-* :ref:`pwd` -- print name of current/working directory
+.. * :ref:`cd` -- change the current working directory to directory
+.. * :ref:`pwd` -- print name of current/working directory
 
 Efficient navigation of the filesystem from the shell is an essential aspect of
 mastering Unix.  Use ``pwd`` to list your current working directory.  If you
@@ -610,7 +627,6 @@ Types of Quoting     Description
 =================    ====================================
 ``' '``              hard quote - no substitution allowed
 ``" "``              soft quote - allow substitution
-``` ```              execute immediately
 =================    ====================================
 
 Finally, a note about using single vs. double quotes in shell code. In general,
@@ -661,11 +677,13 @@ and tools to view and manipulate files.
 * :ref:`cp`-- copy files and directories
 * :ref:`cut` -- remove sections from each line of files
 * :ref:`diff`-- find differences between two files
+* :ref:`grep` -- print lines matching a pattern
 * :ref:`head` -- output the first part of files
 * :ref:`find` --  search for files in a directory hierarchy
 * :ref:`less` -- opposite of more
 * :ref:`more` --  file perusal filter for crt viewing
 * :ref:`mv` -- move (rename) files
+* :ref:`nl` -- number lines of files
 * :ref:`paste` -- merge lines of files
 * :ref:`rm` -- remove files or directories
 * :ref:`rmdir` -- remove empty directories
@@ -677,20 +695,85 @@ and tools to view and manipulate files.
 * :ref:`tr` -- translate or delete characters
 * :ref:`uniq` --  remove duplicate lines from a sorted file
 * :ref:`wc` --  print the number of bytes, words, and lines in files
+* :ref:`wget` and ``curl`` -- non-interactive network downloader
 
-Finding files by name, modification time, and type::
+As we've already seen the general syntax for a Unix program is::
 
-    $ find . -name '*.txt'   # find files named *.txt
-    $ find . -mtime -2       # find files modified less than 2 days ago
-    $ find . -type l         # find links
+  $ command -options argument1 argument2 ...
 
-Translating lowercase to UPPERCASE with ``tr``::
+For example, ::
 
-    $ echo 'user1'  | tr 'a-z' 'A-Z'
-    USER1
-        
-We will look at several examples of how to use these utilities, but first
+  $ grep -i graphics file.txt
+
+looks for the literal string ``graphics`` (argument 1) in ``file.txt``
+(argument2) with the option ``-i``, which says to ignore the case of the
+letters. While ::
+
+  $ less file.txt
+
+simply pages through a text file (you can navigate up and down) so you
+can get a feel for what's in it.  To exit ``less`` type ``q``.
+
+To find files by name, modification time, and type::
+
+  $ find . -name '*.txt'  # find files named *.txt
+  $ find . -mtime -2      # find files modified less than 2 days ago
+  $ find . -type l        # find links
+
+Unix programs often take options that are identified with a minus
+followed by a letter, followed by the specific option (adding a space
+before the specific option is fine). Options may also involve two
+dashes, e.g., ``R --no-save``. Here are some examples using the ``tail``
+command::
+
+  $ tail --help
+  $ tail -n 10 cpds.csv   # last 10 lines of cpds.csv
+  $ tail -f cpds.csv      # shows end of file, continually refreshing
+ 
+A few more tidbits about ``grep`` (we will see more examples of ``grep`` in the
+section on regular expressions, but it is so useful that it is worth seeing
+many times)::
+
+  $ grep ^2001 cpds.csv   # returns lines that start with '2001'
+  $ grep 0$ cpds.csv      # returns lines that end with '0'
+  $ grep 19.0 cpds.csv    # returns lines with '19' separated from '0' by a single character
+  $ grep 19.*0 cpds.csv   # now separated by any number of characters
+  $ grep -o 19.0 cpds.csv # returns only the content matching the pattern from the relevant lines
+
+Note that the first argument to grep is the pattern you are looking for.
+The syntax is different from that used for wildcards in file names.
+Also, you can use regular expressions in the pattern. We won’t see this
+in detail here, but will see regular expressions in R shortly.
+
+It is sometimes helpful to put the pattern inside double quotes, e.g.,
+if you want spaces in your pattern::
+
+  $ grep "George .* Bush" cpds.csv
+
+More generally in Unix, enclosing a string in quotes is often useful to
+indicate that it is a single argument/value.
+
+If you want to explicitly look for one of the special characters used in
+creating patterns (such as double quote (``"``), period (``.``), etc., you
+can "escape" them by preceding with a back-slash. For example to look
+for ``"Canada"``, including the quotes::
+
+  $ grep "\"Canada\"" cpds.csv
+
+If you have a big data file and need to subset it by line (e.g., with
+``grep``) or by field (e.g., with ``cut``), then you can do it really fast
+from the Unix command line, rather than reading it with R, SAS, Python,
+etc.
+
+Much of the power of these utilities comes in piping between them (see
+the next section) and using wildcards (see the section on Globbing) to operate
+on groups of files. The utilities can also be used in shell scripts to do more
+complicated things.
+
+We will look at several examples of how to use these utilities below, but first
 let's discuss streams and redirection.
+
+
 
 **Exercise**
 
@@ -704,21 +787,10 @@ Streams, Pipes, and Redirects
 Unix programs that involve input and/or output often operate by reading input
 from a stream known as standard input (*stdin*), and writing their results to a
 stream known as standard output (*stdout*). In addition, a third stream known
-as standard error (*stderr*) receives error messages, and other information
+as standard error (*stderr*) receives error messages and other information
 that's not part of the program's results. In the usual interactive session,
 standard output and standard error default to your screen, and standard input
 defaults to your keyboard.
-
-**Table. File Descriptors**
-
-============  ============  ===============
-Name          I/O           File Descriptor
-============  ============  ===============
-stdin         input         0
-stdout        output        1
-stderr        error output  2
-user-defined  input/output  3-19
-============  ============  ===============
 
 You can change the place from which programs read and write through
 redirection.  The shell provides this service, not the individual programs, so
@@ -762,6 +834,11 @@ A simple pipe to ``wc`` to count the number of words in a string::
 
   $ echo "hey there" | wc -w
   2
+
+Translating lowercase to UPPERCASE with ``tr``::
+
+    $ echo 'user1'  | tr 'a-z' 'A-Z'
+    USER1
 
 Here's an example of finding out how many unique entries there are in the 2nd
 column of a data file whose fields are separated by commas::
@@ -820,23 +897,29 @@ command line, not standard input.
 The ``xargs`` and ``tee`` commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* :ref:`xargs` --  build and execute command lines from
-  standard input
-* :ref:`tee` -- read from standard input and write to standard
-  output and files
+.. * :ref:`xargs` --  build and execute command lines from
+..   standard input
+.. * :ref:`tee` -- read from standard input and write to standard
+..   output and files
 
 You can also redirect output as the arguments to another program using
 the ``xargs`` utility. Here's an example::
 
   $ ls -t *.{R,r} | head -4 | xargs grep pdf
 
-The ``tee`` command let's you create 2 streams from 1. For example, recall the
-previous example::
+The ``tee`` command let's you create 2 streams from 1. For example, consider
+the case where you want the results of this command::
 
-  $ cut -d',' -f2 cpds.csv | sort | uniq | wc
+  $ cut -d',' -f2 cpds.csv | sort | uniq 
+
+to both be output to the terminal screen you are working in as well
+as being saved to a file.  You could issue the command twice::
+
+  $ cut -d',' -f2 cpds.csv | sort | uniq 
   $ cut -d',' -f2 cpds.csv | sort | uniq > countries.txt
 
-Instead of repeating the command, you could use ``tee`` command::
+Instead of repeating the command and wasting computing time, you could use
+``tee`` command::
 
   $ cut -d',' -f2 cpds.csv | sort | uniq | wc | tee countries.txt
 
@@ -849,6 +932,14 @@ Python, as well as the UNIX utilities ``sed``, ``awk``, and ``grep`` as we will
 see below. I'll just cover the basic use of regular expressions in bash, but
 once you know that, it would be easy to use them elsewhere (Python, R, etc.).
 At the level we'll consider them, the syntax is quite similar.
+
+.. note::
+   POSIX.2 regular expressions come in two flavors: extended regular expressions
+   and basic (or obsolete) regular expressions.  The extended syntax has metacharacters
+   ``()`` and ``{}``, while the basic syntax requires the metacharacters have
+   to be designated ``\(\)`` and ``\{\}``.  In addition to the POSIX standard,
+   Perl regular expressions are also widely used.  While we won't go into
+   detail, we will see some examples of each syntax.
 
 Overview and core syntax
 ------------------------
@@ -881,7 +972,7 @@ you would need to match anything that complies with the `RFC 822
 document, you will quickly realize that implementing a correct regular expression
 to validate email addresses is extremely complex. So if you are writing a website
 that validates email addresses, it is best to look for a bug-vetted implementation
-rather than rolling your own. 
+rather than creating your own. 
 
 The special characters (meta-characters) used for defining regular expressions
 are::
@@ -906,7 +997,6 @@ Operators          Description
 ``[a-z]``          Match any single character from the range of characters
 ``[^abc]``         Match any single character not among listed characters
 ``[^a-z]``         Match any single character not among listed range of characters
-``< word>``        Match *words* bounded by whitespace.
 ``.``              Match any single character except a *newline*
 ``\``              Turn off (escape) the special meaning of a metacharacter
 ===============    ====================================================================
@@ -951,6 +1041,9 @@ and to find it at the end we use ``$``.
 Repetitions, Grouping, and References
 -------------------------------------
 
+Now suppose I wanted to be able to detect phone numbers, email addresses, etc.
+I often need to be able to deal with repetitions of character sets.
+
 **Modifiers**
 
 =============    ====================================================================
@@ -964,9 +1057,6 @@ Operators        Description
 ``|``            Match the character or expression to the left or right of the
                  vertical bar.
 =============    ====================================================================
-
-Now suppose I wanted to be able to detect phone numbers, email addresses, etc.
-I often need to be able to deal with repetitions of character sets.
 
 I can indicate repetitions as indicated in these examples:
 
@@ -993,6 +1083,43 @@ digits when it is preceded by 0 or 1 occurrences of ``1-``.
 
 Parentheses are also used with a pipe (``|``) to indicate any one of a set of
 multi-character sequences, such as ``(http|ftp)``.
+
+Greedy matching
+---------------
+
+Regular expression pattern matching is *greedy*---by default, the longest
+matching string is choosen.
+
+Suppose we have the following file::
+
+  $ cat file1.txt
+  Do an internship <b> in place </b> of <b> one </b> course.
+
+If we want to match the html tags (e.g., ``<b>`` and ``</b>``, we might
+be tempted to use the pattern ``<.*>``.  Using the ``-o`` option to grep,
+we can have grep print out just the part of the text that the pattern
+matches::
+
+  $ grep -o "<.*>" file1.txt
+  <b> in place </b> of <b> one </b>
+
+To get a non-greedy match, you can use the modifier ``?`` after the
+quantifier. However, this requires that we use the Perl syntax.  In order for
+grep to use the Perl syntax, we need to use the ``-P`` option::
+
+  $ grep -P -o "<.*?>" file1.txt
+  <b>
+  </b>
+  <b>
+  </b>
+
+However, one can often avoid greedy matching by being more clever.
+
+**Challenge**: How could we change our regexp to avoid the greedy
+matching without using the ``?`` modifier?  Hint: Is there some
+character set that we don't want to be inside the angle brackets?
+
+
 
 .. tip:: **Globs vs. Regex:** 
     Be sure you understand the difference between filename globbing (see
@@ -1022,15 +1149,10 @@ the syntax of these commands can be terse.  However, it also means that learning
 the syntax for one of these tools will be rewarded when you need to learn the
 syntax of another of these tools.
 
-.. note::
-   POSIX.2 regular expressions come in two flavors: extended regular expressions
-   and basic (or obsolete) regular expressions.  I will indicate some of the
-   differences below.
-
 ``grep``
 ~~~~~~~~
 
-* :ref:`grep` -- print lines matching a pattern
+.. * :ref:`grep` -- print lines matching a pattern
 
 The simplest of these tools is ``grep``.  As I mentioned, ``ed`` only displays
 lines of text when requested.  One common task was to print all the lines in
@@ -1201,9 +1323,9 @@ attributes:
 Monitoring
 ----------
 
-* :ref:`ps` --  report process status
-* :ref:`pstree` -- display a tree of processes
-* :ref:`top` -- display top CPU processes
+.. * :ref:`ps` --  report process status
+.. * :ref:`pstree` -- display a tree of processes
+.. * :ref:`top` -- display top CPU processes
 
 Examining subprocesses of your shell with ``ps``::
 
@@ -1233,6 +1355,15 @@ Examining in more detail all processes on your computer::
   jarrod   16361 16219  0 07:19 tty1     00:00:00 /bin/sh /bin/startx
      <snip>
 
+You can use the ``-u`` option to see percent CPU and percent memory
+used by each process.  You can use the ``-o`` option to provide
+your own user-defined format; for example, ::
+
+  $ ps -o pid,ni,pcpu,pmem,user,comm
+    PID  NI %CPU %MEM USER     COMMAND
+  18124   0  0.0  0.0 jarrod   bash
+  22963   0  0.0  0.0 jarrod   ps
+
 To see the hierarchical process structure, you can use the ``pstree`` command.
 
 Examining processes with ``top``::
@@ -1254,20 +1385,8 @@ To quit ``top``, type ``q``.
 Signaling
 ---------
 
-* :ref:`kill` -- terminate a process
-* :ref:`killall` --  kill processes by name
-
-**Table 3-3. Common Signals**
-
-============= =================================  ====
-Signal Number Meaning                            HUP
-============= =================================  ====
-1             Hangup, reread configuration       INT
-2             Interrupt, stop running            KILL
-9             Stop immediately                   TERM
-15            Terminate nicely                   TSTP
-18            Stop executing, ready to continue
-============= =================================  ====
+.. * :ref:`kill` -- terminate a process
+.. * :ref:`killall` --  kill processes by name
 
 Let's see how to build up a command to kill firefox using some of the tools
 we've seen.  First let's pipe the output of ``ps -e`` to ``grep`` to select
@@ -1298,14 +1417,8 @@ Finally, we can pipe this to the ``kill`` command using ``xargs``::
 Job Control
 -----------
 
-* :ref:`bg` -- background
-* :ref:`fg` -- foreground
-* :ref:`jobs` -- list the active jobs
-* :ref:`nohup` -- Run a command immune to hangups, with
-  output to a non-tty
-
-Starting a job
-~~~~~~~~~~~~~~
+.. * :ref:`bg` -- background
+.. * :ref:`fg` -- foreground
 
 When you run a command in a shell by simply typing its name, you are
 said to be running in the foreground. When a job is running in the
@@ -1338,7 +1451,7 @@ it, you can do it while it's running in the foreground in two steps.
 First, suspend the job using the ``Ctrl-z`` signal. After receiving the
 signal, the program will interrupt execution, but will still have
 access to all files and other resources. Next, issue the ``bg``
-command, which will put the stopped job in the background.
+command, which will start the stopped job running in the background.
 
 Listing and killing jobs
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1346,20 +1459,23 @@ Listing and killing jobs
 Since only foreground jobs will accept signals through the keyboard, if you
 want to terminate a background job you must first determine the unique process
 id (PID) for the process you wish to terminate through the use of the ``ps``
-command. Recall that to see all the processes running on a particular computer,
-you could use a command like::
+command.
 
-  $ ps -ef
+To see all processes owned by a specific user (e.g., ``jarrod``), I can use
+the ``-U jarrod`` option::
 
-Among the output after the header (shown here) might appear a line
-that looks like this::
+  $ ps -U jarrod
 
-  USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
-  paciorek 11998 97.0 39.1 1416644 1204824 pts/16 R+ Jul27 1330:01 /usr/lib64/R/bin/exec/R
+If I want to get more information (e.g., ``%CPU`` and ``%MEM``), I can use
+add the ``-u`` option:: 
 
-In this example, the ``ps`` output tells us that this R job has a PID of
-``11998``, that it has been running for 1330 minutes (!), is using 97%
-of CPU and 39% of memory, and that it started on July 27. You could
+  $ ps -U jarrod -u
+  USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START    TIME COMMAND
+  jarrod   16116 12.0  6.0 118804  5080 tty1     Ss   16:25  133:01 python
+
+In this example, the ``ps`` output tells us that this python job has a PID of
+``16116``, that it has been running for 133 minutes, is using 12%
+of CPU and 6% of memory, and that it started at 16:25. You could
 then issue the command::
 
   $ kill 11998
@@ -1400,13 +1516,11 @@ very long time, if ever, before your job finishes.
 Nicing a job
 ~~~~~~~~~~~~
 
-The most important thing to remember when starting a job on a machine
-that is not your personal machine is how to be a good citizen. This
-often involves 'nicing' your jobs. This is required on the SCF machines,
-but the compute servers should automatically nice your jobs. Nicing a
-job puts it at a lower priority so that a user working at the keyboard
-has higher priority in using the CPU. Here's how to do it, giving the
-job a low priority of 19, as required by SCF::
+The most important thing to remember when starting a job on a machine that is
+not your personal machine is how to be a good citizen. This often involves
+'nicing' your jobs.  Nicing a job puts it at a lower priority so that a user
+working at the keyboard has higher priority in using the CPU. Here's how to do
+it, giving the job a low priority of 19::
 
   $ nice -19 R CMD BATCH --no-save code.R code.Rout &
 
@@ -1416,6 +1530,51 @@ the priority by doing::
   $ renice +19 11998
 
 where ``11998`` is the PID of your job.
+
+Screen
+~~~~~~
+
+Screen allows you to create virtual terminals, which are not connected to your
+actual terminal or shell.  This allows you to run multiple programs from the
+commandline and leave them all in the foreground in their own virtual terminal.
+Screen provides facilities for managing several virtual terminals including
+listing them, switching between them, disconnecting from one machine and then
+reconnecting from another.  While we will only discuss its basic operation, we
+will cover enough to be of regular use.
+
+Calling screen ::
+
+  $ screen
+
+will open a single window and you will see a new bash prompt.  You just work
+at this prompt as you normally would.  The difference is that you can disconnect
+from this window by typing ``Ctrl-c d`` and you will see something like this ::
+
+  $ screen
+  [detached from 23974.pts-2.t430u]
+
+You can now list you screen sessions ::
+
+  $ screen -list 
+  There is a screen on:
+          23974.pts-2.t430u       (Detached)
+
+To reconnect ::
+
+  $ screen -r
+
+You can start multiple screen sessions.  This is what it might look like
+if you have 3 screen sessions::
+
+  $ screen -list 
+  There are screens on:
+          24274.pts-2.t430u       (Attached)
+          24216.pts-2.t430u       (Detached)
+          24158.pts-2.t430u       (Detached)
+ 
+To specify that you want to reattach to session ``24158.pts-2.t430u``, type::
+
+  $ screen -r 24158.pts-2.t430u
 
 Shell programming
 =================
@@ -1450,7 +1609,7 @@ function that saves me some typing when I want to copy a file to the SCF
 filesystem::
 
   function putscf() {
-     scp $1 millman@scf-ug02.berkeley.edu:$2 ``
+     scp $1 millman@scf-ug02.berkeley.edu:$2 
   }
 
 To use this function, I just do the following to copy ``unit1.pdf`` from
@@ -1505,8 +1664,6 @@ through a set of files or directories. Here's an example::
      # this syntax replaces .txt with .R in $file``
   done
 
-You could also have done that with ``for file in `ls *.txt```
-
 Another use of *for* loops is automating file downloads::
 
   # example of bash for loop and wget for downloading a collection of files on the web
@@ -1553,10 +1710,10 @@ You can also do a fair amount of what you need from within R using the
 shell programming syntax (but you'll still need to know how to use UNIX
 utilities, wildcards, and pipes to be effective). 
 
-Documentation tools
-===================
+Working with documents
+======================
 
-* :ref:`pandoc` -- general markup converter
+.. * :ref:`pandoc` -- general markup converter
 
 There are many plain text file formats (e.g., markdown, reStructuredText,
 LaTeX).  Pandoc is a widely used document converter.  To convert a file
@@ -1565,6 +1722,6 @@ do something like::
 
   $ pandoc -o report.pdf report.md
 
-Please see the "Introduction to LaTeX" tutorial and screencast
-here: http://statistics.berkeley.edu/computing/training/tutorials
-
+For a quick introduction to LaTeX, please see the "Introduction to LaTeX"
+tutorial and screencast here:
+http://statistics.berkeley.edu/computing/training/tutorials
