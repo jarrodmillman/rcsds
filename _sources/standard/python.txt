@@ -1,6 +1,6 @@
-*******************
-Python introduction
-*******************
+**********************
+Introduction to Python
+**********************
 
 .. contents::
 
