@@ -21,7 +21,7 @@ a system to track everything.
 
 Consider the following example::
 
-  [jarrod@t430u ~]$ tree proj1
+  $ tree proj1
   proj1
   ├── code
   │   ├── analysis.py
@@ -59,8 +59,8 @@ working on this project with several colleagues.  Each member will want their
 own copy of the project and you will need a mechanism to share the files with
 one another.  You might consider sharing the project using something like
 Dropbox.  However, this will require care as it can be difficult to determine
-which changes will be synced when two people try editing the same file at the
-same time.
+which changes will be synced when two people edit the same file at the same
+time.
 
 Instead of manually trying to keep track of the changes you've made to code,
 data, and documents as indicated above, version control software helps you
@@ -91,8 +91,8 @@ Multi-user use will be covered in another tutorial.
    repository and there are mechanisms for incorporating changes
    from remote repositories into a local repository.
 
-Core Git concepts
-=================
+Core concepts
+=============
 
 A **commit** is a **snapshot** of an entire directory tree at a given point in
 time, some metadata (e.g., reference to previous commits, authors name), and an
@@ -102,6 +102,7 @@ state of the directory tree, which I listed.  Committing the directory tree
 as listed above will allow us to return to this exact state later.
 
 .. figure:: ../figs/commit_anatomy.png
+   :align: center
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
    :width: 80%
 
@@ -119,6 +120,7 @@ commit of each repository has 0 parents.  Each subsequent commit is proceeded
 by 1 or more commits.
 
 .. figure:: ../figs/threecommits.png
+   :align: center
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
    :width: 90%
 
@@ -210,8 +212,8 @@ working linearly with no remotes.
    text editor you prefer.  For instance, I use ``/usr/bin/vim``.
 
 
-Stage I: Local, single-user, linear workflow
-============================================
+Local, single-user, linear workflow
+===================================
 
 From a Bash shell, type ``git`` (or ``git help``) to see a list of the 'core'
 commands, which will look something like this::
@@ -237,14 +239,14 @@ remainder of this tutorial.
 
 First create an empty repository using the ``init`` command::
 
-  cd ~/src
-  git init demo
+  $ cd ~/src
+  $ git init demo
 
 Let's look at what git did::
 
-  cd demo
-  ls -la
-  ls -l .git
+  $ cd demo
+  $ ls -la
+  $ ls -l .git
 
 ``git add``: adding content to the repository
 ---------------------------------------------
@@ -253,23 +255,23 @@ Now let's edit our first file in the test directory with a text editor.  I'm
 doing it programatically here for automation purposes, but you'd normally be
 editing by hand::
 
-  cd ~/src/demo
-  echo "My first bit of text" > file1.txt
+  $ cd ~/src/demo
+  $ echo "My first bit of text" > file1.txt
 
 Now we can tell git about this new file using the ``add`` command::
 
-  git add file1.txt
+  $ git add file1.txt
 
 We can now ask git about what happened with ``status``::
 
-  git status
+  $ git status
 
 ``git commit``: permanently record our changes in git's database
 ----------------------------------------------------------------
 
 Now we are ready to commit our changes::
 
-  git commit -m "This is our first commit"
+  $ git commit -m "This is our first commit"
 
 In the commit above, we used the ``-m`` flag to specify a message at the
 command line. If we don't do that, git will open the editor we specified
@@ -284,7 +286,7 @@ not your nanny).
 
 To see a log of the commits::
 
-  git log
+  $ git log
 
 ``git diff``: what have I changed?
 ----------------------------------
@@ -295,25 +297,26 @@ automation (and therefore the reproducibility of this tutorial!)
 
 ::
 
-  echo "And now some more text..." >> file1.txt
+  $ echo "And now some more text..." >> file1.txt
 
 And now we can ask git what is different::
 
-  git diff
+  $ git diff
 
-The cycle of git virtue: work, add, commit, ...
------------------------------------------------
+The cycle of git: work, add, commit, ...
+----------------------------------------
 
 ::
 
-  echo "Great progress ..." >> file1.txt
-  git add file1.txt
-  git commit -m "Great progress on this matter."
+  $ echo "Great progress ..." >> file1.txt
+  $ git add file1.txt
+  $ git commit -m "Great progress on this matter."
 
 Understanding the difference between the working directory, the staging 
 area (or index), and the repository can be confusing at first.
 
 .. figure:: ../figs/git-index.png
+    :align: center
     :alt: Working tree, staging area, and repository. Credit: ProGit book, by Scott Chacon, CC License.
 
     Working tree, staging area, and repository. Credit: ProGit book, by
@@ -330,18 +333,18 @@ reflects your commits.
 
 First, let's see what the log shows us now::
 
-  git log
+  $ git log
 
 Sometimes it's handy to see a very summarized version of the log::
 
-  git log --oneline --topo-order --graph
+  $ git log --oneline --topo-order --graph
 
 Git supports *aliases:* new names given to command combinations. Let's
 make this handy shortlog an alias, so we only have to type ``git slog``
 and see this compact log::
 
   # We create our alias (this saves it in git's permanent configuration file):
-  git config --global alias.slog "log --oneline --topo-order --graph"
+  $ git config --global alias.slog "log --oneline --topo-order --graph"
   # And now we can use it git slog
 
 ``git mv`` and ``rm``: moving and removing files
@@ -352,15 +355,15 @@ also tell it if we want their names to change or for it to stop tracking
 them. In familiar Unix fashion, the ``mv`` and ``rm`` git commands do
 precisely this::
 
-  git mv file1.txt file-newname.txt
-  git status
+  $ git mv file1.txt file-newname.txt
+  $ git status
 
 Note that these changes must be committed too, to become permanent! In
 git's world, until something hasn't been committed, it isn't permanently
 recorded anywhere::
   
-  git commit -m "I like this new name better"
-  git slog
+  $ git commit -m "I like this new name better"
+  $ git slog
 
 And ``git rm`` works in a similar fashion.
 
@@ -370,8 +373,8 @@ Add a new file ``file2.txt``, commit it, make some changes to it, commit
 them again, and then remove it (and don't forget to commit this last
 step!).
 
-Stage II: Local user, branching
-===============================
+Local, single-user, branching workflow
+======================================
 
 Before understanding what a Git **branch** is, we need to revist the idea
 of a **head**.  As discussed Git labels every commit with cryptographic
@@ -384,7 +387,8 @@ into play.  A head is an easy to remember label (e.g., ``HEAD``, ``master``,
 
 
 .. figure:: ../figs/masterbranch.png
-   :width: 90%
+   :align: center
+   :width: 60%
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
 
    By default every repository has a head called ``master``. In this
@@ -410,6 +414,7 @@ repository.
 
 
 .. figure:: ../figs/HEAD_testing.png
+   :align: center
    :width: 50%
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
 
@@ -424,7 +429,8 @@ Once new commits are made on a branch, HEAD and the branch label move
 with the new commits:
 
 .. figure:: ../figs/branchcommit.png
-   :width: 80%
+   :align: center
+   :width: 50%
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
 
    In this example (notice that HEAD is not shown), the branch
@@ -437,6 +443,7 @@ with the new commits:
 This allows the history of both branches to diverge:
 
 .. figure:: ../figs/mergescenario.png
+   :align: center
    :width: 60%
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
 
@@ -451,7 +458,8 @@ merge the divergent branches back and continue with a unified line of
 development:
 
 .. figure:: ../figs/mergeaftermath.png
-   :width: 80%
+   :align: center
+   :width: 60%
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
 
    Credit: ProGit book, by Scott Chacon, CC License.
@@ -459,8 +467,8 @@ development:
 Let's now illustrate all of this with a concrete example. Let's get our
 bearings first::
 
-  git status
-  ls
+  $ git status
+  $ ls
 
 We are now going to try two different routes of development: on the
 ``master`` branch we will add one file and on the ``experiment`` branch,
@@ -469,27 +477,27 @@ the experimental branch into ``master``.
 
 Create and work on an experimental branch::
 
-  git branch experiment
-  git checkout experiment
-  echo "Some crazy idea" > experiment.txt
-  git add experiment.txt
-  git commit -m "Trying something new"
-  git slog
+  $ git branch experiment
+  $ git checkout experiment
+  $ echo "Some crazy idea" > experiment.txt
+  $ git add experiment.txt
+  $ git commit -m "Trying something new"
+  $ git slog
 
 Work on the master branch::
 
-  git checkout master
-  git slog
-  echo "Work goes on in master..." >> file-newname.txt
-  git add file-newname.txt
-  git commit -m "The mainline keeps moving"
-  git slog
+  $ git checkout master
+  $ git slog
+  $ echo "Work goes on in master..." >> file-newname.txt
+  $ git add file-newname.txt
+  $ git commit -m "The mainline keeps moving"
+  $ git slog
 
 Now merge experimental branch::
 
-  ls
-  git merge experiment
-  git slog
+  $ ls
+  $ git merge experiment
+  $ git slog
 
 .. note::
    We've seen that Git has multiple ways for referring to a commit.
@@ -501,8 +509,8 @@ Now merge experimental branch::
    #. Relative to a specified commit (e.g., ``HEAD^`` is the parent of the
       current head commit)
 
-Stage III: Using remotes as a single user
-=========================================
+Using remotes as a single user
+==============================
 
 We are now going to introduce the concept of a *remote repository*: a
 pointer to another copy of the repository that lives on a different
@@ -516,7 +524,7 @@ other services like `BitBucket <http://bitbucket.org>`__ or
 
 ::
 
-  git remote -v
+  $ git remote -v
 
 Since the above cell didn't produce any output after the
 ``git remote -v`` call, it means we have no remote repositories
@@ -531,12 +539,12 @@ first at Github and don't have a repo made already on a local computer.
 
 We can now follow the instructions from the next page::
 
-  git remote add origin git@github.com:jarrodmillman/test.git
-  git push -u origin master
+  $ git remote add origin git@github.com:jarrodmillman/test.git
+  $ git push -u origin master
 
 Let's see the remote situation again::
 
-  git remote -v
+  $ git remote -v
 
 We can now `see this repository publicly on
 github <https://github.com/jarrodmillman/test>`__.
@@ -547,38 +555,38 @@ different directory...
 
 ::
 
-  cd ~/src/
+  $ cd ~/src/
   # Here I clone my 'test' repo but with a different name, test2,
   # to simulate a 2nd computer
-  git clone git@github.com:jarrodmillman/test.git test2
-  cd test2
-  pwd
-  git remote -v
+  $ git clone git@github.com:jarrodmillman/test.git test2
+  $ cd test2
+  $ pwd
+  $ git remote -v
 
 Let's now make some changes in one 'computer' and synchronize them on
 the second.
 
 ::
 
-  cd ~/src/test2
+  $ cd ~/src/test2
   # working on computer #2
-  echo "More new content on my experiment" >> experiment.txt
-  git add experiment.txt
-  git commit -m "More work, on machine #2"
+  $ echo "More new content on my experiment" >> experiment.txt
+  $ git add experiment.txt
+  $ git commit -m "More work, on machine #2"
 
 Now we put this new work up on the github server so it's available from
 the internet::
 
   # working on computer #2
-  git push
+  $ git push
 
 Now let's fetch that work from machine #1::
 
-  cd ~/src/demo
-  git pull
+  $ cd ~/src/demo
+  $ git pull
 
-An important aside: conflict management
-=======================================
+Conflict management
+===================
 
 While git is very good at merging, if two different branches modify the
 same file in the same location, it simply can't decide which change
@@ -590,49 +598,56 @@ that works by intentionally creating a conflict.
 We start by creating a branch and making a change to our experiment
 file::
 
-  git branch trouble
-  git checkout trouble
-  echo "This is going to be a problem..." >> experiment.txt
-  git add experiment.txt
-  git commit -m "Changes in the trouble branch"
+  $ git branch trouble
+  $ git checkout trouble
+  $ echo "This is going to be a problem..." >> experiment.txt
+  $ git add experiment.txt
+  $ git commit -m "Changes in the trouble branch"
 
 And now we go back to the master branch, where we change the *same*
 file::
 
-  git checkout master
-  echo "More work on the master branch..." >> experiment.txt
-  git add experiment.txt
-  git commit -m "Mainline work"``
+  $ git checkout master
+  $ echo "More work on the master branch..." >> experiment.txt
+  $ git add experiment.txt
+  $ git commit -m "Mainline work"``
 
 So now let's see what happens if we try to merge the ``trouble`` branch
 into ``master``::
 
-  git merge trouble
+  $ git merge trouble
 
 Let's see what git has put into our file::
 
-  cat experiment.txt
+  $ cat experiment.txt
+  Some crazy idea
+  <<<<<<< HEAD
+  More work on the master branch...
+  =======
+  This is going to be a problem...
+  >>>>>>> trouble
 
 At this point, we go into the file with a text editor, decide which
 changes to keep, and make a new commit that records our decision. To
 automate my edits, I use the ``sed`` command::
 
-  sed -i '/^</d' experiment.txt
-  sed -i '/^>/d' experiment.txt
-  sed -i '/^=/d' experiment.txt
+  $ sed -i '/^</d' experiment.txt
+  $ sed -i '/^>/d' experiment.txt
+  $ sed -i '/^=/d' experiment.txt
 
 I've now made the edits, in this case I decided that both pieces of text
-were useful, so I just accepted both additions.
+were useful, so I just accepted both additions::
 
-::
-
-  cat experiment.txt
+  $ cat experiment.txt
+  Some crazy idea
+  More work on the master branch...
+  This is going to be a problem..
 
 Let's then make our new commit::
 
-  git add experiment.txt
-  git commit -m "Completed merge of trouble, fixing conflicts along the way"
-  git slog
+  $ git add experiment.txt
+  $ git commit -m "Completed merge of trouble, fixing conflicts along the way"
+  $ git slog
 
 .. note::
   While it's a good idea to understand the basics of fixing merge
@@ -645,13 +660,57 @@ Let's then make our new commit::
   different operating systems, and as long as they obey a basic command
   structure, git can work with any of them.
 
+Collaborating with a small team
+===============================
 
-Learning Git
-============
+Single remote with shared access: we are going to set up a shared
+collaboration with one partner (the person sitting next to you). This
+will show the basic workflow of collaborating on a project with a small
+team where everyone has write privileges to the same repository.
+
+We will have two people, let’s call them Alice and Bob, sharing a
+repository. Alice will be the owner of the repo and she will give Bob
+write privileges.
+
+We begin with a simple synchronization example, much like we just did
+above, but now between two people instead of one person. Otherwise it’s
+the same:
+
+-  Bob clones Alice’s repository.
+
+-  Bob makes changes to a file and commits them locally.
+
+-  Bob pushes his changes to github.
+
+-  Alice pulls Bob’s changes into her own repository.
+
+Next, we will have both parties make non-conflicting changes each, and
+commit them locally. Then both try to push their changes:
+
+-  Alice adds a new file, *alice.txt* to the repo and commits.
+
+-  Bob adds *bob.txt* and commits.
+
+-  Alice pushes to github.
+
+-  Bob tries to push to github.
+
+What happens here?
+
+The problem is that Bob’s changes create a commit that conflicts with
+Alice’s, so git refuses to apply them. It forces Bob to first do the
+merge on his machine, so that if there is a conflict in the merge, Bob
+deals with the conflict manually (git could try to do the merge on the
+server, but in that case if there’s a conflict, the server repo would be
+left in a conflicted state without a human to fix things up). The
+solution is for Bob to first pull the changes (pull in git is really
+fetch+merge), and then push again.
+
+Learn more
+==========
 
 -  `Git for Scientists: A
    Tutorial <http://nyuccl.org/pages/GitTutorial/>`__
 -  `Gitwash: workflow for scientific Python
    projects <http://matthew-brett.github.io/pydagogue/gitwash_build.html>`__
 -  `Git branching demo <http://pcottle.github.io/learnGitBranching/>`__
-

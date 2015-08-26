@@ -88,6 +88,34 @@ running on the remote computer you need to use the ``-X`` option::
 
   $ ssh -X jarrod@scf-ug01.berkeley.edu
 
+Alternatively, if you want to copy a file (``file1.txt``) from your local
+computer to ``scf-ug01.berkeley.edu``, you can use the ``scp`` command,
+which securely copies files between machines::
+
+  $ scp file1.txt jarrod@scf-ug01.berkeley.edu:.
+
+The above command will copy ``file1.txt`` from my current working directory
+on my local machine to ``jarrod``'s home directory on ``scf-ug01.berkeley.edu``.
+The ``.`` following the ``:`` indicates that I want to copy the file to
+my home directory on the remote machine.  I could also replace ``.`` with
+any relative path from my home directory on the remote machine or I could
+use an absolute path.
+
+To copy a file (``file2.txt``) from ``scf-ug01.berkeley.edu`` to my local machine::
+
+  $ scp jarrod@scf-ug01.berkeley.edu:file2.txt .
+
+I can even copy a file (``file3.txt``) owned by one user (``jarrod``) on one remote
+machine ``scf-ug01.berkeley.edu`` to the account of another user (``jmillman``) on
+another remote machine ``scf-ug02.berkeley.edu``::
+
+  $ scp jarrod@scf-ug01.berkeley.edu:file3.txt jmillman@scf-ug01.berkeley.edu:.
+
+If instead of copying a single file, I wanted to copy an entire directory
+(``src``) from one machine to another, I would use the ``-r`` option::
+
+  $ scp -r src jmillman@scf-ug01.berkeley.edu:.
+
 Regardless of whether you are working on a local computer or a remote one, it
 is occasionally useful to operate as a different user.  For instance, you may
 need root (or administrative) access to change file permissions or install
@@ -105,9 +133,9 @@ To install the text editor `vim` on a BCE machine::
    Most bash commands have electronic manual pages, which are accessible
    directly from the commandline.  You will be more efficient and effective
    if you become accustomed to using these ``man`` pages.  To view the ``man``
-   page for the command ``su``, for instance, you would type::
+   page for the command ``sudo``, for instance, you would type::
 
-     $ man su
+     $ man sudo
 
    Compare this output to the this :ref:`su` page.
 
@@ -200,13 +228,13 @@ specifying to use the long format, ``file.txt`` is the argument, and the
 line acceptance is indicated by hitting the ``Enter`` key at the end
 of the line.
 
-After you type a command at the bash prompt and indicate line acceptance
-with the ``Enter`` key, bash parses the command and then attempts to execute
-the command.  To determine what to do, bash first checks whether the command
-is a shell function (we will discuss functions below).  If not, it checks
-to see whether it is a builtin (e.g., `ls` is a bash builtin).  Finally,
-if the command is not a shell function nor a builtin, bash uses the
-`PATH` variable.  The `PATH` variable is a list of directories::
+After you type a command at the bash prompt and indicate line acceptance with
+the ``Enter`` key, bash parses the command and then attempts to execute the
+command.  To determine what to do, bash first checks whether the command is a
+shell function (we will discuss functions below).  If not, it checks to see
+whether it is a builtin.  Finally, if the command is not a shell function nor a
+builtin, bash uses the ``PATH`` variable.  The ``PATH`` variable is a list of
+directories::
 
   $ echo $PATH
   /home/jarrod/usr/bin:/usr/local/bin:/bin:/usr/bin:
@@ -215,13 +243,13 @@ For example, consider the following command::
 
   $ grep pdf file.txt
 
-We will discuss `grep` later.  For now, let's ignore what `grep` actually does
+We will discuss ``grep`` later.  For now, let's ignore what ``grep`` actually does
 and focus on what bash would do when you press enter after typing the above
-command.  First bash checks whether `grep` a shell function or a builtin.
-Once it determines that `grep` is neither a shell function nor a builtin,
-it will look for an executable file named `grep` first in `/home/jarrod/usr/bin`,
-then in `/usr/local/bin`, and so on until it finds a match or runs out of places
-to look.  You can use `which` to find out where bash would find it::
+command.  First bash checks whether ``grep`` a shell function or a builtin.
+Once it determines that ``grep`` is neither a shell function nor a builtin,
+it will look for an executable file named ``grep`` first in ``/home/jarrod/usr/bin``,
+then in ``/usr/local/bin``, and so on until it finds a match or runs out of places
+to look.  You can use ``which`` to find out where bash would find it::
 
   $ which grep
   /bin/grep
@@ -388,8 +416,7 @@ The real power of aliases is only achieved when they are automatically
 set up whenever you log in to the computer or open a new shell window.
 To achieve that goal with aliases (or any other bash shell commands),
 simply insert the commands in the file ``.bashrc`` in your home directory.
-
-Here is an excerpt from my ``.bashrc``::
+For example, here is an excerpt from my ``.bashrc``::
 
   # .bashrc
 
@@ -451,13 +478,13 @@ Note that you can use emacs-like control sequences (``Ctrl-a``, ``Ctrl-e``,
 ============   ==========================================================
 Key Strokes    Descriptions
 ============   ==========================================================
-*Ctrl-a*       begin of line
-*Ctrl-e*       End of file
-*Ctrl-k*       Delete line from cursor forward
-*Ctrl-d*       EOF; exit
-*Ctrl-c*       Interrupt current command
-*Ctrl-z*       Suspend current command
-*Ctrl-l*       Clear screen
+``Ctrl-a``     Beginning of line
+``Ctrl-e``     End of file
+``Ctrl-k``     Delete line from cursor forward
+``Ctrl-d``     EOF; exit
+``Ctrl-c``     Interrupt current command
+``Ctrl-z``     Suspend current command
+``Ctrl-l``     Clear screen
 ============   ==========================================================
 
 Basic File Management
@@ -487,6 +514,12 @@ A file typically consist of these attributes:
 -  Size.
 -  Protection.
 -  Time, date, and user identification.
+
+.. figure:: ../figs/file.png
+   :alt: Schematic of file attributes.
+   :width: 50%
+
+   Schematic of file attributes.
 
 Listing file attributes with ``ls``::
 
@@ -600,22 +633,20 @@ To read more about standard globbing patterns, see the man page::
 
 **Exercise**
 
-Figure out how to use the :ref:`mkdir` command and brace expansion
-to create the following directory structure in one short command::
+Brace expansion is quite useful and more flexible than I've indicated.
+Above we saw how to use brace expansion using a comma comma separated
+list of items inside the curly braces (e.g., ``{r,q,R}``), but they
+can also be used with a sequence specification.  A sequence is indicated
+with a start and end item separated by two periods (``..``).  Try typing
+the following examples at the command line and try to figure out how they
+work::
 
-  $ tree temp/
-  temp/
-  ├── proj1
-  │   ├── code
-  │   └── data
-  ├── proj2
-  │   ├── code
-  │   └── data
-  └── proj3
-      ├── code
-      └── data
-  
-  9 directories, 0 files 
+  $ echo {1..15}
+  $ echo {a{1..3},b{1..5},c{c..e}}
+  $ echo {{d..a},{a..d}}
+  $ echo {{d..b},a,{b..d}}
+  $ echo {1..5..2}
+  $ echo {z..a..-2}
 
 Quoting
 -------
@@ -723,12 +754,21 @@ To find files by name, modification time, and type::
 Unix programs often take options that are identified with a minus
 followed by a letter, followed by the specific option (adding a space
 before the specific option is fine). Options may also involve two
-dashes, e.g., ``R --no-save``. Here are some examples using the ``tail``
-command::
+dashes, e.g., ``R --no-save``. A standard two dash option for many commands
+is ``--help``.  For example, try::
 
   $ tail --help
+
+Here are a couple of examples of using the ``tail`` command::
+
+  $ wget http://jarrodmillman.com/rcsds/data/cpds.csv
   $ tail -n 10 cpds.csv   # last 10 lines of cpds.csv
   $ tail -f cpds.csv      # shows end of file, continually refreshing
+
+The first line downloads the data from my website.  The two main tools for
+downloading network accessible data from the commandline are ``wget`` and
+``curl``.  I tend to use ``wget`` as my commandline downloading tool as it
+is more convenient.
  
 A few more tidbits about ``grep`` (we will see more examples of ``grep`` in the
 section on regular expressions, but it is so useful that it is worth seeing
@@ -743,7 +783,8 @@ many times)::
 Note that the first argument to grep is the pattern you are looking for.
 The syntax is different from that used for wildcards in file names.
 Also, you can use regular expressions in the pattern. We won’t see this
-in detail here, but will see regular expressions in R shortly.
+in detail here, but will discuss this in the section below on regular
+expressions.
 
 It is sometimes helpful to put the pattern inside double quotes, e.g.,
 if you want spaces in your pattern::
@@ -843,25 +884,18 @@ Translating lowercase to UPPERCASE with ``tr``::
 Here's an example of finding out how many unique entries there are in the 2nd
 column of a data file whose fields are separated by commas::
 
-  $ wget http://jarrodmillman.com/rcsds/data/cpds.csv
   $ cut -d',' -f2 cpds.csv | sort | uniq | wc
   $ cut -d',' -f2 cpds.csv | sort | uniq > countries.txt
 
-The first line downloads the data from my website.  The two main tools for
-downloading network accessible data from the commandline are ``wget`` and
-``curl``.  I tend to use ``wget`` as my commandline downloading tool as it
-is more convenient.
-
-The second and third lines use the ``cut`` utility to extract the second field
-(``-f2``) or column of the file ``cpds.csv`` where the fields (or columns) are
-split or delimited by a comma (``-d','``). The standard output of the ``cut``
-command is then piped (via ``|``) to the standard input of the ``sort``
-command.  Then the output of ``sort`` is sent to the input of ``uniq`` to
-remove duplicate entries in the sorted list provided by ``sort``. Rather than
-using ``sort | uniq``, you could also use ``sort -u``.  Finally, the first of
-the  ``cut`` commands prints a word count summary using ``wc``; while the
-second saving the sorted information with duplicates removed in the file
-``countries.txt``. 
+Above we use the ``cut`` utility to extract the second field (``-f2``) or
+column of the file ``cpds.csv`` where the fields (or columns) are split or
+delimited by a comma (``-d','``). The standard output of the ``cut`` command is
+then piped (via ``|``) to the standard input of the ``sort`` command.  Then the
+output of ``sort`` is sent to the input of ``uniq`` to remove duplicate entries
+in the sorted list provided by ``sort``. Rather than using ``sort | uniq``, you
+could also use ``sort -u``.  Finally, the first of the  ``cut`` commands prints
+a word count summary using ``wc``; while the second saving the sorted
+information with duplicates removed in the file ``countries.txt``. 
 
 To see if there are any "S" values in certain fields (fixed width) of a set of
 files (note I did this on 22,000 files (5 Gb or so) in about 5 minutes on my
@@ -921,7 +955,7 @@ as being saved to a file.  You could issue the command twice::
 Instead of repeating the command and wasting computing time, you could use
 ``tee`` command::
 
-  $ cut -d',' -f2 cpds.csv | sort | uniq | wc | tee countries.txt
+  $ cut -d',' -f2 cpds.csv | sort | uniq | tee countries.txt
 
 Regular Expressions
 ===================
@@ -1088,7 +1122,7 @@ Greedy matching
 ---------------
 
 Regular expression pattern matching is *greedy*---by default, the longest
-matching string is choosen.
+matching string is chosen.
 
 Suppose we have the following file::
 
@@ -1548,14 +1582,20 @@ Calling screen ::
 
 will open a single window and you will see a new bash prompt.  You just work
 at this prompt as you normally would.  The difference is that you can disconnect
-from this window by typing ``Ctrl-c d`` and you will see something like this ::
+from this window by typing ``Ctrl-a d`` and you will see something like this ::
 
   $ screen
   [detached from 23974.pts-2.t430u]
 
-You can now list you screen sessions ::
+.. tip::
+  All the screen key commands begin with the control key combination ``Ctrl-a``
+  followed by another key.  For instance, when you are in a screen session and
+  type ``Ctrl-a ?``, screen will display a help screen with a list of its
+  keybindings.  
 
-  $ screen -list 
+You can now list your screen sessions ::
+
+  $ screen -ls 
   There is a screen on:
           23974.pts-2.t430u       (Detached)
 
@@ -1566,7 +1606,7 @@ To reconnect ::
 You can start multiple screen sessions.  This is what it might look like
 if you have 3 screen sessions::
 
-  $ screen -list 
+  $ screen -ls 
   There are screens on:
           24274.pts-2.t430u       (Attached)
           24216.pts-2.t430u       (Detached)
@@ -1575,6 +1615,41 @@ if you have 3 screen sessions::
 To specify that you want to reattach to session ``24158.pts-2.t430u``, type::
 
   $ screen -r 24158.pts-2.t430u
+
+If you have several screen sessions, you will want to name your screen session
+something more informative than  ``24158.pts-2.t430u``. To
+name a screen session ``gene-analysis`` you can use the ``-S`` option when calling
+screen::
+
+  $ screen -S gene-analysis
+
+While there are many more features and keybindings available for screen, you've
+already seen enough screen to be useful.  For example, imagine you ssh to a
+remote machine from your laptop to run an analysis.  The first thing you do at
+the bash prompt on the remote machine is::
+
+  $ screen -S dbox-study
+
+Then you start your analysis script ``dbox-analysis.py`` running::
+
+  $ dbox-analysis.py
+  Starting statistical analysis ...
+  Processing subject 1 ...
+  Processing subject 2 ...
+
+If your study has 50 subjects and processing each subject takes 20 minutes,
+you will not want to sit there watching your monitor.  So you use ``Ctrl-a d``
+to detach the session and you will then see::
+
+  $ screen -S dbox-study
+  [detached from 2799.dbox-study]
+  $
+
+Now you can log off your laptop and go home.  Sometime after dinner, you decide
+to check on your job.  So you ssh from your home computer to the remote machine
+again and type the following at the bash prompt::
+
+  $ screen -r dbox-study
 
 Shell programming
 =================
@@ -1609,7 +1684,7 @@ function that saves me some typing when I want to copy a file to the SCF
 filesystem::
 
   function putscf() {
-     scp $1 millman@scf-ug02.berkeley.edu:$2 
+     scp $1 jarrod@scf-ug02.berkeley.edu:$2 
   }
 
 To use this function, I just do the following to copy ``unit1.pdf`` from
@@ -1725,3 +1800,73 @@ do something like::
 For a quick introduction to LaTeX, please see the "Introduction to LaTeX"
 tutorial and screencast here:
 http://statistics.berkeley.edu/computing/training/tutorials
+
+Exercises
+=========
+
+
+#. Make a variable, called ``mypython`` that contains the path to Python on
+   your machine.  
+
+#. Construct a variable that has ``<username>@<machinename>`` using existing
+   environment variables and the ``hostname`` utility.
+
+#. Figure out how to use the ``mkdir`` command to create the following directory
+   structure in one short command::
+
+     temp
+     ├── proj1
+     │   ├── code
+     │   └── data
+     ├── proj2
+     │   ├── code
+     │   └── data
+     └── proj3
+         ├── code
+         └── data
+
+#. How would you count the number of lines in an input file, say a data file.
+
+#. Print the first three lines of a file to the screen. Now print just the
+   third line to the screen.
+
+#. Put the third line of a file in a new file.
+
+#. Now add the fifth line of the file to that same file from the previous problem.
+
+#. Extract the Australia data from the ``cpds.csv`` dataset and put it in a file
+   called ``cpds_australia.csv``. It's OK if you do this in a straightforward way
+   and it might fail if 'Australia' is present in an unexpected column.
+
+#. Find all the lines in a file that do not contain a comma.
+   (You might use this to look for anomalies in a CSV file.)
+
+#. Write shell code that creates files ``file1.txt``, ``file2.txt``,
+   ``file3.txt``, etc., with the word 'blah' as the only line in each file.
+
+#. Write shell code that modifies each file from the previous problem so that
+   the number ``1``, ``2``, ``3``, etc. is prepended to the appropriate file
+   (i.e., there is a new first line in each file that simply contains the
+   number corresponding to the file name).
+
+   You may want to write the code to do this operation on a single file before
+   embedding the code in the loop.
+
+#. Create a shell function that will run a Python job in the background such
+   that I can run the job by typing::
+
+     $ bpy file.py file.out
+
+   You can create a test jobs with: ``echo -e 'a=5\nprint(a)' > file.py``
+
+#. Modify the function so that you can simply type ::
+
+     $ bpy file.py
+
+   and it will use ``file.pyout`` as the output file
+
+#. Use ``ps`` to print out all the processes on the machine with information on
+   memory and CPU use and sort the output of ``ps`` in decreasing order of memory use. 
+
+#. Take ``$mypython`` from the first problem and strip the ``python`` off the
+   end---assigning the result to a new variable, ``path_to_py``.
