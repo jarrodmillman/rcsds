@@ -292,13 +292,13 @@ example:</p>
 specifying to use the long format, <code class="docutils literal"><span class="pre">file.txt</span></code> is the argument, and the
 line acceptance is indicated by hitting the <code class="docutils literal"><span class="pre">Enter</span></code> key at the end
 of the line.</p>
-<p>After you type a command at the bash prompt and indicate line acceptance
-with the <code class="docutils literal"><span class="pre">Enter</span></code> key, bash parses the command and then attempts to execute
-the command.  To determine what to do, bash first checks whether the command
-is a shell function (we will discuss functions below).  If not, it checks
-to see whether it is a builtin (e.g., <cite>ls</cite> is a bash builtin).  Finally,
-if the command is not a shell function nor a builtin, bash uses the
-<cite>PATH</cite> variable.  The <cite>PATH</cite> variable is a list of directories:</p>
+<p>After you type a command at the bash prompt and indicate line acceptance with
+the <code class="docutils literal"><span class="pre">Enter</span></code> key, bash parses the command and then attempts to execute the
+command.  To determine what to do, bash first checks whether the command is a
+shell function (we will discuss functions below).  If not, it checks to see
+whether it is a builtin.  Finally, if the command is not a shell function nor a
+builtin, bash uses the <code class="docutils literal"><span class="pre">PATH</span></code> variable.  The <code class="docutils literal"><span class="pre">PATH</span></code> variable is a list of
+directories:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ echo $PATH
 /home/jarrod/usr/bin:/usr/local/bin:/bin:/usr/bin:
 </pre></div>
@@ -307,13 +307,13 @@ if the command is not a shell function nor a builtin, bash uses the
 <div class="highlight-python"><div class="highlight"><pre>$ grep pdf file.txt
 </pre></div>
 </div>
-<p>We will discuss <cite>grep</cite> later.  For now, let&#8217;s ignore what <cite>grep</cite> actually does
+<p>We will discuss <code class="docutils literal"><span class="pre">grep</span></code> later.  For now, let&#8217;s ignore what <code class="docutils literal"><span class="pre">grep</span></code> actually does
 and focus on what bash would do when you press enter after typing the above
-command.  First bash checks whether <cite>grep</cite> a shell function or a builtin.
-Once it determines that <cite>grep</cite> is neither a shell function nor a builtin,
-it will look for an executable file named <cite>grep</cite> first in <cite>/home/jarrod/usr/bin</cite>,
-then in <cite>/usr/local/bin</cite>, and so on until it finds a match or runs out of places
-to look.  You can use <cite>which</cite> to find out where bash would find it:</p>
+command.  First bash checks whether <code class="docutils literal"><span class="pre">grep</span></code> a shell function or a builtin.
+Once it determines that <code class="docutils literal"><span class="pre">grep</span></code> is neither a shell function nor a builtin,
+it will look for an executable file named <code class="docutils literal"><span class="pre">grep</span></code> first in <code class="docutils literal"><span class="pre">/home/jarrod/usr/bin</span></code>,
+then in <code class="docutils literal"><span class="pre">/usr/local/bin</span></code>, and so on until it finds a match or runs out of places
+to look.  You can use <code class="docutils literal"><span class="pre">which</span></code> to find out where bash would find it:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ which grep
 /bin/grep
 </pre></div>
@@ -547,25 +547,25 @@ options passed to it do.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><em>Ctrl-a</em></td>
-<td>begin of line</td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">Ctrl-a</span></code></td>
+<td>Beginning of line</td>
 </tr>
-<tr class="row-odd"><td><em>Ctrl-e</em></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">Ctrl-e</span></code></td>
 <td>End of file</td>
 </tr>
-<tr class="row-even"><td><em>Ctrl-k</em></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">Ctrl-k</span></code></td>
 <td>Delete line from cursor forward</td>
 </tr>
-<tr class="row-odd"><td><em>Ctrl-d</em></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">Ctrl-d</span></code></td>
 <td>EOF; exit</td>
 </tr>
-<tr class="row-even"><td><em>Ctrl-c</em></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">Ctrl-c</span></code></td>
 <td>Interrupt current command</td>
 </tr>
-<tr class="row-odd"><td><em>Ctrl-z</em></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">Ctrl-z</span></code></td>
 <td>Suspend current command</td>
 </tr>
-<tr class="row-even"><td><em>Ctrl-l</em></td>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">Ctrl-l</span></code></td>
 <td>Clear screen</td>
 </tr>
 </tbody>
@@ -1264,7 +1264,7 @@ multi-character sequences, such as <code class="docutils literal"><span class="p
 <div class="section" id="greedy-matching">
 <h3><a class="toc-backref" href="#id20">Greedy matching</a><a class="headerlink" href="#greedy-matching" title="Permalink to this headline">¶</a></h3>
 <p>Regular expression pattern matching is <em>greedy</em>&#8212;by default, the longest
-matching string is choosen.</p>
+matching string is chosen.</p>
 <p>Suppose we have the following file:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ cat file1.txt
 Do an internship &lt;b&gt; in place &lt;/b&gt; of &lt;b&gt; one &lt;/b&gt; course.
@@ -1922,7 +1922,7 @@ third line to the screen.</p>
 <li><p class="first">Now add the fifth line of the file to that same file from the previous problem.</p>
 </li>
 <li><p class="first">Extract the Australia data from the <code class="docutils literal"><span class="pre">cpds.csv</span></code> dataset and put it in a file
-called <code class="docutils literal"><span class="pre">cpds_australia.csv</span></code>. It&#8217;s ok if you do this in a straightforward way
+called <code class="docutils literal"><span class="pre">cpds_australia.csv</span></code>. It&#8217;s OK if you do this in a straightforward way
 and it might fail if &#8216;Australia&#8217; is present in an unexpected column.</p>
 </li>
 <li><p class="first">Find all the lines in a file that do not contain a comma.

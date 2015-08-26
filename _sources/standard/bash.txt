@@ -228,13 +228,13 @@ specifying to use the long format, ``file.txt`` is the argument, and the
 line acceptance is indicated by hitting the ``Enter`` key at the end
 of the line.
 
-After you type a command at the bash prompt and indicate line acceptance
-with the ``Enter`` key, bash parses the command and then attempts to execute
-the command.  To determine what to do, bash first checks whether the command
-is a shell function (we will discuss functions below).  If not, it checks
-to see whether it is a builtin (e.g., `ls` is a bash builtin).  Finally,
-if the command is not a shell function nor a builtin, bash uses the
-`PATH` variable.  The `PATH` variable is a list of directories::
+After you type a command at the bash prompt and indicate line acceptance with
+the ``Enter`` key, bash parses the command and then attempts to execute the
+command.  To determine what to do, bash first checks whether the command is a
+shell function (we will discuss functions below).  If not, it checks to see
+whether it is a builtin.  Finally, if the command is not a shell function nor a
+builtin, bash uses the ``PATH`` variable.  The ``PATH`` variable is a list of
+directories::
 
   $ echo $PATH
   /home/jarrod/usr/bin:/usr/local/bin:/bin:/usr/bin:
@@ -243,13 +243,13 @@ For example, consider the following command::
 
   $ grep pdf file.txt
 
-We will discuss `grep` later.  For now, let's ignore what `grep` actually does
+We will discuss ``grep`` later.  For now, let's ignore what ``grep`` actually does
 and focus on what bash would do when you press enter after typing the above
-command.  First bash checks whether `grep` a shell function or a builtin.
-Once it determines that `grep` is neither a shell function nor a builtin,
-it will look for an executable file named `grep` first in `/home/jarrod/usr/bin`,
-then in `/usr/local/bin`, and so on until it finds a match or runs out of places
-to look.  You can use `which` to find out where bash would find it::
+command.  First bash checks whether ``grep`` a shell function or a builtin.
+Once it determines that ``grep`` is neither a shell function nor a builtin,
+it will look for an executable file named ``grep`` first in ``/home/jarrod/usr/bin``,
+then in ``/usr/local/bin``, and so on until it finds a match or runs out of places
+to look.  You can use ``which`` to find out where bash would find it::
 
   $ which grep
   /bin/grep
@@ -478,13 +478,13 @@ Note that you can use emacs-like control sequences (``Ctrl-a``, ``Ctrl-e``,
 ============   ==========================================================
 Key Strokes    Descriptions
 ============   ==========================================================
-*Ctrl-a*       begin of line
-*Ctrl-e*       End of file
-*Ctrl-k*       Delete line from cursor forward
-*Ctrl-d*       EOF; exit
-*Ctrl-c*       Interrupt current command
-*Ctrl-z*       Suspend current command
-*Ctrl-l*       Clear screen
+``Ctrl-a``     Beginning of line
+``Ctrl-e``     End of file
+``Ctrl-k``     Delete line from cursor forward
+``Ctrl-d``     EOF; exit
+``Ctrl-c``     Interrupt current command
+``Ctrl-z``     Suspend current command
+``Ctrl-l``     Clear screen
 ============   ==========================================================
 
 Basic File Management
@@ -1120,7 +1120,7 @@ Greedy matching
 ---------------
 
 Regular expression pattern matching is *greedy*---by default, the longest
-matching string is choosen.
+matching string is chosen.
 
 Suppose we have the following file::
 
@@ -1833,7 +1833,7 @@ Exercises
 #. Now add the fifth line of the file to that same file from the previous problem.
 
 #. Extract the Australia data from the ``cpds.csv`` dataset and put it in a file
-   called ``cpds_australia.csv``. It's ok if you do this in a straightforward way
+   called ``cpds_australia.csv``. It's OK if you do this in a straightforward way
    and it might fail if 'Australia' is present in an unexpected column.
 
 #. Find all the lines in a file that do not contain a comma.
