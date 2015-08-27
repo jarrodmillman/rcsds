@@ -18,6 +18,10 @@ Things you **need to do** before the first lab on Monday, August 31st:
 #. Read `The Interactive Shell <http://www.jarrodmillman.com/rcsds/standard/bash.html#the-interactive-shell>`_ and
    `Basic File Management <http://www.jarrodmillman.com/rcsds/standard/bash.html#basic-file-management>`_.
 
+You may also want to start reading `Preeyanon, Likit, Alexis Black Pyrkosz,
+and C. Titus Brown. "Reproducible bioinformatics research for biologists."
+Implementing Reproducible Research (2014): 185. <https://osf.io/zqbu2/>`_.
+
 Definitions
 -----------
 
