@@ -76,7 +76,17 @@ Here is::
   
   xy = random_2d_walk()
   plt.plot(xy[:,0], xy[:,1])
-  plt.savefig("test.png")
+  plt.savefig("rw1.png")
+
+Here is the generated figure.
+
+.. figure:: ../figs/rw1.png
+   :align: center
+   :width: 50%
+   :alt: Random walk 1
+
+   Random walk 1
+
 
 And::
 
@@ -112,7 +122,7 @@ And::
       def plot(self):
           xy = self.position()
           plt.plot(xy[:,0], xy[:,1])
-          plt.savefig("test.png")
+          plt.savefig("rw2.png")
           return None
 
   np.random.seed(2)
@@ -124,9 +134,38 @@ And::
   print rw.walk[:5]
   rw.plot()
 
+Produces the following output::
+
+  After 0 steps you are at position: [0 0]
+  After 100 steps you are at position: [-4  4]
+  ['start', 'up', 'left', 'down', 'up']
+  [[ 0  0]
+   [ 0  1]
+   [-1  0]
+   [ 0 -1]
+   [ 0  1]]
+
+
+And here is the generated figure.
+
+.. figure:: ../figs/rw2.png
+   :align: center
+   :width: 50%
+   :alt: Random walk 2
+
+   Random walk 2
+
+
 
 Exercise: Sierpinski triangle
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
+
+.. figure:: ../figs/sierpinski.png
+   :align: center
+   :width: 50%
+   :alt: Sierpinski triangle
+
+   Sierpinski triangle generated via the "chaos game."
 
 Write a Python script to construct Sierpinski triangle using the
 following algorithm:

@@ -207,7 +207,7 @@ page for the command <code class="docutils literal"><span class="pre">sudo</span
 <div class="highlight-python"><div class="highlight"><pre>$ man sudo
 </pre></div>
 </div>
-<p class="last">Compare this output to the this <a class="reference internal" href="../commands/su.html#su"><span>su</span></a> page.</p>
+<p class="last">Compare this output to the this <a class="reference internal" href="../commands/sudo.html#sudo"><span>sudo</span></a> page.</p>
 </div>
 </div>
 <div class="section" id="variables">
@@ -852,13 +852,21 @@ $ find . -type l        # find links
 <p>Unix programs often take options that are identified with a minus
 followed by a letter, followed by the specific option (adding a space
 before the specific option is fine). Options may also involve two
-dashes, e.g., <code class="docutils literal"><span class="pre">R</span> <span class="pre">--no-save</span></code>. Here are some examples using the <code class="docutils literal"><span class="pre">tail</span></code>
-command:</p>
+dashes, e.g., <code class="docutils literal"><span class="pre">R</span> <span class="pre">--no-save</span></code>. A standard two dash option for many commands
+is <code class="docutils literal"><span class="pre">--help</span></code>.  For example, try:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ tail --help
+</pre></div>
+</div>
+<p>Here are a couple of examples of using the <code class="docutils literal"><span class="pre">tail</span></code> command:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ wget http://jarrodmillman.com/rcsds/data/cpds.csv
 $ tail -n 10 cpds.csv   # last 10 lines of cpds.csv
 $ tail -f cpds.csv      # shows end of file, continually refreshing
 </pre></div>
 </div>
+<p>The first line downloads the data from my website.  The two main tools for
+downloading network accessible data from the commandline are <code class="docutils literal"><span class="pre">wget</span></code> and
+<code class="docutils literal"><span class="pre">curl</span></code>.  I tend to use <code class="docutils literal"><span class="pre">wget</span></code> as my commandline downloading tool as it
+is more convenient.</p>
 <p>A few more tidbits about <code class="docutils literal"><span class="pre">grep</span></code> (we will see more examples of <code class="docutils literal"><span class="pre">grep</span></code> in the
 section on regular expressions, but it is so useful that it is worth seeing
 many times):</p>
@@ -988,25 +996,19 @@ USER1
 </div>
 <p>Here&#8217;s an example of finding out how many unique entries there are in the 2nd
 column of a data file whose fields are separated by commas:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ wget http://jarrodmillman.com/rcsds/data/cpds.csv
-$ cut -d&#39;,&#39; -f2 cpds.csv | sort | uniq | wc
+<div class="highlight-python"><div class="highlight"><pre>$ cut -d&#39;,&#39; -f2 cpds.csv | sort | uniq | wc
 $ cut -d&#39;,&#39; -f2 cpds.csv | sort | uniq &gt; countries.txt
 </pre></div>
 </div>
-<p>The first line downloads the data from my website.  The two main tools for
-downloading network accessible data from the commandline are <code class="docutils literal"><span class="pre">wget</span></code> and
-<code class="docutils literal"><span class="pre">curl</span></code>.  I tend to use <code class="docutils literal"><span class="pre">wget</span></code> as my commandline downloading tool as it
-is more convenient.</p>
-<p>The second and third lines use the <code class="docutils literal"><span class="pre">cut</span></code> utility to extract the second field
-(<code class="docutils literal"><span class="pre">-f2</span></code>) or column of the file <code class="docutils literal"><span class="pre">cpds.csv</span></code> where the fields (or columns) are
-split or delimited by a comma (<code class="docutils literal"><span class="pre">-d','</span></code>). The standard output of the <code class="docutils literal"><span class="pre">cut</span></code>
-command is then piped (via <code class="docutils literal"><span class="pre">|</span></code>) to the standard input of the <code class="docutils literal"><span class="pre">sort</span></code>
-command.  Then the output of <code class="docutils literal"><span class="pre">sort</span></code> is sent to the input of <code class="docutils literal"><span class="pre">uniq</span></code> to
-remove duplicate entries in the sorted list provided by <code class="docutils literal"><span class="pre">sort</span></code>. Rather than
-using <code class="docutils literal"><span class="pre">sort</span> <span class="pre">|</span> <span class="pre">uniq</span></code>, you could also use <code class="docutils literal"><span class="pre">sort</span> <span class="pre">-u</span></code>.  Finally, the first of
-the  <code class="docutils literal"><span class="pre">cut</span></code> commands prints a word count summary using <code class="docutils literal"><span class="pre">wc</span></code>; while the
-second saving the sorted information with duplicates removed in the file
-<code class="docutils literal"><span class="pre">countries.txt</span></code>.</p>
+<p>Above we use the <code class="docutils literal"><span class="pre">cut</span></code> utility to extract the second field (<code class="docutils literal"><span class="pre">-f2</span></code>) or
+column of the file <code class="docutils literal"><span class="pre">cpds.csv</span></code> where the fields (or columns) are split or
+delimited by a comma (<code class="docutils literal"><span class="pre">-d','</span></code>). The standard output of the <code class="docutils literal"><span class="pre">cut</span></code> command is
+then piped (via <code class="docutils literal"><span class="pre">|</span></code>) to the standard input of the <code class="docutils literal"><span class="pre">sort</span></code> command.  Then the
+output of <code class="docutils literal"><span class="pre">sort</span></code> is sent to the input of <code class="docutils literal"><span class="pre">uniq</span></code> to remove duplicate entries
+in the sorted list provided by <code class="docutils literal"><span class="pre">sort</span></code>. Rather than using <code class="docutils literal"><span class="pre">sort</span> <span class="pre">|</span> <span class="pre">uniq</span></code>, you
+could also use <code class="docutils literal"><span class="pre">sort</span> <span class="pre">-u</span></code>.  Finally, the first of the  <code class="docutils literal"><span class="pre">cut</span></code> commands prints
+a word count summary using <code class="docutils literal"><span class="pre">wc</span></code>; while the second saving the sorted
+information with duplicates removed in the file <code class="docutils literal"><span class="pre">countries.txt</span></code>.</p>
 <p>To see if there are any &#8220;S&#8221; values in certain fields (fixed width) of a set of
 files (note I did this on 22,000 files (5 Gb or so) in about 5 minutes on my
 desktop; it would have taken much more time to read the data into R):</p>

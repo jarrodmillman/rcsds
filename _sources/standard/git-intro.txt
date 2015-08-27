@@ -6,9 +6,24 @@ Introduction to Git
 
 
 .. note::
-  The content of these slides was adapted from Fernando Perez' `Lecture notes
+  The content of this tutorial was adapted from Fernando Perez' `Lecture notes
   (in IPython Notebook format) on Reproducible Science And Modern Scientific
   Software <https://github.com/fperez/reprosw/blob/master/Version%20Control.ipynb>`_.
+
+  Before reading this, you will want to be familiar with the material in the
+  "Basics of UNIX" tutorial and screencast here:
+  http://statistics.berkeley.edu/computing/training/tutorials
+  
+  In this tutorial, I will use a ``$`` prompt for bash.  To follow along, you
+  will need to have bash installed on your computer and ``git``.  If you are
+  using the BCE VM, you should have everything you need installed.
+
+  You will also need a GitHub account to follow some of the examples using git
+  remotes.  If you don't already have one, create a GitHub account `here
+  <https://github.com/join>`_.  You should consider your GitHub account to be
+  more professional than say your facebook account.  So you should consider using
+  something straightforward.  For example, my username is `jarrodmillman
+  <https://github.com/jarrodmillman>`_.
 
 What is version control?
 ========================
@@ -79,14 +94,14 @@ and powerful version control system (VCS) called Git.  First, we will need to
 develop some basic vocabulary needed to discuss how Git works.  Then we will
 see how to use Git locally as a single-user using a linear workflow.  We will
 then see how to use branches rather than following a simple linear workflow.
-Finally, we will discuss using remotes instead of just working locally.
-Multi-user use will be covered in another tutorial.
+Finally, we will discuss using remotes instead of just working locally including
+a short discussion of collaborative development with one shared remote.
 
 .. note::
    VCS come in two main architectures: client-server (e.g., CVS, Subversion)
    and distributed (e.g., Mercurial, **Git**).  In the client-server
    architecture, there is one master repository and everyone working
-   on the repositor has their own minimal local copy of the master
+   on the repository has their own minimal local copy of the master
    repository.  In the distributed model, every repository is a complete
    repository and there are mechanisms for incorporating changes
    from remote repositories into a local repository.
@@ -94,70 +109,91 @@ Multi-user use will be covered in another tutorial.
 Core concepts
 =============
 
-A **commit** is a **snapshot** of an entire directory tree at a given point in
+The **working tree** (or directory) is the tree of files you are working on in
+the current directory. In the example above, we started with this working
+tree::
+
+  proj1
+  ├── code
+  │   ├── analysis.py
+  │   ├── eda.py
+  │   └── preprocess.py
+  ├── data
+  │   └── blob.dat
+  ├── figs
+  │   └── diagram.png
+  ├── paper
+  │   ├── Makefile
+  │   ├── report.bib
+  │   └── report.tex
+  └── slides
+      └── presentation.md
+
+A **commit** is a *snapshot* of an entire directory tree at a given point in
 time, some metadata (e.g., reference to previous commits, authors name), and an
 identifier (this is called a hash and will be discussed below).  Returning to
 the above example, you would make a **commit** corresponding to the original
 state of the directory tree, which I listed.  Committing the directory tree
-as listed above will allow us to return to this exact state later.
+as listed above will allow us to return to this exact state later (by **checking
+out** that commit---as we will see---the working tree changed to contain
+exactly the files and directories that we originally committed).
 
 .. figure:: ../figs/commit_anatomy.png
    :align: center
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
-   :width: 80%
+   :width: 70%
 
    Here is a schematic representation of a commit.  The commit, which I
-   refer to as 98ca9.., has some metadata (i.e., author name and committer
+   refer to as ``98ca9..``, has some metadata (i.e., author name and committer
    name) as well as a pointer to the entire directory tree.
 
    Credit: ProGit book, by Scott Chacon, CC License.
 
-A **repository** is a group of **linked** commits, which form a directed
-acyclic graph (DAG), as well as a set of references to specific commits (we
-refer to these references to commits as heads).  As part of the metadata of
-each commit, we include references to 0 or more parent commits.  The initial
-commit of each repository has 0 parents.  Each subsequent commit is proceeded
-by 1 or more commits.
+A **repository** is essentially a group of *linked* commits, which form a
+directed acyclic graph (DAG), as well as a set of references to specific
+commits (we refer to these references to commits as **heads**).  As part of the
+metadata of each commit, we include references to 0 or more parent commits.
+The initial commit of each repository has 0 parents.  Each subsequent commit is
+proceeded by 1 or more commits.
 
 .. figure:: ../figs/threecommits.png
    :align: center
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
-   :width: 90%
+   :width: 70%
 
    This is a schematic representation of three commits in a linear
-   workflow.  The first commit 98ca9.. has no parents and Snapshot
+   workflow.  The first commit ``98ca9..`` has no parents and Snapshot
    A contains all the files and directory structure that was in
    working tree when the project was started.  Additional files
-   were added or changed and a new commit 34ac2.. was made containing
+   were added or changed and a new commit ``34ac2..`` was made containing
    all the files and directories corresponding to the new state
-   of the working tree.  This new commit 34ac2.. has one parent
-   98ca9.., which it points to.  Continuing in this manner,
-   a new commit f30ab.. is made on top of the second commit
-   34ac2...
+   of the working tree.  This new commit ``34ac2..`` has one parent
+   ``98ca9..``, which it points to.  Continuing in this manner,
+   a new commit ``f30ab..`` is made on top of the second commit
+   ``34ac2..``.
 
    Credit: ProGit book, by Scott Chacon, CC License.
 
 Again returning to our example, the initial **commit** might correspond to the
-the original state of the directory tree, which I listed above.  Now when you
-begin implementing your new analysis method, you don't need to make any copies
-of the previous files (i.e., there is no need to execute ``cp analysis.py
-analysis.py.orig``).  Since they are already committed, you can always access
-the original state of the repository by checking out the original commit.  To
-proceed you would simply make the necessary edits to the files in your
-directory tree and then when you are satisfied with your changes you make a new
-commit.  This new commit will correspond to a snapshot of the entire directory
-tree with all the edits you've made to it since the original commit.  To keep
-track of the history of the project, the new commit will include a reference to
-the original commit as its parent.  Now when your advisor suggests the
-alternative analysis, you could checkout the original commit, implement the new
-method, and commit your changes including a reference to the original commit as
-its sole parent.
+the original state of the directory tree.  Then when you begin implementing
+your new analysis method, you don't need to make any copies of the previous
+files (i.e., there is no need to execute ``cp analysis.py analysis.py.orig``).
+Since they are already committed, you can always access the original state of
+the repository by checking out the original commit.  To proceed you would
+simply make the necessary edits to the files in your directory tree and then
+when you are satisfied with your changes you make a new commit.  This new
+commit will correspond to a snapshot of the entire directory tree with all the
+edits you've made to it since the original commit.  To keep track of the
+history of the project, the new commit will include a reference to the original
+commit as its parent.  Now when your advisor suggests the alternative analysis,
+you could checkout the original commit, implement the new method, and commit
+your changes including a reference to the original commit as its sole parent.
 
 Finally, we need to understand how Git keeps track of commits. To reference a
 commit, Git uses a **hash**.  Hashing provides a way to have a fixed-length
 identifier for a given set of information, such as a file or set of files. The
-identifier is not guaranteed to be unique, but if the number of items is small,
-it will almost always be unique.
+identifier is not guaranteed to be unique, but under normal circumstances,
+it will always be unique.
 
 To make this concrete, consider the following toy "implementation" in R::
 
@@ -176,6 +212,12 @@ To make this concrete, consider the following toy "implementation" in R::
   hash2 <- digest(c(data2, meta2, hash1), algo="sha1")
   cat('Hash:', hash2)
 
+The first hash is a cryptographic signature of the content of the commit
+(``data1``) and its metadata (``meta1``). Since this is the first commit to the
+repository, there is no parent commit that proceeds it.  However, the second
+hash is a cryptographic signature of the content of the commit (``data2``) and
+its metadata (``meta2``) and---importantly---the first hash (``hash1``).
+
 And here it is in Python::
 
   import sha
@@ -193,8 +235,8 @@ And here it is in Python::
   hash2 = sha.sha(data2 + meta2 + hash1).hexdigest()
   print 'Hash:', hash2
 
-Now that we have developed some basic vocabulary, let's see start using Git.
-To start with we will use Git in the simplest way possible---as a single-user
+Now that we have developed some basic vocabulary, let's start using Git.
+To begin, we will use Git in the simplest way possible---as a single-user
 working linearly with no remotes.
 
 .. note::
@@ -204,13 +246,17 @@ working linearly with no remotes.
 
      $ git config --global user.name "Jarrod Millman"
      $ git config --global user.email "millman@berkeley.edu"
-     $ git config --global core.editor /usr/bin/jed
+     $ git config --global core.editor /usr/bin/gedit
 
    The first two lines tell Git who you are (obviously you should use
-   your own name and address rather than mine).  The final command
+   your own name and email address rather than mine).  The final command
    tells Git which text editor you wish to use.  You should use whatever
-   text editor you prefer.  For instance, I use ``/usr/bin/vim``.
-
+   text editor you prefer.  For instance, I use ``/usr/bin/vim``. The
+   most popular text editors on Linux are ``vim`` and ``emacs``. If
+   you aren't familiar with them at this point, you will probably
+   want to use a simple text editor like ``gedit``, which should already
+   be installed on your BCE VM.  You can learn
+   more about ``gedit`` here: https://help.ubuntu.com/community/gedit
 
 Local, single-user, linear workflow
 ===================================
@@ -234,6 +280,14 @@ commands, which will look something like this::
 You will see more commands than this, but these are the ones we cover in the
 remainder of this tutorial.
 
+There are two ways to get a repository.  First you can ``clone`` an existing
+repository.  Second you can create a new one.
+
+In this section, you will see how to create a new empty repository, add
+content, and commit your work to repository.  You will also see how to look at
+a log of what you've done, see what you've changed, as well as delete and
+rename files.
+
 ``git init``: create an empty repository
 ----------------------------------------
 
@@ -248,11 +302,11 @@ Let's look at what git did::
   $ ls -la
   $ ls -l .git
 
-``git add``: adding content to the repository
----------------------------------------------
+``git add``: add content to the staging area
+--------------------------------------------
 
 Now let's edit our first file in the test directory with a text editor.  I'm
-doing it programatically here for automation purposes, but you'd normally be
+doing it programmatically here for automation purposes, but you'd normally be
 editing by hand::
 
   $ cd ~/src/demo
@@ -266,7 +320,9 @@ We can now ask git about what happened with ``status``::
 
   $ git status
 
-``git commit``: permanently record our changes in git's database
+You should now see that ``file1.txt`` is ready to be committed.
+
+``git commit``: permanently record our changes in the repository
 ----------------------------------------------------------------
 
 Now we are ready to commit our changes::
@@ -376,7 +432,7 @@ step!).
 Local, single-user, branching workflow
 ======================================
 
-Before understanding what a Git **branch** is, we need to revist the idea
+Before understanding what a Git **branch** is, we need to revisit the idea
 of a **head**.  As discussed Git labels every commit with cryptographic
 signature called a hash.  These hashs can be considered to uniquely identify
 every commit and are used to verify that the contents of the commit and
@@ -388,7 +444,7 @@ into play.  A head is an easy to remember label (e.g., ``HEAD``, ``master``,
 
 .. figure:: ../figs/masterbranch.png
    :align: center
-   :width: 60%
+   :width: 50%
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
 
    By default every repository has a head called ``master``. In this
@@ -399,7 +455,7 @@ into play.  A head is an easy to remember label (e.g., ``HEAD``, ``master``,
    Credit: ProGit book, by Scott Chacon, CC License.
 
 A repository can contain any number of heads.  At any point in time,
-your current working directory will correspond to a specific commmit.
+your current working directory will correspond to a specific commit.
 By convention, we refer to this commit with the name ``HEAD`` (note
 the use of all capital letters to distinguish this from the generic
 notion of head).
@@ -415,7 +471,7 @@ repository.
 
 .. figure:: ../figs/HEAD_testing.png
    :align: center
-   :width: 50%
+   :width: 45%
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
 
    In this example there are two heads or branches, *master* and *testing*,
@@ -504,7 +560,7 @@ Now merge experimental branch::
 
    #. Using the full hash, which you can find using ``git log``
    #. Using the first few characters of the hash (as long as there is no
-      ambiquity)
+      ambiguity)
    #. Using a head label (e.g., ``HEAD`` or ``master``)
    #. Relative to a specified commit (e.g., ``HEAD^`` is the parent of the
       current head commit)
@@ -512,7 +568,7 @@ Now merge experimental branch::
 Using remotes as a single user
 ==============================
 
-We are now going to introduce the concept of a *remote repository*: a
+We are now going to introduce the concept of a **remote** repository: a
 pointer to another copy of the repository that lives on a different
 location. This can be simply a different path on the filesystem or a
 server on the internet.
@@ -535,7 +591,7 @@ the `new repository page <https://github.com/new>`__ and make a
 repository called ``test``. Do **not** check the box that says
 ``Initialize this repository with a README``, since we already have an
 existing repository here. That option is useful when you're starting
-first at Github and don't have a repo made already on a local computer.
+first at GitHub and don't have a repo made already on a local computer.
 
 We can now follow the instructions from the next page::
 
@@ -547,7 +603,7 @@ Let's see the remote situation again::
   $ git remote -v
 
 We can now `see this repository publicly on
-github <https://github.com/jarrodmillman/test>`__.
+GitHub <https://github.com/jarrodmillman/test>`__.
 
 Let's see how this can be useful for backup and syncing work between two
 different computers. I'll simulate a 2nd computer by working in a
@@ -574,7 +630,7 @@ the second.
   $ git add experiment.txt
   $ git commit -m "More work, on machine #2"
 
-Now we put this new work up on the github server so it's available from
+Now we put this new work up on the GitHub server so it's available from
 the internet::
 
   # working on computer #2
@@ -680,7 +736,7 @@ the same:
 
 -  Bob makes changes to a file and commits them locally.
 
--  Bob pushes his changes to github.
+-  Bob pushes his changes to GitHub.
 
 -  Alice pulls Bob’s changes into her own repository.
 
@@ -691,9 +747,9 @@ commit them locally. Then both try to push their changes:
 
 -  Bob adds *bob.txt* and commits.
 
--  Alice pushes to github.
+-  Alice pushes to GitHub.
 
--  Bob tries to push to github.
+-  Bob tries to push to GitHub.
 
 What happens here?
 

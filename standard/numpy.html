@@ -27,13 +27,29 @@
     <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
     <link rel="up" title="Core Topics" href="index.html" />
     <link rel="next" title="Collaborative workflow with Git" href="git-advanced.html" />
-    <link rel="prev" title="Python introduction" href="python.html" />
+    <link rel="prev" title="Introduction to Python" href="python.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
   </head>
-  <body role="document">  
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="git-advanced.html" title="Collaborative workflow with Git"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="python.html" title="Introduction to Python"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">RCSDS 0.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Core Topics</a> &raquo;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -41,23 +57,21 @@
           <div class="body" role="main">
             
   <div class="section" id="scientific-computing-with-python">
-<h1><a class="toc-backref" href="#id1">Scientific computing with Python</a><a class="headerlink" href="#scientific-computing-with-python" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id4">Scientific computing with Python</a><a class="headerlink" href="#scientific-computing-with-python" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#scientific-computing-with-python" id="id1">Scientific computing with Python</a><ul>
-<li><a class="reference internal" href="#introduction" id="id2">Introduction</a></li>
-<li><a class="reference internal" href="#numpy-and-matplotlib" id="id3">NumPy and matplotlib</a><ul>
-<li><a class="reference internal" href="#exercise-lock-n-load" id="id4">Exercise: lock ’n load</a></li>
-<li><a class="reference internal" href="#ndarray" id="id5">ndarray</a></li>
-<li><a class="reference internal" href="#d-plotting" id="id6">2D plotting</a></li>
+<li><a class="reference internal" href="#scientific-computing-with-python" id="id4">Scientific computing with Python</a><ul>
+<li><a class="reference internal" href="#introduction" id="id5">Introduction</a></li>
+<li><a class="reference internal" href="#numpy-and-matplotlib" id="id6">NumPy and matplotlib</a><ul>
+<li><a class="reference internal" href="#exercise-lock-n-load" id="id7">Exercise: lock ’n load</a></li>
+<li><a class="reference internal" href="#ndarray" id="id8">ndarray</a></li>
+<li><a class="reference internal" href="#d-plotting" id="id9">2D plotting</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#example-random-walk" id="id7">Example: random walk</a><ul>
-<li><a class="reference internal" href="#exercise-sierpinski-triangle" id="id8">Exercise: Sierpinski triangle</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#scipy" id="id9">SciPy</a></li>
+<li><a class="reference internal" href="#example-random-walk" id="id10">Example: random walk</a></li>
+<li><a class="reference internal" href="#exercise-sierpinski-triangle" id="id11">Exercise: Sierpinski triangle</a></li>
+<li><a class="reference internal" href="#scipy" id="id12">SciPy</a></li>
 </ul>
 </li>
 </ul>
@@ -74,7 +88,7 @@ in Science &amp; Engineering</em> 13, no. 2 (2011): 22-30.</li>
 in Science &amp; Engineering</em> 9, no. 3 (2007): 0090-95.</li>
 </ul>
 <div class="section" id="introduction">
-<h2><a class="toc-backref" href="#id2">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference external" href="http://docs.scipy.org/doc/">http://docs.scipy.org/doc/</a></li>
 <li><a class="reference external" href="http://matplotlib.org/gallery.html">http://matplotlib.org/gallery.html</a></li>
@@ -83,9 +97,9 @@ in Science &amp; Engineering</em> 9, no. 3 (2007): 0090-95.</li>
 </ul>
 </div>
 <div class="section" id="numpy-and-matplotlib">
-<h2><a class="toc-backref" href="#id3">NumPy and matplotlib</a><a class="headerlink" href="#numpy-and-matplotlib" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">NumPy and matplotlib</a><a class="headerlink" href="#numpy-and-matplotlib" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="exercise-lock-n-load">
-<h3><a class="toc-backref" href="#id4">Exercise: lock ’n load</a><a class="headerlink" href="#exercise-lock-n-load" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7">Exercise: lock ’n load</a><a class="headerlink" href="#exercise-lock-n-load" title="Permalink to this headline">¶</a></h3>
 <p>For this exercise please work through Stéfan van der Walt’s NumPy lock
 ’n load.</p>
 <ul class="simple">
@@ -94,21 +108,21 @@ in Science &amp; Engineering</em> 9, no. 3 (2007): 0090-95.</li>
 </ul>
 </div>
 <div class="section" id="ndarray">
-<h3><a class="toc-backref" href="#id5">ndarray</a><a class="headerlink" href="#ndarray" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8">ndarray</a><a class="headerlink" href="#ndarray" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><a class="reference external" href="http://scipy-lectures.github.io/intro/numpy/array_object.html">http://scipy-lectures.github.io/intro/numpy/array_object.html</a></li>
 <li><a class="reference external" href="http://scipy-lectures.github.io/intro/numpy/operations.html">http://scipy-lectures.github.io/intro/numpy/operations.html</a></li>
 </ul>
 </div>
 <div class="section" id="d-plotting">
-<h3><a class="toc-backref" href="#id6">2D plotting</a><a class="headerlink" href="#d-plotting" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id9">2D plotting</a><a class="headerlink" href="#d-plotting" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><a class="reference external" href="http://scipy-lectures.github.io/intro/matplotlib/matplotlib.html">http://scipy-lectures.github.io/intro/matplotlib/matplotlib.html</a></li>
 </ul>
 </div>
 </div>
 <div class="section" id="example-random-walk">
-<h2><a class="toc-backref" href="#id7">Example: random walk</a><a class="headerlink" href="#example-random-walk" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">Example: random walk</a><a class="headerlink" href="#example-random-walk" title="Permalink to this headline">¶</a></h2>
 <p>Here is:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
@@ -128,8 +142,13 @@ in Science &amp; Engineering</em> 9, no. 3 (2007): 0090-95.</li>
 
 <span class="n">xy</span> <span class="o">=</span> <span class="n">random_2d_walk</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xy</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xy</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&quot;test.png&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&quot;rw1.png&quot;</span><span class="p">)</span>
 </pre></div>
+</div>
+<p>Here is the generated figure.</p>
+<div class="figure align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/rw1.png"><img alt="Random walk 1" src="../_images/rw1.png" style="width: 50%;" /></a>
+<p class="caption"><span class="caption-text">Random walk 1</span></p>
 </div>
 <p>And:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
@@ -164,7 +183,7 @@ in Science &amp; Engineering</em> 9, no. 3 (2007): 0090-95.</li>
     <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">xy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">()</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xy</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">xy</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&quot;test.png&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&quot;rw2.png&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">None</span>
 
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -177,8 +196,29 @@ in Science &amp; Engineering</em> 9, no. 3 (2007): 0090-95.</li>
 <span class="n">rw</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
+<p>Produces the following output:</p>
+<div class="highlight-python"><div class="highlight"><pre>After 0 steps you are at position: [0 0]
+After 100 steps you are at position: [-4  4]
+[&#39;start&#39;, &#39;up&#39;, &#39;left&#39;, &#39;down&#39;, &#39;up&#39;]
+[[ 0  0]
+ [ 0  1]
+ [-1  0]
+ [ 0 -1]
+ [ 0  1]]
+</pre></div>
+</div>
+<p>And here is the generated figure.</p>
+<div class="figure align-center" id="id2">
+<a class="reference internal image-reference" href="../_images/rw2.png"><img alt="Random walk 2" src="../_images/rw2.png" style="width: 50%;" /></a>
+<p class="caption"><span class="caption-text">Random walk 2</span></p>
+</div>
+</div>
 <div class="section" id="exercise-sierpinski-triangle">
-<h3><a class="toc-backref" href="#id8">Exercise: Sierpinski triangle</a><a class="headerlink" href="#exercise-sierpinski-triangle" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id11">Exercise: Sierpinski triangle</a><a class="headerlink" href="#exercise-sierpinski-triangle" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="../_images/sierpinski.png"><img alt="Sierpinski triangle" src="../_images/sierpinski.png" style="width: 50%;" /></a>
+<p class="caption"><span class="caption-text">Sierpinski triangle generated via the &#8220;chaos game.&#8221;</span></p>
+</div>
 <p>Write a Python script to construct Sierpinski triangle using the
 following algorithm:</p>
 <ol class="arabic simple">
@@ -190,9 +230,8 @@ following algorithm:</p>
 <li>Repeat from step 3 (for 100 times).</li>
 </ol>
 </div>
-</div>
 <div class="section" id="scipy">
-<h2><a class="toc-backref" href="#id9">SciPy</a><a class="headerlink" href="#scipy" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id12">SciPy</a><a class="headerlink" href="#scipy" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference external" href="http://scipy-lectures.github.io/intro/scipy.html">http://scipy-lectures.github.io/intro/scipy.html</a></li>
 </ul>
@@ -218,10 +257,10 @@ following algorithm:</p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Core Topics</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="course-intro.html">Course introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="git-intro.html">Git introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bash-advanced.html">Advanced Bash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-intro.html">Introduction to Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bash.html">Using the bash shell</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fmri-intro.html">Statistical analysis of fMRI data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python.html">Python introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python.html">Introduction to Python</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="">Scientific computing with Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="git-advanced.html">Collaborative workflow with Git</a></li>
 </ul>

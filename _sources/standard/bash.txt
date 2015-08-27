@@ -137,7 +137,7 @@ To install the text editor `vim` on a BCE machine::
 
      $ man sudo
 
-   Compare this output to the this :ref:`su` page.
+   Compare this output to the this :ref:`sudo` page.
 
 Variables
 ---------
@@ -754,12 +754,21 @@ To find files by name, modification time, and type::
 Unix programs often take options that are identified with a minus
 followed by a letter, followed by the specific option (adding a space
 before the specific option is fine). Options may also involve two
-dashes, e.g., ``R --no-save``. Here are some examples using the ``tail``
-command::
+dashes, e.g., ``R --no-save``. A standard two dash option for many commands
+is ``--help``.  For example, try::
 
   $ tail --help
+
+Here are a couple of examples of using the ``tail`` command::
+
+  $ wget http://jarrodmillman.com/rcsds/data/cpds.csv
   $ tail -n 10 cpds.csv   # last 10 lines of cpds.csv
   $ tail -f cpds.csv      # shows end of file, continually refreshing
+
+The first line downloads the data from my website.  The two main tools for
+downloading network accessible data from the commandline are ``wget`` and
+``curl``.  I tend to use ``wget`` as my commandline downloading tool as it
+is more convenient.
  
 A few more tidbits about ``grep`` (we will see more examples of ``grep`` in the
 section on regular expressions, but it is so useful that it is worth seeing
@@ -875,25 +884,18 @@ Translating lowercase to UPPERCASE with ``tr``::
 Here's an example of finding out how many unique entries there are in the 2nd
 column of a data file whose fields are separated by commas::
 
-  $ wget http://jarrodmillman.com/rcsds/data/cpds.csv
   $ cut -d',' -f2 cpds.csv | sort | uniq | wc
   $ cut -d',' -f2 cpds.csv | sort | uniq > countries.txt
 
-The first line downloads the data from my website.  The two main tools for
-downloading network accessible data from the commandline are ``wget`` and
-``curl``.  I tend to use ``wget`` as my commandline downloading tool as it
-is more convenient.
-
-The second and third lines use the ``cut`` utility to extract the second field
-(``-f2``) or column of the file ``cpds.csv`` where the fields (or columns) are
-split or delimited by a comma (``-d','``). The standard output of the ``cut``
-command is then piped (via ``|``) to the standard input of the ``sort``
-command.  Then the output of ``sort`` is sent to the input of ``uniq`` to
-remove duplicate entries in the sorted list provided by ``sort``. Rather than
-using ``sort | uniq``, you could also use ``sort -u``.  Finally, the first of
-the  ``cut`` commands prints a word count summary using ``wc``; while the
-second saving the sorted information with duplicates removed in the file
-``countries.txt``. 
+Above we use the ``cut`` utility to extract the second field (``-f2``) or
+column of the file ``cpds.csv`` where the fields (or columns) are split or
+delimited by a comma (``-d','``). The standard output of the ``cut`` command is
+then piped (via ``|``) to the standard input of the ``sort`` command.  Then the
+output of ``sort`` is sent to the input of ``uniq`` to remove duplicate entries
+in the sorted list provided by ``sort``. Rather than using ``sort | uniq``, you
+could also use ``sort -u``.  Finally, the first of the  ``cut`` commands prints
+a word count summary using ``wc``; while the second saving the sorted
+information with duplicates removed in the file ``countries.txt``. 
 
 To see if there are any "S" values in certain fields (fixed width) of a set of
 files (note I did this on 22,000 files (5 Gb or so) in about 5 minutes on my
