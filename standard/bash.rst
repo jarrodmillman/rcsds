@@ -137,7 +137,7 @@ To install the text editor `vim` on a BCE machine::
 
      $ man sudo
 
-   Compare this output to the this :ref:`su` page.
+   Compare this output to the this :ref:`sudo` page.
 
 Variables
 ---------
