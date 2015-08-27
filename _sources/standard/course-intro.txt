@@ -55,9 +55,9 @@ Text editor
 
 You will be using a text editor extensively in this class.  Unlike many
 aspects of computing, your choice of text editor will have little direct
-effect on people you work with or who use your code.  However, choosing
-a good text editor is extremely important if you are going to become
-efficient and fluid working on a computer.
+impact on people you work with or who use your code.  However, choosing
+a good text editor is extremely important if you wish to
+efficiently and effectively work on a computer.
 
 Please read this carefully:
 
