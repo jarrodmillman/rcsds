@@ -11,6 +11,8 @@ here: http://statistics.berkeley.edu/computing/training/tutorials
 
 Things you need to do before the first lab on Monday, August 31st:
 
+#. Read the `syllabus <http://www.jarrodmillman.com/stat159-fall2015/syllabus.pdf>`_ and
+   the `project overview <http://www.jarrodmillman.com/stat159-fall2015/project/README.pdf>`_
 #. Sign up on `Piazza <https://piazza.com/berkeley/fall2015/stat159/home>`_
 #. If you don't already have one, create a GitHub account `here <https://github.com/join>`_.
    You should consider your GitHub account to be more professional than
