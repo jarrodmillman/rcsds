@@ -26,7 +26,7 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
     <link rel="up" title="Core Topics" href="index.html" />
-    <link rel="next" title="Git introduction" href="git-intro.html" />
+    <link rel="next" title="Using the bash shell" href="bash.html" />
     <link rel="prev" title="Core Topics" href="index.html" />
    
   
@@ -52,12 +52,49 @@ here: <a class="reference external" href="http://statistics.berkeley.edu/computi
 <li>Sign up on <a class="reference external" href="https://piazza.com/berkeley/fall2015/stat159/home">Piazza</a></li>
 <li>If you don&#8217;t already have one, create a GitHub account <a class="reference external" href="https://github.com/join">here</a>.
 You should consider your GitHub account to be more professional than
-say your facebook account.  So you should consider using something straightward.
+say your facebook account.  So you should consider using something straightforward.
 For example, my username is <a class="reference external" href="https://github.com/jarrodmillman">jarrodmillman</a>.</li>
-<li>Software installation...</li>
-<li>Please read the &#8220;Basics of UNIX&#8221; tutorial and watch the accompanying screencast
+<li>Install BCE on your laptop: <a class="reference external" href="http://bce.berkeley.edu/install">http://bce.berkeley.edu/install</a></li>
+<li>Read the &#8220;Basics of UNIX&#8221; tutorial and watch the accompanying screencast
 here: <a class="reference external" href="http://statistics.berkeley.edu/computing/training/tutorials">http://statistics.berkeley.edu/computing/training/tutorials</a></li>
+<li>Read <a class="reference external" href="http://www.jarrodmillman.com/rcsds/standard/bash.html#the-interactive-shell">The Interactive Shell</a> and
+<a class="reference external" href="http://www.jarrodmillman.com/rcsds/standard/bash.html#basic-file-management">Basic File Management</a>.</li>
 </ol>
+<div class="section" id="definitions">
+<h2>Definitions<a class="headerlink" href="#definitions" title="Permalink to this headline">¶</a></h2>
+<p>A <strong>graph</strong> is an ordered pair <span class="math">\(G = (V, E)\)</span> of a set <span class="math">\(V\)</span> of nodes
+(or vertices) and either an ordered pair <span class="math">\((a,b)\)</span> or an unordered pair
+<span class="math">\(\{a,b\}\)</span> of edges between nodes of <span class="math">\(V\)</span>.</p>
+<p>A <strong>directed graph</strong> has directed edges each represented by an ordered pair
+<span class="math">\((a,b)\)</span> of nodes.  An <strong>undirected graph</strong> has undirected edges each
+represented by an unordered pair <span class="math">\(\{a,b\}\)</span> of nodes.</p>
+<p>A <strong>path</strong> is a sequence of edges which connect a sequence of distinct
+(excluding the first and last) nodes.  Paths are ordered (unordered) for
+directed (undirected) graphs.  A path with the same first and last node
+is a <strong>cycle</strong>.</p>
+<p>A <strong>tree</strong> is a graph with at most one path between any two
+nodes.</p>
+<p>A <strong>directed acylic graph (DAG)</strong> is a directed graph with no cycles.</p>
+</div>
+<div class="section" id="is-it-worth-the-time">
+<h2>Is it worth the time?<a class="headerlink" href="#is-it-worth-the-time" title="Permalink to this headline">¶</a></h2>
+<div class="figure" id="id1">
+<img alt="../_images/is_it_worth_the_time.png" src="../_images/is_it_worth_the_time.png" />
+<p class="caption"><span class="caption-text">Credit: <a class="reference external" href="http://xkcd.com/1205/">http://xkcd.com/1205/</a></span></p>
+</div>
+<div class="section" id="text-editor">
+<h3>Text editor<a class="headerlink" href="#text-editor" title="Permalink to this headline">¶</a></h3>
+<p>You will be using a text editor extensively in this class.  Unlike many
+aspects of computing, your choice of text editor will have little direct
+effect on people you work with or who use your code.  However, choosing
+a good text editor is extremely important if you are going to become
+efficient and fluid working on a computer.</p>
+<p>Please read this carefully:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://practical-neuroimaging.github.io/choosing_editor.html">http://practical-neuroimaging.github.io/choosing_editor.html</a></li>
+</ul>
+</div>
+</div>
 </div>
 
 
@@ -79,12 +116,8 @@ here: <a class="reference external" href="http://statistics.berkeley.edu/computi
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Core Topics</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="">Course introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="git-intro.html">Git introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bash-advanced.html">Advanced Bash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bash.html">Using the bash shell</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fmri-intro.html">Statistical analysis of fMRI data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="python.html">Python introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="numpy.html">Scientific computing with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="git-advanced.html">Collaborative workflow with Git</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
