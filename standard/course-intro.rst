@@ -2,12 +2,9 @@
 Course introduction
 *******************
 
-You will find the course syllabus, announcements, a link to the Piazza
+You will find the course syllabus, a link to the Piazza
 discussion site, information about the labs as well as the group project
 on the course website: http://www.jarrodmillman.com/stat159-fall2015/
-
-Please see the "Basics of UNIX" tutorial and screencast
-here: http://statistics.berkeley.edu/computing/training/tutorials
 
 Things you **need to do** before the first lab on Monday, August 31st:
 
@@ -15,14 +12,15 @@ Things you **need to do** before the first lab on Monday, August 31st:
    the `project overview <http://www.jarrodmillman.com/stat159-fall2015/project/README.pdf>`_
 #. Sign up on `Piazza <https://piazza.com/berkeley/fall2015/stat159/home>`_
 #. If you don't already have one, create a GitHub account `here <https://github.com/join>`_.
-   You should consider your GitHub account to be more professional than
-   say your facebook account.  So you should consider using something straightforward.
-   For example, my username is `jarrodmillman <https://github.com/jarrodmillman>`_.
 #. Install BCE on your laptop: http://bce.berkeley.edu/install
 #. Read the "Basics of UNIX" tutorial and watch the accompanying screencast
    here: http://statistics.berkeley.edu/computing/training/tutorials
 #. Read `The Interactive Shell <http://www.jarrodmillman.com/rcsds/standard/bash.html#the-interactive-shell>`_ and
    `Basic File Management <http://www.jarrodmillman.com/rcsds/standard/bash.html#basic-file-management>`_.
+
+You may also want to start reading `Preeyanon, Likit, Alexis Black Pyrkosz,
+and C. Titus Brown. "Reproducible bioinformatics research for biologists."
+Implementing Reproducible Research (2014): 185. <https://osf.io/zqbu2/>`_.
 
 Definitions
 -----------
