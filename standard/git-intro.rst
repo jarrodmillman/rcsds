@@ -6,7 +6,7 @@ Introduction to Git
 
 
 .. note::
-  The content of this tutorial was adapted from Fernando Perez' `Lecture notes
+  The content of this tutorial was adapted from Fernando Pérez' `Lecture notes
   (in IPython Notebook format) on Reproducible Science And Modern Scientific
   Software <https://github.com/fperez/reprosw/blob/master/Version%20Control.ipynb>`_.
 
@@ -15,15 +15,14 @@ Introduction to Git
   http://statistics.berkeley.edu/computing/training/tutorials
   
   In this tutorial, I will use a ``$`` prompt for bash.  To follow along, you
-  will need to have bash installed on your computer and ``git``.  If you are
+  will need to have bash and ``git`` installed on your computer.  If you are
   using the BCE VM, you should have everything you need installed.
+
+  If you don't have git installed, please see `this <http://git-scm.com/book/en/v2/Getting-Started-Installing-Git>`_ for help.
 
   You will also need a GitHub account to follow some of the examples using git
   remotes.  If you don't already have one, create a GitHub account `here
-  <https://github.com/join>`_.  You should consider your GitHub account to be
-  more professional than say your facebook account.  So you should consider using
-  something straightforward.  For example, my username is `jarrodmillman
-  <https://github.com/jarrodmillman>`_.
+  <https://github.com/join>`_.
 
 What is version control?
 ========================
@@ -203,14 +202,12 @@ To make this concrete, consider the following toy "implementation" in R::
   data1 <- 'This is the start of my paper.'
   meta1 <- 'date: 8/20/15'
   hash1 <- digest(c(data1, meta1), algo="sha1")
-  cat('Hash:', hash1)
   
   # second commit, linked to the first
   data2 <- 'Some more text in my paper...'
   meta2 <- 'date: 8/20/15'
   # Note we add the parent hash here!
   hash2 <- digest(c(data2, meta2, hash1), algo="sha1")
-  cat('Hash:', hash2)
 
 The first hash is a cryptographic signature of the content of the commit
 (``data1``) and its metadata (``meta1``). Since this is the first commit to the
@@ -226,14 +223,12 @@ And here it is in Python::
   data1 = 'This is the start of my paper.'
   meta1 = 'date: 8/20/15'
   hash1 = sha.sha(data1 + meta1).hexdigest()
-  print 'Hash:', hash1
 
   # second commit, linked to the first
   data2 = 'Some more text in my paper...'
   meta2 = 'date: 8/20/15'
   # Note we add the parent hash here!
   hash2 = sha.sha(data2 + meta2 + hash1).hexdigest()
-  print 'Hash:', hash2
 
 Now that we have developed some basic vocabulary, let's start using Git.
 To begin, we will use Git in the simplest way possible---as a single-user
@@ -296,11 +291,24 @@ First create an empty repository using the ``init`` command::
   $ cd ~/src
   $ git init demo
 
+Note that I am working in my ``~/src`` directory.  It is common to use a
+specific directory for all your local repositories.  I tend to use ``src``, but
+you might use ``code``, ``vc``, ``work``, or something similar.
+
 Let's look at what git did::
 
   $ cd demo
   $ ls -la
   $ ls -l .git
+
+The ``git init demo`` command should have created a new directory called
+``demo`` in your ``~/src`` directory.  Inside ``~/src/demo`` you will see
+another directory ``.git``.  The ``.git`` directory is where git stores the
+repository. Every time you stage some work or commit it, a snapshot of
+your working tree is stored in the ``.git`` directory.  You should avoid
+modifying this directory manually.  Since all the repository information is
+stored in the ``.git`` directory, you can turn your working tree back into
+a normal directory tree by deleting the ``.git`` directory.
 
 ``git add``: add content to the staging area
 --------------------------------------------
@@ -309,7 +317,6 @@ Now let's edit our first file in the test directory with a text editor.  I'm
 doing it programmatically here for automation purposes, but you'd normally be
 editing by hand::
 
-  $ cd ~/src/demo
   $ echo "My first bit of text" > file1.txt
 
 Now we can tell git about this new file using the ``add`` command::
@@ -320,7 +327,8 @@ We can now ask git about what happened with ``status``::
 
   $ git status
 
-You should now see that ``file1.txt`` is ready to be committed.
+You should now see that ``file1.txt`` has been added to the staging
+area and is ready to be committed.
 
 ``git commit``: permanently record our changes in the repository
 ----------------------------------------------------------------
@@ -336,6 +344,12 @@ default, git refuses to record changes that don't have a message to go
 along with them (though you can obviously 'cheat' by using an empty or
 meaningless string: git only tries to facilitate best practices, it's
 not your nanny).
+
+While many people use the ``-m`` flag routinely, I would recommend configuring
+your editor and then using it to add your commit message.  This has the
+advantage that while you are writing your commit message, you can see the list
+of files that you are committing.  While this may seem inconsequential, I've
+found that this practice is helpful and doesn't slow me down.
 
 ``git log``: what has been committed so far
 -------------------------------------------
@@ -368,8 +382,41 @@ The cycle of git: work, add, commit, ...
   $ git add file1.txt
   $ git commit -m "Great progress on this matter."
 
-Understanding the difference between the working directory, the staging 
-area (or index), and the repository can be confusing at first.
+While the basic pattern is *work, add, commit, and repeat*,  I tend to
+repeatedly add my work to the staging area before I finally commit it.  This
+allows me to effectively keep saving my work, but only committing it once I
+have finished and tested a chunk of work.  The importance of keeping track of
+your changes is not because you want to track the possibly circuitous route you
+happened to take while implementing a new feature in your code or revising your
+text.  Rather, the goal is to track the logical and conceptual steps that led
+to your new feature or revision. As you learn more about git, you will learn
+how to rebase your changes on a new history, to rewrite your history, as well
+as how to break your commits into many commits.  These features allow you to
+carefully construct the history of your changes into a comprehensible account
+that leads the reader of your history to an understanding of what you have
+done. This makes it easier for you to understand what you've done when you try
+to figure it out months later.  It also makes it easier for your collaborators
+to understand what you've done.
+
+Understanding the difference between the working tree, the staging area (or
+index), and the repository can be confusing at first.  The *working tree* or
+*working directory* is your local directory on the filesystem. The staging area
+(or *index*) reflects your ``git add``, ``git rm``, etc. changes that have been
+staged but not committed. The repository reflects your commits.
+
+Consider the schematic representation below.  You work in your working
+tree (or directory).  Periodically, as you complete little chunks of work,
+you add your work to the staging area.  (Generally, speaking a
+staging area is a place where you prepare to do something.  For instance,
+if you wish to go on a hike in the East Bay Regional Park system with
+some of your friends, you could meet in a staging area---a parking lot
+beside an entrance to one of the paths.  The purpose of the staging area
+in this instance is to provide a place where you and your friends can
+coordinate before beginning your walk.)  Once you've got a logical chunk
+of work completed and staged, you can then commit it.  Each commit has
+a unique hash.  You can go back to the exact snapshot of your working
+tree at the time you committed it by checking it out using the ``git
+checkout`` command, which we will discuss below.
 
 .. figure:: ../figs/git-index.png
     :align: center
@@ -377,11 +424,6 @@ area (or index), and the repository can be confusing at first.
 
     Working tree, staging area, and repository. Credit: ProGit book, by
     Scott Chacon, CC License.
-
-The *working directory* or *working tree* is your local directory on the
-filesystem. The staging area (or *index*) reflects your ``git add``, ``git
-rm``, etc. changes that have been staged but not committed. The repository
-reflects your commits.
 
 
 ``git log`` revisited
@@ -423,23 +465,18 @@ recorded anywhere::
 
 And ``git rm`` works in a similar fashion.
 
-**Exercise**
-
-Add a new file ``file2.txt``, commit it, make some changes to it, commit
-them again, and then remove it (and don't forget to commit this last
-step!).
 
 Local, single-user, branching workflow
 ======================================
 
-Before understanding what a Git **branch** is, we need to revisit the idea
-of a **head**.  As discussed Git labels every commit with cryptographic
-signature called a hash.  These hashs can be considered to uniquely identify
-every commit and are used to verify that the contents of the commit and
-history of the commit are correct.  While this is extremely important, it
-is unlikely that you will remember these hashes.  This is where heads come
-into play.  A head is an easy to remember label (e.g., ``HEAD``, ``master``,
-``feature1``) that references a commit.
+To understand what a Git **branch** is, we first need to revisit the idea of a
+**head**.  As discussed above, Git labels every commit with cryptographic
+signature called a hash.  These hashes can be considered to uniquely identify
+every commit and are used to verify that the contents of the commit and history
+of the commit are correct.  While there are many advantages to using these
+hashes to label the commits, it is unlikely that you will remember these
+hashes.  This is where heads come into play.  A head is an easy to remember
+label (e.g., ``HEAD``, ``master``, ``feature1``) that references a commit.
 
 
 .. figure:: ../figs/masterbranch.png
@@ -455,7 +492,7 @@ into play.  A head is an easy to remember label (e.g., ``HEAD``, ``master``,
    Credit: ProGit book, by Scott Chacon, CC License.
 
 A repository can contain any number of heads.  At any point in time,
-your current working directory will correspond to a specific commit.
+your current working tree will correspond to a specific commit.
 By convention, we refer to this commit with the name ``HEAD`` (note
 the use of all capital letters to distinguish this from the generic
 notion of head).
@@ -471,7 +508,7 @@ repository.
 
 .. figure:: ../figs/HEAD_testing.png
    :align: center
-   :width: 45%
+   :width: 50%
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
 
    In this example there are two heads or branches, *master* and *testing*,
@@ -496,7 +533,12 @@ with the new commits:
 
    Credit: ProGit book, by Scott Chacon, CC License.
 
-This allows the history of both branches to diverge:
+This allows the history of both branches to diverge. For instance, your master
+branch may be were you integrate new features and bug fixes into the main
+trunk of development.  If you have a bug report (perhaps labeled issue 53)
+that you are trying to fix, you might create a branch (labeled iss53). While
+you are preparing a fix for issue 53, the main trunk gains another bug fix
+or feature.
 
 .. figure:: ../figs/mergescenario.png
    :align: center
@@ -509,8 +551,11 @@ This allows the history of both branches to diverge:
 
    Credit: ProGit book, by Scott Chacon, CC License.
 
-But based on this graph structure, Git can compute the necessary information to
-merge the divergent branches back and continue with a unified line of
+Once you've completed fixing issue 53 on branch iss53, you want to
+integrate your work back into the main trunk represented by the master
+branch.  The process of integrating your work is called merging
+and often happens automatically.  Once the iss53 branch has been merged
+back into the master branch, you can continue with a unified line of
 development:
 
 .. figure:: ../figs/mergeaftermath.png
@@ -518,6 +563,10 @@ development:
    :width: 60%
    :alt: Credit: ProGit book, by Scott Chacon, CC License.
 
+   The result of merging the iss53 branch into the master
+   branch.  At this point, you could safely delete the
+   iss53 branch, which would result in removing the
+   label iss53 pointing to commit C5.
    Credit: ProGit book, by Scott Chacon, CC License.
 
 Let's now illustrate all of this with a concrete example. Let's get our
@@ -591,7 +640,7 @@ the `new repository page <https://github.com/new>`__ and make a
 repository called ``test``. Do **not** check the box that says
 ``Initialize this repository with a README``, since we already have an
 existing repository here. That option is useful when you're starting
-first at GitHub and don't have a repo made already on a local computer.
+first at GitHub and don't have a repository made already on a local computer.
 
 We can now follow the instructions from the next page::
 
@@ -612,8 +661,10 @@ different directory...
 ::
 
   $ cd ~/src/
-  # Here I clone my 'test' repo but with a different name, test2,
-  # to simulate a 2nd computer
+  
+Here I clone my 'test' repository but with a different name, test2,
+to simulate a 2nd computer::
+
   $ git clone git@github.com:jarrodmillman/test.git test2
   $ cd test2
   $ pwd
@@ -622,10 +673,9 @@ different directory...
 Let's now make some changes in one 'computer' and synchronize them on
 the second.
 
-::
+First I switch directories to simulate working on computer #2::
 
   $ cd ~/src/test2
-  # working on computer #2
   $ echo "More new content on my experiment" >> experiment.txt
   $ git add experiment.txt
   $ git commit -m "More work, on machine #2"
@@ -633,10 +683,10 @@ the second.
 Now we put this new work up on the GitHub server so it's available from
 the internet::
 
-  # working on computer #2
   $ git push
 
-Now let's fetch that work from machine #1::
+Now let's fetch that work from machine #1.  Again, I first change directories
+to simulate working from my other machine::
 
   $ cd ~/src/demo
   $ git pull
@@ -716,51 +766,47 @@ Let's then make our new commit::
   different operating systems, and as long as they obey a basic command
   structure, git can work with any of them.
 
-Collaborating with a small team
-===============================
+Exercise: Single remote with shared access
+------------------------------------------
 
-Single remote with shared access: we are going to set up a shared
-collaboration with one partner (the person sitting next to you). This
-will show the basic workflow of collaborating on a project with a small
-team where everyone has write privileges to the same repository.
+For this exercise, you are going to set up a shared collaboration with one
+partner (the person sitting next to you). This will show the basic workflow of
+collaborating on a project with a small team where everyone has write
+privileges to the same repository.
 
 We will have two people, let’s call them Alice and Bob, sharing a
-repository. Alice will be the owner of the repo and she will give Bob
+repository. Alice will be the owner of the repository and she will give Bob
 write privileges.
 
 We begin with a simple synchronization example, much like we just did
 above, but now between two people instead of one person. Otherwise it’s
 the same:
 
--  Bob clones Alice’s repository.
-
+-  Bob clones Alice's repository.
 -  Bob makes changes to a file and commits them locally.
-
 -  Bob pushes his changes to GitHub.
-
--  Alice pulls Bob’s changes into her own repository.
+-  Alice pulls Bob's changes into her own repository.
 
 Next, we will have both parties make non-conflicting changes each, and
 commit them locally. Then both try to push their changes:
 
--  Alice adds a new file, *alice.txt* to the repo and commits.
-
--  Bob adds *bob.txt* and commits.
-
+-  Alice adds a new file, ``alice.txt`` to the repository and commits.
+-  Bob adds ``bob.txt`` and commits.
 -  Alice pushes to GitHub.
-
 -  Bob tries to push to GitHub.
 
-What happens here?
+What happened?  Read the error message and hint provided by git to see
+if you can figure it out.
 
-The problem is that Bob’s changes create a commit that conflicts with
-Alice’s, so git refuses to apply them. It forces Bob to first do the
-merge on his machine, so that if there is a conflict in the merge, Bob
-deals with the conflict manually (git could try to do the merge on the
-server, but in that case if there’s a conflict, the server repo would be
-left in a conflicted state without a human to fix things up). The
-solution is for Bob to first pull the changes (pull in git is really
-fetch+merge), and then push again.
+Since Alice and Bob are working on the same branch of the repository, the
+problem is that Bob's branch doesn't have Alice's most recent commit, which the
+branch on GitHub has since Alice pushed it already.  In order to push a branch
+to a remote, you have to already have the entire history on the remote in your
+local repository.  The solution is for Bob to first pull the changes (pull in
+git is really fetch+merge), and then push again.  When Bob pulls from his
+GitHub remote, he will merge Alice's history into his repository.  Now when he
+attempts to push, his repository contains all the history that the remote
+repository on GitHub has.
 
 Learn more
 ==========

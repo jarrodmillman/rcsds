@@ -20,7 +20,7 @@ Things you **need to do** before the first lab on Monday, August 31st:
 
 You may also want to start reading `Preeyanon, Likit, Alexis Black Pyrkosz,
 and C. Titus Brown. "Reproducible bioinformatics research for biologists."
-Implementing Reproducible Research (2014): 185. <https://osf.io/zqbu2/>`_.
+Implementing Reproducible Research (2014): 185. <https://osf.io/zqbu2/>`_
 
 Definitions
 -----------
