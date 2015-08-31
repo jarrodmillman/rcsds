@@ -4,9 +4,8 @@ Core Topics
 
 .. toctree::
 
-   course-intro.rst
-   #git-intro.rst
    bash.rst
+   git-intro.rst
    fmri-intro.rst
    #python.rst
    #numpy.rst

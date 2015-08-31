@@ -1,5 +1,5 @@
-Useful Command Line Utilities
-=============================
+Command Line Utilities
+======================
 
 
 .. toctree::
