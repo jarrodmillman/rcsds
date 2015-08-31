@@ -13,5 +13,5 @@ bash-tutorial:
 	Rscript -e "library(knitr); knit2html('bash.md')"
 
 clean:
-	-rm bash.html bash.md 
-	-rm git-intro.html git-intro.md
+	-rm bash.html bash.md bash.txt
+	-rm git-intro.html git-intro.md git-intro.txt

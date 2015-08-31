@@ -6,4 +6,5 @@ Reproducible and Collaborative Statistical Data Science
    :maxdepth: 2
 
    standard/index.rst
+   lectures/index.rst
    append/index.rst

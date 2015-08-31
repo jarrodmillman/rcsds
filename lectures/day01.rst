@@ -1,6 +1,6 @@
-*******************
-Course introduction
-*******************
+*****
+Day 1
+*****
 
 You will find the course syllabus, a link to the Piazza
 discussion site, information about the labs as well as the group project

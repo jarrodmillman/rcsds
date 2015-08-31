@@ -4,7 +4,6 @@ Core Topics
 
 .. toctree::
 
-   course-intro.rst
    bash.rst
    git-intro.rst
    fmri-intro.rst
