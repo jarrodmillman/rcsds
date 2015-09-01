@@ -767,7 +767,7 @@ Let's then make our new commit::
   structure, git can work with any of them.
 
 Exercise: Single remote with shared access
-------------------------------------------
+==========================================
 
 For this exercise, you are going to set up a shared collaboration with one
 partner (the person sitting next to you). This will show the basic workflow of

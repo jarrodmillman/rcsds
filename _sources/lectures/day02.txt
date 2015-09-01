@@ -1,0 +1,17 @@
+*****
+Day 2
+*****
+
+Announcements
+-------------
+
+- Everyone should be signed up on Piazza and GitHub
+- Reading 1 due Thursday
+- Quiz Thursday during class
+- Quest lecture next Tuesday by Alex Huth
+
+Things you **need to do** before Thursday, September 3rd:
+
+#. Read `Introduction to Git <http://www.jarrodmillman.com/rcsds/standard/git-intro.html>`_
+#. [optional] Read `Git for Scientists: A Tutorial <http://nyuccl.org/pages/GitTutorial/>`_
+   and `The Git Parable <http://tom.preston-werner.com/2009/05/19/the-git-parable.html>`_
