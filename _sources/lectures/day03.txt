@@ -24,3 +24,12 @@ following this weekend:
 
 #. `Git for Scientists: A Tutorial <http://nyuccl.org/pages/GitTutorial/>`_
 #. `The Git Parable <http://tom.preston-werner.com/2009/05/19/the-git-parable.html>`_
+
+We will start discussing Python next Thursday.  If you haven't ever used Python
+I encourage you to look over `The Python Tutorial <https://docs.python.org/2/tutorial/>`_
+before Thursday, September 10th.  In particular, look through:
+
+#. Whetting Your Appetite
+#. Using the Python Interpreter
+#. An Informal Introduction to Python
+#. More Control Flow Tools
