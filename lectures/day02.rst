@@ -8,7 +8,7 @@ Announcements
 - Everyone should be signed up on Piazza and GitHub
 - Reading 1 due Thursday
 - Quiz Thursday during class
-- Quest lecture next Tuesday by Alex Huth
+- Guest lecture next Tuesday by Alex Huth
 
 Things you **need to do** before Thursday, September 3rd:
 
