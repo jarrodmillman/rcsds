@@ -6,3 +6,4 @@ Lectures
 
    day01.rst
    day02.rst
+   day03.rst
