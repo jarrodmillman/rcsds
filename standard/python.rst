@@ -4,6 +4,15 @@ Introduction to Python
 
 .. contents::
 
+.. note::
+   This tutorial assumes that you are familiar with at least one high-level
+   language like R or Matlab.  If you don't have this background, you may
+   want to read the first 3 sections of the `Python tutorial
+   <https://docs.python.org/2/tutorial/index.html>`_---`Whetting Your
+   Appetite <https://docs.python.org/2/tutorial/appetite.html>`_,
+   `Using the Python Interpreter <https://docs.python.org/2/tutorial/interpreter.html>`_,
+   and `An Informal Introduction to Python
+   <https://docs.python.org/2/tutorial/introduction.html>`_---first.
 
 Introduction
 ------------
@@ -149,7 +158,7 @@ how you might benefit from NumPy docstrings in practice.
 
 .. note:: Python 2 vs. 3
   Python 3 is a new version of Python, which is incompatible with Python
-  2. We will use Python 2 in this bootcamp, but Python 3 is the future.
+  2. We will use Python 2, but Python 3 is the future.
   Due to the large installed codebase of Python 2, the transition will
   take years.
   
