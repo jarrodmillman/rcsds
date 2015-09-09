@@ -25,6 +25,9 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Core Topics" href="index.html" />
+    <link rel="next" title="Lectures" href="../lectures/index.html" />
+    <link rel="prev" title="Statistical analysis of fMRI data" href="fmri-intro.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -87,19 +90,40 @@
 </li>
 </ul>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This tutorial assumes that you are familiar with at least one high-level
+language like R or Matlab.  If you don&#8217;t have this background, you may
+want to read the first 3 sections of the <a class="reference external" href="https://docs.python.org/2/tutorial/index.html">Python tutorial</a>&#8212;<a class="reference external" href="https://docs.python.org/2/tutorial/appetite.html">Whetting Your
+Appetite</a>,
+<a class="reference external" href="https://docs.python.org/2/tutorial/interpreter.html">Using the Python Interpreter</a>,
+and <a class="reference external" href="https://docs.python.org/2/tutorial/introduction.html">An Informal Introduction to Python</a>&#8212;first.</p>
+<p>It also assumes you have Python (and IPython) installed on your computer.  If
+you have Python installed&#8212;but not IPython, you can install it by typing:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ pip install ipython
+</pre></div>
+</div>
+<p class="last">For additional help with installation, please see the <a class="reference external" href="http://ipython.org/install.html">IPython installation
+page</a>.</p>
+</div>
 <div class="section" id="introduction">
 <h2><a class="toc-backref" href="#id7">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Useful written references and tutorials:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://docs.python.org/2/index.html">https://docs.python.org/2/index.html</a></li>
 <li><a class="reference external" href="https://docs.python.org/2/library/index.html">https://docs.python.org/2/library/index.html</a></li>
 <li><a class="reference external" href="https://scipy-lectures.github.io/">https://scipy-lectures.github.io/</a></li>
-<li><a class="reference external" href="http://software-carpentry.org/v4/python/">http://software-carpentry.org/v4/python/</a></li>
 <li><a class="reference external" href="https://docs.python.org/3/howto/pyporting.html">https://docs.python.org/3/howto/pyporting.html</a></li>
 </ul>
-<p>While reading this tutorial, you should type the example code snippets at an
-interactive Python terminal. I recommend using either the IPython shell or the
-IPython notebook. To start an IPython shell, type the following at a BASH
-prompt:</p>
+<p>Some introductory video lectures:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://software-carpentry.org/v4/python/">http://software-carpentry.org/v4/python/</a></li>
+<li><a class="reference external" href="https://www.youtube.com/watch?v=a_Z_6brm9ZQ">https://www.youtube.com/watch?v=a_Z_6brm9ZQ</a></li>
+</ul>
+<p>While working through this tutorial, you should type the example code snippets
+at an interactive Python terminal. I recommend using either the IPython shell
+or the IPython notebook. To start an IPython shell, type the following at a
+BASH prompt:</p>
 <div class="code bash highlight-python"><div class="highlight"><pre>$ ipython
 </pre></div>
 </div>
@@ -215,7 +239,7 @@ you might use this functionality. Use on them as well.</li>
 <p class="first admonition-title">Note</p>
 <p>Python 2 vs. 3
 Python 3 is a new version of Python, which is incompatible with Python
-2. We will use Python 2 in this bootcamp, but Python 3 is the future.
+2. We will use Python 2, but Python 3 is the future.
 Due to the large installed codebase of Python 2, the transition will
 take years.</p>
 <p>If you are writing new Python code at this point, require Python 2.7 as
@@ -244,8 +268,8 @@ that then runs similarly on Python 2.6/2.7 and Python 3.3+.&#8221;</p>
 </ul>
 <div class="section" id="numbers">
 <h3><a class="toc-backref" href="#id13">Numbers</a><a class="headerlink" href="#numbers" title="Permalink to this headline">¶</a></h3>
-<p>Python has integers, floats, and complex numbers with the usual
-operations (beware: division).</p>
+<p>Python has integers, floats, and complex numbers with the usual operations
+(beware: division).</p>
 <div class="code python highlight-python"><div class="highlight"><pre>In [1]: 2/3
 Out[1]: 0
 
@@ -298,9 +322,9 @@ In [13]: (type(1), type(1.1), type(1+2j))
 Out[13]: (int, float, complex)
 </pre></div>
 </div>
-<p>The above line is an example of a composite object called a tuple, which
-we will discuss more in §&nbsp;[subsec:tuples] below. At an IPython prompt,
-use <code class="docutils literal"><span class="pre">type?</span></code> to see what <code class="docutils literal"><span class="pre">type</span></code> does.</p>
+<p>The above line is an example of a composite object called a tuple, which we
+will discuss more below. At an IPython prompt, use <code class="docutils literal"><span class="pre">type?</span></code> to see what
+<code class="docutils literal"><span class="pre">type</span></code> does.</p>
 <p>The <code class="docutils literal"><span class="pre">math</span></code> package in the standard library includes many additional
 numerical operations.</p>
 <div class="code python highlight-python"><div class="highlight"><pre>In [14]: math.
@@ -753,8 +777,6 @@ In [106]: add(3)
 Out[106]: 4
 </pre></div>
 </div>
-<p><strong>Exercise: DNA</strong></p>
-<p>For this exercise, please see <code class="docutils literal"><span class="pre">ex1/dna.py</span></code>.</p>
 </div>
 </div>
 <div class="section" id="classes">
@@ -781,8 +803,6 @@ In [229]: x.area()
 Out[229]: 50
 </pre></div>
 </div>
-<p><strong>Exercise: Cipher</strong></p>
-<p>For this exercise, please see <code class="docutils literal"><span class="pre">ex2/cipher.py</span></code>.</p>
 </div>
 <div class="section" id="data-formats">
 <h2><a class="toc-backref" href="#id28">Data formats</a><a class="headerlink" href="#data-formats" title="Permalink to this headline">¶</a></h2>
@@ -932,8 +952,14 @@ IPython prompt and in tandem write your script</td></tr>
 
 
 <h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="index.html">Core Topics</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Core Topics</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="bash.html">Using the bash shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-intro.html">Introduction to Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fmri-intro.html">Statistical analysis of fMRI data</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Introduction to Python</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../lectures/index.html">Lectures</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
 </ul>

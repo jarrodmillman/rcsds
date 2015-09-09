@@ -4,20 +4,44 @@ Introduction to Python
 
 .. contents::
 
+.. note::
+   This tutorial assumes that you are familiar with at least one high-level
+   language like R or Matlab.  If you don't have this background, you may
+   want to read the first 3 sections of the `Python tutorial
+   <https://docs.python.org/2/tutorial/index.html>`_---`Whetting Your
+   Appetite <https://docs.python.org/2/tutorial/appetite.html>`_,
+   `Using the Python Interpreter <https://docs.python.org/2/tutorial/interpreter.html>`_,
+   and `An Informal Introduction to Python
+   <https://docs.python.org/2/tutorial/introduction.html>`_---first.
+
+   It also assumes you have Python (and IPython) installed on your computer.  If
+   you have Python installed---but not IPython, you can install it by typing::
+
+      $ pip install ipython
+
+   For additional help with installation, please see the `IPython installation
+   page <http://ipython.org/install.html>`_.
 
 Introduction
 ------------
 
--  https://docs.python.org/2/index.html
--  https://docs.python.org/2/library/index.html
--  https://scipy-lectures.github.io/
--  http://software-carpentry.org/v4/python/
--  https://docs.python.org/3/howto/pyporting.html
+Useful written references and tutorials:
 
-While reading this tutorial, you should type the example code snippets at an
-interactive Python terminal. I recommend using either the IPython shell or the
-IPython notebook. To start an IPython shell, type the following at a BASH
-prompt:
+- https://docs.python.org/2/index.html
+- https://docs.python.org/2/library/index.html
+- https://scipy-lectures.github.io/
+- https://docs.python.org/3/howto/pyporting.html
+
+
+Some introductory video lectures:
+
+- http://software-carpentry.org/v4/python/
+- https://www.youtube.com/watch?v=a_Z_6brm9ZQ
+
+While working through this tutorial, you should type the example code snippets
+at an interactive Python terminal. I recommend using either the IPython shell
+or the IPython notebook. To start an IPython shell, type the following at a
+BASH prompt:
 
 .. code:: bash
 
@@ -149,7 +173,7 @@ how you might benefit from NumPy docstrings in practice.
 
 .. note:: Python 2 vs. 3
   Python 3 is a new version of Python, which is incompatible with Python
-  2. We will use Python 2 in this bootcamp, but Python 3 is the future.
+  2. We will use Python 2, but Python 3 is the future.
   Due to the large installed codebase of Python 2, the transition will
   take years.
   
@@ -180,8 +204,8 @@ Data Structures
 Numbers
 ~~~~~~~
 
-Python has integers, floats, and complex numbers with the usual
-operations (beware: division).
+Python has integers, floats, and complex numbers with the usual operations
+(beware: division).
 
 .. code:: python
 
@@ -236,9 +260,9 @@ operations (beware: division).
     In [13]: (type(1), type(1.1), type(1+2j))
     Out[13]: (int, float, complex)
 
-The above line is an example of a composite object called a tuple, which
-we will discuss more in § [subsec:tuples] below. At an IPython prompt,
-use ``type?`` to see what ``type`` does.
+The above line is an example of a composite object called a tuple, which we
+will discuss more below. At an IPython prompt, use ``type?`` to see what
+``type`` does.
 
 The ``math`` package in the standard library includes many additional
 numerical operations.
@@ -733,9 +757,11 @@ Functions
     In [106]: add(3)
     Out[106]: 4
 
-**Exercise: DNA**
-
-For this exercise, please see ``ex1/dna.py``.
+.. **Exercise: DNA**
+.. 
+.. To get this exercise::
+.. 
+..   $ wget http://jarrodmillman.com/rcsds/code/dna.py
 
 Classes
 -------
@@ -762,9 +788,11 @@ Classes
     In [229]: x.area()
     Out[229]: 50
 
-**Exercise: Cipher**
+.. **Exercise: Cipher**
 
-For this exercise, please see ``ex2/cipher.py``.
+   To get this exercise::
+   
+     $ wget http://jarrodmillman.com/rcsds/code/cipher.py
 
 Data formats
 ------------
