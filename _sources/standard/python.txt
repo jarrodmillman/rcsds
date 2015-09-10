@@ -286,7 +286,7 @@ numerical operations.
 
 Using the section on "Built-in Types" from the official "The Python
 Standard Library" reference (follow the first link at the top of
-§ [sec:datastructures]), figure out how to compute:
+this section), figure out how to compute:
 
 #. :math:`3 \le 4`,
 
