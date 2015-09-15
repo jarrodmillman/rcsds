@@ -14,19 +14,34 @@ Introduction to Python
    and `An Informal Introduction to Python
    <https://docs.python.org/2/tutorial/introduction.html>`_---first.
 
+   It also assumes you have Python (and IPython) installed on your computer.  If
+   you have Python installed---but not IPython, you can install it by typing::
+
+      $ pip install ipython
+
+   For additional help with installation, please see the `IPython installation
+   page <http://ipython.org/install.html>`_.
+
 Introduction
 ------------
 
--  https://docs.python.org/2/index.html
--  https://docs.python.org/2/library/index.html
--  https://scipy-lectures.github.io/
--  http://software-carpentry.org/v4/python/
--  https://docs.python.org/3/howto/pyporting.html
+Useful written references and tutorials:
 
-While reading this tutorial, you should type the example code snippets at an
-interactive Python terminal. I recommend using either the IPython shell or the
-IPython notebook. To start an IPython shell, type the following at a BASH
-prompt:
+- https://docs.python.org/2/index.html
+- https://docs.python.org/2/library/index.html
+- https://scipy-lectures.github.io/
+- https://docs.python.org/3/howto/pyporting.html
+
+
+Some introductory video lectures:
+
+- http://software-carpentry.org/v4/python/
+- https://www.youtube.com/watch?v=a_Z_6brm9ZQ
+
+While working through this tutorial, you should type the example code snippets
+at an interactive Python terminal. I recommend using either the IPython shell
+or the IPython notebook. To start an IPython shell, type the following at a
+BASH prompt:
 
 .. code:: bash
 
@@ -189,8 +204,8 @@ Data Structures
 Numbers
 ~~~~~~~
 
-Python has integers, floats, and complex numbers with the usual
-operations (beware: division).
+Python has integers, floats, and complex numbers with the usual operations
+(beware: division).
 
 .. code:: python
 
@@ -245,9 +260,9 @@ operations (beware: division).
     In [13]: (type(1), type(1.1), type(1+2j))
     Out[13]: (int, float, complex)
 
-The above line is an example of a composite object called a tuple, which
-we will discuss more in § [subsec:tuples] below. At an IPython prompt,
-use ``type?`` to see what ``type`` does.
+The above line is an example of a composite object called a tuple, which we
+will discuss more below. At an IPython prompt, use ``type?`` to see what
+``type`` does.
 
 The ``math`` package in the standard library includes many additional
 numerical operations.
@@ -271,7 +286,7 @@ numerical operations.
 
 Using the section on "Built-in Types" from the official "The Python
 Standard Library" reference (follow the first link at the top of
-§ [sec:datastructures]), figure out how to compute:
+this section), figure out how to compute:
 
 #. :math:`3 \le 4`,
 
@@ -742,9 +757,6 @@ Functions
     In [106]: add(3)
     Out[106]: 4
 
-**Exercise: DNA**
-
-For this exercise, please see ``ex1/dna.py``.
 
 Classes
 -------
@@ -771,9 +783,6 @@ Classes
     In [229]: x.area()
     Out[229]: 50
 
-**Exercise: Cipher**
-
-For this exercise, please see ``ex2/cipher.py``.
 
 Data formats
 ------------

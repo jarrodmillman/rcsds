@@ -195,6 +195,7 @@ github:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	touch $(BUILDDIR)/html/.nojekyll
 	cp -a data $(BUILDDIR)/html/.
+	cp -a code $(BUILDDIR)/html/.
 	ghp-import $(BUILDDIR)/html/
 	git push -u origin gh-pages
 	@echo

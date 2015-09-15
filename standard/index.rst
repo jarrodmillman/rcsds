@@ -7,7 +7,7 @@ Core Topics
    bash.rst
    git-intro.rst
    fmri-intro.rst
-   #python.rst
+   python.rst
    #numpy.rst
    #git-advanced.rst
    #eda.rst
