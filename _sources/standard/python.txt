@@ -757,11 +757,6 @@ Functions
     In [106]: add(3)
     Out[106]: 4
 
-.. **Exercise: DNA**
-.. 
-.. To get this exercise::
-.. 
-..   $ wget http://jarrodmillman.com/rcsds/code/dna.py
 
 Classes
 -------
@@ -788,11 +783,6 @@ Classes
     In [229]: x.area()
     Out[229]: 50
 
-.. **Exercise: Cipher**
-
-   To get this exercise::
-   
-     $ wget http://jarrodmillman.com/rcsds/code/cipher.py
 
 Data formats
 ------------
