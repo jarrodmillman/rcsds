@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab 2 &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Labs" href="index.html" />
+    <link rel="next" title="Appendices" href="../append/index.html" />
+    <link rel="prev" title="Lab 1" href="lab01.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="lab-2">
+<h1>Lab 2<a class="headerlink" href="#lab-2" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li>Agenda<ol class="arabic">
+<li>Get SCF accounts set up</li>
+<li>re-emphasize some stuff from the past couple weeks<ol class="arabic">
+<li>quiz</li>
+<li>reading1</li>
+</ol>
+</li>
+<li>Mention more git basics we never explicitly covered<ol class="arabic" start="3">
+<li>merging (esp. merge conflicts)</li>
+<li>branches</li>
+</ol>
+</li>
+<li>More python intro<ol class="arabic" start="5">
+<li>Get up to flow control in lecture notes before Tuesday</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>SCF account forms<ol class="arabic" start="5">
+<li><a class="reference external" href="http://scf.berkeley.edu/cgi-bin/ingrid.cgi">http://scf.berkeley.edu/cgi-bin/ingrid.cgi</a></li>
+<li>Distribute forms</li>
+<li>log in to server<ol class="arabic" start="6">
+<li>$ ssh &#64;.berkeley.edu</li>
+<li>acct_name is on the form</li>
+<li>change password and enter required info</li>
+</ol>
+</li>
+<li>sign and collect forms</li>
+</ol>
+</li>
+<li>Quiz 1 results<ol class="arabic" start="9">
+<li>Go question by questions<ol class="arabic" start="9">
+<li>go over results spreadsheet (names are blacked-out)</li>
+</ol>
+</li>
+<li>man | grep</li>
+<li>apropos</li>
+</ol>
+</li>
+<li>Assignment submission notes<ol class="arabic" start="12">
+<li>I will be crontab-ing my pulls of your work directories, so from
+here on out the deadlines will be strictly enforced<ol class="arabic" start="10">
+<li>If you submit something at 9:01 PM, I will not see it</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Reading 1 results<ol class="arabic" start="13">
+<li>Must include your take - a summary is not enough</li>
+<li>Formatting issues<ol class="arabic" start="11">
+<li>No name (ruins blind functionality), no title/author/header
+(wastes words)</li>
+<li>80 char limit<ol class="arabic">
+<li>limitations of fold</li>
+<li>.vimrc colorcolumn option</li>
+</ol>
+</li>
+<li>Run through grading script to show how formatting issues show
+up in grader</li>
+</ol>
+</li>
+<li>Some insights<ol class="arabic" start="14">
+<li><strong>Optimization</strong><ol class="arabic" start="3">
+<li>&#8220;<em>The real problem is that programmers have spent far too
+much time worrying about efficiency in the wrong places
+and at the wrong times; ****premature optimization is
+the root of all evil**</em>* (or at least most of it) in
+programming&#8221;*. &#8211;Donald Knuth, Turing Award acceptance
+speech</li>
+</ol>
+</li>
+<li><strong>Paralysis by analysis</strong> - There are so many tools and so
+much info, how do you know what you should be doing, and when<ol class="arabic" start="4">
+<li>Don’t be afraid to just try things (git should make you
+braver)</li>
+<li>Collaboration is your friend</li>
+<li>Incorporate info in small, but constant chunks</li>
+</ol>
+</li>
+<li><strong>You can overdo it with the comments</strong><ol class="arabic" start="7">
+<li>One school of thought even pushes for code that’s so
+self-descriptive, comments are unnecessary</li>
+</ol>
+</li>
+<li><strong>Myth: People with CS backgrounds are uninterested in other
+fields</strong><ol class="arabic" start="8">
+<li>It is important for people in their fields to know the
+basics of CS so that interesting ideas and concepts can be
+effectively communicated to people with stronger CS
+backgrounds</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>More git basics<ol class="arabic" start="16">
+<li>Who’s been burned by git yet?<ol class="arabic" start="18">
+<li>commit early and often</li>
+<li>beware commands where you can truly lose work<ol class="arabic" start="9">
+<li>reset &#8211;hard</li>
+<li>checkout &#8211;</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>branching, merging (esp. merge conflicts)</li>
+<li>In-class demo: hello-world + branching example</li>
+<li>Interactive demo: pow function - merge conflict over github</li>
+</ol>
+</li>
+<li>Follow intro python <a class="reference external" href="http://www.jarrodmillman.com/rcsds/standard/python.html#data-structures">lecture
+notes</a>
+up to control-flow and do exercises in groups.</li>
+</ol>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/index.html">Lectures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Labs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lab01.html">Lab 1</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Lab 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>

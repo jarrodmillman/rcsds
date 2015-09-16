@@ -7,4 +7,5 @@ Reproducible and Collaborative Statistical Data Science
 
    standard/index.rst
    lectures/index.rst
+   labs/index.rst
    append/index.rst

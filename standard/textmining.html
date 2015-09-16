@@ -1,0 +1,413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Webservices &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Core Topics" href="index.html" />
+    <link rel="next" title="Lectures" href="../lectures/index.html" />
+    <link rel="prev" title="Introduction to Python" href="python.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="webservices">
+<h1>Webservices<a class="headerlink" href="#webservices" title="Permalink to this headline">¶</a></h1>
+<p>Many data sources are available on the Internet. You’ve probably used a
+web browser interface to search through some of this data and even
+download it to your computer. As you may have noticed, this manual
+process is labor intensive, error prone, and hard to document.</p>
+<p>To provide programmatic and automatic interaction with these data
+stores, many websites serve this information through a documented
+application programmer interface (API). <a class="footnote-reference" href="#id8" id="id1">[1]</a> These webservice APIs
+provide a mechanism to create new functionality on top of existing
+webcontent.</p>
+<p>While there are several ways to implement webservices, <a class="reference external" href="http://en.wikipedia.org/wiki/Representational_state_transfer">Representational
+State Transfer
+(REST)</a>
+has gained widespread popularity. REST is more of a style than a
+standard. A system designed in the REST style is called RESTful. RESTful
+systems typically use HTTP requests to query and post data using the
+standard HTTP verbs (GET, POST, PUT, DELETE, etc.). Often some form of
+authentication is necessary to communicate with a webservice. It is
+common to use <a class="reference external" href="http://en.wikipedia.org/wiki/OAuth">OAuth</a> for this
+purpose.</p>
+</div>
+<div class="section" id="data-serialization">
+<h1>Data serialization<a class="headerlink" href="#data-serialization" title="Permalink to this headline">¶</a></h1>
+<p>When you use a web browser to view a webpage, your browser handles the
+HTTP communication for you. You specify what you wish to view in the
+form of a
+<a class="reference external" href="http://en.wikipedia.org/wiki/Uniform_resource_identifier">URI</a> such
+as <a class="reference external" href="http://example.org/absolute/URI/with/absolute/path/to/resource.txt">http://example.org/absolute/URI/with/absolute/path/to/resource.txt</a>.
+At this point your browser communicates with the webserver and requests
+the resource. The resource is typically provided to your web browser as
+an <a class="reference external" href="http://en.wikipedia.org/wiki/HTML">HTML</a> document, which browsers
+are specifically designed to render.</p>
+<p>Similarly, you will use HTTP to communicate with the Twitter webservice.
+However rather than passively consuming webpages, you will be interested
+in retrieving data in a form that is amenable to further processing.</p>
+<p>Data serialization refers to the process of encoding data structures and
+objects in a format that can be used to store this information on disk
+or transmit it over the web. For example, in R you can use the Rdata
+format to save R objects to disk and reload them later. For webservices,
+JSON and XML are standard formats. To better understand this, let’s
+briefly look at data serialization more generally.</p>
+<div class="section" id="python-object">
+<h2>Python object<a class="headerlink" href="#python-object" title="Permalink to this headline">¶</a></h2>
+<p>First let’s create a Python object.</p>
+<div class="highlight-python"><div class="highlight"><pre>\PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{n}{mydict} \PY{o}{=} \PY{p}{\PYZob{}}
+\PY{g+gp}{... }    \PY{l+s}{\PYZdq{}}\PY{l+s}{parents}\PY{l+s}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{p}{\PYZob{}}\PY{l+s}{\PYZdq{}}\PY{l+s}{name}\PY{l+s}{\PYZdq{}}\PY{p}{:} \PY{l+s}{\PYZdq{}}\PY{l+s}{mom}\PY{l+s}{\PYZdq{}}\PY{p}{,}
+\PY{g+gp}{... }                \PY{l+s}{\PYZdq{}}\PY{l+s}{number}\PY{l+s}{\PYZdq{}}\PY{p}{:} \PY{l+s}{\PYZdq{}}\PY{l+s}{555\PYZhy{}123\PYZhy{}4567}\PY{l+s}{\PYZdq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+\PY{g+gp}{... }               \PY{p}{\PYZob{}}\PY{l+s}{\PYZdq{}}\PY{l+s}{name}\PY{l+s}{\PYZdq{}}\PY{p}{:} \PY{l+s}{\PYZdq{}}\PY{l+s}{dad}\PY{l+s}{\PYZdq{}}\PY{p}{,}
+\PY{g+gp}{... }                \PY{l+s}{\PYZdq{}}\PY{l+s}{number}\PY{l+s}{\PYZdq{}}\PY{p}{:} \PY{l+s}{\PYZdq{}}\PY{l+s}{555\PYZhy{}123\PYZhy{}4567}\PY{l+s}{\PYZdq{}}\PY{p}{\PYZcb{}}\PY{p}{]}\PY{p}{,}
+\PY{g+gp}{... }    \PY{l+s}{\PYZdq{}}\PY{l+s}{colleagues}\PY{l+s}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+s}{\PYZdq{}}\PY{l+s}{name}\PY{l+s}{\PYZdq{}}\PY{p}{:} \PY{l+s}{\PYZdq{}}\PY{l+s}{advisor}\PY{l+s}{\PYZdq{}}\PY{p}{,}
+\PY{g+gp}{... }                   \PY{l+s}{\PYZdq{}}\PY{l+s}{number}\PY{l+s}{\PYZdq{}}\PY{p}{:} \PY{l+s}{\PYZdq{}}\PY{l+s}{555\PYZhy{}123\PYZhy{}4567}\PY{l+s}{\PYZdq{}}\PY{p}{\PYZcb{}}
+\PY{g+gp}{... }\PY{p}{\PYZcb{}}
+</pre></div>
+</div>
+<p>And let’s print the results:</p>
+<div class="highlight-python"><div class="highlight"><pre>\PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{n}{mydict}
+\PY{g+go}{\PYZob{}\PYZsq{}colleagues\PYZsq{}: \PYZob{}\PYZsq{}name\PYZsq{}: \PYZsq{}advisor\PYZsq{}, \PYZsq{}number\PYZsq{}: \PYZsq{}555\PYZhy{}123\PYZhy{}4567\PYZsq{}\PYZcb{}, \PYZsq{}parents\PYZsq{}: [\PYZob{}\PYZsq{}name\PYZsq{}: \PYZsq{}mom\PYZsq{}, \PYZsq{}number\PYZsq{}: \PYZsq{}555\PYZhy{}123\PYZhy{}4567\PYZsq{}\PYZcb{}, \PYZob{}\PYZsq{}name\PYZsq{}: \PYZsq{}dad\PYZsq{}, \PYZsq{}number\PYZsq{}: \PYZsq{}555\PYZhy{}123\PYZhy{}4567\PYZsq{}\PYZcb{}]\PYZcb{}}
+\PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k+kn}{import} \PY{n+nn}{pprint}
+\PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{n}{pprint}\PY{o}{.}\PY{n}{pprint}\PY{p}{(}\PY{n}{mydict}\PY{p}{)}
+\PY{g+go}{\PYZob{}\PYZsq{}colleagues\PYZsq{}: \PYZob{}\PYZsq{}name\PYZsq{}: \PYZsq{}advisor\PYZsq{}, \PYZsq{}number\PYZsq{}: \PYZsq{}555\PYZhy{}123\PYZhy{}4567\PYZsq{}\PYZcb{},}
+\PY{g+go}{ \PYZsq{}parents\PYZsq{}: [\PYZob{}\PYZsq{}name\PYZsq{}: \PYZsq{}mom\PYZsq{}, \PYZsq{}number\PYZsq{}: \PYZsq{}555\PYZhy{}123\PYZhy{}4567\PYZsq{}\PYZcb{},}
+\PY{g+go}{             \PYZob{}\PYZsq{}name\PYZsq{}: \PYZsq{}dad\PYZsq{}, \PYZsq{}number\PYZsq{}: \PYZsq{}555\PYZhy{}123\PYZhy{}4567\PYZsq{}\PYZcb{}]\PYZcb{}}
+</pre></div>
+</div>
+</div>
+<div class="section" id="xml">
+<h2>XML<a class="headerlink" href="#xml" title="Permalink to this headline">¶</a></h2>
+<p>How does this object look if we convert it to XML? <a class="footnote-reference" href="#id9" id="id2">[2]</a></p>
+<div class="highlight-python"><div class="highlight"><pre>\PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k+kn}{from} \PY{n+nn}{dict2xml} \PY{k+kn}{import} \PY{n}{dict2xml}
+\PY{g+gt}{Traceback (most recent call last):}
+  File \PY{n+nb}{\PYZdq{}\PYZlt{}stdin\PYZgt{}\PYZdq{}}, line \PY{l+m}{1}, in \PY{n}{\PYZlt{}module\PYZgt{}}
+\PY{g+gr}{ImportError}: \PY{n}{No module named dict2xml}
+\PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k}{print}\PY{p}{(}\PY{n}{dict2xml}\PY{p}{(}\PY{n}{mydict}\PY{p}{)}\PY{p}{)}
+\PY{g+gt}{Traceback (most recent call last):}
+  File \PY{n+nb}{\PYZdq{}\PYZlt{}stdin\PYZgt{}\PYZdq{}}, line \PY{l+m}{1}, in \PY{n}{\PYZlt{}module\PYZgt{}}
+\PY{g+gr}{NameError}: \PY{n}{name \PYZsq{}dict2xml\PYZsq{} is not defined}
+</pre></div>
+</div>
+</div>
+<div class="section" id="json">
+<h2>JSON<a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h2>
+<p>What if we convert it to JSON?</p>
+<div class="highlight-python"><div class="highlight"><pre>\PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k+kn}{import} \PY{n+nn}{json}
+\PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k}{print}\PY{p}{(}\PY{n}{json}\PY{o}{.}\PY{n}{dumps}\PY{p}{(}\PY{n}{mydict}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{sort\PYZus{}keys}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}\PY{p}{)}
+\PY{g+go}{\PYZob{}}
+\PY{g+go}{    \PYZdq{}colleagues\PYZdq{}: \PYZob{}}
+\PY{g+go}{        \PYZdq{}name\PYZdq{}: \PYZdq{}advisor\PYZdq{},}
+\PY{g+go}{        \PYZdq{}number\PYZdq{}: \PYZdq{}555\PYZhy{}123\PYZhy{}4567\PYZdq{}}
+\PY{g+go}{    \PYZcb{},}
+\PY{g+go}{    \PYZdq{}parents\PYZdq{}: [}
+\PY{g+go}{        \PYZob{}}
+\PY{g+go}{            \PYZdq{}name\PYZdq{}: \PYZdq{}mom\PYZdq{},}
+\PY{g+go}{            \PYZdq{}number\PYZdq{}: \PYZdq{}555\PYZhy{}123\PYZhy{}4567\PYZdq{}}
+\PY{g+go}{        \PYZcb{},}
+\PY{g+go}{        \PYZob{}}
+\PY{g+go}{            \PYZdq{}name\PYZdq{}: \PYZdq{}dad\PYZdq{},}
+\PY{g+go}{            \PYZdq{}number\PYZdq{}: \PYZdq{}555\PYZhy{}123\PYZhy{}4567\PYZdq{}}
+\PY{g+go}{        \PYZcb{}}
+\PY{g+go}{    ]}
+\PY{g+go}{\PYZcb{}}
+</pre></div>
+</div>
+</div>
+<div class="section" id="yaml">
+<h2>YAML<a class="headerlink" href="#yaml" title="Permalink to this headline">¶</a></h2>
+<p>What if we convert it to YAML?</p>
+<div class="highlight-python"><div class="highlight"><pre>\PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k+kn}{import} \PY{n+nn}{yaml}
+\PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k}{print}\PY{p}{(}\PY{n}{yaml}\PY{o}{.}\PY{n}{dump}\PY{p}{(}\PY{n}{mydict}\PY{p}{)}\PY{p}{)}
+\PY{g+go}{colleagues: \PYZob{}name: advisor, number: 555\PYZhy{}123\PYZhy{}4567\PYZcb{}}
+\PY{g+go}{parents:}
+\PY{g+go}{\PYZhy{} \PYZob{}name: mom, number: 555\PYZhy{}123\PYZhy{}4567\PYZcb{}}
+\PY{g+go}{\PYZhy{} \PYZob{}name: dad, number: 555\PYZhy{}123\PYZhy{}4567\PYZcb{}}
+</pre></div>
+</div>
+</div>
+<div class="section" id="questions">
+<h2>Questions<a class="headerlink" href="#questions" title="Permalink to this headline">¶</a></h2>
+<p>Looking over the output of the above formats you should notice several
+things.</p>
+<ul class="simple">
+<li>Which of the formats uses the largest number of characters?</li>
+<li>Which uses the fewest?</li>
+<li>Which looks most like Python?</li>
+</ul>
+</div>
+<div class="section" id="saving-json-and-csv">
+<h2>Saving JSON and CSV<a class="headerlink" href="#saving-json-and-csv" title="Permalink to this headline">¶</a></h2>
+<p>For this project you will be querying the Twitter webservice and will be
+getting responses in the JSON format. After you get your response, you
+will want to save it to disk. I recommend that you use the JSON format
+as your main data storage format for this project.</p>
+<div class="highlight-python"><div class="highlight"><pre>\PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k+kn}{import} \PY{n+nn}{json}
+\PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{data.json}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{w}\PY{l+s}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{outfile}\PY{p}{:}
+\PY{g+gp}{... }    \PY{n}{json}\PY{o}{.}\PY{n}{dump}\PY{p}{(}\PY{n}{mydict}\PY{p}{,} \PY{n}{outfile}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{sort\PYZus{}keys}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}
+\PY{g+gp}{...}
+</pre></div>
+</div>
+<p>If you decide that you would like to use R for part of your analysis or
+for creating figures, I recommend saving the information you want to
+work with in R as a CSV file. Your JSON file will have nested and
+non-homogeneous structure, which is not possible to directly store using
+CSV. So you will need to first decide what data you want to save as CSV
+and then transform the JSON data into the necessary form. Here is an
+example of how you might transform <code class="docutils literal"><span class="pre">mydict</span></code> above into a list of equal
+length tuples.</p>
+<div class="highlight-python"><div class="highlight"><pre>\PY{n}{mydict}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{colleagues}\PY{l+s}{\PYZdq{}}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{n}{mydict}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{colleagues}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{]}
+\PY{n}{mylist} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{e}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{name}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{e}\PY{p}{\PYZob{}}\PY{l+s}{\PYZdq{}}\PY{l+s}{number}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{k}\PY{p}{)} \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{mydict}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{e} \PY{o+ow}{in} \PY{n}{v}\PY{p}{]}
+</pre></div>
+</div>
+<p>Before I can use list comprehension to form the list of tuples I ensure
+that the nested structure that I iterate over has equal depth in each
+substructure. Then I save the list of tuples as a CSV file.</p>
+<div class="highlight-python"><div class="highlight"><pre>\PY{k+kn}{import} \PY{n+nn}{csv}
+\PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{data.csv}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{w}\PY{l+s}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{outfile}\PY{p}{:}
+    \PY{n}{csv\PYZus{}out} \PY{o}{=} \PY{n}{csv}\PY{o}{.}\PY{n}{writer}\PY{p}{(}\PY{n}{outfile}\PY{p}{)}
+    \PY{n}{csv\PYZus{}out}\PY{o}{.}\PY{n}{writerow}\PY{p}{(}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{name}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{number}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{relation}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+    \PY{k}{for} \PY{n}{row} \PY{o+ow}{in} \PY{n}{mylist}\PY{p}{:}
+        \PY{n}{csv\PYZus{}out}\PY{o}{.}\PY{n}{writerow}\PY{p}{(}\PY{n}{row}\PY{p}{)}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="example-us-senate-tweets">
+<h1>Example: US Senate tweets<a class="headerlink" href="#example-us-senate-tweets" title="Permalink to this headline">¶</a></h1>
+<p>If we are interested in Tweets from members of the U.S. Senate, <a class="footnote-reference" href="#id10" id="id3">[3]</a> we
+could start by getting a list of their Twitter accounts. <a class="footnote-reference" href="#id11" id="id4">[4]</a> Then we
+could retrieve each Senator’s user profile, <a class="footnote-reference" href="#id12" id="id5">[5]</a> which contains their
+most recent tweets. This information could then be used to create a
+document-term matrix where a document is defined as a senator’s recent
+tweets. To try to visualize this data we might project the document-term
+matrix onto its first and second principal components. At this point, it
+would be useful to have additional data about each senator (e.g., party
+affiliation, years in office). <a class="footnote-reference" href="#id13" id="id6">[6]</a></p>
+<p>In the appendix, you will find a script to do the above data gathering
+and exploration. This should give you a sense of how you might go about
+collecting your data. For additional examples see .</p>
+</div>
+<div class="section" id="appendix">
+<h1>Appendix<a class="headerlink" href="#appendix" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="code">
+<h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre>\PY{k+kn}{import} \PY{n+nn}{json}
+\PY{k+kn}{import} \PY{n+nn}{re}
+\PY{k+kn}{from} \PY{n+nn}{operator} \PY{k+kn}{import} \PY{n}{itemgetter}
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k+kn}{as} \PY{n+nn}{np}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib.pyplot} \PY{k+kn}{as} \PY{n+nn}{plt}
+\PY{k+kn}{import} \PY{n+nn}{twitter}
+
+\PY{n}{CONSUMER\PYZus{}KEY}       \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}
+\PY{n}{CONSUMER\PYZus{}SECRET}    \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}
+\PY{n}{OAUTH\PYZus{}TOKEN}        \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}
+\PY{n}{OAUTH\PYZus{}TOKEN\PYZus{}SECRET} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}
+
+\PY{n}{auth} \PY{o}{=} \PY{n}{twitter}\PY{o}{.}\PY{n}{oauth}\PY{o}{.}\PY{n}{OAuth}\PY{p}{(}\PY{n}{OAUTH\PYZus{}TOKEN}\PY{p}{,} \PY{n}{OAUTH\PYZus{}TOKEN\PYZus{}SECRET}\PY{p}{,}
+                           \PY{n}{CONSUMER\PYZus{}KEY}\PY{p}{,} \PY{n}{CONSUMER\PYZus{}SECRET}\PY{p}{)}
+\PY{n}{api} \PY{o}{=} \PY{n}{twitter}\PY{o}{.}\PY{n}{Twitter}\PY{p}{(}\PY{n}{auth}\PY{o}{=}\PY{n}{auth}\PY{p}{)}
+
+\PY{c}{\PYZsh{} get the list of senators}
+\PY{n}{senators} \PY{o}{=} \PY{n}{api}\PY{o}{.}\PY{n}{lists}\PY{o}{.}\PY{n}{members}\PY{p}{(}\PY{n}{owner\PYZus{}screen\PYZus{}name}\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{gov}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{n}{slug}\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{us\PYZhy{}senate}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{n}{count}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}
+\PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{senators\PYZhy{}list.json}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{w}\PY{l+s}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+    \PY{n}{json}\PY{o}{.}\PY{n}{dump}\PY{p}{(}\PY{n}{senators}\PY{p}{,} \PY{n}{f}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{sort\PYZus{}keys}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}
+
+\PY{c}{\PYZsh{} get all the senators\PYZsq{} timelines}
+\PY{n}{names} \PY{o}{=} \PY{p}{[}\PY{n}{d}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{screen\PYZus{}name}\PY{l+s}{\PYZdq{}}\PY{p}{]} \PY{k}{for} \PY{n}{d} \PY{o+ow}{in} \PY{n}{senators}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{users}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{]}
+\PY{n}{timelines} \PY{o}{=} \PY{p}{[}\PY{n}{api}\PY{o}{.}\PY{n}{statuses}\PY{o}{.}\PY{n}{user\PYZus{}timeline}\PY{p}{(}\PY{n}{screen\PYZus{}name}\PY{o}{=}\PY{n}{name}\PY{p}{)} \PY{k}{for} \PY{n}{name} \PY{o+ow}{in} \PY{n}{names}\PY{p}{]}
+\PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{timelines.json}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{w}\PY{l+s}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+    \PY{n}{json}\PY{o}{.}\PY{n}{dump}\PY{p}{(}\PY{n}{timelines}\PY{p}{,} \PY{n}{f}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{sort\PYZus{}keys}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}
+
+\PY{c}{\PYZsh{} could check who has the most followers}
+\PY{n}{followers} \PY{o}{=} \PY{p}{[}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{user}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{followers\PYZus{}count}\PY{l+s}{\PYZdq{}}\PY{p}{]} \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n}{timelines}\PY{p}{]}
+\PY{n}{zipped} \PY{o}{=} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{names}\PY{p}{,} \PY{n}{followers}\PY{p}{)}
+\PY{n}{zipped}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{key}\PY{o}{=}\PY{n}{itemgetter}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+
+\PY{c}{\PYZsh{} get all the tweets and see what words are used}
+\PY{n}{tweets} \PY{o}{=} \PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{ }\PY{l+s}{\PYZdq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{p}{[}\PY{n}{tweet}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{text}\PY{l+s}{\PYZdq{}}\PY{p}{]} \PY{k}{for} \PY{n}{tweet} \PY{o+ow}{in} \PY{n}{tweets}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{tweets} \PY{o+ow}{in} \PY{n}{timelines}\PY{p}{]}
+\PY{n}{words} \PY{o}{=} \PY{p}{[}\PY{n}{w} \PY{k}{for} \PY{n}{text} \PY{o+ow}{in} \PY{n}{tweets} \PY{k}{for} \PY{n}{w} \PY{o+ow}{in} \PY{n}{re}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZbs{}}\PY{l+s}{W}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{n}{text}\PY{p}{)} \PY{k}{if} \PY{n}{w}\PY{p}{]}
+\PY{n}{vocab} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n+nb}{set}\PY{p}{(}\PY{n}{words}\PY{p}{)}\PY{p}{)}
+
+\PY{c}{\PYZsh{} construct document\PYZhy{}term matrix}
+\PY{n}{M} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{asmatrix}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{n+nb}{len}\PY{p}{(}\PY{n}{tweets}\PY{p}{)}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{vocab}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+\PY{k}{for} \PY{n}{n}\PY{p}{,} \PY{n}{tweet} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{tweets}\PY{p}{)}\PY{p}{:}
+    \PY{k}{for} \PY{n}{m}\PY{p}{,} \PY{n}{term} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{vocab}\PY{p}{)}\PY{p}{:}
+        \PY{n}{M}\PY{p}{[}\PY{n}{n}\PY{p}{,} \PY{n}{m}\PY{p}{]} \PY{o}{=} \PY{n}{tweet}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{n}{term}\PY{p}{)}
+
+\PY{c}{\PYZsh{} pca using scikit\PYZhy{}learn}
+\PY{k+kn}{from} \PY{n+nn}{sklearn} \PY{k+kn}{import} \PY{n}{decomposition}
+\PY{n}{pca} \PY{o}{=} \PY{n}{decomposition}\PY{o}{.}\PY{n}{PCA}\PY{p}{(}\PY{n}{n\PYZus{}components}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+\PY{n}{pca}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{M}\PY{p}{)}
+\PY{n}{pc} \PY{o}{=} \PY{n}{pca}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{M}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{pc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{pc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+</pre></div>
+</div>
+</div>
+<div class="section" id="links">
+<h2>Links<a class="headerlink" href="#links" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h3>Webservices<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="https://dev.twitter.com/overview/documentation">https://dev.twitter.com/overview/documentation</a></li>
+<li><a class="reference external" href="https://developers.facebook.com/docs/graph-api">https://developers.facebook.com/docs/graph-api</a></li>
+<li><a class="reference external" href="https://developers.google.com/youtube/getting_started">https://developers.google.com/youtube/getting_started</a></li>
+<li><a class="reference external" href="http://en.wikipedia.org/w/api.php">http://en.wikipedia.org/w/api.php</a></li>
+<li><a class="reference external" href="http://www.mediawiki.org/wiki/API:Main_page">http://www.mediawiki.org/wiki/API:Main_page</a></li>
+<li><a class="reference external" href="https://developer.github.com/v3/">https://developer.github.com/v3/</a></li>
+</ul>
+</div>
+<div class="section" id="serialization">
+<h3>Serialization<a class="headerlink" href="#serialization" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/Serialization">http://en.wikipedia.org/wiki/Serialization</a></li>
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/Comparison_of_data_serialization_formats">http://en.wikipedia.org/wiki/Comparison_of_data_serialization_formats</a></li>
+<li><a class="reference external" href="http://www.json.org/xml.html">http://www.json.org/xml.html</a></li>
+<li><a class="reference external" href="http://yaml.org/">http://yaml.org/</a></li>
+<li><a class="reference external" href="http://www.drdobbs.com/web-development/after-xml-json-then-what/240151851">http://www.drdobbs.com/web-development/after-xml-json-then-what/240151851</a></li>
+<li><a class="reference external" href="http://www.cowtowncoder.com/blog/archives/2012/04/entry_473.html">http://www.cowtowncoder.com/blog/archives/2012/04/entry_473.html</a></li>
+</ul>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>For several examples see the Appendix.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>This functionality is not part of the standard library. And should
+not be used in practice.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><a class="reference external" href="https://twitter.com/gov/lists/us-senate/members">https://twitter.com/gov/lists/us-senate/members</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id11" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td><a class="reference external" href="https://dev.twitter.com/rest/reference/get/lists/members">https://dev.twitter.com/rest/reference/get/lists/members</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id12" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td><a class="reference external" href="https://dev.twitter.com/rest/reference/get/statuses/user_timeline">https://dev.twitter.com/rest/reference/get/statuses/user_timeline</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id13" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[6]</a></td><td><a class="reference external" href="https://sunlightlabs.github.io/congress/">https://sunlightlabs.github.io/congress/</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Core Topics</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="bash.html">Using the bash shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-intro.html">Introduction to Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fmri-intro.html">Statistical analysis of fMRI data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python.html">Introduction to Python</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Webservices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-serialization">Data serialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-us-senate-tweets">Example: US Senate tweets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#appendix">Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/index.html">Lectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>

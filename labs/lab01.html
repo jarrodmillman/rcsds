@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab 1 &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Labs" href="index.html" />
+    <link rel="next" title="Lab 1" href="lab02.html" />
+    <link rel="prev" title="Labs" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="lab-1">
+<h1>Lab 1<a class="headerlink" href="#lab-1" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li>Intro to this lab<ol class="arabic">
+<li>In general the structure of today’s lab will be different from the
+labs in general</li>
+<li>Today is about getting everybody on the same page for getting
+started with class on Tuesday (no fMRI stuff today!)<ol class="arabic">
+<li>If you’re already running linux (or very familiar with *nix
+systems), have an editor, have set up git and a github account,
+this may seem a little tedious, but I’ll try to give you
+something to do</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Laptop check</li>
+<li>First things first - get installs and tools all set up for Tuesday<ol class="arabic" start="3">
+<li>First: Piazza</li>
+<li>Github<ol class="arabic" start="2">
+<li>Who doesn’t have a github account yet?</li>
+<li>Google form with two entries: student name and github names</li>
+</ol>
+</li>
+<li>OS Poll<ol class="arabic" start="4">
+<li>Have students who didn’t take it yet fill it out</li>
+<li>Show results</li>
+</ol>
+</li>
+<li>Why *nix?<ol class="arabic" start="6">
+<li>Full control of the computer</li>
+<li>CLI is arguable faster (with some training)<ol class="arabic">
+<li>More importantly: reproducible!</li>
+</ol>
+</li>
+<li>Most servers run linux</li>
+<li>Almost all supercomputers</li>
+</ol>
+</li>
+<li>Discuss options for linux<ol class="arabic" start="10">
+<li>BCE</li>
+<li>Other VM</li>
+<li>Dual boot</li>
+<li>Account on a server - contact home department about setting up</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Next - Brief discussion of text editors<ol class="arabic" start="8">
+<li>ADVANCED: For students that are past this point and using vim,
+check out pathogen vim system - goal: install simple-vim package<ol class="arabic" start="14">
+<li>google vim-awesome to explore vim plugins</li>
+</ol>
+</li>
+<li>Graphics based vs. non graphics based:<ol class="arabic" start="15">
+<li>Programmers in general should be familiar with non-graphics
+based editors because chances are you will be forced into a
+non-graphics enabled environment at some point<ol class="arabic" start="2">
+<li>Recovery</li>
+<li>ssh</li>
+</ol>
+</li>
+<li>GUI-based editors:<ol class="arabic" start="4">
+<li>Simple ones like Gedit, gvim</li>
+<li>IDE’s like eclipse</li>
+</ol>
+</li>
+<li>Recommended pathway - get familiar with a non-graphics
+editor, then switch into an IDE for specific tasks (this
+pathway is so common, that most IDE’s have key-bindings for
+the non-graphics based editors like vim)</li>
+</ol>
+</li>
+<li>Vim - steep learning curve (although 30 min is enough to get you
+started)<ol class="arabic" start="18">
+<li>vimtutor</li>
+</ol>
+</li>
+<li>emacs - the other of the &#8220;big 2&#8221;</li>
+</ol>
+</li>
+<li>Install git<ol class="arabic" start="12">
+<li>Who hasn’t installed git?<ol class="arabic" start="19">
+<li>Help with installs</li>
+<li>ADVANCED: For bored students, check out the &#8220;hub&#8221; project
+from github</li>
+</ol>
+</li>
+<li>Configure git<ol class="arabic" start="21">
+<li>Use git config with &#8211;global flag</li>
+<li>show the .gitconfig file that gets created</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Next, go through the course intro<ol class="arabic" start="14">
+<li><a class="reference external" href="http://www.jarrodmillman.com/rcsds/lectures/day01.html">http://www.jarrodmillman.com/rcsds/lectures/day01.html</a></li>
+<li>Quiz on Thursday based on &#8220;interactive shell&#8221; and “basic file
+management” sections</li>
+</ol>
+</li>
+<li>Do the tutorial in tutorial-unix-basics<ol class="arabic" start="16">
+<li>First, clone the tutorial:
+<a class="reference external" href="https://github.com/berkeley-scf/tutorial-unix-basics.git">https://github.com/berkeley-scf/tutorial-unix-basics.git</a></li>
+<li>You’ll also need another repo which serves as an example
+directory structure to explore/change/move files:
+<a class="reference external" href="https://github.com/berkeley-stat243/stat243-fall-2014">https://github.com/berkeley-stat243/stat243-fall-2014</a></li>
+<li>Split into groups (or solo + screencast) and follow the tutorial</li>
+</ol>
+</li>
+</ol>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/index.html">Lectures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Labs</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="">Lab 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab02.html">Lab 1</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,320 @@
+Webservices
+===========
+
+Many data sources are available on the Internet. You’ve probably used a
+web browser interface to search through some of this data and even
+download it to your computer. As you may have noticed, this manual
+process is labor intensive, error prone, and hard to document.
+
+To provide programmatic and automatic interaction with these data
+stores, many websites serve this information through a documented
+application programmer interface (API). [1]_ These webservice APIs
+provide a mechanism to create new functionality on top of existing
+webcontent.
+
+While there are several ways to implement webservices, `Representational
+State Transfer
+(REST) <http://en.wikipedia.org/wiki/Representational_state_transfer>`__
+has gained widespread popularity. REST is more of a style than a
+standard. A system designed in the REST style is called RESTful. RESTful
+systems typically use HTTP requests to query and post data using the
+standard HTTP verbs (GET, POST, PUT, DELETE, etc.). Often some form of
+authentication is necessary to communicate with a webservice. It is
+common to use `OAuth <http://en.wikipedia.org/wiki/OAuth>`__ for this
+purpose.
+
+Data serialization
+==================
+
+When you use a web browser to view a webpage, your browser handles the
+HTTP communication for you. You specify what you wish to view in the
+form of a
+`URI <http://en.wikipedia.org/wiki/Uniform_resource_identifier>`__ such
+as http://example.org/absolute/URI/with/absolute/path/to/resource.txt.
+At this point your browser communicates with the webserver and requests
+the resource. The resource is typically provided to your web browser as
+an `HTML <http://en.wikipedia.org/wiki/HTML>`__ document, which browsers
+are specifically designed to render.
+
+Similarly, you will use HTTP to communicate with the Twitter webservice.
+However rather than passively consuming webpages, you will be interested
+in retrieving data in a form that is amenable to further processing.
+
+Data serialization refers to the process of encoding data structures and
+objects in a format that can be used to store this information on disk
+or transmit it over the web. For example, in R you can use the Rdata
+format to save R objects to disk and reload them later. For webservices,
+JSON and XML are standard formats. To better understand this, let’s
+briefly look at data serialization more generally.
+
+Python object
+-------------
+
+First let’s create a Python object.
+
+::
+
+    \PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{n}{mydict} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{g+gp}{... }    \PY{l+s}{\PYZdq{}}\PY{l+s}{parents}\PY{l+s}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{p}{\PYZob{}}\PY{l+s}{\PYZdq{}}\PY{l+s}{name}\PY{l+s}{\PYZdq{}}\PY{p}{:} \PY{l+s}{\PYZdq{}}\PY{l+s}{mom}\PY{l+s}{\PYZdq{}}\PY{p}{,}
+    \PY{g+gp}{... }                \PY{l+s}{\PYZdq{}}\PY{l+s}{number}\PY{l+s}{\PYZdq{}}\PY{p}{:} \PY{l+s}{\PYZdq{}}\PY{l+s}{555\PYZhy{}123\PYZhy{}4567}\PY{l+s}{\PYZdq{}}\PY{p}{\PYZcb{}}\PY{p}{,}
+    \PY{g+gp}{... }               \PY{p}{\PYZob{}}\PY{l+s}{\PYZdq{}}\PY{l+s}{name}\PY{l+s}{\PYZdq{}}\PY{p}{:} \PY{l+s}{\PYZdq{}}\PY{l+s}{dad}\PY{l+s}{\PYZdq{}}\PY{p}{,}
+    \PY{g+gp}{... }                \PY{l+s}{\PYZdq{}}\PY{l+s}{number}\PY{l+s}{\PYZdq{}}\PY{p}{:} \PY{l+s}{\PYZdq{}}\PY{l+s}{555\PYZhy{}123\PYZhy{}4567}\PY{l+s}{\PYZdq{}}\PY{p}{\PYZcb{}}\PY{p}{]}\PY{p}{,}
+    \PY{g+gp}{... }    \PY{l+s}{\PYZdq{}}\PY{l+s}{colleagues}\PY{l+s}{\PYZdq{}}\PY{p}{:} \PY{p}{\PYZob{}}\PY{l+s}{\PYZdq{}}\PY{l+s}{name}\PY{l+s}{\PYZdq{}}\PY{p}{:} \PY{l+s}{\PYZdq{}}\PY{l+s}{advisor}\PY{l+s}{\PYZdq{}}\PY{p}{,}
+    \PY{g+gp}{... }                   \PY{l+s}{\PYZdq{}}\PY{l+s}{number}\PY{l+s}{\PYZdq{}}\PY{p}{:} \PY{l+s}{\PYZdq{}}\PY{l+s}{555\PYZhy{}123\PYZhy{}4567}\PY{l+s}{\PYZdq{}}\PY{p}{\PYZcb{}}
+    \PY{g+gp}{... }\PY{p}{\PYZcb{}}
+
+And let’s print the results:
+
+::
+
+    \PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{n}{mydict}
+    \PY{g+go}{\PYZob{}\PYZsq{}colleagues\PYZsq{}: \PYZob{}\PYZsq{}name\PYZsq{}: \PYZsq{}advisor\PYZsq{}, \PYZsq{}number\PYZsq{}: \PYZsq{}555\PYZhy{}123\PYZhy{}4567\PYZsq{}\PYZcb{}, \PYZsq{}parents\PYZsq{}: [\PYZob{}\PYZsq{}name\PYZsq{}: \PYZsq{}mom\PYZsq{}, \PYZsq{}number\PYZsq{}: \PYZsq{}555\PYZhy{}123\PYZhy{}4567\PYZsq{}\PYZcb{}, \PYZob{}\PYZsq{}name\PYZsq{}: \PYZsq{}dad\PYZsq{}, \PYZsq{}number\PYZsq{}: \PYZsq{}555\PYZhy{}123\PYZhy{}4567\PYZsq{}\PYZcb{}]\PYZcb{}}
+    \PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k+kn}{import} \PY{n+nn}{pprint}
+    \PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{n}{pprint}\PY{o}{.}\PY{n}{pprint}\PY{p}{(}\PY{n}{mydict}\PY{p}{)}
+    \PY{g+go}{\PYZob{}\PYZsq{}colleagues\PYZsq{}: \PYZob{}\PYZsq{}name\PYZsq{}: \PYZsq{}advisor\PYZsq{}, \PYZsq{}number\PYZsq{}: \PYZsq{}555\PYZhy{}123\PYZhy{}4567\PYZsq{}\PYZcb{},}
+    \PY{g+go}{ \PYZsq{}parents\PYZsq{}: [\PYZob{}\PYZsq{}name\PYZsq{}: \PYZsq{}mom\PYZsq{}, \PYZsq{}number\PYZsq{}: \PYZsq{}555\PYZhy{}123\PYZhy{}4567\PYZsq{}\PYZcb{},}
+    \PY{g+go}{             \PYZob{}\PYZsq{}name\PYZsq{}: \PYZsq{}dad\PYZsq{}, \PYZsq{}number\PYZsq{}: \PYZsq{}555\PYZhy{}123\PYZhy{}4567\PYZsq{}\PYZcb{}]\PYZcb{}}
+
+XML
+---
+
+How does this object look if we convert it to XML? [2]_
+
+::
+
+    \PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k+kn}{from} \PY{n+nn}{dict2xml} \PY{k+kn}{import} \PY{n}{dict2xml}
+    \PY{g+gt}{Traceback (most recent call last):}
+      File \PY{n+nb}{\PYZdq{}\PYZlt{}stdin\PYZgt{}\PYZdq{}}, line \PY{l+m}{1}, in \PY{n}{\PYZlt{}module\PYZgt{}}
+    \PY{g+gr}{ImportError}: \PY{n}{No module named dict2xml}
+    \PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k}{print}\PY{p}{(}\PY{n}{dict2xml}\PY{p}{(}\PY{n}{mydict}\PY{p}{)}\PY{p}{)}
+    \PY{g+gt}{Traceback (most recent call last):}
+      File \PY{n+nb}{\PYZdq{}\PYZlt{}stdin\PYZgt{}\PYZdq{}}, line \PY{l+m}{1}, in \PY{n}{\PYZlt{}module\PYZgt{}}
+    \PY{g+gr}{NameError}: \PY{n}{name \PYZsq{}dict2xml\PYZsq{} is not defined}
+
+JSON
+----
+
+What if we convert it to JSON?
+
+::
+
+    \PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k+kn}{import} \PY{n+nn}{json}
+    \PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k}{print}\PY{p}{(}\PY{n}{json}\PY{o}{.}\PY{n}{dumps}\PY{p}{(}\PY{n}{mydict}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{sort\PYZus{}keys}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}\PY{p}{)}
+    \PY{g+go}{\PYZob{}}
+    \PY{g+go}{    \PYZdq{}colleagues\PYZdq{}: \PYZob{}}
+    \PY{g+go}{        \PYZdq{}name\PYZdq{}: \PYZdq{}advisor\PYZdq{},}
+    \PY{g+go}{        \PYZdq{}number\PYZdq{}: \PYZdq{}555\PYZhy{}123\PYZhy{}4567\PYZdq{}}
+    \PY{g+go}{    \PYZcb{},}
+    \PY{g+go}{    \PYZdq{}parents\PYZdq{}: [}
+    \PY{g+go}{        \PYZob{}}
+    \PY{g+go}{            \PYZdq{}name\PYZdq{}: \PYZdq{}mom\PYZdq{},}
+    \PY{g+go}{            \PYZdq{}number\PYZdq{}: \PYZdq{}555\PYZhy{}123\PYZhy{}4567\PYZdq{}}
+    \PY{g+go}{        \PYZcb{},}
+    \PY{g+go}{        \PYZob{}}
+    \PY{g+go}{            \PYZdq{}name\PYZdq{}: \PYZdq{}dad\PYZdq{},}
+    \PY{g+go}{            \PYZdq{}number\PYZdq{}: \PYZdq{}555\PYZhy{}123\PYZhy{}4567\PYZdq{}}
+    \PY{g+go}{        \PYZcb{}}
+    \PY{g+go}{    ]}
+    \PY{g+go}{\PYZcb{}}
+
+YAML
+----
+
+What if we convert it to YAML?
+
+::
+
+    \PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k+kn}{import} \PY{n+nn}{yaml}
+    \PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k}{print}\PY{p}{(}\PY{n}{yaml}\PY{o}{.}\PY{n}{dump}\PY{p}{(}\PY{n}{mydict}\PY{p}{)}\PY{p}{)}
+    \PY{g+go}{colleagues: \PYZob{}name: advisor, number: 555\PYZhy{}123\PYZhy{}4567\PYZcb{}}
+    \PY{g+go}{parents:}
+    \PY{g+go}{\PYZhy{} \PYZob{}name: mom, number: 555\PYZhy{}123\PYZhy{}4567\PYZcb{}}
+    \PY{g+go}{\PYZhy{} \PYZob{}name: dad, number: 555\PYZhy{}123\PYZhy{}4567\PYZcb{}}
+
+Questions
+---------
+
+Looking over the output of the above formats you should notice several
+things.
+
+-  Which of the formats uses the largest number of characters?
+
+-  Which uses the fewest?
+
+-  Which looks most like Python?
+
+Saving JSON and CSV
+-------------------
+
+For this project you will be querying the Twitter webservice and will be
+getting responses in the JSON format. After you get your response, you
+will want to save it to disk. I recommend that you use the JSON format
+as your main data storage format for this project.
+
+::
+
+    \PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k+kn}{import} \PY{n+nn}{json}
+    \PY{g+gp}{\PYZgt{}\PYZgt{}\PYZgt{} }\PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{data.json}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{w}\PY{l+s}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{outfile}\PY{p}{:}
+    \PY{g+gp}{... }    \PY{n}{json}\PY{o}{.}\PY{n}{dump}\PY{p}{(}\PY{n}{mydict}\PY{p}{,} \PY{n}{outfile}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{sort\PYZus{}keys}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}
+    \PY{g+gp}{...}
+
+If you decide that you would like to use R for part of your analysis or
+for creating figures, I recommend saving the information you want to
+work with in R as a CSV file. Your JSON file will have nested and
+non-homogeneous structure, which is not possible to directly store using
+CSV. So you will need to first decide what data you want to save as CSV
+and then transform the JSON data into the necessary form. Here is an
+example of how you might transform ``mydict`` above into a list of equal
+length tuples.
+
+::
+
+    \PY{n}{mydict}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{colleagues}\PY{l+s}{\PYZdq{}}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{n}{mydict}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{colleagues}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{]}
+    \PY{n}{mylist} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{e}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{name}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{e}\PY{p}{\PYZob{}}\PY{l+s}{\PYZdq{}}\PY{l+s}{number}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{k}\PY{p}{)} \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{mydict}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{e} \PY{o+ow}{in} \PY{n}{v}\PY{p}{]}
+
+Before I can use list comprehension to form the list of tuples I ensure
+that the nested structure that I iterate over has equal depth in each
+substructure. Then I save the list of tuples as a CSV file.
+
+::
+
+    \PY{k+kn}{import} \PY{n+nn}{csv}
+    \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{data.csv}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{w}\PY{l+s}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{outfile}\PY{p}{:}
+        \PY{n}{csv\PYZus{}out} \PY{o}{=} \PY{n}{csv}\PY{o}{.}\PY{n}{writer}\PY{p}{(}\PY{n}{outfile}\PY{p}{)}
+        \PY{n}{csv\PYZus{}out}\PY{o}{.}\PY{n}{writerow}\PY{p}{(}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{name}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{number}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{relation}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+        \PY{k}{for} \PY{n}{row} \PY{o+ow}{in} \PY{n}{mylist}\PY{p}{:}
+            \PY{n}{csv\PYZus{}out}\PY{o}{.}\PY{n}{writerow}\PY{p}{(}\PY{n}{row}\PY{p}{)}
+
+Example: US Senate tweets
+=========================
+
+If we are interested in Tweets from members of the U.S. Senate, [3]_ we
+could start by getting a list of their Twitter accounts. [4]_ Then we
+could retrieve each Senator’s user profile, [5]_ which contains their
+most recent tweets. This information could then be used to create a
+document-term matrix where a document is defined as a senator’s recent
+tweets. To try to visualize this data we might project the document-term
+matrix onto its first and second principal components. At this point, it
+would be useful to have additional data about each senator (e.g., party
+affiliation, years in office). [6]_
+
+In the appendix, you will find a script to do the above data gathering
+and exploration. This should give you a sense of how you might go about
+collecting your data. For additional examples see .
+
+Appendix
+========
+
+Code
+----
+
+::
+
+    \PY{k+kn}{import} \PY{n+nn}{json}
+    \PY{k+kn}{import} \PY{n+nn}{re}
+    \PY{k+kn}{from} \PY{n+nn}{operator} \PY{k+kn}{import} \PY{n}{itemgetter}
+    \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k+kn}{as} \PY{n+nn}{np}
+    \PY{k+kn}{import} \PY{n+nn}{matplotlib.pyplot} \PY{k+kn}{as} \PY{n+nn}{plt}
+    \PY{k+kn}{import} \PY{n+nn}{twitter}
+
+    \PY{n}{CONSUMER\PYZus{}KEY}       \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}
+    \PY{n}{CONSUMER\PYZus{}SECRET}    \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}
+    \PY{n}{OAUTH\PYZus{}TOKEN}        \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}
+    \PY{n}{OAUTH\PYZus{}TOKEN\PYZus{}SECRET} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}
+
+    \PY{n}{auth} \PY{o}{=} \PY{n}{twitter}\PY{o}{.}\PY{n}{oauth}\PY{o}{.}\PY{n}{OAuth}\PY{p}{(}\PY{n}{OAUTH\PYZus{}TOKEN}\PY{p}{,} \PY{n}{OAUTH\PYZus{}TOKEN\PYZus{}SECRET}\PY{p}{,}
+                               \PY{n}{CONSUMER\PYZus{}KEY}\PY{p}{,} \PY{n}{CONSUMER\PYZus{}SECRET}\PY{p}{)}
+    \PY{n}{api} \PY{o}{=} \PY{n}{twitter}\PY{o}{.}\PY{n}{Twitter}\PY{p}{(}\PY{n}{auth}\PY{o}{=}\PY{n}{auth}\PY{p}{)}
+
+    \PY{c}{\PYZsh{} get the list of senators}
+    \PY{n}{senators} \PY{o}{=} \PY{n}{api}\PY{o}{.}\PY{n}{lists}\PY{o}{.}\PY{n}{members}\PY{p}{(}\PY{n}{owner\PYZus{}screen\PYZus{}name}\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{gov}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{n}{slug}\PY{o}{=}\PY{l+s}{\PYZdq{}}\PY{l+s}{us\PYZhy{}senate}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{n}{count}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}
+    \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{senators\PYZhy{}list.json}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{w}\PY{l+s}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+        \PY{n}{json}\PY{o}{.}\PY{n}{dump}\PY{p}{(}\PY{n}{senators}\PY{p}{,} \PY{n}{f}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{sort\PYZus{}keys}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}
+
+    \PY{c}{\PYZsh{} get all the senators\PYZsq{} timelines}
+    \PY{n}{names} \PY{o}{=} \PY{p}{[}\PY{n}{d}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{screen\PYZus{}name}\PY{l+s}{\PYZdq{}}\PY{p}{]} \PY{k}{for} \PY{n}{d} \PY{o+ow}{in} \PY{n}{senators}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{users}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{]}
+    \PY{n}{timelines} \PY{o}{=} \PY{p}{[}\PY{n}{api}\PY{o}{.}\PY{n}{statuses}\PY{o}{.}\PY{n}{user\PYZus{}timeline}\PY{p}{(}\PY{n}{screen\PYZus{}name}\PY{o}{=}\PY{n}{name}\PY{p}{)} \PY{k}{for} \PY{n}{name} \PY{o+ow}{in} \PY{n}{names}\PY{p}{]}
+    \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{timelines.json}\PY{l+s}{\PYZdq{}}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{w}\PY{l+s}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+        \PY{n}{json}\PY{o}{.}\PY{n}{dump}\PY{p}{(}\PY{n}{timelines}\PY{p}{,} \PY{n}{f}\PY{p}{,} \PY{n}{indent}\PY{o}{=}\PY{l+m+mi}{4}\PY{p}{,} \PY{n}{sort\PYZus{}keys}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}
+
+    \PY{c}{\PYZsh{} could check who has the most followers}
+    \PY{n}{followers} \PY{o}{=} \PY{p}{[}\PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{user}\PY{l+s}{\PYZdq{}}\PY{p}{]}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{followers\PYZus{}count}\PY{l+s}{\PYZdq{}}\PY{p}{]} \PY{k}{for} \PY{n}{t} \PY{o+ow}{in} \PY{n}{timelines}\PY{p}{]}
+    \PY{n}{zipped} \PY{o}{=} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{names}\PY{p}{,} \PY{n}{followers}\PY{p}{)}
+    \PY{n}{zipped}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{key}\PY{o}{=}\PY{n}{itemgetter}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+
+    \PY{c}{\PYZsh{} get all the tweets and see what words are used}
+    \PY{n}{tweets} \PY{o}{=} \PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{ }\PY{l+s}{\PYZdq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{p}{[}\PY{n}{tweet}\PY{p}{[}\PY{l+s}{\PYZdq{}}\PY{l+s}{text}\PY{l+s}{\PYZdq{}}\PY{p}{]} \PY{k}{for} \PY{n}{tweet} \PY{o+ow}{in} \PY{n}{tweets}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{tweets} \PY{o+ow}{in} \PY{n}{timelines}\PY{p}{]}
+    \PY{n}{words} \PY{o}{=} \PY{p}{[}\PY{n}{w} \PY{k}{for} \PY{n}{text} \PY{o+ow}{in} \PY{n}{tweets} \PY{k}{for} \PY{n}{w} \PY{o+ow}{in} \PY{n}{re}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{\PYZbs{}}\PY{l+s}{W}\PY{l+s}{\PYZsq{}}\PY{p}{,} \PY{n}{text}\PY{p}{)} \PY{k}{if} \PY{n}{w}\PY{p}{]}
+    \PY{n}{vocab} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n+nb}{set}\PY{p}{(}\PY{n}{words}\PY{p}{)}\PY{p}{)}
+
+    \PY{c}{\PYZsh{} construct document\PYZhy{}term matrix}
+    \PY{n}{M} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{asmatrix}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{p}{[}\PY{n+nb}{len}\PY{p}{(}\PY{n}{tweets}\PY{p}{)}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{vocab}\PY{p}{)}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+    \PY{k}{for} \PY{n}{n}\PY{p}{,} \PY{n}{tweet} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{tweets}\PY{p}{)}\PY{p}{:}
+        \PY{k}{for} \PY{n}{m}\PY{p}{,} \PY{n}{term} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{vocab}\PY{p}{)}\PY{p}{:}
+            \PY{n}{M}\PY{p}{[}\PY{n}{n}\PY{p}{,} \PY{n}{m}\PY{p}{]} \PY{o}{=} \PY{n}{tweet}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{n}{term}\PY{p}{)}
+
+    \PY{c}{\PYZsh{} pca using scikit\PYZhy{}learn}
+    \PY{k+kn}{from} \PY{n+nn}{sklearn} \PY{k+kn}{import} \PY{n}{decomposition}
+    \PY{n}{pca} \PY{o}{=} \PY{n}{decomposition}\PY{o}{.}\PY{n}{PCA}\PY{p}{(}\PY{n}{n\PYZus{}components}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+    \PY{n}{pca}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{M}\PY{p}{)}
+    \PY{n}{pc} \PY{o}{=} \PY{n}{pca}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{M}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{pc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{pc}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+
+.. figure:: fig/pca.png
+   :alt: Document-term matrix projected on first and second principal
+   axes.
+
+   Document-term matrix projected on first and second principal axes.
+
+Links
+-----
+
+Webservices
+~~~~~~~~~~~
+
+-  https://dev.twitter.com/overview/documentation
+
+-  https://developers.facebook.com/docs/graph-api
+
+-  https://developers.google.com/youtube/getting_started
+
+-  http://en.wikipedia.org/w/api.php
+
+-  http://www.mediawiki.org/wiki/API:Main_page
+
+-  https://developer.github.com/v3/
+
+Serialization
+~~~~~~~~~~~~~
+
+-  http://en.wikipedia.org/wiki/Serialization
+
+-  http://en.wikipedia.org/wiki/Comparison_of_data_serialization_formats
+
+-  http://www.json.org/xml.html
+
+-  http://yaml.org/
+
+-  http://www.drdobbs.com/web-development/after-xml-json-then-what/240151851
+
+-  http://www.cowtowncoder.com/blog/archives/2012/04/entry_473.html
+
+.. [1]
+   For several examples see the Appendix.
+
+.. [2]
+   This functionality is not part of the standard library. And should
+   not be used in practice.
+
+.. [3]
+   https://twitter.com/gov/lists/us-senate/members
+
+.. [4]
+   https://dev.twitter.com/rest/reference/get/lists/members
+
+.. [5]
+   https://dev.twitter.com/rest/reference/get/statuses/user_timeline
+
+.. [6]
+   https://sunlightlabs.github.io/congress/
