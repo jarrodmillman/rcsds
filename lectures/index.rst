@@ -10,3 +10,4 @@ Lectures
    day04.rst
    day05.rst
    day06.rst
+   day07.rst

@@ -8,6 +8,7 @@ Core Topics
    git-intro.rst
    fmri-intro.rst
    python.rst
+   textmining.rst
    #numpy.rst
    #git-advanced.rst
    #eda.rst
