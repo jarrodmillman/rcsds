@@ -1,3 +1,7 @@
+*****
+Lab 3
+*****
+
 # Lesson Plan - Stats 159/259 - Lab 3 - 9/21/15
 
 ## Agenda
