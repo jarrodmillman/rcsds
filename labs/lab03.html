@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab 3 &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Labs" href="index.html" />
+    <link rel="next" title="Appendices" href="../append/index.html" />
+    <link rel="prev" title="Lab 2" href="lab02.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="lab-3">
+<h1>Lab 3<a class="headerlink" href="#lab-3" title="Permalink to this headline">¶</a></h1>
+<p>Lesson Plan - Stats 159/259 - Lab 3 - 9/21/15</p>
+<div class="section" id="agenda">
+<h2>Agenda<a class="headerlink" href="#agenda" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Working with git remotes</li>
+<li>A couple python notes<ul>
+<li>modules &amp; __name__</li>
+<li>High-level vs. low-level - what does this mean and how does it work?</li>
+</ul>
+</li>
+<li>Working on HW 1</li>
+<li>Before class on Tuesday:
+<a class="reference external" href="http://mentat.za.net/numpy/intro/intro.html">NumPy Lock &#8216;n Load</a>.</li>
+</ol>
+</div>
+<div class="section" id="working-with-git-remotes">
+<h2>Working with (git) Remotes<a class="headerlink" href="#working-with-git-remotes" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul>
+<li><p class="first">What are the two ways to set up a project to work on in git?</p>
+</li>
+<li><p class="first"><cite>git clone</cite> is like an <cite>git init</cite> + <cite>git pull</cite> + <cite>git remote add</cite></p>
+</li>
+<li><p class="first">Git workflows: forking, cloning, push/pull permissions with remotes.</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Centralized model</strong>
+Often used for small (potentially private) projects
+where all the collaborators know each other. A single central repo is used
+as the &#8220;main&#8221; repo and every collaborator has read/write (i.e. pull/push)
+access to the main repo.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<div class="figure align-center" id="id2">
+<a class="reference internal image-reference" href="../_images/centralized_collab_model.png"><img alt="../_images/centralized_collab_model.png" src="../_images/centralized_collab_model.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-text">A simple cartoon of the centralized collaboration model. For more
+information, see the ProGit book <a class="reference external" href="https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows">section 5.1</a>.</span></p>
+</div>
+<p>_</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Integration-manager model</strong>
+This collaboration model takes full advantage of the distributed nature
+of git. It is a very common model for contributing to open-source
+projects ranging in size from very small (100&#8217;s of lines) to very large
+(10&#8217;s of thousands of lines). In this model, everyone has read (pull)
+access to the main project repository, but only a few people (called
+integration-managers, or sometimes lieutenants) have write (push)access.
+Any (potential) collaborator may pull down a local copy of the project
+and contribute locally. They can also <cite>fork</cite> to create their own remote
+copy of the repository that they can push to. However, to get your
+contributions into the &#8220;main&#8221; (or &#8220;blessed&#8221;) repository, you have to
+<strong>request</strong> that one of the integration managers <strong>pull</strong> your changes
+into the blessed repo. This is where the concept of a <em>pull request</em>
+comes from.</li>
+</ul>
+</div></blockquote>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/integration_manager_model.png"><img alt="../_images/integration_manager_model.png" src="../_images/integration_manager_model.png" style="width: 100%;" /></a>
+</div>
+</div>
+<div class="section" id="python-pontification">
+<h2>Python Pontification<a class="headerlink" href="#python-pontification" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul>
+<li><p class="first">Reading 3 stressed python&#8217;s &#8220;high-level syntax with low-level capability&#8221;.
+Many of you latched on to this concept, but it seems there may have been some
+confusion as to what this means. To start, let&#8217;s take a look at what python
+actually is by looking at its <a class="reference external" href="https://github.com/python/cpython">source code</a>.</p>
+</li>
+<li><p class="first">Don&#8217;t worry! You aren&#8217;t expected to understand the source or know anything
+about it. However, looking at it should emphasize a couple things:</p>
+<blockquote>
+<div><ul class="simple">
+<li>An example (in all it&#8217;s gory detail) of what it means to be &#8220;open source&#8221;</li>
+<li>More importantly, this is in large part how python gives programmers
+access to &#8220;low-level capabilities&#8221; - The interpreter itself is written
+in a &#8220;low-level&#8221; language: C! This is also contributes to python&#8217;s
+description as a &#8220;glue language&#8221; - it is possible for developers to use
+various tools (e.g. cython, SWIG, ctypes, other API&#8217;s) to build wrappers
+around or bridges to code that was written in other languages.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Quick demo on scope: what is __name__?</p>
+<ul class="simple">
+<li>Python objects&#8217; special attributes: <em>dunders</em></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="work-on-hw-1-or-numpy-lock-n-load">
+<h2>Work on HW 1 or Numpy Lock N&#8217; Load<a class="headerlink" href="#work-on-hw-1-or-numpy-lock-n-load" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/index.html">Lectures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Labs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lab01.html">Lab 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab02.html">Lab 2</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Lab 3</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>
