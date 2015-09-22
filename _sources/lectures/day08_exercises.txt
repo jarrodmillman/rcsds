@@ -174,6 +174,8 @@ Remember our array ``a``::
 What are the:
 
 * sum of all the values?
+* sum of the columns?
+* sum of the rows?
 * mean?
 * min?
 * max?
