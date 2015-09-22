@@ -1,6 +1,10 @@
-#############
+###############
+Day 8 exercises
+###############
+
+*************
 Simple arrays
-#############
+*************
 
 5 minutes.
 
@@ -18,9 +22,9 @@ How about the ``len`` of the array?
 
 Can you get the ``ndim`` and ``len`` from the shape?
 
-###############################
+*******************************
 Creating arrays using functions
-###############################
+*******************************
 
 10 minutes.
 
@@ -40,9 +44,9 @@ Creating arrays using functions
 
 Look at the docstring for ``np.random.randn``.  Make a shape (3, 5) array with random numbers from a mean=0, variance = 1 normal distribution.
 
-#####################
+*********************
 Simple visualizations
-#####################
+*********************
 
 7 minutes.
 
@@ -60,9 +64,9 @@ Simple visualizations
 6. Investigate ``plt.cm``.  See if you can work out how to make the displayed
    image be grayscale instead of color.
 
-####################################
+************************************
 Indexing and slicing, array creation
-####################################
+************************************
 
 10 minutes.
 
@@ -76,12 +80,38 @@ Indexing and slicing, array creation
 
 3. Get the 3rd column of ``a`` (``[12 3 1]``);
 
-Then continue with lecture exercises on "array creation". If you have time, go
-onto the "tiling" section.
+4. Create the following arrays (with correct data types)::
 
-###################################
+        [[1, 1, 1, 1],
+         [1, 1, 1, 1],
+         [1, 1, 1, 2],
+         [1, 6, 1, 1]]
+
+        [[0., 0., 0., 0., 0.],
+         [2., 0., 0., 0., 0.],
+         [0., 3., 0., 0., 0.],
+         [0., 0., 4., 0., 0.],
+         [0., 0., 0., 5., 0.],
+         [0., 0., 0., 0., 6.]]
+
+   Par on course: 3 statements for each
+
+   *Hint*: Individual array elements can be accessed similarly to a list, e.g.
+   ``a[1]`` or ``a[1, 2]``.
+
+   *Hint*: Examine the docstring for ``diag``.
+
+5. Skim through the documentation for ``np.tile``, and use this function to
+   construct the array::
+
+        [[4, 3, 4, 3, 4, 3],
+         [2, 1, 2, 1, 2, 1],
+         [4, 3, 4, 3, 4, 3],
+         [2, 1, 2, 1, 2, 1]]
+
+***********************************
 Fancy indexing using boolean arrays
-###################################
+***********************************
 
 5 minutes.
 
@@ -106,9 +136,9 @@ Fancy indexing using boolean arrays
     3  5  3  4
     4  0  1  3
 
-######################
+**********************
 Elementwise operations
-######################
+**********************
 
 10 minutes.
 
@@ -131,9 +161,9 @@ Remember our array ``a``::
 
     x[i] = 2 ** (3 * i) - i
 
-#################
+*****************
 Summary functions
-#################
+*****************
 
 Remember our array ``a``::
 
