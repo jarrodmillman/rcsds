@@ -402,7 +402,7 @@ Exercise: US Senate tweets
 
 In this exercise you will explore Tweets from members of the U.S. Senate.
 To get the data you can use ``wget`` (if you only have ``curl`` you can
-use ``curl -LO`` instead of ``wget`` in the commands below)::
+use ``curl -O`` instead of ``wget`` in the commands below)::
 
   $ wget http://jarrodmillman.com/rcsds/data/senators-list.json
   $ wget http://jarrodmillman.com/rcsds/data/timelines.json
