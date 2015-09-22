@@ -199,13 +199,14 @@ array([[1, 1, 1, 1],
        [1, 1, 1, 2],
        [1, 6, 1, 1]])
 
->>> np.diag([2., 3., 4, 5, 6], -1)  # Need a float input to diag for float output
-array([[ 0.,  0.,  0.,  0.,  0.,  0.],
-       [ 2.,  0.,  0.,  0.,  0.,  0.],
-       [ 0.,  3.,  0.,  0.,  0.,  0.],
-       [ 0.,  0.,  4.,  0.,  0.,  0.],
-       [ 0.,  0.,  0.,  5.,  0.,  0.],
-       [ 0.,  0.,  0.,  0.,  6.,  0.]])
+>>> arr2 = np.diag([2., 3., 4, 5, 6], -1)  # Need a float input to diag for float output
+>>> arr2[:, :-1]
+array([[ 0.,  0.,  0.,  0.,  0.],
+       [ 2.,  0.,  0.,  0.,  0.],
+       [ 0.,  3.,  0.,  0.,  0.],
+       [ 0.,  0.,  4.,  0.,  0.],
+       [ 0.,  0.,  0.,  5.,  0.],
+       [ 0.,  0.,  0.,  0.,  6.]])
 
 5. Skim through the documentation for ``np.tile``, and use this function to
    construct the array::
