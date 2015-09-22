@@ -22,3 +22,10 @@ We will cover:
   <https://scipy-lectures.github.io/intro/numpy/operations.html>`_.
 
 The exercises are in :doc:`day08_exercises`.
+
+Solutions for the exercises at :doc:`day08_solutions`.
+
+Homework
+--------
+
+Please finish the :doc:`exercises <day08_exercises>` from the lecture.

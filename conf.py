@@ -35,6 +35,7 @@ import shlex
 extensions = [
 #    'alabaster',
     'sphinx.ext.mathjax',
+    'sphinx.ext.doctest',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -302,3 +303,6 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+# Trim doctest flags from doctest blocks (not just .. doctest:: directives)
+trim_doctest_flags = True
