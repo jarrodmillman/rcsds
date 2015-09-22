@@ -5,6 +5,10 @@ Day 8
 Announcements
 -------------
 
+* Teams due today
+* Homework due Thursday
+* Make sure you review today's material before the next class
+
 Lesson plan
 -----------
 
