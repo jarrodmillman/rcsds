@@ -41,7 +41,6 @@ Working with (git) Remotes
 
    A simple cartoon of the centralized collaboration model. For more 
    information, see the ProGit book `section 5.1 <https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows>`_.
-_
 
     - **Integration-manager model**
       This collaboration model takes full advantage of the distributed nature
