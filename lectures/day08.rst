@@ -12,7 +12,7 @@ Announcements
 Lesson plan
 -----------
 
-An introduction to the numpy data library, from the `numpy introdction <https://scipy-lectures.github.io/intro/numpy/index.html>`_ of the `scipy lecture notes <https://scipy-lectures.github.io/index.html>`_.
+An introduction to the numpy data library, from the `numpy introduction <https://scipy-lectures.github.io/intro/numpy/index.html>`_ of the `scipy lecture notes <https://scipy-lectures.github.io/index.html>`_.
 
 We will cover:
 
