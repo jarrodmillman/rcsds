@@ -12,3 +12,4 @@ Lectures
    day06.rst
    day07.rst
    day08.rst
+   day09.rst
