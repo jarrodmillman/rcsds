@@ -20,8 +20,8 @@ Here are the first four lines of ``anatomical.txt``.
 
     0.0000
     0.0000
-    0.0000
-    0.0000
+    53.0000
+    43.0000
 
 The data is in the same floating point text format as the camera
 picture pixel data.
