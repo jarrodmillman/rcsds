@@ -24,8 +24,10 @@ retest dataset`_ of Gorgolewski et al.
 Solutions
 ---------
 
-* `camera`
-* `anatomical`
+* `camera solutions
+  <https://github.com/jarrodmillman/rcsds/blob/master/lectures/camera_solutions.ipynb>`_
+* `anatomical solutions
+  <https://github.com/jarrodmillman/rcsds/blob/master/lectures/anatomical_solutions.ipynb>`_
 
 Homework
 --------
