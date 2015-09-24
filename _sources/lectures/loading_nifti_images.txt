@@ -31,7 +31,7 @@ Check if you have this package, start IPython and type::
 If this gives you an import error (it probably will), exit from IPython, and
 type::
 
-    pip install nibabel
+    pip install --user nibabel
 
 Now try to import nibabel again.  It should work.  If it doesn't call over one
 of your instructors.

@@ -94,7 +94,7 @@ binarized image with a 3D rendering.
 For this last part, you will need the scikit-image_ Python package.
 
 Install as you did for `nibabel`_ in class.  First try (in IPython) ``import
-skimage``.  If that fails, exit IPython, and try ``pip install scikit-image``.
+skimage``.  If that fails, exit IPython, and try ``pip install --user scikit-image``.
 If that works, try ``import skimage`` in IPython again.
 
 .. code:: python
