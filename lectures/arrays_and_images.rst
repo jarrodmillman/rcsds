@@ -198,3 +198,11 @@ This is integer division:
 .. code:: python
 
     1 // 2
+
+This is reading the lines of a text file into a list:
+
+.. code:: python
+
+    fobj = open('myfile.txt', 'rt')  # 'rt' = Read Text mode
+    lines = fobj.readlines()
+    fobj.close()
