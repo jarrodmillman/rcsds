@@ -186,6 +186,12 @@ the sides of the plot) that we want to the top 4 rows, and the last
 <div class="code python highlight-python"><div class="highlight"><pre><span class="mi">1</span> <span class="o">//</span> <span class="mi">2</span>
 </pre></div>
 </div>
+<p>This is reading the lines of a text file into a list:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">fobj</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;myfile.txt&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span>  <span class="c"># &#39;rt&#39; = Read Text mode</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">fobj</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+<span class="n">fobj</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
 </div>
 </div>
 
