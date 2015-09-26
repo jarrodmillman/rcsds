@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Day 7 &mdash; RCSDS 0.1 documentation</title>
+    <title>Notes on the Open FMRI data sets &mdash; RCSDS 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,9 +25,6 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
-    <link rel="up" title="Lectures" href="index.html" />
-    <link rel="next" title="Day 8" href="day08.html" />
-    <link rel="prev" title="Day 6" href="day06.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -40,30 +37,39 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="day-7">
-<h1>Day 7<a class="headerlink" href="#day-7" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="announcements">
-<h2>Announcements<a class="headerlink" href="#announcements" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Reading 3 due today</li>
-<li>Teams formed by Tuesday (9/22)</li>
-<li>Homework 1 due Thursday (9/24)</li>
-</ul>
+  <div class="section" id="notes-on-the-open-fmri-data-sets">
+<h1>Notes on the Open FMRI data sets<a class="headerlink" href="#notes-on-the-open-fmri-data-sets" title="Permalink to this headline">¶</a></h1>
+<p>Here are some notes on the <a class="reference external" href="https://www.openfmri.org/data-sets">OpenFMRI data sets</a></p>
+<div class="section" id="prefer-curated-datasets">
+<h2>Prefer curated datasets<a class="headerlink" href="#prefer-curated-datasets" title="Permalink to this headline">¶</a></h2>
+<p>Not all of the data sets are suitable for your projects.</p>
+<p>When you click on a link a dataset, check at the bottom of the page of the page
+whether the dataset is &#8220;Curated&#8221;:</p>
+<img alt="../_images/openfmri_curated.png" src="../_images/openfmri_curated.png" />
+<p>If &#8220;Curated&#8221; is No, it&#8217;s unlikely that the data will be usable, and it often
+isn&#8217;t available.  You are welcome to try using the &#8220;Curated=No&#8221; datasets when
+they are available, but bear in mind that you will have to do careful checks
+to make sure the data is usable for analysis.  For example, you will need to
+make sure you have all the stimulus files you need to know when the subject
+was doing the task, during the FMRI scans.</p>
+<p>We are only expecting you to analyze the FMRI data, possibly with the
+anatomical data.  There are various datasets with other modalities of data
+such as EEG (Electroencephalography - brain electrical activity recorded on
+the scalp).  We aren&#8217;t expecting you to analyze these other modalities, but
+you can still analyze the FMRI parts of these multimodal datasets.</p>
+<p>The <a class="reference external" href="https://openfmri.org/dataset/ds000117">multi-modal data set ds0117</a>
+does have FMRI data available, as well as the other modalities, but you should
+look at <a class="reference external" href="http://www.nature.com/articles/sdata20151">their Nature data paper</a>
+for details of the study (not linked from the OpenFMRI page).</p>
 </div>
-<div class="section" id="lesson-plan">
-<h2>Lesson plan<a class="headerlink" href="#lesson-plan" title="Permalink to this headline">¶</a></h2>
-<p>Continue basic introduction to Python focusing on classes
-and data formats.</p>
-<p>Introduce basic text mining.</p>
-<p>Start forming teams.</p>
-</div>
-<div class="section" id="homework">
-<h2>Homework<a class="headerlink" href="#homework" title="Permalink to this headline">¶</a></h2>
-<p>Before class on Tuesday (9/22), please work through Stéfan van der Walt’s NumPy
-lock &#8216;n load:</p>
-<div class="highlight-python"><div class="highlight"><pre>-  http://mentat.za.net/numpy/intro/intro.html
-</pre></div>
-</div>
+<div class="section" id="some-terms">
+<h2>Some terms<a class="headerlink" href="#some-terms" title="Permalink to this headline">¶</a></h2>
+<p>An &#8220;event-related&#8221; design is a design where the subject sees stimuli or does a
+task that lasts only a few seconds at a time.  The events are often presented
+at random intervals.</p>
+<p>A &#8220;block-related&#8221; design is when the subjects see stimuli or do a task for a
+longer period, usually around 30 seconds.  Block designs tend to have simpler
+tasks, but generate higher brain signal due to the task.</p>
 </div>
 </div>
 
@@ -83,21 +89,9 @@ lock &#8216;n load:</p>
 
 
 <h3>Navigation</h3>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Lectures</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="day01.html">Day 1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day02.html">Day 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day03.html">Day 3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day04.html">Day 4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day05.html">Day 5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day06.html">Day 6</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">Day 7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day08.html">Day 8</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day09.html">Day 9</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day10.html">Day 9</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Lectures</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../labs/index.html">Labs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
 </ul>
