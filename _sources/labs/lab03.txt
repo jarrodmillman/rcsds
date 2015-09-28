@@ -35,12 +35,12 @@ Working with (git) Remotes
       as the "main" repo and every collaborator has read/write (i.e. pull/push)
       access to the main repo.
 
-.. figure:: ../figs/centralized_collab_model.png
-   :align: center
-   :width: 100%
-
-   A simple cartoon of the centralized collaboration model. For more 
-   information, see the ProGit book `section 5.1 <https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows>`_.
+      .. figure:: ../figs/centralized_collab_model.png
+         :align: center
+         :width: 100%
+      
+         A simple cartoon of the centralized collaboration model. For more 
+         information, see the ProGit book `section 5.1 <https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows>`_.
 
     - **Integration-manager model**
       This collaboration model takes full advantage of the distributed nature
@@ -57,12 +57,13 @@ Working with (git) Remotes
       into the blessed repo. This is where the concept of a *pull request*
       comes from.
 
-.. figure:: ../figs/integration_manager_model.png
-   :align: center
-   :width: 100%
-
-   A simple cartoon of the integration-manager collaboration model. For more 
-   information, see the ProGit book `section 5.1 <https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows>`_.
+      .. figure:: ../figs/integration_manager_model.png
+         :align: center
+         :width: 100%
+      
+         A simple cartoon of the integration-manager collaboration model.
+         For more information, see the ProGit book
+         `section 5.1 <https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows>`_.
 
 Python Pontification
 ++++++++++++++++++++
