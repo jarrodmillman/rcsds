@@ -79,26 +79,25 @@ affect your grade, but that doesn't mean that it should be ignored.
 
  - Beware of nesting
    
-.. figure:: ../figs/pterodactyl.png
-   :align: center
-   :width: 100%
-
-   Terrible joke of the day. Picture from 
-   `here <http://gallerydriver.com/Art/IMG_2290.jpg>`_.
-.
+   .. figure:: ../figs/pterodactyl.png
+      :align: center
+      :width: 100%
+   
+      Terrible joke of the day. Picture from `here <http://gallerydriver.com/Art/IMG_2290.jpg>`_.
+   
    There's a reason pep8 chose four-space indents - it's to
    discourage too much nesting.
-
+   
    e.g.::
-
+   
      if:
      else:
          if:
          else:
              if:
-
+   
    vs.::
-
+   
      if:
      elif:
      elif:
@@ -106,18 +105,18 @@ affect your grade, but that doesn't mean that it should be ignored.
  - Beware of ``global``
    This isn't so much an idiomatic thing, but global is dangerous because it
    breaks scoping rules. Can lead to some really frustrating bugs
-      Rule of Thumb: If you're working on a small, quick project ``global`` 
-      probably won't kill you. If you're working on a bigger project where 
-      you're putting a lot of effort into designing, come up with solutions
-      that don't use global
+
+   Rule of Thumb: If you're working on a small, quick project ``global`` 
+   probably won't kill you. If you're working on a bigger project where 
+   you're putting a lot of effort into designing, come up with solutions
+   that don't use global
 
  - Eliminate "double-negatives"
    Lots of instances in homework where things were cancelling themselves out.
    One relatively common example: ``zip(*(v1, v2))``. This is equivalent to 
    ``zip(v1, v2)`` and far less readable.
 
- - Related: trim the fat
-   Example::
+ - Related: trim the fat. Example::
      if s1 == s2:
          return True
      else:
