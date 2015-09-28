@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab 4 &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Labs" href="index.html" />
+    <link rel="next" title="Appendices" href="../append/index.html" />
+    <link rel="prev" title="Lab 3" href="lab03.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="lab-4">
+<h1>Lab 4<a class="headerlink" href="#lab-4" title="Permalink to this headline">¶</a></h1>
+<p>Stats 159/259 - Lab 4 - 9/28/15</p>
+<div class="section" id="agenda">
+<h2>Agenda<a class="headerlink" href="#agenda" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Attendance (for quiz) + quiz instructions</li>
+<li>Quiz 2 (15-25 min)</li>
+<li>Idiomatic Python<ul>
+<li>What does this term mean?</li>
+<li>Why is it important</li>
+</ul>
+</li>
+<li>Preliminary HW1 notes</li>
+<li>Individual/Group work<ul>
+<li>Final project OR</li>
+<li>Numpy examples from Thursday&#8217;s lecture (arteries example, due Tuesday)</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="idiomatic-python">
+<h2>Idiomatic Python<a class="headerlink" href="#idiomatic-python" title="Permalink to this headline">¶</a></h2>
+<p>In python, as in all languages, there are often many ways to express the
+semantic idea that you want to convey. We&#8217;ve already seen a prominent example
+of this: for-loops vs. list comprehension. When it comes to creating a list
+from an iterative kernel, they are functionally equivalent but syntactically
+very different.</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8220;Idiomatic&#8221; -&gt; think idioms in natural language: often-times have
+rich semantic meaning that is lost on people who don&#8217;t get the idiom.</li>
+</ul>
+</div></blockquote>
+<p>Here&#8217;s an excerpt I pulled from
+<a class="reference external" href="http://examples.yourdictionary.com/idiom.html">an article</a> which was focused
+on helping people understand idioms in natural languages:</p>
+<blockquote class="epigraph">
+<div><p>Learning a Language with Idioms</p>
+<p>Because of idioms, learning a language can be complicated. After you can
+conjugate verbs, and know a lot of words, you may still have difficulty
+speaking the language with native users.</p>
+<p>This is partly due to the use of idioms and would also depend of which
+region of a country you were in. Idiom usage is not just regional, but
+also varies according to people’s interests and social groups.</p>
+<p>The best way to pick up on the meaning of certain idioms would be to
+converse with people and ask them for a clarification of the idiom if you
+are not clear about the idiom they used. There are also sites on the
+Internet which will help explain the meaning of idioms.</p>
+</div></blockquote>
+<p>Note there is a difference between expression and choosing a different
+algorithm: the difference between merge-sort and bubble-sort is not
+idiomatic because they are different algorithms</p>
+<p>Idiomatic python is important to understand because how you express things has
+a huge impact on code clarity. Examples in the next section.</p>
+</div>
+<div class="section" id="python-in-practice-hw1">
+<h2>Python in Practice - HW1<a class="headerlink" href="#python-in-practice-hw1" title="Permalink to this headline">¶</a></h2>
+<p>Concrete (and very common) examples of non-idiomatic python from HW1. This won&#8217;t
+affect your grade, but that doesn&#8217;t mean that it should be ignored.</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">range(len(iterable)):</span></code> vs. <code class="docutils literal"><span class="pre">for</span> <span class="pre">unit</span> <span class="pre">in</span> <span class="pre">iterable:</span></code></p>
+</li>
+<li><p class="first">import placement - top-level scope where it will be used; never in
+function calls</p>
+</li>
+<li><p class="first">Beware of nesting</p>
+<div class="figure align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/pterodactyl.png"><img alt="../_images/pterodactyl.png" src="../_images/pterodactyl.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-text">Terrible joke of the day. Picture from <a class="reference external" href="http://gallerydriver.com/Art/IMG_2290.jpg">here</a>.</span></p>
+</div>
+<p>There&#8217;s a reason pep8 chose four-space indents - it&#8217;s to
+discourage too much nesting.</p>
+<p>e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre>if:
+else:
+    if:
+    else:
+        if:
+</pre></div>
+</div>
+<p>vs.:</p>
+<div class="highlight-python"><div class="highlight"><pre>if:
+elif:
+elif:
+</pre></div>
+</div>
+</li>
+<li><p class="first">Beware of <code class="docutils literal"><span class="pre">global</span></code>
+This isn&#8217;t so much an idiomatic thing, but global is dangerous because it
+breaks scoping rules. Can lead to some really frustrating bugs</p>
+<p>Rule of Thumb: If you&#8217;re working on a small, quick project <code class="docutils literal"><span class="pre">global</span></code>
+probably won&#8217;t kill you. If you&#8217;re working on a bigger project where
+you&#8217;re putting a lot of effort into designing, come up with solutions
+that don&#8217;t use global</p>
+</li>
+<li><p class="first">Eliminate &#8220;double-negatives&#8221;
+Lots of instances in homework where things were cancelling themselves out.
+One relatively common example: <code class="docutils literal"><span class="pre">zip(*(v1,</span> <span class="pre">v2))</span></code>. This is equivalent to
+<code class="docutils literal"><span class="pre">zip(v1,</span> <span class="pre">v2)</span></code> and far less readable.</p>
+</li>
+<li><dl class="first docutils">
+<dt>Related: trim the fat. Example::</dt>
+<dd><dl class="first last docutils">
+<dt>if s1 == s2:</dt>
+<dd><p class="first last">return True</p>
+</dd>
+<dt>else:</dt>
+<dd><p class="first last">return False</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>Can condense this to: <code class="docutils literal"><span class="pre">return</span> <span class="pre">s1</span> <span class="pre">==</span> <span class="pre">s2</span></code></p>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="work-on-projects-or-artery-notebook">
+<h2>Work on projects or artery notebook<a class="headerlink" href="#work-on-projects-or-artery-notebook" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/index.html">Lectures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Labs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lab01.html">Lab 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab02.html">Lab 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab03.html">Lab 3</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Lab 4</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>
