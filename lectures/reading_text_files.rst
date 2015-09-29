@@ -2,9 +2,6 @@
 Reading numerical data from text files
 ######################################
 
-Reading text files
-------------------
-
 We've been reading values from text files in the exercises.
 
 Here is some revision on how to do that, going from the crude to the
@@ -51,7 +48,8 @@ In fact we can do this even more simply by using ``np.loadtxt``:
     import numpy as np
     np.loadtxt('some_numbers.txt')
 
+The output is:
+
 .. parsed-literal::
 
     array([ 1.2,  2.3,  3.4,  4.5])
-
