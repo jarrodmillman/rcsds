@@ -25,6 +25,9 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Lectures" href="index.html" />
+    <link rel="next" title="Labs" href="../labs/index.html" />
+    <link rel="prev" title="Day 9" href="day09.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -42,8 +45,34 @@
 <div class="section" id="lesson-plan">
 <h2>Lesson plan<a class="headerlink" href="#lesson-plan" title="Permalink to this headline">¶</a></h2>
 <p>We will go over the <a class="reference internal" href="openfmri_notes.html"><em>OpenFMRI notes</em></a>.</p>
-<p>We will then download and extract a dataset in class, and explain the directory
-structure and how to read the data.</p>
+<p>We will then download and extract a dataset in class, and explain the
+directory structure and how to read the data.</p>
+<p>Next we will do a couple of exercises with some introduction before each.</p>
+<ul class="simple">
+<li>BOLD images;</li>
+<li>Revision of nibabel load, <code class="docutils literal"><span class="pre">get_data</span></code>;</li>
+<li>Images with three and four dimensions;</li>
+<li>Summary functions work on all dimensions unless you tell them otherwise; use
+<code class="docutils literal"><span class="pre">axis=</span></code> to tell them otherwise;</li>
+</ul>
+<p>Then we will do the <a class="reference internal" href="in_4d.html"><em>Into four dimensions</em></a> exercise.</p>
+<ul class="simple">
+<li>Brain cartoons, and the frontal lobe;</li>
+<li>Gray matter, white matter, CSF;</li>
+<li>Block designs and event-related designs;</li>
+<li>Repetition time (TR) is the time between the beginning of acquisition of one
+volume and the beginning of the next;</li>
+<li>Negating booleans with <code class="docutils literal"><span class="pre">~bool_arr</span></code></li>
+<li><code class="docutils literal"><span class="pre">np.loadtxt</span></code> loads text files into numpy arrays;</li>
+</ul>
+<p>Now we do the <a class="reference internal" href="first_activation.html"><em>A first go at finding brain activation</em></a> exercise.</p>
+</div>
+<div class="section" id="solutions">
+<h2>Solutions<a class="headerlink" href="#solutions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/jarrodmillman/rcsds/blob/master/lectures/in_4d_solutions.ipynb">in 4D solutions</a></li>
+<li><a class="reference external" href="https://github.com/jarrodmillman/rcsds/blob/master/lectures/first_activation_solutions.ipynb">first activation solutions</a></li>
+</ul>
 </div>
 </div>
 
@@ -63,9 +92,21 @@ structure and how to read the data.</p>
 
 
 <h3>Navigation</h3>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="index.html">Lectures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Lectures</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="day01.html">Day 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day02.html">Day 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day03.html">Day 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day04.html">Day 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day05.html">Day 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day06.html">Day 6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day07.html">Day 7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day08.html">Day 8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day09.html">Day 9</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Day 10</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../labs/index.html">Labs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
 </ul>
