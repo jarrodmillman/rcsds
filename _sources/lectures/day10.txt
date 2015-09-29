@@ -12,11 +12,14 @@ directory structure and how to read the data.
 
 Next we will do a couple of exercises with some introduction before each.
 
+See :doc:`images_in_4d`:
+
 * BOLD images;
 * Revision of nibabel load, ``get_data``;
 * Images with three and four dimensions;
 * Summary functions work on all dimensions unless you tell them otherwise; use
   ``axis=`` to tell them otherwise;
+* Negating booleans with ``~bool_arr``
 
 Then we will do the :doc:`in_4d` exercise.
 
@@ -25,8 +28,9 @@ Then we will do the :doc:`in_4d` exercise.
 * Block designs and event-related designs;
 * Repetition time (TR) is the time between the beginning of acquisition of one
   volume and the beginning of the next;
-* Negating booleans with ``~bool_arr``
 * ``np.loadtxt`` loads text files into numpy arrays;
+
+See :doc:`reading_text_files`
 
 Now we do the :doc:`first_activation` exercise.
 
