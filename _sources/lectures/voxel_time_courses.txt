@@ -143,3 +143,5 @@ We can do things like get the correlation between the on-off prediction and the 
 .. testcleanup::
 
     os.chdir('..')
+
+.. include:: ../links_names.inc
