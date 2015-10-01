@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Voxel time courses &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="voxel-time-courses">
+<h1>Voxel time courses<a class="headerlink" href="#voxel-time-courses" title="Permalink to this headline">¶</a></h1>
+<p>When we have a 4D image, we can think of the data in several ways.  For example the data could be:</p>
+<ul class="simple">
+<li>A series of 3D volumes (slicing over the last axis);</li>
+<li>A collection of 1D voxel time courses (slicing over the first three axes).</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Load 4D image file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">nibabel</span> <span class="kn">as</span> <span class="nn">nib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;ds114_sub009_t2r1.nii&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(64, 64, 30, 173)</span>
+</pre></div>
+</div>
+<p>We drop the first volume; as you remember, the first volume is very different
+from the rest of the volumes in the series:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Drop the first volume</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(64, 64, 30, 172)</span>
+</pre></div>
+</div>
+<p>We can think of this 4D data as a series of 3D volumes.  That is the way we
+have been thinking of the 4D data so far:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># This is slicing over the last (time) axis</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vol0</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vol0</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(64, 64, 30)</span>
+</pre></div>
+</div>
+<p>We can also index over the first three axes.  The first three axes in this
+array represent space.</p>
+<ul class="simple">
+<li>The first axis goes from right to left (0 index value means right, 63 means
+left);</li>
+<li>The second axis goes from back to front (0 index value means back, 63 means
+front);</li>
+<li>The third axes goes from bottom to top (0 means bottom, 29 means top).</li>
+</ul>
+<p>If you give me index values for these first three axes, you have given me a <em>coordinate</em> in the first three axes of the array.</p>
+<p>For example, you could give me an index tuple for the first three axes like
+this: <code class="docutils literal"><span class="pre">(42,</span> <span class="pre">32,</span> <span class="pre">19)</span></code>.  The first index of 42 refers to a position towards the
+left of the brain (&gt; 31).  The second index of 32 refers to a position almost
+in the center front to back.  The last index of 19 refers to a position
+a little further towards the top of the brain <a href="#id1"><span class="problematic" id="id2">|&#8211;|</span></a> in this image.</p>
+<p>This coordinate therefore refers to a particular part of the image:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Where is this in the brain?</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mean_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Make a nice bright dot in the right place</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mean_data</span><span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">19</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">mean_data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mean_data</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">19</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s">&#39;gray&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;nearest&#39;</span><span class="p">)</span>
+<span class="go">&lt;...&gt;</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/voxel_time_courses-4.png">png</a>, <a class="reference external" href="../lectures/voxel_time_courses-4.hires.png">hires.png</a>, <a class="reference external" href="../lectures/voxel_time_courses-4.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/voxel_time_courses-4.png" src="../_images/voxel_time_courses-4.png" />
+</div>
+<p>If I slice into the data array with these coordinates, I will get a vector, with the image value at that position (43, 32, 19), for every point in time:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># This is slicing over all three of the space axes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voxel_time_course</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">19</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">voxel_time_course</span><span class="p">)</span>
+<span class="go">[...]</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/voxel_time_courses-5.png">png</a>, <a class="reference external" href="../lectures/voxel_time_courses-5.hires.png">hires.png</a>, <a class="reference external" href="../lectures/voxel_time_courses-5.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/voxel_time_courses-5.png" src="../_images/voxel_time_courses-5.png" />
+</div>
+<p>We could call this a &#8220;voxel time course&#8221;.</p>
+<p>We might want to do ordinary statistical type things with this time course.
+For example, we might want to correlate this time course with a measure of whether the subject was doing the task or not.</p>
+<p>This measure will have 1 for each volume (time point) where the subject was doing the task, and 0 for each volume where the subject was at rest.</p>
+<p>We call this a &#8220;neural&#8221; time course, because we believe that the nerves in the
+relevant brain area will switch on when the task starts (value = 1) and then
+switch off when the task stops (value = 0).</p>
+<p>To get this on-off measure, we will use our pre-packaged function for OpenFMRI data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Load the neural time course using pre-packaged function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">stimuli</span> <span class="kn">import</span> <span class="n">events2neural</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">TR</span> <span class="o">=</span> <span class="mf">2.5</span>  <span class="c"># time between volumes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_trs</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c"># The original number of TRs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">neural</span> <span class="o">=</span> <span class="n">events2neural</span><span class="p">(</span><span class="s">&#39;ds114_sub009_t2r1_cond.txt&#39;</span><span class="p">,</span> <span class="n">TR</span><span class="p">,</span> <span class="n">n_trs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">neural</span><span class="p">)</span>
+<span class="go">[...]</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/voxel_time_courses-6.png">png</a>, <a class="reference external" href="../lectures/voxel_time_courses-6.hires.png">hires.png</a>, <a class="reference external" href="../lectures/voxel_time_courses-6.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/voxel_time_courses-6.png" src="../_images/voxel_time_courses-6.png" />
+</div>
+<p>We can plot the voxel time course against this neural prediction:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Plot the neural prediction against the data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">neural</span> <span class="o">=</span> <span class="n">neural</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Notice the + to specify the &quot;line marker&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">neural</span><span class="p">,</span> <span class="n">voxel_time_course</span><span class="p">,</span> <span class="s">&#39;o&#39;</span><span class="p">)</span>
+<span class="go">[...]</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/voxel_time_courses-7.png">png</a>, <a class="reference external" href="../lectures/voxel_time_courses-7.hires.png">hires.png</a>, <a class="reference external" href="../lectures/voxel_time_courses-7.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/voxel_time_courses-7.png" src="../_images/voxel_time_courses-7.png" />
+</div>
+<p>We can do things like get the correlation between the on-off prediction and the voxel time course:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Correlate the neural time course with the voxel time course</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">neural</span><span class="p">,</span> <span class="n">voxel_time_course</span><span class="p">)</span>
+<span class="go">array([[ 1.     ,  0.54285],</span>
+<span class="go">       [ 0.54285,  1.     ]])</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Lectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/index.html">Labs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>

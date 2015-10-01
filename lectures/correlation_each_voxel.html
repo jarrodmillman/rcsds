@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Correlation r value for each voxel in the brain &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="correlation-r-value-for-each-voxel-in-the-brain">
+<h1>Correlation r value for each voxel in the brain<a class="headerlink" href="#correlation-r-value-for-each-voxel-in-the-brain" title="Permalink to this headline">¶</a></h1>
+<p>In this exercise, we will take each voxel time course in the brain, and calculate a correlation between the task-on / task-off vector and the voxel time course.  We then make a new 3D volume that contains correlation values for each voxel.</p>
+<p>Import the <code class="docutils literal"><span class="pre">events2neural</span></code> function from the <code class="docutils literal"><span class="pre">stimuli</span></code> module:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># import events2neural from stimuli module</span>
+</pre></div>
+</div>
+<p>Load the <code class="docutils literal"><span class="pre">ds114_sub009_t2r1.nii</span></code> image, and calculate the number of volumes:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Load the ds114_sub009_t2r1.nii image</span>
+<span class="c"># Get number of volumes</span>
+</pre></div>
+</div>
+<p>The TR (time between scans) is 2.5 seconds.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">TR</span> <span class="o">=</span> <span class="mf">2.5</span>
+</pre></div>
+</div>
+<p>Call the <code class="docutils literal"><span class="pre">events2neural</span></code> function to give you a time course that is 1
+for the volumes during the task (thinking of verbs) and 0 for the
+volumes during rest.  Plot this time course:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Generate the on-off values for each volume</span>
+<span class="c"># Plot these values</span>
+</pre></div>
+</div>
+<p>Using slicing, drop the first 4 volumes, and the corresponding on-off values:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Drop the first 4 volumes, and corresponding on-off values</span>
+</pre></div>
+</div>
+<p>Make a single brain-volume-sized array of all zero to hold the correlations:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Make array to hold the correlation values</span>
+<span class="n">correlations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Loop over all voxel indices on the first, then second, then third dimension.</li>
+<li>Extract the voxel time courses at each voxel coordinate in the image.</li>
+<li>Get the correlation between the voxel time course and neural prediction.</li>
+<li>Fill in the value in the correlations array.</li>
+</ul>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Loop over all voxel indices</span>
+<span class="c"># Extract the voxel time courses at each voxel</span>
+<span class="c"># Get correlation value for voxel time course with on-off vector</span>
+<span class="c"># Fill value in the correlations array</span>
+</pre></div>
+</div>
+<p>Plot the middle slice of the third axis from the correlations array.  Can you
+see any sign of activity (high correlation) in the frontal lobe?</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Plot the middle slice of the correlation image</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Lectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/index.html">Labs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Slicing with boolean vectors &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="slicing-with-boolean-vectors">
+<h1>Slicing with boolean vectors<a class="headerlink" href="#slicing-with-boolean-vectors" title="Permalink to this headline">¶</a></h1>
+<p>We have already seen how to slice arrays using colons and integers.</p>
+<p>The colon means &#8216;all the elements on this axis&#8217;:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">an_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">an_array</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c"># All rows, only the second column</span>
+<span class="go">array([1, 5])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">an_array</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span>  <span class="c"># Only the first row, all columns except the first</span>
+<span class="go">array([1, 2, 3])</span>
+</pre></div>
+</div>
+<p>We have also seen how to slice using a boolean array the same shape as
+the original:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">is_gt_5</span> <span class="o">=</span> <span class="n">an_array</span> <span class="o">&gt;</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_gt_5</span>
+<span class="go">array([[False, False, False, False],</span>
+<span class="go">       [False, False,  True,  True]], dtype=bool)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">an_array</span><span class="p">[</span><span class="n">is_gt_5</span><span class="p">]</span>  <span class="c"># Select elements greater than 5 into 1D array</span>
+<span class="go">array([6, 7])</span>
+</pre></div>
+</div>
+<p>We can also use boolean vectors to select elements on a particular axis.
+So, for example, let&#8217;s say we want the first and last elements on the
+second axis. We can use a boolean vector to select these elements from a
+particular axis, while still using integer and colon syntax for the
+other axes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">want_first_last</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>All rows, columns as identified by boolean vector:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">an_array</span><span class="p">[:,</span> <span class="n">want_first_last</span><span class="p">]</span>
+<span class="go">array([[0, 3],</span>
+<span class="go">       [4, 7]])</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Lectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/index.html">Labs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>
