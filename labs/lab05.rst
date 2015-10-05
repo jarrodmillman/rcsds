@@ -1,5 +1,5 @@
 *****
-Lab 4
+Lab 5
 *****
 
 Stats 159/259 - Lab 5 - 10/5/15
@@ -82,14 +82,14 @@ standpoint is their proprietary/binary formats.
   - Difficult to version control and collaborate on
 
   - Most document processing tools are trying to address this issue (e.g.
-    google docs built-in VC and collaboration)
+    google docs built-in VC and sharing)
 
 
 WYSIWYM - "What you see is what you mean"
 ----------------------------------------
 
 The WYSIWYM paradigm inherently separates content from formatting. It is 
-implemented by relying on **markup languages**. A markup language allows for 
+implemented by leveraging **markup languages**. A markup language allows for 
 generation of content in plain text, while also maintaining a set of special
 syntax to annotate the content with structural information. In this way, the
 plain-text or "source" files are human-readable and easy to version control. To
