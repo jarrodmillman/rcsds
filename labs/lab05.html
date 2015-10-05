@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab 5 &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Labs" href="index.html" />
+    <link rel="next" title="Appendices" href="../append/index.html" />
+    <link rel="prev" title="Lab 4" href="lab04.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="lab-5">
+<h1>Lab 5<a class="headerlink" href="#lab-5" title="Permalink to this headline">¶</a></h1>
+<p>Stats 159/259 - Lab 5 - 10/5/15</p>
+<div class="section" id="agenda">
+<h2>Agenda<a class="headerlink" href="#agenda" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Brief discussion of HW1 &amp; qz2<ul>
+<li>Everybody check their grades</li>
+<li>GitHub issue tracker for grading issues</li>
+<li>Similarity analysis on reading1.txt</li>
+</ul>
+</li>
+<li>Markup Languages<ul>
+<li>What is a markup language?</li>
+<li>Why are they important?</li>
+<li>WYSIWYG vs. WYSIWYM and reproducibility</li>
+</ul>
+</li>
+<li>Individual/Group work<ul>
+<li>Project proposals (due tonight &#64; 9:00 PM)</li>
+<li><a class="reference external" href="http://www.jarrodmillman.com/rcsds/lectures/correlation_each_voxel.html">Your homework</a>
+due before class tomorrow.</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="homework-1">
+<h2>Homework 1<a class="headerlink" href="#homework-1" title="Permalink to this headline">¶</a></h2>
+<p>Similarity matrix grading demo &#8212; push results and answer:</p>
+<blockquote>
+<div><ul class="simple">
+<li>What is the word count for each reading?</li>
+<li>What was the most frequently used word? What is the maximum number of
+times it was used? The minimum?</li>
+<li>How many times was the word &#8220;python&#8221; used?</li>
+</ul>
+</div></blockquote>
+<p>Why we didn&#8217;t want you to use numpy for hw1 - manual dot product vs. np.dot</p>
+</div>
+<div class="section" id="document-processing-and-markup-languages">
+<h2>Document Processing and Markup Languages<a class="headerlink" href="#document-processing-and-markup-languages" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>Everybody&#8217;s first document processor?</li>
+</ul>
+</div></blockquote>
+<div class="section" id="wysiwyg-what-you-see-is-what-you-get">
+<h3>WYSIWYG - &#8220;What you see is what you get&#8221;<a class="headerlink" href="#wysiwyg-what-you-see-is-what-you-get" title="Permalink to this headline">¶</a></h3>
+<p>This is a good paradigm for artistic documents or simple documents where there
+isn&#8217;t much formatting. The major drawback of the WYSIWYG paradigm is that
+content and formatting are fused into one interface. This can be detrimental for
+STEM pursuits, since publication and peer review is central to the scientific
+process.</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Wrestling with formatting is time consuming and irrelevant in the context
+of publication.</p>
+</li>
+<li><p class="first">Feelings-ball take: having formatting in the same document as the content
+distracts from the true goals of the document; clearly and concisely
+expressing ideas or results</p>
+</li>
+<li><p class="first">Practical take: journals all have different formats. If a paper is being
+submitted to multiple places you don&#8217;t want to have to explicitly
+re-wrangle the document every time just to change the formatting.</p>
+</li>
+<li><p class="first">Having content be separate from the formatting allows for much easier
+re-use of the content.</p>
+<blockquote>
+<div><ul class="simple">
+<li>e.g. you can post pictures from your publication to your website and
+reuse your paper as a chapter in a thesis, or keep a portion for reuse
+in subsequent publications (e.g. acknowledgements)</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p>Other major drawback of WYSIWYG editors from a reproducible/collaborative
+standpoint is their proprietary/binary formats.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Difficult to version control and collaborate on</li>
+<li>Most document processing tools are trying to address this issue (e.g.
+google docs built-in VC and sharing)</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="wysiwym-what-you-see-is-what-you-mean">
+<h3>WYSIWYM - &#8220;What you see is what you mean&#8221;<a class="headerlink" href="#wysiwym-what-you-see-is-what-you-mean" title="Permalink to this headline">¶</a></h3>
+<p>The WYSIWYM paradigm inherently separates content from formatting. It is
+implemented by leveraging <strong>markup languages</strong>. A markup language allows for
+generation of content in plain text, while also maintaining a set of special
+syntax to annotate the content with structural information. In this way, the
+plain-text or &#8220;source&#8221; files are human-readable and easy to version control. To
+produce the final document, the source files must undergo a <em>build</em> or <em>render</em>
+step where the markup syntax (and any associated style files) are passed to a
+tool that knows how to interpret and render the content.</p>
+<p>Examples of markup languages:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The big one: HTML (hyper text markup language). The markup language of the
+internet</li>
+<li>XML: very popular for serialization</li>
+<li>LaTeX: see below</li>
+<li>markdown: very popular for document production. GitHub will automatically
+render markdown (NOTE: there are many different &#8220;flavors&#8221; of markdown; the
+GitHub flavor is quite popular)</li>
+<li>reStructuredText: official recommended markup language for python
+doc strings. There are tools like <a class="reference external" href="http://sphinx-doc.org/">Sphinx</a> that
+will automatically build a documentation website for your python code
+based on the docstrings (also used for the class website!)</li>
+</ul>
+</div></blockquote>
+<p>There are many examples of this paradigm, but <strong>LaTeX</strong> is by-far the most
+ubiquitous in STEM (and all academia), largely due to its beautiful rendering
+of math and the extensibility of the core by tons of open-source packages
+(it also has a significant head-start over other WYSIWYM tools). We will be
+using LaTeX for your projects and discussing it in further detail during the
+rest of the semester.</p>
+</div>
+</div>
+<div class="section" id="work-on-projects-or-correlation-exercise">
+<h2>Work on projects or correlation exercise<a class="headerlink" href="#work-on-projects-or-correlation-exercise" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/index.html">Lectures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Labs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lab01.html">Lab 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab02.html">Lab 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab03.html">Lab 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab04.html">Lab 4</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Lab 5</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>
