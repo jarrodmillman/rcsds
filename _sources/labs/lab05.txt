@@ -35,6 +35,11 @@ Homework 1
 
 Similarity matrix grading demo --- push results and answer:
 
+NOTE: This is what I originally *planned* to do, which differed from the
+example we did in class. These questions are only answerable if you have the
+tdm and the vocab. I didn't push these and stuck with the preprocessing 
+example instead (see below).
+
    - What is the word count for each reading?
 
    - What was the most frequently used word? What is the maximum number of 
@@ -42,7 +47,18 @@ Similarity matrix grading demo --- push results and answer:
 
    - How many times was the word "python" used?
 
-Why we didn't want you to use numpy for hw1 - manual dot product vs. np.dot
+Example we **actually did** in lab: preprocess the similarity matrix to get
+rid of rows/cols of zeros and the outlier point.
+
+   - Use structure of similarity matrix (max of cols on the diagonal, symmetric,
+     no zeros in the matrix unless file was empty) and boolean masking to 
+     clean the data.
+
+   - boolean mask to get rid of zeros:
+
+      - sm_nozeros = sm[sm != 0]
+
+      - Requires a reshape to get data back into 2D array
 
 Document Processing and Markup Languages
 ++++++++++++++++++++++++++++++++++++++++

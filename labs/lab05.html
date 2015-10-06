@@ -69,6 +69,10 @@ due before class tomorrow.</li>
 <div class="section" id="homework-1">
 <h2>Homework 1<a class="headerlink" href="#homework-1" title="Permalink to this headline">¶</a></h2>
 <p>Similarity matrix grading demo &#8212; push results and answer:</p>
+<p>NOTE: This is what I originally <em>planned</em> to do, which differed from the
+example we did in class. These questions are only answerable if you have the
+tdm and the vocab. I didn&#8217;t push these and stuck with the preprocessing
+example instead (see below).</p>
 <blockquote>
 <div><ul class="simple">
 <li>What is the word count for each reading?</li>
@@ -77,7 +81,24 @@ times it was used? The minimum?</li>
 <li>How many times was the word &#8220;python&#8221; used?</li>
 </ul>
 </div></blockquote>
-<p>Why we didn&#8217;t want you to use numpy for hw1 - manual dot product vs. np.dot</p>
+<p>Example we <strong>actually did</strong> in lab: preprocess the similarity matrix to get
+rid of rows/cols of zeros and the outlier point.</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Use structure of similarity matrix (max of cols on the diagonal, symmetric,
+no zeros in the matrix unless file was empty) and boolean masking to
+clean the data.</p>
+</li>
+<li><p class="first">boolean mask to get rid of zeros:</p>
+<blockquote>
+<div><ul class="simple">
+<li>sm_nozeros = sm[sm != 0]</li>
+<li>Requires a reshape to get data back into 2D array</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
 </div>
 <div class="section" id="document-processing-and-markup-languages">
 <h2>Document Processing and Markup Languages<a class="headerlink" href="#document-processing-and-markup-languages" title="Permalink to this headline">¶</a></h2>

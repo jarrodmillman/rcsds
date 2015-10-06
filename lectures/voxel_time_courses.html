@@ -92,7 +92,10 @@ a little further towards the top of the brain — in this image.</p>
 <span class="go">&lt;...&gt;</span>
 </pre></div>
 </div>
-<p>()</p>
+<p>(<a class="reference external" href="../lectures/voxel_time_courses-4.png">png</a>, <a class="reference external" href="../lectures/voxel_time_courses-4.hires.png">hires.png</a>, <a class="reference external" href="../lectures/voxel_time_courses-4.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/voxel_time_courses-4.png" src="../_images/voxel_time_courses-4.png" />
+</div>
 <p>If I slice into the data array with these coordinates, I will get a vector, with the image value at that position (43, 32, 19), for every point in time:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># This is slicing over all three of the space axes</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">voxel_time_course</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">19</span><span class="p">]</span>
@@ -100,7 +103,10 @@ a little further towards the top of the brain — in this image.</p>
 <span class="go">[...]</span>
 </pre></div>
 </div>
-<p>()</p>
+<p>(<a class="reference external" href="../lectures/voxel_time_courses-5.png">png</a>, <a class="reference external" href="../lectures/voxel_time_courses-5.hires.png">hires.png</a>, <a class="reference external" href="../lectures/voxel_time_courses-5.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/voxel_time_courses-5.png" src="../_images/voxel_time_courses-5.png" />
+</div>
 <p>We could call this a &#8220;voxel time course&#8221;.</p>
 <p>We might want to do ordinary statistical type things with this time course.
 For example, we might want to correlate this time course with a measure of whether the subject was doing the task or not.</p>
@@ -118,7 +124,10 @@ switch off when the task stops (value = 0).</p>
 <span class="go">[...]</span>
 </pre></div>
 </div>
-<p>()</p>
+<p>(<a class="reference external" href="../lectures/voxel_time_courses-6.png">png</a>, <a class="reference external" href="../lectures/voxel_time_courses-6.hires.png">hires.png</a>, <a class="reference external" href="../lectures/voxel_time_courses-6.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/voxel_time_courses-6.png" src="../_images/voxel_time_courses-6.png" />
+</div>
 <p>We can plot the voxel time course against this neural prediction:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Plot the neural prediction against the data</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">neural</span> <span class="o">=</span> <span class="n">neural</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
@@ -127,7 +136,10 @@ switch off when the task stops (value = 0).</p>
 <span class="go">[...]</span>
 </pre></div>
 </div>
-<p>()</p>
+<p>(<a class="reference external" href="../lectures/voxel_time_courses-7.png">png</a>, <a class="reference external" href="../lectures/voxel_time_courses-7.hires.png">hires.png</a>, <a class="reference external" href="../lectures/voxel_time_courses-7.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/voxel_time_courses-7.png" src="../_images/voxel_time_courses-7.png" />
+</div>
 <p>We can do things like get the correlation between the on-off prediction and the voxel time course:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Correlate the neural time course with the voxel time course</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">corrcoef</span><span class="p">(</span><span class="n">neural</span><span class="p">,</span> <span class="n">voxel_time_course</span><span class="p">)</span>
