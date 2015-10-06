@@ -29,7 +29,8 @@ Lesson plan
 Homework
 --------
 
-We will post some videos on collaboration with git later today (Tuesday 6th).
+Please read this `tutorial on convolution
+<http://practical-neuroimaging.github.io/on_convolution.html>`_.
 
 Solutions
 ---------
