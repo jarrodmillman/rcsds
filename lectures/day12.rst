@@ -12,8 +12,10 @@ Lesson plan
   * a more sophisticated regressor using convolution;
   * activation by multiple regression
 
-* Reshaping 4D to 2D and back again: :doc:`reshaping_arrays`;
-* exercise: correlation via reshaping;
+* Review of `correlation each voxel solutions
+  <https://github.com/jarrodmillman/rcsds/blob/master/lectures/correlation_each_voxel.ipynb>`_
+* reshaping 4D to 2D and back again: :doc:`reshaping_arrays`;
+* reshaping exercise: :doc:`correlation_2d`;
 * introduction to testing with nose;
 * exercise: correlation one to many;
 * the neural and hemodynamic model;
