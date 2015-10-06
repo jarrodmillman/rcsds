@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Lectures &mdash; RCSDS 0.1 documentation</title>
+    <title>Day 12 &mdash; RCSDS 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,8 +25,9 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
-    <link rel="next" title="Day 1" href="day01.html" />
-    <link rel="prev" title="Text Mining" href="../standard/textmining.html" />
+    <link rel="up" title="Lectures" href="index.html" />
+    <link rel="next" title="Labs" href="../labs/index.html" />
+    <link rel="prev" title="Day 11" href="day11.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -39,71 +40,41 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="lectures">
-<h1>Lectures<a class="headerlink" href="#lectures" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="day01.html">Day 1</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="day01.html#definitions">Definitions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day01.html#is-it-worth-the-time">Is it worth the time?</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="day01.html#text-editor">Text editor</a></li>
+  <div class="section" id="day-12">
+<h1>Day 12<a class="headerlink" href="#day-12" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="lesson-plan">
+<h2>Lesson plan<a class="headerlink" href="#lesson-plan" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>An outline of where we&#8217;re going:<ul>
+<li>we have tried to find &#8220;activation&#8221; by subtracting task from rest;</li>
+<li>we have used correlation with the on-off time-course;</li>
+<li>we will try a more sophisticated regressor using convolution;</li>
+<li>then, detection of activation by multiple regression.</li>
 </ul>
 </li>
+<li>Review of <a class="reference external" href="https://github.com/jarrodmillman/rcsds/blob/master/lectures/correlation_each_voxel.ipynb">correlation each voxel solutions</a></li>
+<li>reshaping 4D to 2D and back again: <a class="reference internal" href="reshaping_arrays.html"><em>Reshaping arrays</em></a>;</li>
+<li>reshaping exercise: <a class="reference internal" href="correlation_2d.html"><em>Correlation per voxel, in 2D</em></a>;</li>
+<li>about <a class="reference internal" href="dot_products.html"><em>Dot products in numpy</em></a>;</li>
+<li><a class="reference internal" href="on_correlation.html"><em>revision about correlation</em></a>;</li>
+<li>introduction to <a class="reference internal" href="nose_intro.html"><em>Testing with nose</em></a>;</li>
+<li>a reminder about <code class="docutils literal"><span class="pre">np.tile</span></code>;</li>
+<li>exercise: open the files <a class="reference download internal" href="../_downloads/pearson.py"><code class="xref download docutils literal"><span class="pre">pearson.py</span></code></a> and
+<a class="reference download internal" href="../_downloads/test_pearson_1d.py"><code class="xref download docutils literal"><span class="pre">test_pearson_1d.py</span></code></a> and <a class="reference download internal" href="../_downloads/test_pearson_2d.py"><code class="xref download docutils literal"><span class="pre">test_pearson_2d.py</span></code></a> . Read the
+instructions in both these files, and, shoot at will;</li>
+<li>the neural and hemodynamic model;</li>
+<li>convolution;</li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="day02.html">Day 2</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="day02.html#announcements">Announcements</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="day03.html">Day 3</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="day03.html#announcements">Announcements</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="day04.html">Day 4</a></li>
-<li class="toctree-l1"><a class="reference internal" href="day05.html">Day 5</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="day05.html#announcements">Announcements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day05.html#lesson-plan">Lesson plan</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="day06.html">Day 6</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="day06.html#announcements">Announcements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day06.html#lesson-plan">Lesson plan</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="day07.html">Day 7</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="day07.html#announcements">Announcements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day07.html#lesson-plan">Lesson plan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day07.html#homework">Homework</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="day08.html">Day 8</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="day08.html#announcements">Announcements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day08.html#lesson-plan">Lesson plan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day08.html#homework">Homework</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="day09.html">Day 9</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="day09.html#lesson-plan">Lesson plan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day09.html#solutions">Solutions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day09.html#homework">Homework</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="day10.html">Day 10</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="day10.html#lesson-plan">Lesson plan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day10.html#solutions">Solutions</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="day11.html">Day 11</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="day11.html#lesson-plan">Lesson plan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day11.html#homework">Homework</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="day12.html">Day 12</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="day12.html#lesson-plan">Lesson plan</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day12.html#homework">Homework</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day12.html#solutions">Solutions</a></li>
-</ul>
-</li>
+</div>
+<div class="section" id="homework">
+<h2>Homework<a class="headerlink" href="#homework" title="Permalink to this headline">¶</a></h2>
+<p>We will post some videos on collaboration with git later today (Tuesday 6th).</p>
+</div>
+<div class="section" id="solutions">
+<h2>Solutions<a class="headerlink" href="#solutions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/jarrodmillman/rcsds/blob/master/lectures/correlation_2d.ipynb">correlation 2d</a>;</li>
+<li><a class="reference download internal" href="../_downloads/pearson_solutions.py"><code class="xref download docutils literal"><span class="pre">pearson_solutions.py</span></code></a>.</li>
 </ul>
 </div>
 </div>
@@ -126,7 +97,7 @@
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Lectures</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Lectures</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="day01.html">Day 1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day02.html">Day 2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day03.html">Day 3</a></li>
@@ -138,7 +109,7 @@
 <li class="toctree-l2"><a class="reference internal" href="day09.html">Day 9</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day10.html">Day 10</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day11.html">Day 11</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day12.html">Day 12</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Day 12</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../labs/index.html">Labs</a></li>

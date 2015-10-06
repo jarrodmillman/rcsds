@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Appendices &mdash; RCSDS 0.1 documentation</title>
+    <title>On correlation and the dot product &mdash; RCSDS 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,8 +25,6 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
-    <link rel="next" title="Software installation" href="software.html" />
-    <link rel="prev" title="Lab 4" href="../labs/lab04.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -39,18 +37,23 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <p>_appendices:</p>
-<div class="section" id="appendices">
-<h1>Appendices<a class="headerlink" href="#appendices" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="software.html">Software installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="file-transfer.html">File Transfer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix1.html">Command Line Utilities</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix2.html">File System Layout</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix3.html">Shell Customization</a></li>
-</ul>
-</div>
+  <div class="section" id="on-correlation-and-the-dot-product">
+<h1>On correlation and the dot product<a class="headerlink" href="#on-correlation-and-the-dot-product" title="Permalink to this headline">¶</a></h1>
+<p>We are going to implement <a class="reference external" href="https://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient">Pearson product-moment
+correlation</a>.</p>
+<p>We have two vectors, <span class="math">\(\mathbf{x}\)</span> and <span class="math">\(\mathbf{y}\)</span>, each
+with <span class="math">\(N\)</span> values, <span class="math">\(\mathbf{x} = x_0, x_1, ..., x_{N-1}\)</span>,
+<span class="math">\(\mathbf{y} = y_0, y_1, ..., y_{N-1}\)</span>.</p>
+<p>The sample mean is:</p>
+<div class="math">
+\[\bar{x}=\frac{1}{N}\sum_{i=0}^{N-1} x_i\]</div>
+<p>In <code class="docutils literal"><span class="pre">numpy</span></code> this would just be <code class="docutils literal"><span class="pre">np.mean(x)</span></code>.</p>
+<p>The Pearson product-moment correlation coefficient between two vectors
+<span class="math">\(\mathbf{x}, \mathbf{y}\)</span> is defined as:</p>
+<div class="math">
+\[r_{xy} =\frac{\sum ^{N-1} _{i=0}(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum ^{N-1} _{i=0}(x_i - \bar{x})^2} \sqrt{\sum ^{N-1} _{i=0}(y_i - \bar{y})^2}}\]</div>
+<p><span class="math">\((x_i - \bar{x})\)</span> is the vector <span class="math">\(\mathbf{x}\)</span> after it has
+been <em>mean-centered</em> (it has a sample mean of zero).</p>
 </div>
 
 
@@ -69,18 +72,11 @@
 
 
 <h3>Navigation</h3>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../lectures/index.html">Lectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Lectures</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../labs/index.html">Labs</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Appendices</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="software.html">Software installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file-transfer.html">File Transfer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix1.html">Command Line Utilities</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix2.html">File System Layout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="appendix3.html">Shell Customization</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
 </ul>
 
 

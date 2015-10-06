@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Correlation per voxel, in 2D &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="correlation-per-voxel-in-2d">
+<h1>Correlation per voxel, in 2D<a class="headerlink" href="#correlation-per-voxel-in-2d" title="Permalink to this headline">¶</a></h1>
+<p>In this exercise, we will take each voxel time course in the brain, and calculate a correlation between the task-on / task-off vector and the voxel time course.  We then make a new 3D volume that contains correlation values for each voxel.</p>
+<p>You&#8217;ve done this before in the exercise <a class="reference internal" href="correlation_each_voxel.html"><em>Correlation r value for each voxel in the brain</em></a>, but this time we&#8217;ll do it by reshaping the 4D data to 2D, and looping over the long voxels axis instead of over each of the three spatial axes.</p>
+<p>We&#8217;ve given you the stuff you will have done already for the previous exercise - you can copy-paste into IPython.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># - import common modules</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>  <span class="c"># the Python array package</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>  <span class="c"># the Python plotting package</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># import events2neural from stimuli module</span>
+<span class="kn">from</span> <span class="nn">stimuli</span> <span class="kn">import</span> <span class="n">events2neural</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">nibabel</span> <span class="kn">as</span> <span class="nn">nib</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Load the ds114_sub009_t2r1.nii image</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;ds114_sub009_t2r1.nii&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Get the number of volumes in ds114_sub009_t2r1.nii</span>
+<span class="n">n_trs</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The TR (time between scans) is 2.5 seconds.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">TR</span> <span class="o">=</span> <span class="mf">2.5</span>
+</pre></div>
+</div>
+<p>Call the <code class="docutils literal"><span class="pre">events2neural</span></code> function to give you a time course that is 1
+for the volumes during the task (thinking of verbs) and 0 for the
+volumes during rest.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">time_course</span> <span class="o">=</span> <span class="n">events2neural</span><span class="p">(</span><span class="s">&#39;ds114_sub009_t2r1_cond.txt&#39;</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="n">n_trs</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Using slicing, drop the first 4 volumes, and the first 4 on-off values</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">4</span><span class="p">:]</span>
+<span class="n">time_course</span> <span class="o">=</span> <span class="n">time_course</span><span class="p">[</span><span class="mi">4</span><span class="p">:]</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Calculate the number of voxels (number of elements in one volume)</span>
+</pre></div>
+</div>
+<p>Now, reshape the 4D data to a 2D array shape (number of voxels, number
+of volumes).</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Reshape 4D array to 2D array n_voxels by n_volumes</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Make a 1D array of size (n_voxels,) to hold the correlation values</span>
+</pre></div>
+</div>
+<p>Now loop over all voxels, calculate the correlation coefficient with
+<code class="docutils literal"><span class="pre">time_course</span></code> at this voxel, and fill in the corresponding entry in your 1D
+array.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Loop over voxels filling in correlation at this voxel</span>
+</pre></div>
+</div>
+<p>Reshape the correlations 1D array back to a 3D array, using the original 3D
+shape.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Reshape the correlations array back to 3D</span>
+</pre></div>
+</div>
+<p>If all went well, you should have generated the same 3D volume of correlations as you did for the original exercise:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Plot the middle slice of the third axis from the correlations array</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">correlations</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s">&#39;gray&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Lectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/index.html">Labs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>
