@@ -37,6 +37,7 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.doctest',
     'plot_directive',
+    'mathcode',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -311,3 +312,6 @@ trim_doctest_flags = True
 # Config of plot_directive
 plot_include_source = True
 plot_html_show_source_link = False
+
+# Config of mathcode directive
+mathcode_use_plot_ns = True

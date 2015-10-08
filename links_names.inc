@@ -1,6 +1,9 @@
 .. A file containing links and substitutions
 .. vim: ft=rst
 
+.. Python stuff
+.. _numpy: http://www.numpy.org
+
 .. Imaging stuff
 .. _NIfTI format: http://nifti.nimh.nih.gov/nifti-1
 .. _OpenFMRI data sets: https://www.openfmri.org/data-sets
