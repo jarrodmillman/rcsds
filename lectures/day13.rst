@@ -16,7 +16,12 @@ Lesson plan
 
     * Review of :download:`pearson_solutions.py`.
 
-* Using ``pearson.py`` and array reshaping;
+* The Python module search path::
+
+    import sys
+    sys.path.append('/path/containing/modules')
+
+* Using ``pearson.py`` and array reshaping: :doc:`faster_correlation`;
 * A better regressor using convolution;
 
 Homework
