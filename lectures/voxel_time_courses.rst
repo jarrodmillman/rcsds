@@ -20,7 +20,7 @@ When we have a 4D image, we can think of the data in several ways.  For example 
     import matplotlib.pyplot as plt
 
 .. plot::
-    :context:
+    :context: reset
     :nofigs:
 
     >>> # Load 4D image file
