@@ -102,7 +102,7 @@ standpoint is their proprietary/binary formats.
 
 
 WYSIWYM - "What you see is what you mean"
-----------------------------------------
+-----------------------------------------
 
 The WYSIWYM paradigm inherently separates content from formatting. It is 
 implemented by leveraging **markup languages**. A markup language allows for 
