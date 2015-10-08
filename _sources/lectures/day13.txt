@@ -16,14 +16,17 @@ Lesson plan
 
     * Review of :download:`pearson_solutions.py`.
 
-* Using ``pearson.py`` and array reshaping;
-* A better regressor using convolution;
+* The Python module search path::
+
+    import sys
+    sys.path.append('/path/containing/modules')
+
+* Using ``pearson.py`` and array reshaping: :doc:`faster_correlation`;
+* A better regressor using convolution |--| :doc:`convolution_background`.
 
 Homework
 --------
 
 Please read the :doc:`glm_intro`.
 
-Solutions
----------
-
+.. include:: ../links_names.inc
