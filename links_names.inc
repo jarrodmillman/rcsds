@@ -14,7 +14,8 @@
 .. _test retest dataset: https://www.openfmri.org/dataset/ds000114
 .. _nibabel: http://nipy.org/nibabel
 .. _scikit-image: http://scikit-image.org
-
+.. _tutorial on convolution:
+    http://practical-neuroimaging.github.io/on_convolution.html
 .. Substitutions
 .. |emdash| unicode:: U+02014
 .. |--| unicode:: U+02014

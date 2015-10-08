@@ -22,13 +22,11 @@ Lesson plan
     sys.path.append('/path/containing/modules')
 
 * Using ``pearson.py`` and array reshaping: :doc:`faster_correlation`;
-* A better regressor using convolution;
+* A better regressor using convolution |--| :doc:`convolution_background`.
 
 Homework
 --------
 
 Please read the :doc:`glm_intro`.
 
-Solutions
----------
-
+.. include:: ../links_names.inc

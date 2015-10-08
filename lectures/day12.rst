@@ -29,8 +29,7 @@ Lesson plan
 Homework
 --------
 
-Please read this `tutorial on convolution
-<http://practical-neuroimaging.github.io/on_convolution.html>`_.
+Please read this `tutorial on convolution`_.
 
 Solutions
 ---------
@@ -38,3 +37,5 @@ Solutions
 * `correlation 2d
   <https://github.com/jarrodmillman/rcsds/blob/master/lectures/correlation_2d.ipynb>`_;
 * :download:`pearson_solutions.py`.
+
+.. include:: ../links_names.inc
