@@ -1,9 +1,12 @@
 #!/usr/bin/env python
-""" Process ipython notebook converted rst
+""" Process ipython notebook to plot-directived, doctested rst
 """
 
 import sys
-from os.path import split as psplit, join as pjoin
+from os.path import splitext
+
+import nbformat
+from nbconvert import RSTExporter
 
 
 def line_indent(line):
@@ -32,13 +35,24 @@ def proc_body(body, indent):
         if is_empty(line):
             new_body.append(line)
             continue
-        if line_indent(line) == indent:
+        L_indent = line_indent(line)
+        if L_indent == indent:
             new_line = spaces + '>>> ' + line.lstrip()
             new_body.append(new_line)
             continue
-        new_line = spaces + '... ' + line.lstrip()
+        extra_spaces = ' ' * (L_indent - indent)
+        new_line = spaces + '... ' + extra_spaces + line.lstrip()
         new_body.append(new_line)
     return new_body
+
+
+def _p_default(line, new_contents):
+    if line.startswith('.. code:: python'):
+        return 'code-block-line0'
+    elif not line.startswith('.. image::'):
+        # Discard image lines
+        new_contents.append(line)
+    return 'default'
 
 
 def proc_notebook(contents):
@@ -46,10 +60,7 @@ def proc_notebook(contents):
     state = 'default'
     for line in contents:
         if state == 'default':
-            if line.startswith('.. code:: python'):
-                state = 'code-block-line0'
-            else:
-                new_contents.append(line)
+            state = _p_default(line, new_contents)
             continue
         if state == 'code-block-line0':
             if line.strip() == '':
@@ -72,19 +83,40 @@ def proc_notebook(contents):
         if state == 'in-pl-line0':
             if is_empty(line):
                 continue
+            pl_indent = line_indent(line)
+            state = 'in-pl'
+        if state == 'in-pl':
+            if not is_empty(line) and line_indent(line) < pl_indent:
+                state = _p_default(line, new_contents)
+                continue
+            if line.strip().startswith('<matplotlib.'):
+                line = ' ' * line_indent(line) + '<...>\n'
+            elif line.strip().startswith('[<matplotlib.'):
+                line = ' ' * line_indent(line) + '[...]\n'
             new_contents.append(line)
-            state = 'default'
 
     return new_contents
 
 
+def nb2rst(filepath):
+    with open(filepath) as fh:
+        nb = nbformat.reads(fh.read(), nbformat.NO_CONVERT)
+    exporter = RSTExporter()
+    # source is a tuple of python source code
+    # meta contains metadata
+    source, meta = exporter.from_notebook_node(nb)
+    return [line + '\n' for line in source.split('\n')]
+
+
 def main():
-    for rst_fname in sys.argv[1:]:
-        with open(rst_fname, 'rt') as fobj:
-            contents = fobj.readlines()
+    for ipynb_fname in sys.argv[1:]:
+        froot, ext = splitext(ipynb_fname)
+        if ext == '.rst':
+            raise RuntimeError('Expecting ipynb file as input, got ' +
+                               ipynb_fname)
+        contents = nb2rst(ipynb_fname)
         better_contents = proc_notebook(contents)
-        path, fname = psplit(rst_fname)
-        new_fname = pjoin(path, 'p_' + fname)
+        new_fname = froot + '.rst'
         with open(new_fname, 'wt') as fobj:
             fobj.write(''.join(better_contents))
 
