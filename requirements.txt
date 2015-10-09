@@ -1,0 +1,7 @@
+sphinx
+ghp-import
+matplotlib
+nibabel
+numpy
+scipy
+sympy
