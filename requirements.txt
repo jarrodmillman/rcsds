@@ -1,7 +1,8 @@
 sphinx
 ghp-import
-matplotlib
+matplotlib>=1.4.3
 nibabel
 numpy
 scipy
-sympy
+sympy>=0.7.3
+texext>=0.2
