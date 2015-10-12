@@ -1,4 +1,4 @@
-_appendices:
+.. _appendices:
 
 **********
 Appendices
@@ -12,3 +12,4 @@ Appendices
    appendix1.rst
    appendix2.rst
    appendix3.rst
+   over_dimensions
