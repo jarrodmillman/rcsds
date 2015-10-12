@@ -16,4 +16,4 @@ Agenda
 Group Exercise
 ++++++++++++++
 
-See `https://github.com/berkeley-stat159/lab6_exercise`_
+See the `exercise on github <https://github.com/berkeley-stat159/lab6_exercise>`_.
