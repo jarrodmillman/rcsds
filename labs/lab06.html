@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>&lt;no title&gt; &mdash; RCSDS 0.1 documentation</title>
+    <title>Lab 6 &mdash; RCSDS 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,6 +25,9 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Labs" href="index.html" />
+    <link rel="next" title="Appendices" href="../append/index.html" />
+    <link rel="prev" title="Lab 5" href="lab05.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -37,22 +40,22 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="highlight-python"><div class="highlight"><pre><span class="c"># - my attempt - you can do better than this</span>
-</pre></div>
+  <div class="section" id="lab-6">
+<h1>Lab 6<a class="headerlink" href="#lab-6" title="Permalink to this headline">¶</a></h1>
+<p>Stats 159/259 - Lab 6 - 10/12/15</p>
+<div class="section" id="agenda">
+<h2>Agenda<a class="headerlink" href="#agenda" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Attendance (for quiz) + quiz instructions</li>
+<li>Quiz 3 (20 min)</li>
+<li>Group exercise: collaborative workflow project practice</li>
+</ol>
 </div>
-<p>()</p>
-<dl class="docutils">
-<dt>def not_great_hrf(times):</dt>
-<dd>&#8220;&#8221;&#8221; Return values for HRF at given times &#8220;&#8221;&#8221;
-# Gamma pdf for the peak
-peak_values = gamma.pdf(times, 6)
-# Gamma pdf for the undershoot
-undershoot_values = gamma.pdf(times, 12)
-# Combine them
-values = peak_values - 0.35 * undershoot_values
-# Scale max to 0.6
-return values / np.max(values) * 0.</dd>
-</dl>
+<div class="section" id="group-exercise">
+<h2>Group Exercise<a class="headerlink" href="#group-exercise" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference external" href="https://github.com/berkeley-stat159/lab6_exercise">https://github.com/berkeley-stat159/lab6_exercise</a>.</p>
+</div>
+</div>
 
 
           </div>
@@ -70,10 +73,18 @@ return values / np.max(values) * 0.</dd>
 
 
 <h3>Navigation</h3>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="index.html">Lectures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../labs/index.html">Labs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/index.html">Lectures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Labs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lab01.html">Lab 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab02.html">Lab 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab03.html">Lab 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab04.html">Lab 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab05.html">Lab 5</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Lab 6</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
 </ul>
 
