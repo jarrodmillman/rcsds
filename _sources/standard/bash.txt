@@ -149,7 +149,7 @@ Variables
 Much of how bash behaves can be customized through the use of variables,
 which consists of names that have values assigned to them.  To access
 the value currently assigned to a variable, you can prepend the name
-with the dollar sign ($).  To print the value you can use the ``echo``
+with the dollar sign (\$).  To print the value you can use the ``echo``
 command.
 
 #. | What is my default shell?
