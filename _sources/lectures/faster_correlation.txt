@@ -2,16 +2,20 @@
 Correlation per voxel, the faster way
 #####################################
 
-You are going to use your new super-fast correlation routine to recalculate the voxel correlation volumne
+You are going to use your new super-fast correlation routine to recalculate
+the voxel correlation volumne
 
-We've given you the stuff you will have done already for the previous exercise - you can copy-paste into IPython.
+We've given you the stuff you will have done already for the previous exercise
+- you can copy-paste into IPython.
 
-If you don't have them already you will need these files in your working directory:
+If you don't have them already you will need these files in your working
+directory:
 
 * :download:`ds114_sub009_t2r1.nii`
 * :download:`ds114_sub009_t2r1_cond.txt`
 
-First, import ``sys`` and append the directory containing your ``pearson.py`` module to ``sys.path``:
+First, import ``sys`` and append the directory containing your ``pearson.py``
+module to ``sys.path``:
 
 .. code:: python
 
@@ -72,13 +76,15 @@ Transpose the array to make a (number of volumes, number of voxels) array.
 
     # Transpose 2D array to give n_volumes, n_voxels array
 
-Use the `pearson_2d` function to return the correlation coefficients with ``time_series`` at each voxel:
+Use the `pearson_2d` function to return the correlation coefficients with
+``time_series`` at each voxel:
 
 .. code:: python
 
     # Calculate 1D vector length n_voxels of correlation coefficients
 
-You might have noticed this is much faster than doing the correlation by looping over each voxel.
+You might have noticed this is much faster than doing the correlation by
+looping over each voxel.
 
 Reshape the correlations 1D array back to a 3D array, using the original 3D
 shape.
@@ -87,7 +93,8 @@ shape.
 
     # Reshape the correlations array back to 3D
 
-If all went well, you should have generated the same 3D volume of correlations as you did for the original exercise:
+If all went well, you should have generated the same 3D volume of correlations
+as you did for the original exercise:
 
 .. code:: python
 

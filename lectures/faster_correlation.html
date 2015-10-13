@@ -39,14 +39,18 @@
             
   <div class="section" id="correlation-per-voxel-the-faster-way">
 <h1>Correlation per voxel, the faster way<a class="headerlink" href="#correlation-per-voxel-the-faster-way" title="Permalink to this headline">¶</a></h1>
-<p>You are going to use your new super-fast correlation routine to recalculate the voxel correlation volumne</p>
-<p>We&#8217;ve given you the stuff you will have done already for the previous exercise - you can copy-paste into IPython.</p>
-<p>If you don&#8217;t have them already you will need these files in your working directory:</p>
+<p>You are going to use your new super-fast correlation routine to recalculate
+the voxel correlation volumne</p>
+<p>We&#8217;ve given you the stuff you will have done already for the previous exercise
+- you can copy-paste into IPython.</p>
+<p>If you don&#8217;t have them already you will need these files in your working
+directory:</p>
 <ul class="simple">
 <li><a class="reference download internal" href="../_downloads/ds114_sub009_t2r1.nii"><code class="xref download docutils literal"><span class="pre">ds114_sub009_t2r1.nii</span></code></a></li>
 <li><a class="reference download internal" href="../_downloads/ds114_sub009_t2r1_cond.txt"><code class="xref download docutils literal"><span class="pre">ds114_sub009_t2r1_cond.txt</span></code></a></li>
 </ul>
-<p>First, import <code class="docutils literal"><span class="pre">sys</span></code> and append the directory containing your <code class="docutils literal"><span class="pre">pearson.py</span></code> module to <code class="docutils literal"><span class="pre">sys.path</span></code>:</p>
+<p>First, import <code class="docutils literal"><span class="pre">sys</span></code> and append the directory containing your <code class="docutils literal"><span class="pre">pearson.py</span></code>
+module to <code class="docutils literal"><span class="pre">sys.path</span></code>:</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Import sys, and append directory to sys.path</span>
 </pre></div>
 </div>
@@ -95,17 +99,20 @@ if you can&#8217;t.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Transpose 2D array to give n_volumes, n_voxels array</span>
 </pre></div>
 </div>
-<p>Use the <cite>pearson_2d</cite> function to return the correlation coefficients with <code class="docutils literal"><span class="pre">time_series</span></code> at each voxel:</p>
+<p>Use the <cite>pearson_2d</cite> function to return the correlation coefficients with
+<code class="docutils literal"><span class="pre">time_series</span></code> at each voxel:</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Calculate 1D vector length n_voxels of correlation coefficients</span>
 </pre></div>
 </div>
-<p>You might have noticed this is much faster than doing the correlation by looping over each voxel.</p>
+<p>You might have noticed this is much faster than doing the correlation by
+looping over each voxel.</p>
 <p>Reshape the correlations 1D array back to a 3D array, using the original 3D
 shape.</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Reshape the correlations array back to 3D</span>
 </pre></div>
 </div>
-<p>If all went well, you should have generated the same 3D volume of correlations as you did for the original exercise:</p>
+<p>If all went well, you should have generated the same 3D volume of correlations
+as you did for the original exercise:</p>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="c"># Plot the middle slice of the third axis from the correlations array</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">correlations</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s">&#39;gray&#39;</span><span class="p">)</span>
 </pre></div>

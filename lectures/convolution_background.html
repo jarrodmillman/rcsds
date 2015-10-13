@@ -94,11 +94,15 @@ array) known as the <a class="reference external" href="https://en.wikipedia.org
 </div>
 <div class="section" id="constructing-a-hemodynamic-response-function">
 <h2>Constructing a hemodynamic response function<a class="headerlink" href="#constructing-a-hemodynamic-response-function" title="Permalink to this headline">¶</a></h2>
-<p>We can use these gamma functions to construct a continuous function that is close to the hemodynamic response we observe for a single brief event in the brain.</p>
-<p>Our function will accept an array that gives the times we want to calculate the HRF for, and returns the values of the HRF for those times.  We will assume that the true HRF starts at zero, and gets to zero sometime before 35 seconds.</p>
-<p>We&#8217;re going to try using the sum of two <a class="reference external" href="https://en.wikipedia.org/wiki/Gamma_distribution">gamma
-distribution</a> probability
-density functions.</p>
+<p>We can use these gamma functions to construct a continuous function that is
+close to the hemodynamic response we observe for a single brief event in the
+brain.</p>
+<p>Our function will accept an array that gives the times we want to calculate
+the HRF for, and returns the values of the HRF for those times.  We will
+assume that the true HRF starts at zero, and gets to zero sometime before 35
+seconds.</p>
+<p>We&#8217;re going to try using the sum of two <a class="reference external" href="https://en.wikipedia.org/wiki/Gamma_distribution">gamma distribution</a> probability density
+functions.</p>
 <p>Here is one example of such a function:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">hrf</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="sd">&quot;&quot;&quot; Return values for HRF at given times &quot;&quot;&quot;</span>
@@ -124,7 +128,9 @@ density functions.</p>
 <div class="figure">
 <img alt="../_images/convolution_background-6.png" src="../_images/convolution_background-6.png" />
 </div>
-<p>We can sample from the function, to get the estimates at the times of our TRs.  Remember, the TR is 2.5 for our example data, meaning the scans were 2.5 seconds apart.</p>
+<p>We can sample from the function, to get the estimates at the times of our TRs.
+Remember, the TR is 2.5 for our example data, meaning the scans were 2.5
+seconds apart.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">TR</span> <span class="o">=</span> <span class="mf">2.5</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tr_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">TR</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hrf_at_trs</span> <span class="o">=</span> <span class="n">hrf</span><span class="p">(</span><span class="n">tr_times</span><span class="p">)</span>
@@ -142,7 +148,9 @@ density functions.</p>
 <div class="figure">
 <img alt="../_images/convolution_background-7.png" src="../_images/convolution_background-7.png" />
 </div>
-<p>We can use this to convolve our neural (on-off) prediction.  This will give us a hemodynamic prediction, under the linear-time-invariant assumptions of the convolution:</p>
+<p>We can use this to convolve our neural (on-off) prediction.  This will give us
+a hemodynamic prediction, under the linear-time-invariant assumptions of the
+convolution:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">stimuli</span> <span class="kn">import</span> <span class="n">events2neural</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">n_vols</span> <span class="o">=</span> <span class="mi">173</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">neural_prediction</span> <span class="o">=</span> <span class="n">events2neural</span><span class="p">(</span><span class="s">&#39;ds114_sub009_t2r1_cond.txt&#39;</span><span class="p">,</span>
@@ -156,7 +164,10 @@ density functions.</p>
 <div class="figure">
 <img alt="../_images/convolution_background-8.png" src="../_images/convolution_background-8.png" />
 </div>
-<p>When we convolve, the output is length N + M-1, where N is the number of values in the vector we convolved, and M is the length of the convolution kernel (<code class="docutils literal"><span class="pre">hrf_at_trs</span></code> in our case).  For a reminder of why this is, see the <a class="reference external" href="http://practical-neuroimaging.github.io/on_convolution.html">tutorial on convolution</a>.</p>
+<p>When we convolve, the output is length N + M-1, where N is the number of
+values in the vector we convolved, and M is the length of the convolution
+kernel (<code class="docutils literal"><span class="pre">hrf_at_trs</span></code> in our case).  For a reminder of why this is, see the
+<a class="reference external" href="http://practical-neuroimaging.github.io/on_convolution.html">tutorial on convolution</a>.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">convolved</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">neural_prediction</span><span class="p">,</span> <span class="n">hrf_at_trs</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">neural_prediction</span><span class="p">)</span>  <span class="c"># M == n_vols == 173</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hrf_at_trs</span><span class="p">)</span>  <span class="c"># M == 12</span>
@@ -165,8 +176,8 @@ density functions.</p>
 </pre></div>
 </div>
 <p>This is because of the HRF convolution kernel falling off the end of the input
-vector. The value at index 172 in the new vector refers to time 172 * 2.5
-= 430.0 seconds, and value at index 173 refers to time 432.5 seconds, which is
+vector. The value at index 172 in the new vector refers to time 172 * 2.5 =
+430.0 seconds, and value at index 173 refers to time 432.5 seconds, which is
 just after the end of the scanning run. To retain only the values in the new
 hemodynamic vector that refer to times up to (and including) 430s, we can just
 drop the last <code class="docutils literal"><span class="pre">len(hrf_at_trs)</span> <span class="pre">-</span> <span class="pre">1</span> <span class="pre">==</span> <span class="pre">M</span> <span class="pre">-</span> <span class="pre">1</span></code> values:</p>
@@ -183,6 +194,47 @@ drop the last <code class="docutils literal"><span class="pre">len(hrf_at_trs)</
 <p>(<a class="reference external" href="../lectures/convolution_background-11.png">png</a>, <a class="reference external" href="../lectures/convolution_background-11.hires.png">hires.png</a>, <a class="reference external" href="../lectures/convolution_background-11.pdf">pdf</a>)</p>
 <div class="figure">
 <img alt="../_images/convolution_background-11.png" src="../_images/convolution_background-11.png" />
+</div>
+</div>
+<div class="section" id="saving-1d-and-2d-arrays-as-text">
+<h2>Saving 1D and 2D arrays as text<a class="headerlink" href="#saving-1d-and-2d-arrays-as-text" title="Permalink to this headline">¶</a></h2>
+<p>We have so far seen floating point numbers in this kind of format in text
+files : 314.15926.  It is common for numpy and MATLAB to write floating point
+numbers in exponential format, like this 3.1415926e02. You can read this as
+meaning 3.1415926 * 10**2 == 3.1415926 * 100 == 314.15926. Both <code class="docutils literal"><span class="pre">np.loadtxt</span></code>
+and the <code class="docutils literal"><span class="pre">float</span></code> function will happily convert these to floating point values
+in memory:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="s">&#39;2.2e02&#39;</span><span class="p">)</span>
+<span class="go">220.0</span>
+</pre></div>
+</div>
+<p>This is also the default format that <code class="docutils literal"><span class="pre">np.savetxt</span></code> uses.  For example, let&#8217;s
+save our convolved time course:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s">&#39;ds114_sub009_t2r1_conv.txt&#39;</span><span class="p">,</span> <span class="n">convolved</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">back</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s">&#39;ds114_sub009_t2r1_conv.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">convolved</span><span class="p">,</span> <span class="n">back</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Why might the saved, reloaded numbers not be <em>exactly</em> the same?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fobj</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;ds114_sub009_t2r1_conv.txt&#39;</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lines</span> <span class="o">=</span> <span class="n">fobj</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fobj</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+<span class="go">173</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[:</span><span class="mi">10</span><span class="p">]:</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+<span class="go">0.000000000000000000e+00</span>
+<span class="go">0.000000000000000000e+00</span>
+<span class="go">0.000000000000000000e+00</span>
+<span class="go">0.000000000000000000e+00</span>
+<span class="go">0.000000000000000000e+00</span>
+<span class="go">2.321802309091016703e-01</span>
+<span class="go">8.321802309091016481e-01</span>
+<span class="go">1.141223007348432184e+00</span>
+<span class="go">1.134358594322657066e+00</span>
+<span class="go">1.035057581311021879e+00</span>
+</pre></div>
 </div>
 </div>
 </div>

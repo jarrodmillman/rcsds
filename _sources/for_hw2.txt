@@ -1,0 +1,4 @@
+
+* ``import numpy as npl``
+* save plots with ``savefig``
+* ``np.nonzero``
