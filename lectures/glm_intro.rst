@@ -202,6 +202,7 @@ of ones, then we can rewrite the formula as:
 because :math:`o_i = 1` and so :math:`co_i = c`.
 
 .. mathcode::
+    :label: matrix-addition
 
     # Show the model in a pretty way using Sympy's symbols and printing
     c, b = symbols('c, b')
@@ -227,6 +228,9 @@ the column of ones (:math:`\mathbf{o}` above) and the second column is
    b \\
    \end{array}
    \right]
+
+This gives us the same formula as :eq:`matrix-addition` but in terms of matrix
+multiplication:
 
 .. mathcode::
 
@@ -373,7 +377,7 @@ If :math:`\Xmat^T \Xmat` is invertible (has a matrix inverse
 
 .. math::
 
-   \bhat = (\Xmat^T \Xmat)^{-1} \Xmat \yvec
+   \bhat = (\Xmat^T \Xmat)^{-1} \Xmat^T \yvec
 
 It turns out that, if :math:`\Xmat^T \Xmat` is not invertible, there are
 an infinite number of solutions, and we have to choose one solution,

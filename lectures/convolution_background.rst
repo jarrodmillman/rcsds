@@ -91,13 +91,18 @@ Next we plot the gamma PDF for shape values of 2, 4, 8, 12.
 Constructing a hemodynamic response function
 ********************************************
 
-We can use these gamma functions to construct a continuous function that is close to the hemodynamic response we observe for a single brief event in the brain.
+We can use these gamma functions to construct a continuous function that is
+close to the hemodynamic response we observe for a single brief event in the
+brain.
 
-Our function will accept an array that gives the times we want to calculate the HRF for, and returns the values of the HRF for those times.  We will assume that the true HRF starts at zero, and gets to zero sometime before 35 seconds.
+Our function will accept an array that gives the times we want to calculate
+the HRF for, and returns the values of the HRF for those times.  We will
+assume that the true HRF starts at zero, and gets to zero sometime before 35
+seconds.
 
-We're going to try using the sum of two `gamma
-distribution <https://en.wikipedia.org/wiki/Gamma_distribution>`_ probability
-density functions.
+We're going to try using the sum of two `gamma distribution
+<https://en.wikipedia.org/wiki/Gamma_distribution>`_ probability density
+functions.
 
 Here is one example of such a function:
 
@@ -122,7 +127,9 @@ Here is one example of such a function:
     >>> plt.ylabel('HRF model of signal')
     <...>
 
-We can sample from the function, to get the estimates at the times of our TRs.  Remember, the TR is 2.5 for our example data, meaning the scans were 2.5 seconds apart.
+We can sample from the function, to get the estimates at the times of our TRs.
+Remember, the TR is 2.5 for our example data, meaning the scans were 2.5
+seconds apart.
 
 .. plot::
     :context:
@@ -139,7 +146,9 @@ We can sample from the function, to get the estimates at the times of our TRs.  
     >>> plt.ylabel('HRF sampled every 2.5 seconds')
     <...>
 
-We can use this to convolve our neural (on-off) prediction.  This will give us a hemodynamic prediction, under the linear-time-invariant assumptions of the convolution:
+We can use this to convolve our neural (on-off) prediction.  This will give us
+a hemodynamic prediction, under the linear-time-invariant assumptions of the
+convolution:
 
 .. plot::
     :context:
@@ -152,7 +161,10 @@ We can use this to convolve our neural (on-off) prediction.  This will give us a
     >>> plt.plot(all_tr_times, neural_prediction)
     [...]
 
-When we convolve, the output is length N + M-1, where N is the number of values in the vector we convolved, and M is the length of the convolution kernel (``hrf_at_trs`` in our case).  For a reminder of why this is, see the `tutorial on convolution`_.
+When we convolve, the output is length N + M-1, where N is the number of
+values in the vector we convolved, and M is the length of the convolution
+kernel (``hrf_at_trs`` in our case).  For a reminder of why this is, see the
+`tutorial on convolution`_.
 
 .. plot::
     :context:
@@ -165,8 +177,8 @@ When we convolve, the output is length N + M-1, where N is the number of values 
     True
 
 This is because of the HRF convolution kernel falling off the end of the input
-vector. The value at index 172 in the new vector refers to time 172 * 2.5
-= 430.0 seconds, and value at index 173 refers to time 432.5 seconds, which is
+vector. The value at index 172 in the new vector refers to time 172 * 2.5 =
+430.0 seconds, and value at index 173 refers to time 432.5 seconds, which is
 just after the end of the scanning run. To retain only the values in the new
 hemodynamic vector that refer to times up to (and including) 430s, we can just
 drop the last ``len(hrf_at_trs) - 1 == M - 1`` values:
@@ -185,6 +197,56 @@ drop the last ``len(hrf_at_trs) - 1 == M - 1`` values:
     [...]
     >>> plt.plot(all_tr_times, convolved)
     [...]
+
+*******************************
+Saving 1D and 2D arrays as text
+*******************************
+
+We have so far seen floating point numbers in this kind of format in text
+files : 314.15926.  It is common for numpy and MATLAB to write floating point
+numbers in exponential format, like this 3.1415926e02. You can read this as
+meaning 3.1415926 * 10**2 == 3.1415926 * 100 == 314.15926. Both ``np.loadtxt``
+and the ``float`` function will happily convert these to floating point values
+in memory:
+
+>>> float('2.2e02')
+220.0
+
+This is also the default format that ``np.savetxt`` uses.  For example, let's
+save our convolved time course:
+
+.. plot::
+    :context:
+    :nofigs:
+
+    >>> np.savetxt('ds114_sub009_t2r1_conv.txt', convolved)
+    >>> back = np.loadtxt('ds114_sub009_t2r1_conv.txt')
+    >>> np.allclose(convolved, back)
+    True
+
+Why might the saved, reloaded numbers not be *exactly* the same?
+
+.. plot::
+    :context:
+    :nofigs:
+
+    >>> fobj = open('ds114_sub009_t2r1_conv.txt', 'rt')
+    >>> lines = fobj.readlines()
+    >>> fobj.close()
+    >>> len(lines)
+    173
+    >>> for line in lines[:10]:
+    ...     print(line.strip())
+    0.000000000000000000e+00
+    0.000000000000000000e+00
+    0.000000000000000000e+00
+    0.000000000000000000e+00
+    0.000000000000000000e+00
+    2.321802309091016703e-01
+    8.321802309091016481e-01
+    1.141223007348432184e+00
+    1.134358594322657066e+00
+    1.035057581311021879e+00
 
 .. testcleanup::
 

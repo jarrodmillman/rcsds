@@ -22,7 +22,7 @@ import shlex
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-# sys.path.insert(0, os.path.abspath('sphinxext'))
+sys.path.insert(0, os.path.abspath('sphinxext'))
 
 # -- General configuration ------------------------------------------------
 
@@ -36,7 +36,7 @@ extensions = [
 #    'alabaster',
     'sphinx.ext.mathjax',
     'sphinx.ext.doctest',
-    'matplotlib.sphinxext.plot_directive',
+    'plot_directive',
     'texext.mathcode',
     'texext.math_dollar',
 ]
@@ -310,9 +310,12 @@ texinfo_documents = [
 # Trim doctest flags from doctest blocks (not just .. doctest:: directives)
 trim_doctest_flags = True
 
+# Config of mathcode directive
+mathcode_use_plot_ns = True
+import plot_directive
+mathcode_plot_directive = plot_directive
+
 # Config of plot_directive
 plot_include_source = True
 plot_html_show_source_link = False
 
-# Config of mathcode directive
-mathcode_use_plot_ns = True

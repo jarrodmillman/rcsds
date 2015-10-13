@@ -17,3 +17,4 @@ Lectures
    day11.rst
    day12.rst
    day13.rst
+   day14.rst
