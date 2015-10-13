@@ -20,7 +20,7 @@ Lesson plan
 * :doc:`revision about correlation <on_correlation>`;
 * introduction to :doc:`nose_intro`;
 * a reminder about ``np.tile``;
-* exercise: open the files :download:`pearson.py` and
+* exercise: open the files :download:`pearson.py <../downloads/pearson.py>` and
   :download:`test_pearson_1d.py` and :download:`test_pearson_2d.py` . Read the
   instructions in both these files, and, shoot at will;
 * the neural and hemodynamic model;
