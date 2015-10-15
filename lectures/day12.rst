@@ -20,9 +20,10 @@ Lesson plan
 * :doc:`revision about correlation <on_correlation>`;
 * introduction to :doc:`nose_intro`;
 * a reminder about ``np.tile``;
-* exercise: open the files :download:`pearson.py <../downloads/pearson.py>` and
-  :download:`test_pearson_1d.py` and :download:`test_pearson_2d.py` . Read the
-  instructions in both these files, and, shoot at will;
+* exercise: open the files :download:`pearson.py <../_downloads/pearson.py>` and
+  :download:`test_pearson_1d.py <../_downloads/test_pearson_1d.py>` and 
+  :download:`test_pearson_2d.py <../_downloads/test_pearson_2d.py>` . 
+  Read the instructions in both these files, and, shoot at will;
 * the neural and hemodynamic model;
 * convolution;
 
@@ -36,6 +37,6 @@ Solutions
 
 * `correlation 2d
   <https://github.com/jarrodmillman/rcsds/blob/master/lectures/correlation_2d.ipynb>`_;
-* :download:`pearson_solutions.py`.
+* :download:`pearson_solutions.py <../_downloads/pearson_solutions.py>`.
 
 .. include:: ../links_names.inc

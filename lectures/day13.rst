@@ -14,7 +14,7 @@ Lesson plan
 
 * Collaborative git workflow;
 
-    * Review of :download:`pearson_solutions.py`.
+    * Review of :download:`pearson_solutions.py <../_downloads/pearson_solutions.py>`.
 
 * The Python module search path::
 

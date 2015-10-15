@@ -6,7 +6,8 @@ Now we will work with a 3D brain image.
 
 Like the camera image in :doc:`camera`, the pixel data for the 3D
 image is in a text file called ``anatomical.txt``.  Download
-:download:`anatomical.txt` to your working directory.
+:download:`anatomical.txt <../_downloads/anatomical.txt>` to your working
+directory.
 
 I happen to know this image has is length 32 on the third dimension,
 but I don't know what the size of the first two dimensions are.

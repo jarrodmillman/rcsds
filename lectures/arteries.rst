@@ -13,7 +13,7 @@ and `carotid
 arteries on this image.
 
 This time we are going to load an image using the nibabel_ library.
-The image is :download:`ds107_sub001_highres.nii`.
+The image is :download:`ds107_sub001_highres.nii <../_downloads/ds107_sub001_highres.nii>`.
 If you didn't download this during class, download this
 file to your working directory.
 

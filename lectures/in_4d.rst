@@ -2,7 +2,9 @@
 Into four dimensions
 ####################
 
-Download the 4D image file :download:`ds114_sub009_t2r1.nii` to your working directory.
+Download the 4D image file 
+:download:`ds114_sub009_t2r1.nii <../_downloads/ds114_sub009_t2r1.nii>`
+to your working directory.
 
 Start at the IPython console.  We recommend you begin your IPython console session with these standard lines::
 

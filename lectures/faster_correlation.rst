@@ -11,8 +11,8 @@ We've given you the stuff you will have done already for the previous exercise
 If you don't have them already you will need these files in your working
 directory:
 
-* :download:`ds114_sub009_t2r1.nii`
-* :download:`ds114_sub009_t2r1_cond.txt`
+* :download:`ds114_sub009_t2r1.nii <../_downloads/ds114_sub009_t2r1.nii>`
+* :download:`ds114_sub009_t2r1_cond.txt <../_downloads/ds114_sub009_t2r1_cond.txt>`
 
 First, import ``sys`` and append the directory containing your ``pearson.py``
 module to ``sys.path``:

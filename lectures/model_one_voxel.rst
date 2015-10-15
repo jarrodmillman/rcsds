@@ -43,7 +43,7 @@ Now we are going to use our new convolved regressor to do a simple regression
 on this voxel time course.
 
 If you don't have it already, you will need to download
-:download:`ds114_sub009_t2r1_conv.txt`.
+:download:`ds114_sub009_t2r1_conv.txt <../_downloads/ds114_sub009_t2r1_conv.txt>`.
 
 .. plot::
     :context:

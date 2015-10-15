@@ -17,7 +17,8 @@ is called a "covert" task, because the subjects were thinking of verbs instead
 of saying them.
 
 Download the OpenFMRI task definition file
-:download:`ds114_sub009_t2r1_cond.txt`. It comes from subject 9 task 2 and run
+:download:`ds114_sub009_t2r1_cond.txt <../_downloads/ds114_sub009_t2r1_cond.txt>`.
+It comes from subject 9 task 2 and run
 1 from OpenFMRI dataset https://openfmri.org/dataset/ds000114 .
 
 The file has one line of text per "on" block, giving the onset time of the

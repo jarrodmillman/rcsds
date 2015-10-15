@@ -9,4 +9,4 @@ Reproducible and Collaborative Statistical Data Science
    lectures/index.rst
    labs/index.rst
    append/index.rst
-   downloads/index.rst
+   _downloads/index.rst

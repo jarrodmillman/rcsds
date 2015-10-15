@@ -9,7 +9,7 @@ Lesson plan
 * TR - time between the beginning of each scan;
 * Review of `first activation solutions
   <https://github.com/jarrodmillman/rcsds/blob/master/lectures/first_activation_solutions.ipynb>`_
-* The :download:`stimuli.py` file;
+* The :download:`stimuli.py <../_downloads/stimuli.py>` file;
 * :doc:`voxel_time_courses`;
 
 Then - project proposals.

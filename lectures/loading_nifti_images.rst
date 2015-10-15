@@ -37,7 +37,7 @@ Now try to import nibabel again.  It should work.  If it doesn't call over one
 of your instructors.
 
 Now, download the example image we are going to use to your working directory:
-:download:`ds107_sub001_highres.nii`.
+:download:`ds107_sub001_highres.nii <../_downloads/ds107_sub001_highres.nii>`.
 
 Start IPython.
 

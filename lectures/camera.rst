@@ -2,9 +2,9 @@
 The cameraman
 #############
 
-Download the file :download:`camera.txt` and save it in your working
-directory. It contains the pixel values for a picture, and it's your
-job to find what picture that is. The file contains a single floating
+Download the file :download:`camera.txt <../_downloads/camera.txt>` and save
+it in your working directory. It contains the pixel values for a picture, and
+it's your job to find what picture that is. The file contains a single floating
 point value per line. Here are the first four lines of the file:
 
 ::
