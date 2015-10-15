@@ -1,6 +1,6 @@
-#######################
-Modeling a single voxel
-#######################
+######################
+Testing a single voxel
+######################
 
 A short ago (:doc:`model_one_voxel`), we were modeling a single voxel time
 course.
