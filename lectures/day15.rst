@@ -16,7 +16,7 @@ Lesson plan
 * On :doc:`matrix_rank`;
 * :doc:`test_one_voxel`;
 * Comparing to R with :download:`model_one_voxel.R`;
-* :doc:`matrix multiplyiing more than one column <multi_multiply>`_;
+* :doc:`matrix multiplying more than one column <multi_multiply>`_;
 * Exercise |--| :doc:`multi_model`.
 * Extending the model with linear and quadratic drift;
 * Experimental design;
