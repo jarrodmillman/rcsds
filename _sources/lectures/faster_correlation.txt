@@ -77,7 +77,7 @@ Transpose the array to make a (number of volumes, number of voxels) array.
     # Transpose 2D array to give n_volumes, n_voxels array
 
 Use the `pearson_2d` function to return the correlation coefficients with
-``time_series`` at each voxel:
+``time_course`` at each voxel:
 
 .. code:: python
 
