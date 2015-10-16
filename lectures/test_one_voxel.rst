@@ -109,11 +109,11 @@ the variance / covariance of the $\hat\beta$ estimates is:
 
     \text{Cov}(\hat\beta) = \sigma^2 \left(X^T X\right)^{-1}.
 
-where $\sigma^2$ is the true unknown variance of the errors. See `wikiepedia
+where $\sigma^2$ is the true unknown variance of the errors. See `wikipedia
 proof
 <https://en.wikipedia.org/wiki/Proofs_involving_ordinary_least_squares#Unbiasedness_of_.CE.B2.CC.82>`_,
 and `stackoverflow proof
-<http://stats.stackexchange.com/questions/72940/covariance-matrix-of-least-squares-estimator-hat-beta>`_
+<http://stats.stackexchange.com/questions/72940/covariance-matrix-of-least-squares-estimator-hat-beta>`_.
 
 We can use an estimate $s^2$ of $\sigma^2$ to give us estimated standard
 errors of the variance covariance:
