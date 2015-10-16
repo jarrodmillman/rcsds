@@ -74,7 +74,7 @@ We can get our least squares parameter *estimates* for $\bvec$ with:
 
    \bhat = \Xmat^+y
 
-where $\Xmat^+$ is the *pseudoinverse* of $\Xmat$.  When $\Xmat$ is
+where $\Xmat^+$ is the *pseudoinverse* of $\Xmat$.  When $(\Xmat^T \Xmat)$ is
 invertible, the pseudoinverse is given by:
 
 .. math::
@@ -115,7 +115,7 @@ proof
 and `stackoverflow proof
 <http://stats.stackexchange.com/questions/72940/covariance-matrix-of-least-squares-estimator-hat-beta>`_
 
-We can use an estimate $|s^2$ of $\sigma^2$ to give us estimated standard
+We can use an estimate $s^2$ of $\sigma^2$ to give us estimated standard
 errors of the variance covariance:
 
 .. plot::
