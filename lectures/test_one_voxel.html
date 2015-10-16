@@ -114,9 +114,9 @@ be different instantiation of the random noise.  It&#8217;s possible to show tha
 the variance / covariance of the <span class="math">\(\hat\beta\)</span> estimates is:</p>
 <div class="math">
 \[\text{Cov}(\hat\beta) = \sigma^2 \left(X^T X\right)^{-1}.\]</div>
-<p>where <span class="math">\(\sigma^2\)</span> is the true unknown variance of the errors. See <a class="reference external" href="https://en.wikipedia.org/wiki/Proofs_involving_ordinary_least_squares#Unbiasedness_of_.CE.B2.CC.82">wikiepedia
+<p>where <span class="math">\(\sigma^2\)</span> is the true unknown variance of the errors. See <a class="reference external" href="https://en.wikipedia.org/wiki/Proofs_involving_ordinary_least_squares#Unbiasedness_of_.CE.B2.CC.82">wikipedia
 proof</a>,
-and <a class="reference external" href="http://stats.stackexchange.com/questions/72940/covariance-matrix-of-least-squares-estimator-hat-beta">stackoverflow proof</a></p>
+and <a class="reference external" href="http://stats.stackexchange.com/questions/72940/covariance-matrix-of-least-squares-estimator-hat-beta">stackoverflow proof</a>.</p>
 <p>We can use an estimate <span class="math">\(s^2\)</span> of <span class="math">\(\sigma^2\)</span> to give us estimated standard
 errors of the variance covariance:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">voxel_time_course</span>
