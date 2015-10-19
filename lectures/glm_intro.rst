@@ -284,7 +284,7 @@ from the *sum* of some components (:math:`c, b_1 x_{1, i}, b_2 x_{2, i}, e_i`).
 
 We can keep doing this by adding more and more regressors. In general, a linear model with :math:`p` predictors looks like this:
 
-.. math:: y_i = b_1 x_{1, i} + b_2 x_{2, i} + ... b_p x_{p, i} + e_i
+.. math:: y_i = b_1 x_{1, i} + b_2 x_{2, i} + ... + b_p x_{p, i} + e_i
 
 In the case of the models above, the first predictor :math:`\xvec_1`
 would be a column of ones, to express the intercept in the model.
