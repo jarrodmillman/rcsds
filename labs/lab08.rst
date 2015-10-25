@@ -15,7 +15,7 @@ Agenda
 
    - Make sure Mac users have homebrew
 
-   - Install LaTeX and `Pandoc <http://www.pandoc.org/installing.html>`.
+   - Install LaTeX and `Pandoc <http://www.pandoc.org/installing.html>`_.
 
 3. Visualization in Python
 
@@ -36,15 +36,15 @@ If you are using MacOS, you may have experienced unusual behavior from your
 python, especially when using different modules. There are several resources
 that I believe we have mentioned in class before, but we'd like to emphasize
 again to make sure that everyone is on the same page. Both are from Matthew:
-the `first <http://practical-neuroimaging.github.io/installation.html>` 
+the `first <http://practical-neuroimaging.github.io/installation.html>`_ 
 is a very brief how-to for getting your Mac set up for using 
 scientific python. While you should all be well beyond this step at this point
 in the course, there is a very nice script in the post that validates that your
 system is set up properly. If you are running MacOS, I strongly recommend
 checking that post out and running the 
-`check_pna_install.py <https://nipy.bic.berkeley.edu/pna/check_pna_install.py>`
+`check_pna_install.py <https://nipy.bic.berkeley.edu/pna/check_pna_install.py>`_
 script to validate the setup on your system. The 
-`second post <https://github.com/MacPython/wiki/wiki/Which-Python>` is relevant
+`second post <https://github.com/MacPython/wiki/wiki/Which-Python>`_ is relevant
 for any MacOS users who have run into the user vs. system python problem. For
 instance, I know many of you have had problems where you use pip to install a
 package, but then get an import error when trying to use it in an ipython 
@@ -87,7 +87,7 @@ here as a starting point for you to go and investigate them yourself!
 
 **General Purpose Visualization**
 
-  - `matplotlib <http://matplotlib.org/>`
+  - `matplotlib <http://matplotlib.org/>`_
     The most ubiquitous of the python visualization packages. Has a massive
     set of features and is relatively easy to use. It is well documented and has
     very active user and development communities. Achieves cross-platform 
@@ -96,7 +96,7 @@ here as a starting point for you to go and investigate them yourself!
     Pros:
 
      - Feature-rich: you can create just about any type of visualization in 
-       matplotlib. Check out the `gallery <http://matplotlib.org/gallery.html>`
+       matplotlib. Check out the `gallery <http://matplotlib.org/gallery.html>`_
        for examples
 
      - Straightforward syntax: modeled after MatLab to make the transition easy
@@ -136,7 +136,7 @@ here as a starting point for you to go and investigate them yourself!
        especially for relatively simple visualizations, but for complex 3D
        visualization, another package is required.
 
-  - `pyqtgraph <http://www.pyqtgraph.org/>`
+  - `pyqtgraph <http://www.pyqtgraph.org/>`_
     A performance-oriented package capable of 2D and 3D plotting.
 
     Pros:
@@ -159,11 +159,11 @@ here as a starting point for you to go and investigate them yourself!
        do with pyqtgraph
 
      - Not developed as actively - lead developer left to join the 
-       `VisPy project <http://vispy.org/>`
+       `VisPy project <http://vispy.org/>`_
 
 **3D Visualization**
 
-  - `MayaVi <http://docs.enthought.com/mayavi/mayavi/>`
+  - `MayaVi <http://docs.enthought.com/mayavi/mayavi/>`_
     A package for high-quality 3D visualization
 
     Pros:
@@ -187,7 +187,7 @@ here as a starting point for you to go and investigate them yourself!
      - Scalability: Resource-intensive so can struggle with visualizations of
        large data.
 
-  - `yt <http://yt-project.org/>`
+  - `yt <http://yt-project.org/>`_
     A package for 3D visualization, originally developed for astrophysics
 
     Pros:
@@ -202,14 +202,20 @@ here as a starting point for you to go and investigate them yourself!
 
 **Of interest to statistics folks**
 
-  - `ggplot <http://ggplot.yhathq.com/>`
+  - `ggplot <http://ggplot.yhathq.com/>`_
     For those of you used to ggplot2 in R
 
-  - `seaborn <http://stanford.edu/~mwaskom/software/seaborn/>`
+  - `seaborn <http://stanford.edu/~mwaskom/software/seaborn/>`_
     Package designed specifically for statistical visuzlization
 
 **Browser-based visualization tools**
 
-  - `bokeh <http://bokeh.pydata.org/en/latest/>`
+  - `bokeh <http://bokeh.pydata.org/en/latest/>`_
 
-  - `plotly <https://plot.ly/>`
+  - `plotly <https://plot.ly/>`_
+
+Breakout Exercise
++++++++++++++++++
+
+In your groups, work on the 
+`breakout exercise <https://github.com/berkeley-stat159/lab8_exercise>`_

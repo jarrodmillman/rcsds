@@ -10,3 +10,5 @@ Labs
    lab04.rst
    lab05.rst
    lab06.rst
+   lab07.rst
+   lab08.rst
