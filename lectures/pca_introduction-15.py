@@ -1,5 +1,5 @@
 remaining = X - projected
-distances = np.sqrt((remaining ** 2).sum(axis=0))
+distances = np.sqrt(np.sum(remaining ** 2, axis=0))
 distances
 # array([ 0.926426,  0.714267,  0.293125,  0.415278,  0.062126,  0.793188,
 # 0.684554,  1.686549,  0.340629,  0.006746,  0.301138,  0.405397,

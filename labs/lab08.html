@@ -1,0 +1,342 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab 8 &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Labs" href="index.html" />
+    <link rel="next" title="Appendices" href="../append/index.html" />
+    <link rel="prev" title="Lab 7" href="lab07.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="lab-8">
+<h1>Lab 8<a class="headerlink" href="#lab-8" title="Permalink to this headline">¶</a></h1>
+<p>Stats 159/259 - Lab 8 - 10/26/15</p>
+<div class="section" id="agenda">
+<h2>Agenda<a class="headerlink" href="#agenda" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>HW 2 Due today (10/26) &#64; 21:00<ul>
+<li>Last-minute questions?</li>
+</ul>
+</li>
+<li>Getting set up for Tuesday (and beyond)<ul>
+<li>Make sure Mac users have homebrew</li>
+<li>Install LaTeX and <a class="reference external" href="http://www.pandoc.org/installing.html">Pandoc</a>.</li>
+</ul>
+</li>
+<li>Visualization in Python<ul>
+<li>Brief intro</li>
+<li>Group exercise: matplotlib breakout session</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>Who&#8217;s done with HW 2?</li>
+<li>How many of you are using MacOS for the course?<ul>
+<li>Of those, how many of you have homebrew installed?</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p>If you are using MacOS, you may have experienced unusual behavior from your
+python, especially when using different modules. There are several resources
+that I believe we have mentioned in class before, but we&#8217;d like to emphasize
+again to make sure that everyone is on the same page. Both are from Matthew:
+the <a class="reference external" href="http://practical-neuroimaging.github.io/installation.html">first</a>
+is a very brief how-to for getting your Mac set up for using
+scientific python. While you should all be well beyond this step at this point
+in the course, there is a very nice script in the post that validates that your
+system is set up properly. If you are running MacOS, I strongly recommend
+checking that post out and running the
+<a class="reference external" href="https://nipy.bic.berkeley.edu/pna/check_pna_install.py">check_pna_install.py</a>
+script to validate the setup on your system. The
+<a class="reference external" href="https://github.com/MacPython/wiki/wiki/Which-Python">second post</a> is relevant
+for any MacOS users who have run into the user vs. system python problem. For
+instance, I know many of you have had problems where you use pip to install a
+package, but then get an import error when trying to use it in an ipython
+session. Matthew has helped many of you with this problem during lecture, but
+if you want an overview of how this problem comes about and what to do about it,
+check out this post.</p>
+</div>
+<div class="section" id="visualization">
+<h2>Visualization<a class="headerlink" href="#visualization" title="Permalink to this headline">¶</a></h2>
+<p>Visualization is obviously an important part of any STEM pursuit. It has
+always played an important role in communicating ideas to others, but one of the
+main advancements brought about within the last 15 years by interactive data
+analysis platforms like MatLab, R, and IPython is the ability to visualize as
+you analyze. Thus there are several different domains in which we&#8217;d like to
+be able to visualize things: for communication purposes (i.e. &#8220;for others&#8221;), and
+for analytical purposes (i.e. &#8220;for ourselves). When generating visualizations
+for communication purposes, we&#8217;d like tools that create publication-quality,
+content-rich visualizations with expressive, reproducible command-line syntax.
+When visualizing during data analysis (e.g. to check our work after applying
+some analysis to data), we&#8217;d really like tools that are loaded with features,
+have simple interfaces/syntax, and are quick and easy to learn and fast to use.
+Many toolkits cover both domains reasonably well, though as your visualization
+needs get more and more specific (as they inevitably will throughout the course
+of any project) you will find that some tools fit your needs better than others.</p>
+<p>There are many, many visualization toolkits in python. We will introduce and
+briefly discuss some of them, followed by a breakout session where you can
+practice visualizations in matplotlib, the (still very relevant) grand-daddy of
+python visualization packages.</p>
+<div class="section" id="visualization-tools">
+<h3>Visualization Tools<a class="headerlink" href="#visualization-tools" title="Permalink to this headline">¶</a></h3>
+<p>Below is a list of some python visualization packages. For packages that I&#8217;ve
+personally used, I&#8217;ve included
+a list of (relative) pros and cons. It is impossible to accurately convey
+everything about these packages in the quick blurbs below; we only list packages
+here as a starting point for you to go and investigate them yourself!</p>
+<p><strong>General Purpose Visualization</strong></p>
+<blockquote>
+<div><ul>
+<li><p class="first"><a class="reference external" href="http://matplotlib.org/">matplotlib</a>
+The most ubiquitous of the python visualization packages. Has a massive
+set of features and is relatively easy to use. It is well documented and has
+very active user and development communities. It achieves cross-platform
+compatibility by implementing several graphics backends.</p>
+<p>Pros:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Feature-rich: you can create just about any type of static
+visualization in
+matplotlib. Check out the <a class="reference external" href="http://matplotlib.org/gallery.html">gallery</a>
+for examples</li>
+<li>Straightforward syntax: modeled after MatLab to make the transition easy
+for MatLab users.</li>
+<li>Quick to learn and use: while it would be very impractical to memorize
+the syntax for every feature, it has a very low learning curve for most
+basic plotting tasks which make it a good candidate for on-the-fly data
+visualization during analysis.</li>
+<li>Content-rich plotting: while it may be a bit behind aesthetically (see
+below), matplotlib is more than capable of producing clear and content-
+rich plots of publication quality</li>
+<li>Cross-platform: Has many backends (e.g. Tk, Qt, wx) including several
+native ones that allow matplotlib to create visualizations on just about
+any platform that supports graphics</li>
+<li>Very mature: the matplotlib foundation has a team of dedicated developers
+ensuring that the project is actively developed and kept stable. The user
+community is huge and very active.</li>
+</ul>
+</div></blockquote>
+<p>Cons:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Many find the plots aesthetically outdated</li>
+<li>Animation/interactivity: matplotlib is king at generating static images.
+While it is capable of dynamic images and user interaction, the learning
+curve for these features is significantly steeper than for static
+visualizations</li>
+<li>Speed: Related to the last bullet point, if you are trying to generate
+high-performance (i.e. high frame-rate) animations, matplotlib may be
+sufficient, but is probably not the correct package.</li>
+<li>3D visualization: Again, matplotlib has some functionality here,
+especially for relatively simple visualizations, but for complex 3D
+visualization, another package is required.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><a class="reference external" href="http://www.pyqtgraph.org/">pyqtgraph</a>
+A performance-oriented package capable of 2D and 3D plotting.</p>
+<p>Pros:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Performance oriented: If you need fast animations or high-performance
+3D rendering, this is a good package to investigate.</li>
+<li>Cross-platform: Relies only on numpy and python bindings for Qt (either
+pyqt or PySide). Once those are installed, no further compilation is
+required: the package is pure python.</li>
+</ul>
+</div></blockquote>
+<p>Cons:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Very steep learning curve: Even basic tasks can be difficult to
+accomplish. Furthermore, the documentation and example galleries are much
+more terse and less extensive than matplotlib</li>
+<li>Still in 0.9.8 and a much smaller user community - it is usually
+possible but much more difficult to figure out how to do what you want to
+do with pyqtgraph</li>
+<li>Not developed as actively - lead developer left to join the
+<a class="reference external" href="http://vispy.org/">VisPy project</a></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>3D Visualization</strong></p>
+<blockquote>
+<div><ul>
+<li><p class="first"><a class="reference external" href="http://docs.enthought.com/mayavi/mayavi/">MayaVi</a>
+A package for high-quality 3D visualization</p>
+<p>Pros:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Beautiful 3D visualization with relatively high-level interface (compared
+to pyqtgraph for example)</li>
+<li>Relatively feature rich</li>
+<li>Cross platform, easy to install</li>
+<li>Low learning curve for basic functionality</li>
+</ul>
+</div></blockquote>
+<p>Cons:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Very steep learning curve for more advanced functionality</li>
+<li>Performance: best for static 3D visualizations, can struggle with dynamic
+visualiztions</li>
+<li>Scalability: Resource-intensive so can struggle with visualizations of
+large data.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><a class="reference external" href="http://yt-project.org/">yt</a>
+A package for 3D visualization, originally developed for astrophysics</p>
+<p>Pros:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Very aesthetically pleasing - produces beautiful images</li>
+<li>Active user and developer communities</li>
+</ul>
+</div></blockquote>
+<p>Cons:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Some 3D visualiztion capabilities are not immediately obvious</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>Of interest to statistics folks</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://ggplot.yhathq.com/">ggplot</a>
+For those used to ggplot2 in R</li>
+<li><a class="reference external" href="http://stanford.edu/~mwaskom/software/seaborn/">seaborn</a>
+Package designed specifically for statistical visuzlization</li>
+</ul>
+</div></blockquote>
+<p><strong>Browser-based visualization tools</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://bokeh.pydata.org/en/latest/">bokeh</a></li>
+<li><a class="reference external" href="https://plot.ly/">plotly</a></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="breakout-exercise">
+<h2>Breakout Exercise<a class="headerlink" href="#breakout-exercise" title="Permalink to this headline">¶</a></h2>
+<p>In your groups, work on the
+<a class="reference external" href="https://github.com/berkeley-stat159/lab8_exercise">breakout exercise</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/index.html">Lectures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Labs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lab01.html">Lab 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab02.html">Lab 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab03.html">Lab 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab04.html">Lab 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab05.html">Lab 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab06.html">Lab 6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab07.html">Lab 7</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Lab 8</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>

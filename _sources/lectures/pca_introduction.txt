@@ -205,7 +205,7 @@ This is a unit vector:
     :context:
     :nofigs:
 
-    >>> (u_guessed ** 2).sum()
+    >>> np.sum(u_guessed ** 2)
     1.0
 
 .. plot::
@@ -254,7 +254,7 @@ red projected points also have their own sum of squares:
     :context:
     :nofigs:
 
-    >>> print((projected ** 2).sum())
+    >>> print(np.sum(projected ** 2))
     133.381320743
 
 Because we are projecting onto a unit vector, :math:`\|c\hat{u}\|^2 = c\hat{u}
@@ -267,7 +267,7 @@ points:
     :context:
     :nofigs:
 
-    >>> print((c_values ** 2).sum())
+    >>> print(np.sum(c_values ** 2))
     133.381320743
 
 As we will see later, this is the sum of squares from the original points that
@@ -281,7 +281,7 @@ the actual points from the projected points:
     :nofigs:
 
     >>> remaining = X - projected
-    >>> distances = np.sqrt((remaining ** 2).sum(axis=0))
+    >>> distances = np.sqrt(np.sum(remaining ** 2, axis=0))
     >>> distances
     array([ 0.926426,  0.714267,  0.293125,  0.415278,  0.062126,  0.793188,
             0.684554,  1.686549,  0.340629,  0.006746,  0.301138,  0.405397,
@@ -300,7 +300,7 @@ of squares:
     :context:
     :nofigs:
 
-    >>> print((remaining ** 2).sum())
+    >>> print(np.sum(remaining ** 2))
     22.2879691152
 
 I'm going to try a whole lot of different values for :math:`\hat{u}`, so
@@ -339,7 +339,7 @@ Using these little functions, I get the same answer as before:
     :context:
     :nofigs:
 
-    >>> print((line_remaining(u_guessed, X) ** 2).sum())
+    >>> print(np.sum(line_remaining(u_guessed, X) ** 2))
     22.2879691152
 
 Now I will make lots of :math:`\hat{u}` vectors spanning half the circle:
@@ -373,7 +373,7 @@ unit vectors:
     >>> remaining_ss = []
     >>> for u in u_vectors.T: # iterate over columns
     ...     remaining = line_remaining(u, X)
-    ...     remaining_ss.append((remaining ** 2).sum())
+    ...     remaining_ss.append(np.sum(remaining ** 2))
     >>> plt.plot(angles, remaining_ss)
     [...]
     >>> plt.xlabel('Angle of unit vector')

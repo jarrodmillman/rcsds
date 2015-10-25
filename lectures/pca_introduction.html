@@ -165,7 +165,7 @@ degrees angle to the x axis:</p>
 </pre></div>
 </div>
 <p>This is a unit vector:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">u_guessed</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">u_guessed</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
 <span class="go">1.0</span>
 </pre></div>
 </div>
@@ -213,7 +213,7 @@ degrees angle to the x axis:</p>
 <p>The projected points (in red), are the positions of the points that can be
 explained by projection onto the guessed line defined by <span class="math">\(\hat{u}\)</span>. The
 red projected points also have their own sum of squares:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">((</span><span class="n">projected</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">projected</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
 <span class="go">133.381320743</span>
 </pre></div>
 </div>
@@ -222,7 +222,7 @@ red projected points also have their own sum of squares:</p>
 <code class="docutils literal"><span class="pre">c_values</span></code> are also the lengths of the projected vectors, so the sum of
 squares of the <code class="docutils literal"><span class="pre">c_values</span></code> also gives us the sum of squares of the projected
 points:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">((</span><span class="n">c_values</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">c_values</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
 <span class="go">133.381320743</span>
 </pre></div>
 </div>
@@ -231,7 +231,7 @@ have been explained by projection onto <span class="math">\(\hat{u}\)</span>.</p
 <p>Once I have the projected points, I can calculate the remaining distance of
 the actual points from the projected points:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">remaining</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">projected</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">remaining</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">remaining</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">distances</span>
 <span class="go">array([ 0.926426,  0.714267,  0.293125,  0.415278,  0.062126,  0.793188,</span>
 <span class="go">        0.684554,  1.686549,  0.340629,  0.006746,  0.301138,  0.405397,</span>
@@ -246,7 +246,7 @@ the actual points from the projected points:</p>
 </div>
 <p>I can also express the overall (squared) remaining distance as the sum
 of squares:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">((</span><span class="n">remaining</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">remaining</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
 <span class="go">22.2879691152</span>
 </pre></div>
 </div>
@@ -273,7 +273,7 @@ projections:</p>
 </pre></div>
 </div>
 <p>Using these little functions, I get the same answer as before:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">((</span><span class="n">line_remaining</span><span class="p">(</span><span class="n">u_guessed</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">line_remaining</span><span class="p">(</span><span class="n">u_guessed</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
 <span class="go">22.2879691152</span>
 </pre></div>
 </div>
@@ -302,7 +302,7 @@ unit vectors:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">remaining_ss</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">u_vectors</span><span class="o">.</span><span class="n">T</span><span class="p">:</span> <span class="c"># iterate over columns</span>
 <span class="gp">... </span>    <span class="n">remaining</span> <span class="o">=</span> <span class="n">line_remaining</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">remaining_ss</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">remaining</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="gp">... </span>    <span class="n">remaining_ss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">remaining</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">remaining_ss</span><span class="p">)</span>
 <span class="go">[...]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;Angle of unit vector&#39;</span><span class="p">)</span>
