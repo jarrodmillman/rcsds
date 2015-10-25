@@ -90,12 +90,13 @@ here as a starting point for you to go and investigate them yourself!
   - `matplotlib <http://matplotlib.org/>`_
     The most ubiquitous of the python visualization packages. Has a massive
     set of features and is relatively easy to use. It is well documented and has
-    very active user and development communities. Achieves cross-platform 
+    very active user and development communities. It achieves cross-platform 
     compatibility by implementing several graphics backends.
     
     Pros:
 
-     - Feature-rich: you can create just about any type of visualization in 
+     - Feature-rich: you can create just about any type of static 
+       visualization in 
        matplotlib. Check out the `gallery <http://matplotlib.org/gallery.html>`_
        for examples
 
@@ -129,7 +130,7 @@ here as a starting point for you to go and investigate them yourself!
        visualizations
 
      - Speed: Related to the last bullet point, if you are trying to generate
-       high-performance (i.e. high frame-rate) animations, matplotlib is may be
+       high-performance (i.e. high frame-rate) animations, matplotlib may be
        sufficient, but is probably not the correct package.
 
      - 3D visualization: Again, matplotlib has some functionality here, 
@@ -142,7 +143,7 @@ here as a starting point for you to go and investigate them yourself!
     Pros:
 
      - Performance oriented: If you need fast animations or high-performance
-       3D rendering, this is a very capable package.
+       3D rendering, this is a good package to investigate.
 
      - Cross-platform: Relies only on numpy and python bindings for Qt (either
        pyqt or PySide). Once those are installed, no further compilation is
@@ -192,7 +193,7 @@ here as a starting point for you to go and investigate them yourself!
 
     Pros:
 
-     - Very aesthetically pleasing - produced beautiful images
+     - Very aesthetically pleasing - produces beautiful images
 
      - Active user and developer communities
 
@@ -203,7 +204,7 @@ here as a starting point for you to go and investigate them yourself!
 **Of interest to statistics folks**
 
   - `ggplot <http://ggplot.yhathq.com/>`_
-    For those of you used to ggplot2 in R
+    For those used to ggplot2 in R
 
   - `seaborn <http://stanford.edu/~mwaskom/software/seaborn/>`_
     Package designed specifically for statistical visuzlization
