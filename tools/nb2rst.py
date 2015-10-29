@@ -4,6 +4,7 @@
 
 import sys
 from os.path import splitext
+from warnings import warn
 
 import nbformat
 from nbconvert import RSTExporter
@@ -122,4 +123,6 @@ def main():
 
 
 if __name__ == '__main__':
+    warn('Please use nb2plots instead of this tool'
+         ': https://pypi.python.org/pypi/nb2plots')
     main()
