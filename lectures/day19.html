@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Day 9 &mdash; RCSDS 0.1 documentation</title>
+    <title>Day 19 &mdash; RCSDS 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
     <link rel="up" title="Lectures" href="index.html" />
-    <link rel="next" title="Day 10" href="day10.html" />
-    <link rel="prev" title="Day 8" href="day08.html" />
+    <link rel="next" title="Labs" href="../labs/index.html" />
+    <link rel="prev" title="Day 18" href="day18.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -40,31 +40,58 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="day-9">
-<h1>Day 9<a class="headerlink" href="#day-9" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="lesson-plan">
-<h2>Lesson plan<a class="headerlink" href="#lesson-plan" title="Permalink to this headline">¶</a></h2>
-<p>We will cover <a class="reference internal" href="arrays_and_images.html"><em>Arrays and images</em></a>.</p>
-<p>Then we will do the <a class="reference internal" href="camera.html"><em>The cameraman</em></a> exercise.</p>
-<p>Next we will cover <a class="reference internal" href="loading_nifti_images.html"><em>Loading data from NIfTI images</em></a>, followed by the
-<a class="reference internal" href="anatomical.html"><em>An anatomical image</em></a> exercise.</p>
-<p>Last, we will do a brief review of the <a class="reference external" href="https://www.openfmri.org/data-sets">OpenFMRI data sets</a> to orient
-you for your projects.</p>
-<p>One dataset with a lot of tutorial material online is the <a class="reference external" href="https://www.openfmri.org/dataset/ds000105">visual
-object recognition dataset</a>  by Haxby et al.</p>
-<p>A dataset we will be using for some of the examples is the <a class="reference external" href="https://www.openfmri.org/dataset/ds000114">test
-retest dataset</a> of Gorgolewski et al.</p>
-</div>
-<div class="section" id="solutions">
-<h2>Solutions<a class="headerlink" href="#solutions" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="day-19">
+<h1>Day 19<a class="headerlink" href="#day-19" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="announcements">
+<h2>Announcements<a class="headerlink" href="#announcements" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference external" href="https://github.com/jarrodmillman/rcsds/blob/master/lectures/camera_solutions.ipynb">camera solutions</a></li>
-<li><a class="reference external" href="https://github.com/jarrodmillman/rcsds/blob/master/lectures/anatomical_solutions.ipynb">anatomical solutions</a></li>
+<li>Presentations will be 5 minutes per group on Thursday, November 12 (i.e., 2 weeks from today)</li>
+<li>Draft reports (~6 pages) due on Thursday, November 12 at 21:00</li>
+<li>BIC tour on Monday, November 23 (during lab time)</li>
 </ul>
 </div>
-<div class="section" id="homework">
-<h2>Homework<a class="headerlink" href="#homework" title="Permalink to this headline">¶</a></h2>
-<p>Please do the <a class="reference internal" href="arteries.html"><em>Finding the arteries</em></a> exercise.</p>
+<div class="section" id="task">
+<h2>Task<a class="headerlink" href="#task" title="Permalink to this headline">¶</a></h2>
+<p>(Remember to always add new code and text via pull-requests.)</p>
+<p>I will check that each group completed the work from Tuesday:</p>
+<ul class="simple">
+<li>Add TravisCI and Coveralls.io buttons to your README.md</li>
+<li>Make sure your tests pass, add a new test</li>
+</ul>
+<p>Here is what you should work on today:</p>
+<ul>
+<li><p class="first">Make a tentative roadmap for what you want to do in the next 2 weeks
+including who is assigned to each part</p>
+</li>
+<li><p class="first">Make sure you have merged at least one pull request today</p>
+</li>
+<li><p class="first">Don&#8217;t forget that a pull request needs to be reviewed by at least
+one person not involved in writing the code or text</p>
+</li>
+<li><p class="first">Each team should have someone look into:</p>
+<ul class="simple">
+<li>slides/progress.md</li>
+<li>paper/report.tex, paper/report.bib</li>
+</ul>
+<p>In particular, one member of the team should create a pull request
+to modify <cite>slides/progress.md</cite> (e.g., put your title, team member
+names, etc.).  Another member of the team should create a pull request
+to modify <cite>paper/report.tex</cite> and <cite>paper/report.bib</cite> (e.g., put
+your title, team member names, references to your paper and data, etc.).
+A third (or possibly fourth) member should review changes, possibly
+make suggestions, and then merge the pull request once it is ready.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="remember">
+<h2>Remember<a class="headerlink" href="#remember" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>If you have questions about your projects, there should be a pull request with code
+or text and use <cite>&#64;jarrodmillman</cite>, <cite>&#64;matthew-brett</cite>, and/or <cite>&#64;rossbar</cite></li>
+<li>Most of your code should be written as a collection of functions
+with tests, then use scripts calling these functions to perform
+your analysis</li>
+</ul>
 </div>
 </div>
 
@@ -95,7 +122,7 @@ retest dataset</a> of Gorgolewski et al.</p>
 <li class="toctree-l2"><a class="reference internal" href="day06.html">Day 6</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day07.html">Day 7</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day08.html">Day 8</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">Day 9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day09.html">Day 9</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day10.html">Day 10</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day11.html">Day 11</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day12.html">Day 12</a></li>
@@ -103,7 +130,7 @@ retest dataset</a> of Gorgolewski et al.</p>
 <li class="toctree-l2"><a class="reference internal" href="day14.html">Day 14</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day15.html">Day 15</a></li>
 <li class="toctree-l2"><a class="reference internal" href="day18.html">Day 18</a></li>
-<li class="toctree-l2"><a class="reference internal" href="day19.html">Day 19</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Day 19</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../labs/index.html">Labs</a></li>

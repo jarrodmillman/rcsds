@@ -9,6 +9,7 @@ Core Topics
    fmri-intro.rst
    python.rst
    textmining.rst
+   #linear-algebra.rst
    #numpy.rst
    #git-advanced.rst
    #eda.rst
