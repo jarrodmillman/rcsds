@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab 9 &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Labs" href="index.html" />
+    <link rel="next" title="Appendices" href="../append/index.html" />
+    <link rel="prev" title="Lab 8" href="lab08.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="lab-9">
+<h1>Lab 9<a class="headerlink" href="#lab-9" title="Permalink to this headline">¶</a></h1>
+<p>Stats 159/259 - Lab 9 - 11/2/15</p>
+<div class="section" id="agenda">
+<h2>Agenda<a class="headerlink" href="#agenda" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>A quick discussion about <em>scope</em></li>
+<li>Structured code review exercise</li>
+<li>Work on your projects</li>
+</ol>
+</div>
+<div class="section" id="scope-in-python">
+<h2>Scope in Python<a class="headerlink" href="#scope-in-python" title="Permalink to this headline">¶</a></h2>
+<p>First, a couple of definitions:</p>
+<p><strong>Name</strong>: A <em>name</em> in python is a reference to a python object. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Create an object named a</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="c"># Create a new NAME for the object named a</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">a</span>
+<span class="c"># a and b should be equivalent</span>
+<span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
+<span class="c"># Are the two objects exactly the same? (i.e. are &#39;a&#39; and &#39;b&#39; just two</span>
+<span class="c"># different names for the same object?)</span>
+<span class="n">a</span> <span class="ow">is</span> <span class="n">b</span>
+<span class="c"># Create a new object that is equivalent to a</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="c"># a and c are equivalent, but are they the same object?</span>
+<span class="n">a</span> <span class="o">==</span> <span class="n">c</span>
+<span class="n">a</span> <span class="ow">is</span> <span class="n">c</span>
+</pre></div>
+</div>
+<p><strong>Block</strong>: A <em>block</em> in Python is a piece of code that is executed as a unit.
+Examples of blocks include: the body of a function, modules, class definitions,
+and script files.</p>
+<p><strong>Scope</strong>: A <em>scope</em> defines the visibility of a <em>name</em> in a given <em>block</em>. If
+an object with a given name is defined within a code block, then the <em>scope</em> of
+that object includes the given <em>block</em>.</p>
+<p>Why is any of this important? Misunderstanding scope can cause headaches in some
+situations; most commonly when you have several objects that have the same
+name in different scopes. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="k">def</span> <span class="nf">print_a</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="k">print</span> <span class="n">a</span>
+
+<span class="c"># Which number gets printed?</span>
+<span class="n">print_a</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The previous example deals with an issue called <em>name resolution</em>, i.e.
+figuring out which object you mean when you use the given name. If a name is
+unique, then name resolution is easy, but if there are different objects with
+the same name in different scopes, then name resolution is a little more
+involved (although pretty straightforward, once you understand it).</p>
+<p>There is a rule-of-thumb for Python name resolution: the <strong>LEGB</strong> rule. It
+specifies the order of name resolution when there are multiple scopes. It is
+analogous to the order of operations in arithmatic (PEMDAS). The LEGB
+rule states the order that scopes are searched for a given name:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><strong>L</strong> ocal</li>
+<li><strong>E</strong> nvironment</li>
+<li><strong>G</strong> lobal</li>
+<li><strong>B</strong> uiltin</li>
+</ol>
+</div></blockquote>
+<p>To understand this rule, we should define another term: <em>environment</em>. An
+envirnoment is just the set of all scopes that are visible to a given
+block. For example, if you define a function within a module (as we do all the
+time) then the <em>environment</em> for code within that function includes the
+function scope, and the module scope.</p>
+<p>Now, back to name resolution: The key thing to remember is that Python will
+search through the local scope first, then work it&#8217;s way outward. If it hasn&#8217;t
+found anything in the environment, it will move on to variables defined with
+<em>global</em> scope. If it still hasn&#8217;t found an object with the given name, it
+moves on to it&#8217;s own set of built-in functions. If at that point it still hasn&#8217;t
+found any object with the given name, it will throw a <cite>NameError</cite> exception.</p>
+<p>There is one final term that should be defined here, and that&#8217;s <strong>namespace</strong>.
+A <em>namepace</em> is essentially just a lookup table that relates every name to an
+underlying object. You can think of a namespace as a python dictionary, where
+the key corresponds to the name, and the value is the underlying python object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">namespace</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;name1&quot;</span><span class="p">:</span><span class="n">object1</span><span class="p">,</span> <span class="s">&quot;name2&quot;</span><span class="p">:</span><span class="n">object2</span><span class="p">}</span> <span class="c">#...</span>
+</pre></div>
+</div>
+<p>This helps illuminate how one object can have multiple names: it&#8217;s just the
+same object, stored in the dictionary under multiple keys. The concept of
+namespace is useful with regards to naming resolution because all that name
+resolution really is is a search through the keys of the namespace
+dictionaries. The search
+starts with the <em>local</em> namespace; if there is no key in the dictionary
+corresponding to the given name, it moves on to the <em>environment</em> namespace,
+etc.</p>
+<p>In practical terms, name resolution has a couple big implications:</p>
+<ol class="arabic">
+<li><p class="first">You have to be careful what you name things. There are certain built-ins with
+set names and if you name an object with the same name as one of the
+built-ins, the LEGB rule dictates that the name will now resolve to your
+object rather than the built-in. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c"># Try to convert a float to an int:</span>
+<span class="nb">int</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Another common example: keywordargs:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="k">def</span> <span class="nf">print_my_type</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">print</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">print_me</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">print_my_type</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&quot;pretty&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Print the type of the input. The type kwarg specifies how to print</span>
+<span class="sd">    the information.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s">&quot;pretty&quot;</span><span class="p">:</span> <span class="n">pprint</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span> <span class="k">print</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">print_my_type</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c"># type is still okay outside the scope of the print_me function</span>
+<span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Naming different objects with the same name in different scopes. This happens
+all the time, but you just have to be aware of the scope of your objects to
+be able to figure out which object you&#8217;re referring to (see original
+example).</p>
+</li>
+</ol>
+<p>That&#8217;s it for the brief intro to scope. If you&#8217;re curious and would like to
+learn more (scope and name resolution are important features of all computer
+languages, not just python), you might want to check out:</p>
+<p><a class="reference external" href="https://docs.python.org/2/reference/executionmodel.html">Python&#8217;s execution model</a></p>
+<p>You can also check out the wikipedia pages for
+<a class="reference external" href="https://en.wikipedia.org/wiki/Scope_(computer_science)">scope</a> and
+<a class="reference external" href="https://en.wikipedia.org/wiki/Name_resolution_(programming_languages)">name resolution</a></p>
+</div>
+<div class="section" id="exercise-code-review">
+<h2>Exercise: Code Review<a class="headerlink" href="#exercise-code-review" title="Permalink to this headline">¶</a></h2>
+<p>In this exercise, you will be critiquing each others&#8217; solutions to HW2. This
+may be nervewracking, as it is likely (with the exception of your project work)
+the first time you&#8217;ve exposed your code to the critical eyes of others.
+Although it may seem scary, as we&#8217;ve mentioned before, critical code review is
+one of if not the best and fastest ways to improve your programming ability.
+Learning how to accept and dole-out constructive criticism is a very important
+and over-looked skill, so we&#8217;re going to try to develop it a bit today.</p>
+<ol class="arabic simple">
+<li>Get into your teams (doesn&#8217;t have to be your project team)</li>
+<li>One member of your team will create a GitHub repo called
+code_review_practice (or something like that)</li>
+<li>Everybody else in the team fork that repo and set up your remotes (just like
+the lab6 exercise)</li>
+<li>Every member of the group should now copy their num.py solutions from HW2
+and put them into the code_review_practice repo with a format like
+&lt;your_name&gt;_num_solutions.py</li>
+<li>Also add Jarrod&#8217;s solutions to the repo.</li>
+<li>As a group, choose three functions from num.py that you will review.</li>
+<li>Using the GitHub code review model we&#8217;ve been practicing in class, review
+each of the 3 functions you&#8217;ve selected. It&#8217;s up to you how you decide to do
+this (you can split up into subgroups etc). When reviewing the functions,
+keep the following characteristics in mind:<ul>
+<li>code clarity / readability</li>
+<li>brevity</li>
+<li>code performance (you may want to use ipython&#8217;s %timeit feature for some
+basic code profiling)</li>
+</ul>
+</li>
+<li>At the end of the exercise (~45 min), your group should have analyzed each
+other&#8217;s (and Jarrod&#8217;s) solutions to num.py. Share your findings amongst
+yourselves, with specific reference to the three characteristics above.
+Summarize your thoughts in a <cite>results.md</cite> file. This file could contain, for
+example, a listing of positive and negative examples of code with respect to
+clarity, brevity, and performance.</li>
+</ol>
+<p>We won&#8217;t be &#8220;grading&#8221; the results.md, but we will look at it to see what you
+came up with and provide our own feedback.</p>
+</div>
+<div class="section" id="project-work">
+<h2>Project work<a class="headerlink" href="#project-work" title="Permalink to this headline">¶</a></h2>
+<p>The rest of the class time is for you to work on your projects!</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/index.html">Lectures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Labs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lab01.html">Lab 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab02.html">Lab 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab03.html">Lab 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab04.html">Lab 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab05.html">Lab 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab06.html">Lab 6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab07.html">Lab 7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab08.html">Lab 8</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Lab 9</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>

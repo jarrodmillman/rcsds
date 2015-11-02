@@ -12,3 +12,4 @@ Labs
    lab06.rst
    lab07.rst
    lab08.rst
+   lab09.rst
