@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Word Vectors &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="word-vectors">
+<h1>Word Vectors<a class="headerlink" href="#word-vectors" title="Permalink to this headline">¶</a></h1>
+<p>In many statistical applications, data are represented as vectors in
+some space. For instance, in genomic applications measurements for gene
+expression levels may be recorded for several subjects. Each of these
+subjects is then represented as a vector in gene space where each
+dimension represents the expression level of a specific gene.</p>
+<p>In other applications, the data is not directly presented as a vector
+space model; yet may be usefully represented as such. For this part of
+the assignment, you will see one common way to represent text documents
+as vectors. Once we&#8217;ve represented text documents as vectors we will
+want to ask which documents are similar to each other. We could use the
+dot product or cosine of the angle between two document vectors as our
+measure of similarity; however, in the second homework you will use
+another distance measure that has proved fruitful for measuring
+similarity in text documents.</p>
+<div class="section" id="a-bag-of-words-and-a-term-document-matrix">
+<h2>A bag of words and a term-document matrix<a class="headerlink" href="#a-bag-of-words-and-a-term-document-matrix" title="Permalink to this headline">¶</a></h2>
+<p>Natural languages encode part of the meaning of a text in the specific
+order of the words as the following two sentences illustrate:</p>
+<div class="highlight-python"><div class="highlight"><pre>John ate the tomato.
+The tomato ate John.
+</pre></div>
+</div>
+<p>For some tasks, however, it suffices to consider only the number of
+occurrences of each word in a document&#8212;disregarding grammar and word
+order. Such a simplified representation of a document is called a <em>bag
+of words</em> model.</p>
+<p>To get a sense of why this simple model might be useful consider the
+task of distinguishing documents pertaining to cars from documents about
+flowers. In documents related to cars you might expect to see many
+occurrences of words like power, drive, wheel, etc. Similarly, in the
+documents about flowers you might expect to see many occurrences of
+words like petal, bud, seed, etc.</p>
+<p>To see how we could use this insight in practice, consider the following
+three simple text documents (i.e., consider each sentence a separate
+document):</p>
+<div class="highlight-python"><div class="highlight"><pre>R is a popular programming language for statistical computing.
+The Python programming language is also popular for statistical programming.
+Spanish is a popular foreign language taught in US schools.
+</pre></div>
+</div>
+<p>Based on these three documents, we can create the following list of
+words used in our collection of documents (let&#8217;s call this our
+vocabulary):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span>
+ <span class="s">&#39;also&#39;</span><span class="p">,</span>
+ <span class="s">&#39;computing&#39;</span><span class="p">,</span>
+ <span class="s">&#39;for&#39;</span><span class="p">,</span>
+ <span class="s">&#39;foreign&#39;</span><span class="p">,</span>
+ <span class="s">&#39;in&#39;</span><span class="p">,</span>
+ <span class="s">&#39;is&#39;</span><span class="p">,</span>
+ <span class="s">&#39;language&#39;</span><span class="p">,</span>
+ <span class="s">&#39;popular&#39;</span><span class="p">,</span>
+ <span class="s">&#39;programming&#39;</span><span class="p">,</span>
+ <span class="s">&#39;python&#39;</span><span class="p">,</span>
+ <span class="s">&#39;r&#39;</span><span class="p">,</span>
+ <span class="s">&#39;schools&#39;</span><span class="p">,</span>
+ <span class="s">&#39;spanish&#39;</span><span class="p">,</span>
+ <span class="s">&#39;statistical&#39;</span><span class="p">,</span>
+ <span class="s">&#39;taught&#39;</span><span class="p">,</span>
+ <span class="s">&#39;the&#39;</span><span class="p">,</span>
+ <span class="s">&#39;us&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>For each word in the above list of 18 words, we can count how many times
+it occurs in the first text document to create the word vector</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>where each element of the word vector is the number of times the
+corresponding word from our list of vocabulary words appears in the
+first document. For example, the first <code class="docutils literal"><span class="pre">1</span></code> in the above word vector
+represents the fact that the word <code class="docutils literal"><span class="pre">a</span></code> appears exactly once in the
+sentence
+<code class="docutils literal"><span class="pre">R</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">popular</span> <span class="pre">programming</span> <span class="pre">language</span> <span class="pre">for</span> <span class="pre">statistical</span> <span class="pre">computing.</span></code>
+Similarly, the first <code class="docutils literal"><span class="pre">0</span></code> represents the fact that the word <code class="docutils literal"><span class="pre">also</span></code>
+does not occur in the sentence.</p>
+<p>Following the same procedure for the second and third sentences in our
+collection of documents, yields the following two word vectors:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Putting the list of vocabulary words used in our collection of documents
+as well as the word vector for each document under the bag of words
+model, we can form the following term document matrix:</p>
+<div class="highlight-python"><div class="highlight"><pre>              Document 1     Document 2    Document 3
+a                  1              1             0
+also               0              0             1
+computing          1              0             0
+for                1              0             1
+foreign            0              1             0
+in                 0              1             0
+is                 1              1             1
+language           1              1             1
+popular            1              1             1
+programming        1              0             2
+python             0              0             0
+r                  0              0             0
+schools            0              1             0
+spanish            0              0             0
+statistical        1              0             1
+taught             0              1             0
+the                0              0             0
+us                 0              0             0
+</pre></div>
+</div>
+<p>where each row of the matrix corresponds to the given term from our
+vocabulary and each column represents one document from our collection.</p>
+<p>One purpose of representing the collection of documents as a matrix of
+word vector columns is that we can measure the &#8220;distance&#8221; between any
+two column vectors in our term document matrix to get a sense of how
+similar the corresponding documents are.</p>
+<p>The dot-product between word vectors is a simple approach to measuring
+the similarity of the corresponding documents. We will see better
+alternatives to this measure later, but for now let&#8217;s just consider this
+simple &#8220;distance&#8221; measure. Recall that the dot-product
+<span class="math">\(\mathbf{a} \cdot \mathbf{b}\)</span> between two vectors
+<span class="math">\(\mathbf{a}\)</span> and <span class="math">\(\mathbf{b}\)</span> is the sum of products of the
+corresponding elements
+<span class="math">\(\mathbf{a} \cdot \mathbf{b} = \sum{a_i b_i}\)</span>. Taking the
+dot-product of all pairs of word vectors yields the following similarity
+matrix:</p>
+<div class="highlight-python"><div class="highlight"><pre>              Document 1     Document 2    Document 3
+Document 1        9              4             7
+Document 2        4             10             3
+Document 3        7              3            12
+</pre></div>
+</div>
+<p>As you would expect, each document is most similar with itself. However,
+does it make sense to think document 3 is more similar to itself than
+document 2 is similar to itself? Probably not. The reason that document
+3 has a higher entry in the similarity matrix based on raw word
+occurrence counts and the dot-product is that we aren&#8217;t controlling for
+the length of the document. However, notice that documents 1 and 3 are
+more similar (by this measure) than either documents 1 and 2 or
+documents 2 and 3. Since the first and third documents are both related
+to statistical programming languages, you would hope that our approach
+results in a similarity measure that results in them being closer to
+each other than either is to the document about natural language.
+Fortunately, even with this simple approach the results aren&#8217;t too far
+off from what you might expect.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="standard/index.html">Core Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/index.html">Lectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="labs/index.html">Labs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>
