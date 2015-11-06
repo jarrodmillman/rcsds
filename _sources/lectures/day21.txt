@@ -22,7 +22,7 @@ Technical writing
 
 Tentative final project rubric
 
-- #`Rubric <http://www.jarrodmillman.com/rcsds/notes/rubric.pdf>`_
+- `Rubric <http://www.jarrodmillman.com/rcsds/notes/rubric.pdf>`_
 
 
 Reports and presentations
