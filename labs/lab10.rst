@@ -112,7 +112,7 @@ big issue however is that as a result of all of the work they are merging into
 their projects, their coverage is decreasing! One way to deal with this issue
 is to have two parallel lines of development: a *stable* branch (often master)
 and a *dev* branch. The stable branch is the one that you present to the world:
-it should be fully tested, fully documented (including installation 
+it should be the fully tested, fully documented (including installation 
 instructions, examples, how-to's etc) version of your code. Anything that is
 to be pull-requested into the stable branch must not only be code-reviewed, but
 also have associated tests and documentation. This makes releasing code a lot
