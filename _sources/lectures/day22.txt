@@ -12,7 +12,7 @@ Announcements
 Presentation schedule
 ---------------------
 
-- in class random shuffle
+- delta, gamma, alpha, iota, zeta, beta, theta, epsilon, eta, lambda, kappa
 
 Reports and presentations
 -------------------------
@@ -30,7 +30,7 @@ Please carefully review the
 
 Basically I will be looking for projects that involve (among other things):
 
-- constant improvement
+- constant improvement (e.g., work every week)
 - team effort 
 - clear reasoning that is carefully and comprehensively documented
 - questions that are motivated and well formulated
@@ -40,8 +40,8 @@ Basically I will be looking for projects that involve (among other things):
 - conclusions that justified by the work (i.e., they should be limited and specific)
 
 Moreover, everything you do **must** be reproducible.  I will need to be able to issue
-a few commands to download all the relevant data, runs your analysis, and generates
-all your plots, tables, and other results.
+a few commands to download all the relevant data, that runs your analysis, and that
+generates all your plots, tables, and other results.
 
 Remember
 --------
