@@ -6,7 +6,7 @@ Announcements
 -------------
 
 - Presentations will be 5 minutes per group on Thursday, November 12 (i.e., 2 days from today)
-- Draft reports (<=6 pages) due on Friday, November 12 at 21:00
+- Draft reports (<=6 pages) due on Friday, November 13 at 21:00
 - BIC tour on Monday, November 23 (during lab time)
 
 Presentation schedule
