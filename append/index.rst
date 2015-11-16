@@ -8,6 +8,7 @@ Appendices
    :maxdepth: 1
 
    software.rst
+   git-advanced.rst
    file-transfer.rst
    appendix1.rst
    appendix2.rst
