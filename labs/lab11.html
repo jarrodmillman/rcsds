@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab 11 &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Labs" href="index.html" />
+    <link rel="next" title="Appendices" href="../append/index.html" />
+    <link rel="prev" title="Lab 10" href="lab10.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="lab-11">
+<h1>Lab 11<a class="headerlink" href="#lab-11" title="Permalink to this headline">¶</a></h1>
+<p>Stats 159/259 - Lab 11 - 11/16/15</p>
+<div class="section" id="agenda">
+<h2>Agenda<a class="headerlink" href="#agenda" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Organize groups for &#8220;field trip&#8221; to fMRI lab next Monday</li>
+<li>Git tips &#8216;n tricks</li>
+<li>Quick discussion of a couple python packages<ul>
+<li>Pandas</li>
+<li>Scikit-learn</li>
+</ul>
+</li>
+<li>Project work</li>
+</ol>
+</div>
+<div class="section" id="field-trip">
+<h2>Field Trip<a class="headerlink" href="#field-trip" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>Two groups: 11-12PM and 12-1PM.</li>
+<li>Need a 50/50 split so some people from the afternoon lab will have to move
+to the 11-12 slot</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="making-collaboration-and-git-easier">
+<h2>Making Collaboration and Git Easier<a class="headerlink" href="#making-collaboration-and-git-easier" title="Permalink to this headline">¶</a></h2>
+<p>Many of you identified git and, more generally, collaborating as one of the
+primary challenges for your projects. In light of that feedback, I wanted to
+cover a few git topics. First, several groups mentioned that they were using
+facebook chat to communicate or were otherwise having trouble getting everyone
+in the same room at one time. There are a couple tools you should be aware of
+that could help with the general communication issues:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="https://slack.com/">Slack</a> is a popular messaging/organization app for
+team-based projects. If you are having trouble getting everyone on the same
+chat (not everyone uses facebook) or your schedules are such that it&#8217;s very
+challenging to meet in person as often as you&#8217;d like to, you may want to
+investigate this tool</li>
+<li><a class="reference external" href="https://gitter.im/">Gitter</a> is another popular messaging app for
+github-based projects. One of the things that&#8217;s really nice about it
+is it integrates with GitHub (for instance you can add a button to your
+README.md to link to your gitter page, just like you do for TravisCI and
+coverage). Again, if you&#8217;re having trouble with real-time communication as
+a group, this might be a tool worth investigating.</li>
+</ul>
+</div></blockquote>
+<p>Now, on to things specific to git. Let&#8217;s start with a few quick and easy things
+to make life easier:</p>
+<blockquote>
+<div><ul class="simple">
+<li>git_ps1: Info about your repos in the bash prompt</li>
+<li>git alias: just like bash alias - can make &#8220;shortcuts&#8221; for commands you
+might use frequently, e.g.<ul>
+<li>git unstage</li>
+<li>git hist</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p>The <a class="reference external" href="https://github.com/rossbar/UbuntuInstallScripts">scripts</a> I use to
+configure my Linux environment contain specific examples for these two topics,
+specifically the bash_color and configure_git scripts.</p>
+<p>GitHub is loaded with scripts that people use to configure their computing
+environment, so if you don&#8217;t like these ones, feel free to try to find others
+by searching GitHub.</p>
+<p><strong>Undoing things in git &#8211; git reset</strong></p>
+<p>Many people have had questions both in lab and office hours relating to how do
+you <em>undo</em> things in git. There is a
+<a class="reference external" href="https://git-scm.com/book/en/v2/Git-Basics-Undoing-Things">whole section</a> on
+this topic in the pro git book.</p>
+<p>As an aside, if you are planning on continuing computational work and using git,
+I very strongly recommend you take the time to read the
+<a class="reference external" href="https://git-scm.com/book/en/v2">pro git</a> book. It&#8217;s free online, and is where
+I learned 90% of the things that I know about git.</p>
+<p>Back to undoing things... Let&#8217;s follow along with a section in the pro git book:
+<a class="reference external" href="https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified">reset demystified</a>.</p>
+</div>
+<div class="section" id="python-packages-you-ve-expressed-interest-in">
+<h2>Python Packages you&#8217;ve Expressed Interest In<a class="headerlink" href="#python-packages-you-ve-expressed-interest-in" title="Permalink to this headline">¶</a></h2>
+<p>From the feedback in your presentations, there were a couple packages that
+teams expressed interest in and I figured I&#8217;d just touch on them here. First:</p>
+<p><strong>Pandas</strong></p>
+<p>Pandas is a library that intends to make working with data easier. At it&#8217;s core,
+it&#8217;s really nothing more than a high-level wrapper over numpy arrays. That&#8217;s not
+to say it isn&#8217;t useful however! I&#8217;ve only used pandas sparingly as I prefer to
+work with numpy arrays directly, but from my experience, one of the biggest
+advantages of using pandas is it&#8217;s ability to deal with imperfect, typed data
+with relative ease. For example, if you have multi-field data where each value
+in a row has a specific meaning (for example, col1 = timestamp, col2 = stock
+price, col3 = purchases/hour), the pandas <em>dataframe</em> object handles this data
+well. Of course, you can deal with data like this in numpy as well with
+np.dtype, but the real advantage of pandas comes in the ability to add fields
+(for example, say you wanted to add a col4 that represented the temperature)
+and for dealing with missing or irregular data.</p>
+<p>In my opinion, you&#8217;re much better off using pure numpy arrays for dealing with
+the fMRI data as it is strictly numerical in nature.</p>
+<p><strong>scikit-learn</strong></p>
+<p>Many groups have asked about/started using scikit-learn. The scikit-learn
+library has many, many tools for both supervised and unsupervised learning,
+including a ton of built-in tools for regression and classification.</p>
+<p>For your projects, you may be interested in some of the
+<a class="reference external" href="http://scikit-learn.org/stable/modules/linear_model.html">regression tools</a>.
+Let&#8217;s get your feet wet with a super simple exercise.</p>
+</div>
+<div class="section" id="scikit-learn-exercise">
+<h2>scikit-learn exercise<a class="headerlink" href="#scikit-learn-exercise" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>Load the &#8220;digits&#8221; dataset that comes with scikit learn</li>
+<li>Use imshow to visualize a couple of images from the digits dataset. Can you
+tell what numbers they represent? (use the &#8220;target&#8221; array to check your
+answer).</li>
+<li>Use the train_test_split() helper function from sklearn to split the digits
+dataset into a training and test set. Use 2/3 of the dataset to train on.</li>
+<li>Once you&#8217;ve trained your classifier, use it&#8217;s .predict() method to look at a
+couple specific examples in your test set.</li>
+<li>Use the .score() method of your classifier to see how well it performs on the
+entire test set.</li>
+</ul>
+</div></blockquote>
+<p>In all, this example should take very few lines of code, but your classifier
+may not be very good. At this point, if you are interested, you can continue
+following through scikit-learn examples to improve your classifier. For
+instance, you may be interested in using sklearn&#8217;s cross-validation tools to
+determine optimal parameters for you classifier, or perhaps try a differnt
+classifier.</p>
+</div>
+<div class="section" id="project-work">
+<h2>Project work<a class="headerlink" href="#project-work" title="Permalink to this headline">¶</a></h2>
+<p>As of your presentations, several groups seemed to have a good start on
+preprocessing their data, but with the exception of a couple of groups, there
+was very little in the way of preliminary analysis. We will have more specific
+feedback Tuesday in class, but the general theme is: get going with your
+analyses!</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/index.html">Lectures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Labs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lab01.html">Lab 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab02.html">Lab 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab03.html">Lab 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab04.html">Lab 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab05.html">Lab 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab06.html">Lab 6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab07.html">Lab 7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab08.html">Lab 8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab09.html">Lab 9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab10.html">Lab 10</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Lab 11</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>
