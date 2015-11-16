@@ -141,12 +141,12 @@ In all, this example should take very few lines of code, but your classifier
 may not be very good. At this point, if you are interested, you can continue
 following through scikit-learn examples to improve your classifier. For 
 instance, you may be interested in using sklearn's cross-validation tools to 
-determine optimal parameters for you classifier, or perhaps try a differnt
+determine optimal parameters for you classifier, or perhaps try a different
 classifier.
 
 Project work
 ++++++++++++
-As of your presentations, several groups seemed to have a good start on 
+As for your presentations, several groups seemed to have a good start on 
 preprocessing their data, but with the exception of a couple of groups, there
 was very little in the way of preliminary analysis. We will have more specific
 feedback Tuesday in class, but the general theme is: get going with your
