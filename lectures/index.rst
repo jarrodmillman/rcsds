@@ -23,3 +23,4 @@ Lectures
    day19.rst
    day21.rst
    day22.rst
+   day24.rst
