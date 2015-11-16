@@ -7,6 +7,13 @@ Stats 159/259 - Lab 11 - 11/16/15
 Agenda
 ++++++
 
+0. All hw and qz issues closed
+
+   - Double-check that everything is correct!
+
+     - Should have grades for readings 1 through 5, qz 2 through 4, and 
+       hw1 and hw2
+
 1. Organize groups for "field trip" to fMRI lab next Monday
 
 2. Git tips 'n tricks
