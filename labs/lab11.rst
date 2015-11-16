@@ -44,7 +44,7 @@ that could help with the general communication issues:
    investigate this tool
 
  - `Gitter <https://gitter.im/>`_ is another popular messaging app for 
-   github-based coding projects. One of the things that's really nice about it
+   github-based projects. One of the things that's really nice about it
    is it integrates with GitHub (for instance you can add a button to your
    README.md to link to your gitter page, just like you do for TravisCI and 
    coverage). Again, if you're having trouble with real-time communication as 
@@ -62,8 +62,8 @@ to make life easier:
 
    - git hist
 
-The scripts I use to configure my Linux environment contain specific examples
-for these two topics: `https://github.com/rossbar/UbuntuInstallScripts`_;
+The `scripts <https://github.com/rossbar/UbuntuInstallScripts>`_ I use to
+configure my Linux environment contain specific examples for these two topics,
 specifically the bash_color and configure_git scripts.
 
 GitHub is loaded with scripts that people use to configure their computing
@@ -107,13 +107,13 @@ np.dtype, but the real advantage of pandas comes in the ability to add fields
 and for dealing with missing or irregular data.
 
 In my opinion, you're much better off using pure numpy arrays for dealing with
-the fMRI data as it is largely numerical in nature.
+the fMRI data as it is strictly numerical in nature.
 
 **scikit-learn**
 
-Many groups have asked/started using scikit-learn. The scikit-learn library has
-many, many tools for both supervised and unsupervised learning, including a ton
-of built-in tools for regression and classification.
+Many groups have asked about/started using scikit-learn. The scikit-learn
+library has many, many tools for both supervised and unsupervised learning,
+including a ton of built-in tools for regression and classification.
 
 For your projects, you may be interested in some of the 
 `regression tools <http://scikit-learn.org/stable/modules/linear_model.html>`_.
@@ -140,7 +140,9 @@ scikit-learn exercise
 In all, this example should take very few lines of code, but your classifier
 may not be very good. At this point, if you are interested, you can continue
 following through scikit-learn examples to improve your classifier. For 
-instance, you may be interested in using 
+instance, you may be interested in using sklearn's cross-validation tools to 
+determine optimal parameters for you classifier, or perhaps try a differnt
+classifier.
 
 Project work
 ++++++++++++
