@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using masks and modeling noise &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="using-masks-and-modeling-noise">
+<h1>Using masks and modeling noise<a class="headerlink" href="#using-masks-and-modeling-noise" title="Permalink to this headline">¶</a></h1>
+<p>Our usual setup:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy.linalg</span> <span class="kn">as</span> <span class="nn">npl</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+<p>Set defaults for plots:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># set gray colormap and nearest neighbor interpolation by default</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">&#39;image.cmap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;gray&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">&#39;image.interpolation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;nearest&#39;</span>
+</pre></div>
+</div>
+<p>First we load our data, and slice off the first 4 volumes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">nibabel</span> <span class="kn">as</span> <span class="nn">nib</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;ds114_sub009_t2r1.nii&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">4</span><span class="p">:]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vol_shape</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_trs</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vol_shape</span><span class="p">,</span> <span class="n">n_trs</span>
+<span class="go">((64, 64, 30), 169)</span>
+</pre></div>
+</div>
+<p>Next we take the mean volume (over time), and do a histogram of the values:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">mean_vol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">mean_vol</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-5.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-5.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-5.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-5.png" src="../_images/modeling_noise-5.png" />
+</div>
+<p>It looks like we can set a threshold to idenfity the voxels inside the brain.
+From this threshold we can get a 3D brain mask, that selects those voxels:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">in_brain_mask</span> <span class="o">=</span> <span class="n">mean_vol</span> <span class="o">&gt;</span> <span class="mi">900</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">in_brain_mask</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(64, 64, 30)</span>
+</pre></div>
+</div>
+<p>It looks this this has done a good job of selecting the voxels within the
+brain:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mean_vol</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">])</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-7.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-7.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-7.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-7.png" src="../_images/modeling_noise-7.png" />
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">in_brain_mask</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">])</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-8.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-8.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-8.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-8.png" src="../_images/modeling_noise-8.png" />
+</div>
+<p>We can use this 3D mask to index into our 4D dataset.  This selects all the
+voxel time-courses for voxels within the brain (as defined by the mask):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">in_brain_tcs</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">in_brain_mask</span><span class="p">,</span> <span class="p">:]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">in_brain_tcs</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(21353, 169)</span>
+</pre></div>
+</div>
+<p>We can now run our model on just the time-courses for these voxels, rather
+than all voxels in the image.</p>
+<p>Let&#8217;s first try modeling our signals with an extra couple of drift terms.  We
+will use a linear drift regressor, and a squared linear drift regressor:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">convolved</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s">&#39;ds114_sub009_t2r1_conv.txt&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">:]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_trs</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">convolved</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">linear_drift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_trs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">linear_drift</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">quadratic_drift</span> <span class="o">=</span> <span class="n">linear_drift</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">quadratic_drift</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">linear_drift</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">quadratic_drift</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-10.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-10.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-10.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-10.png" src="../_images/modeling_noise-10.png" />
+</div>
+<p>We can fit this design to the data in the usual way:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">in_brain_tcs</span><span class="o">.</span><span class="n">T</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">B</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">B</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(4, 21353)</span>
+</pre></div>
+</div>
+<p>There are four betas for each in-brain voxel.  We can put these back into
+their correct voxel locations in the original 3D shape, by using the mask
+again:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">b_vols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">vol_shape</span> <span class="o">+</span> <span class="p">(</span><span class="mi">4</span><span class="p">,))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b_vols</span><span class="p">[</span><span class="n">in_brain_mask</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+<p>The different regressors pick up different patterns across the brain:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">b_vols</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-13.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-13.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-13.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-13.png" src="../_images/modeling_noise-13.png" />
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">b_vols</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-14.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-14.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-14.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-14.png" src="../_images/modeling_noise-14.png" />
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">b_vols</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-15.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-15.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-15.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-15.png" src="../_images/modeling_noise-15.png" />
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">b_vols</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-16.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-16.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-16.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-16.png" src="../_images/modeling_noise-16.png" />
+</div>
+<p>The drift terms model gradual drifts across the time-series, but are there
+other patterns of noise that we have not found yet?  One way to look for such
+patterns is to use Principal Components Analysis:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Y_demeaned</span> <span class="o">=</span> <span class="n">Y</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unscaled_cov</span> <span class="o">=</span> <span class="n">Y_demeaned</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Y_demeaned</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">unscaled_cov</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The component vectors (time-courses) are in the columns of the <code class="docutils literal"><span class="pre">U</span></code> matrix:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">U</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="go">[...]</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-18.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-18.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-18.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-18.png" src="../_images/modeling_noise-18.png" />
+</div>
+<p>We can get the projection of the data onto the new <code class="docutils literal"><span class="pre">U</span></code> basis with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">projections</span> <span class="o">=</span> <span class="n">U</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Y_demeaned</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">projections</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(169, 21353)</span>
+</pre></div>
+</div>
+<p>Again, we can put these back into the correct 3D locations using the mask:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">projection_vols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">projection_vols</span><span class="p">[</span><span class="n">in_brain_mask</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">projections</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+<p>This first component doesn&#8217;t look like anything to do with the task:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">projection_vols</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-21.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-21.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-21.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-21.png" src="../_images/modeling_noise-21.png" />
+</div>
+<p>How about the second component?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">U</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="go">[...]</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-22.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-22.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-22.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-22.png" src="../_images/modeling_noise-22.png" />
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">projection_vols</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-23.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-23.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-23.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-23.png" src="../_images/modeling_noise-23.png" />
+</div>
+<p>And the third?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">U</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="go">[...]</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-24.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-24.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-24.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-24.png" src="../_images/modeling_noise-24.png" />
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">projection_vols</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-25.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-25.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-25.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-25.png" src="../_images/modeling_noise-25.png" />
+</div>
+<p>At least the first two components look as if they are happening in many voxels
+at the same time, and they reflect brain anatomy rather than function.  They
+may therefore reflect noise from the scanner or the subject.  We can remove
+these components by regression:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">X_pca</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_trs</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X_pca</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">convolved</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X_pca</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X_pca</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">linear_drift</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_pca</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-26.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-26.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-26.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-26.png" src="../_images/modeling_noise-26.png" />
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">B_pca</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">X_pca</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Again, we can put our fitted betas into their correct 3D location with the
+mask:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">b_pca_vols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">vol_shape</span> <span class="o">+</span> <span class="p">(</span><span class="mi">4</span><span class="p">,))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b_pca_vols</span><span class="p">[</span><span class="n">in_brain_mask</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">B_pca</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">b_pca_vols</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-29.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-29.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-29.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-29.png" src="../_images/modeling_noise-29.png" />
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">b_pca_vols</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-30.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-30.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-30.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-30.png" src="../_images/modeling_noise-30.png" />
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">b_pca_vols</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-31.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-31.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-31.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-31.png" src="../_images/modeling_noise-31.png" />
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">b_pca_vols</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/modeling_noise-32.png">png</a>, <a class="reference external" href="../lectures/modeling_noise-32.hires.png">hires.png</a>, <a class="reference external" href="../lectures/modeling_noise-32.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/modeling_noise-32.png" src="../_images/modeling_noise-32.png" />
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Lectures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/index.html">Labs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>
