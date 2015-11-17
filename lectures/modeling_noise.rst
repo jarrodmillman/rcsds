@@ -203,7 +203,7 @@ these components by regression:
 
 .. nbplot::
 
-    >>> X_pca = np.zeros((n_trs, 4))
+    >>> X_pca = np.zeros((n_trs, 5))
     >>> X_pca[:, 0] = convolved
     >>> X_pca[:, 1:3] = U[:, :2]
     >>> X_pca[:, 3] = linear_drift
