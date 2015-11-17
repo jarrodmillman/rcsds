@@ -1,0 +1,166 @@
+Word Vectors
+------------
+
+In many statistical applications, data are represented as vectors in
+some space. For instance, in genomic applications measurements for gene
+expression levels may be recorded for several subjects. Each of these
+subjects is then represented as a vector in gene space where each
+dimension represents the expression level of a specific gene.
+
+In other applications, the data is not directly presented as a vector
+space model; yet may be usefully represented as such. For this part of
+the assignment, you will see one common way to represent text documents
+as vectors. Once we've represented text documents as vectors we will
+want to ask which documents are similar to each other. We could use the
+dot product or cosine of the angle between two document vectors as our
+measure of similarity; however, in the second homework you will use
+another distance measure that has proved fruitful for measuring
+similarity in text documents.
+
+A bag of words and a term-document matrix
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Natural languages encode part of the meaning of a text in the specific
+order of the words as the following two sentences illustrate:
+
+::
+
+    John ate the tomato.
+    The tomato ate John.
+
+For some tasks, however, it suffices to consider only the number of
+occurrences of each word in a document---disregarding grammar and word
+order. Such a simplified representation of a document is called a *bag
+of words* model.
+
+To get a sense of why this simple model might be useful consider the
+task of distinguishing documents pertaining to cars from documents about
+flowers. In documents related to cars you might expect to see many
+occurrences of words like power, drive, wheel, etc. Similarly, in the
+documents about flowers you might expect to see many occurrences of
+words like petal, bud, seed, etc.
+
+To see how we could use this insight in practice, consider the following
+three simple text documents (i.e., consider each sentence a separate
+document):
+
+::
+
+    R is a popular programming language for statistical computing.
+    The Python programming language is also popular for statistical programming.
+    Spanish is a popular foreign language taught in US schools.
+
+Based on these three documents, we can create the following list of
+words used in our collection of documents (let's call this our
+vocabulary):
+
+::
+
+    ['a',
+     'also',
+     'computing',
+     'for',
+     'foreign',
+     'in',
+     'is',
+     'language',
+     'popular',
+     'programming',
+     'python',
+     'r',
+     'schools',
+     'spanish',
+     'statistical',
+     'taught',
+     'the',
+     'us']
+
+For each word in the above list of 18 words, we can count how many times
+it occurs in the first text document to create the word vector
+
+::
+
+    [1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0]
+
+where each element of the word vector is the number of times the
+corresponding word from our list of vocabulary words appears in the
+first document. For example, the first ``1`` in the above word vector
+represents the fact that the word ``a`` appears exactly once in the
+sentence
+``R is a popular programming language for statistical computing.``
+Similarly, the first ``0`` represents the fact that the word ``also``
+does not occur in the sentence.
+
+Following the same procedure for the second and third sentences in our
+collection of documents, yields the following two word vectors:
+
+::
+
+    [1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0]
+    [0, 1, 0, 1, 0, 0, 1, 1, 1, 2, 0, 0, 0, 0, 1, 0, 0, 0]
+
+Putting the list of vocabulary words used in our collection of documents
+as well as the word vector for each document under the bag of words
+model, we can form the following term document matrix:
+
+::
+
+                  Document 1     Document 2    Document 3
+    a                  1              1             0  
+    also               0              0             1  
+    computing          1              0             0  
+    for                1              0             1  
+    foreign            0              1             0  
+    in                 0              1             0  
+    is                 1              1             1  
+    language           1              1             1  
+    popular            1              1             1  
+    programming        1              0             2  
+    python             0              0             0  
+    r                  0              0             0  
+    schools            0              1             0  
+    spanish            0              0             0  
+    statistical        1              0             1  
+    taught             0              1             0  
+    the                0              0             0  
+    us                 0              0             0  
+
+where each row of the matrix corresponds to the given term from our
+vocabulary and each column represents one document from our collection.
+
+One purpose of representing the collection of documents as a matrix of
+word vector columns is that we can measure the "distance" between any
+two column vectors in our term document matrix to get a sense of how
+similar the corresponding documents are.
+
+The dot-product between word vectors is a simple approach to measuring
+the similarity of the corresponding documents. We will see better
+alternatives to this measure later, but for now let's just consider this
+simple "distance" measure. Recall that the dot-product
+:math:`\mathbf{a} \cdot \mathbf{b}` between two vectors
+:math:`\mathbf{a}` and :math:`\mathbf{b}` is the sum of products of the
+corresponding elements
+:math:`\mathbf{a} \cdot \mathbf{b} = \sum{a_i b_i}`. Taking the
+dot-product of all pairs of word vectors yields the following similarity
+matrix:
+
+::
+
+                  Document 1     Document 2    Document 3
+    Document 1        9              4             7              
+    Document 2        4             10             3
+    Document 3        7              3            12 
+
+As you would expect, each document is most similar with itself. However,
+does it make sense to think document 3 is more similar to itself than
+document 2 is similar to itself? Probably not. The reason that document
+3 has a higher entry in the similarity matrix based on raw word
+occurrence counts and the dot-product is that we aren't controlling for
+the length of the document. However, notice that documents 1 and 3 are
+more similar (by this measure) than either documents 1 and 2 or
+documents 2 and 3. Since the first and third documents are both related
+to statistical programming languages, you would hope that our approach
+results in a similarity measure that results in them being closer to
+each other than either is to the document about natural language.
+Fortunately, even with this simple approach the results aren't too far
+off from what you might expect.
