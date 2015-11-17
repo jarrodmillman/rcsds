@@ -17,3 +17,9 @@ Remember
 - Most of your code should be written as a collection of functions
   with tests, then use scripts calling these functions to perform
   your analysis
+
+Lecture
+-------
+
+* :doc:`boolean_indexing`;
+* :doc:`modeling_noise`;
