@@ -88,7 +88,7 @@ will use a linear drift regressor, and a squared linear drift regressor:
     >>> linear_drift = np.linspace(-1, 1, n_trs)
     >>> X[:, 1] = linear_drift
     >>> quadratic_drift = linear_drift ** 2
-    >>> quadratic_drift -= np.mean(linear_drift)
+    >>> quadratic_drift -= np.mean(quadratic_drift)
     >>> X[:, 2] = quadratic_drift
     >>> plt.imshow(X, aspect=0.1)
     ...
@@ -203,7 +203,7 @@ these components by regression:
 
 .. nbplot::
 
-    >>> X_pca = np.zeros((n_trs, 5))
+    >>> X_pca = np.ones((n_trs, 5))
     >>> X_pca[:, 0] = convolved
     >>> X_pca[:, 1:3] = U[:, :2]
     >>> X_pca[:, 3] = linear_drift
