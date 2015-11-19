@@ -45,13 +45,16 @@ What if we had a different *event related* condition file like this:
            [ 304.76,    3.  ,    2.  ],
            [ 356.32,    3.  ,    2.  ],
            [ 372.22,    3.  ,    3.  ]])
+    >>> onsets_seconds = cond_data[:, 0]
+    >>> durations_seconds = cond_data[:, 1]
+    >>> amplitudes = cond_data[:, 2]
 
 Notice that the onsets of the events can happen in the middle of the volumes
 (well after the volumes have started).
 
 .. nbplot::
 
-    >>> onsets_in_scans = cond_data[:, 0] / TR
+    >>> onsets_in_scans = onsets_seconds / TR
     >>> onsets_in_scans
     array([   1.34 ,    5.104,   17.308,   30.1  ,   38.192,   67.136,
             112.944,  121.904,  142.528,  148.888])
@@ -78,30 +81,59 @@ This is what we do next.
 .. nbplot::
 
     >>> tr_divs = 100.0  # finer resolution has 100 steps per TR
-    >>> high_res_times = np.arange(0, n_trs, 1 / tr_divs)
-    >>> high_res_onsets = onsets_in_scans * tr_divs
-    >>> high_res_onsets
-    array([   134. ,    510.4,   1730.8,   3010. ,   3819.2,   6713.6,
-            11294.4,  12190.4,  14252.8,  14888.8])
+
+With each TR divided into 100 intervals, one element corresponds to time
+intervals of 1/100 of a TR:
 
 .. nbplot::
 
-    >>> high_res_durations = cond_data[:, 1] / TR * tr_divs
-    >>> high_res_durations
-    array([ 120.,  120.,  120.,  120.,  120.,  120.,  120.,  120.,  120.,  120.])
+    >>> high_res_times = np.arange(0, n_trs, 1 / tr_divs) * TR
+
+We will soon create a new neural prediction time-course where one element
+corresponds to 1 / 100 of a TR:
 
 .. nbplot::
 
     >>> high_res_neural = np.zeros(high_res_times.shape)
-    >>> for hr_onset, hr_duration, amplitude in zip(high_res_onsets, high_res_durations, cond_data[:, 2]):
-    ...     hr_onset = int(round(hr_onset))
-    ...     hr_duration = int(round(hr_duration))
-    ...     high_res_neural[hr_onset:hr_onset + hr_duration] = amplitude
+
+We have the onset indices in terms of TRs, but now we want the onset indices
+in terms of the new vector with 100 elements per TR:
 
 .. nbplot::
 
+    >>> high_res_onset_indices = onsets_in_scans * tr_divs
+    >>> high_res_onset_indices
+    array([   134. ,    510.4,   1730.8,   3010. ,   3819.2,   6713.6,
+            11294.4,  12190.4,  14252.8,  14888.8])
+
+In the same way, the durations were in seconds.  We divide by the TR to get
+duration in terms of scans, then multiply by 100 to get the number in terms of
+elements in the new ``high_res_neural`` time-course.
+
+.. nbplot::
+
+    >>> high_res_durations = durations_seconds / TR * tr_divs
+    >>> high_res_durations
+    array([ 120.,  120.,  120.,  120.,  120.,  120.,  120.,  120.,  120.,  120.])
+
+Now we fill in the ``high_res_neural`` time course by setting values between
+the start and the end of each event with the matching amplitudes:
+
+.. nbplot::
+
+    >>> for hr_onset, hr_duration, amplitude in zip(
+    ...            high_res_onset_indices, high_res_durations, amplitudes):
+    ...     hr_onset = int(round(hr_onset))  # index - must be int
+    ...     hr_duration = int(round(hr_duration))  # makes index - must be int
+    ...     high_res_neural[hr_onset:hr_onset + hr_duration] = amplitude
     >>> plt.plot(high_res_times, high_res_neural)
     [...]
+    >>> plt.xlabel('Time (seconds)')
+    <...>
+    >>> plt.ylabel('High resolution neural prediction')
+    <...>
+
+We can use the hemodynamic response function we created earlier:
 
 .. nbplot::
 
@@ -118,35 +150,63 @@ This is what we do next.
     ...     # Scale max to 0.6
     ...     return values / np.max(values) * 0.6
 
+We are going to convolve at this higher time resolution.  First we need to
+sample the HRF at this finer time resolution, to match the neural prediction:
+
 .. nbplot::
 
     >>> hrf_times = np.arange(0, 24, 1 / tr_divs)
     >>> hrf_at_hr = hrf(hrf_times)
+
+Next we convolve the sampled HRF with the high resolution neural time course:
+
+.. nbplot::
+
     >>> high_res_hemo = np.convolve(high_res_neural, hrf_at_hr)[:len(high_res_neural)]
     >>> plt.plot(high_res_times, high_res_hemo)
     [...]
+    >>> plt.xlabel('Time (seconds)')
+    <...>
+    >>> plt.ylabel('High resolution convolved values')
+    <...>
     >>> len(high_res_times)
     17300
 
+We can see that this is sampled at high resolution on the X axis by looking at
+the first 20 seconds-worth of data:
+
 .. nbplot::
 
-    >>> plt.plot(high_res_times[:20 * tr_divs], high_res_hemo[:20 * tr_divs])
+    >>> plt.plot(high_res_times[:20 * tr_divs], high_res_hemo[:20 * tr_divs], 'x:')
     [...]
 
+We can then subsample this high-resolution time course to get the values
+corresponding to the start of each original TR (volume):
+
 .. nbplot::
 
-    >>> tr_times = np.arange(n_trs)
-    >>> hr_indices = np.round(tr_times * tr_divs).astype(int)
-    >>> tr_hemo = high_res_hemo[hr_indices]
+    >>> tr_indices = np.arange(n_trs)
+    >>> hr_tr_indices = np.round(tr_indices * tr_divs).astype(int)
+    >>> tr_hemo = high_res_hemo[hr_tr_indices]
+    >>> tr_times = tr_indices * TR  # times of TR onsets in seconds
     >>> plt.plot(tr_times, tr_hemo)
     [...]
-    >>> len(tr_times)
-    173
+    >>> plt.xlabel('Time (seconds)')
+    <...>
+    >>> plt.ylabel('Convolved values at TR onsets')
+    <...>
+
+The first 20 seconds shows these values are sampled every TR rather than every
+1/100th of a TR:
 
 .. nbplot::
 
-    >>> plt.plot(tr_times[:20], tr_hemo[:20])
+    >>> plt.plot(tr_times[:20], tr_hemo[:20], 'x:')
     [...]
+    >>> plt.xlabel('Time (seconds)')
+    <...>
+    >>> plt.ylabel('Convolved values at TR onsets')
+    <...>
 
 .. testcleanup::
 
