@@ -2,7 +2,7 @@
 Using masks and modeling noise
 ##############################
 
-.. testcode::
+.. testsetup::
 
     import os
     os.chdir('lectures')
