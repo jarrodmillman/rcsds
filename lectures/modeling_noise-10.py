@@ -7,4 +7,4 @@ quadratic_drift = linear_drift ** 2
 quadratic_drift -= np.mean(quadratic_drift)
 X[:, 2] = quadratic_drift
 plt.imshow(X, aspect=0.1)
-# ...
+# <...>

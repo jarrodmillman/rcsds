@@ -2,6 +2,11 @@
 Using masks and modeling noise
 ##############################
 
+.. testcode::
+
+    import os
+    os.chdir('lectures')
+
 Our usual setup:
 
 .. nbplot::
@@ -41,7 +46,7 @@ Next we take the mean volume (over time), and do a histogram of the values:
 
     >>> mean_vol = np.mean(data, axis=-1)
     >>> plt.hist(np.ravel(mean_vol), bins=100)
-    ...
+    (...)
 
 It looks like we can set a threshold to idenfity the voxels inside the brain.
 From this threshold we can get a 3D brain mask, that selects those voxels:
@@ -58,12 +63,12 @@ brain:
 .. nbplot::
 
     >>> plt.imshow(mean_vol[:, :, 14])
-    ...
+    <...>
 
 .. nbplot::
 
     >>> plt.imshow(in_brain_mask[:, :, 14])
-    ...
+    <...>
 
 We can use this 3D mask to index into our 4D dataset.  This selects all the
 voxel time-courses for voxels within the brain (as defined by the mask):
@@ -91,7 +96,7 @@ will use a linear drift regressor, and a squared linear drift regressor:
     >>> quadratic_drift -= np.mean(quadratic_drift)
     >>> X[:, 2] = quadratic_drift
     >>> plt.imshow(X, aspect=0.1)
-    ...
+    <...>
 
 We can fit this design to the data in the usual way:
 
@@ -116,22 +121,22 @@ The different regressors pick up different patterns across the brain:
 .. nbplot::
 
     >>> plt.imshow(b_vols[:, :, 14, 0])
-    ...
+    <...>
 
 .. nbplot::
 
     >>> plt.imshow(b_vols[:, :, 14, 1])
-    ...
+    <...>
 
 .. nbplot::
 
     >>> plt.imshow(b_vols[:, :, 14, 2])
-    ...
+    <...>
 
 .. nbplot::
 
     >>> plt.imshow(b_vols[:, :, 14, 3])
-    ...
+    <...>
 
 The drift terms model gradual drifts across the time-series, but are there
 other patterns of noise that we have not found yet?  One way to look for such
@@ -170,7 +175,7 @@ This first component doesn't look like anything to do with the task:
 .. nbplot::
 
     >>> plt.imshow(projection_vols[:, :, 14, 0])
-    ...
+    <...>
 
 How about the second component?
 
@@ -182,7 +187,7 @@ How about the second component?
 .. nbplot::
 
     >>> plt.imshow(projection_vols[:, :, 14, 1])
-    ...
+    <...>
 
 And the third?
 
@@ -194,7 +199,7 @@ And the third?
 .. nbplot::
 
     >>> plt.imshow(projection_vols[:, :, 14, 2])
-    ...
+    <...>
 
 At least the first two components look as if they are happening in many voxels
 at the same time, and they reflect brain anatomy rather than function.  They
@@ -208,7 +213,7 @@ these components by regression:
     >>> X_pca[:, 1:3] = U[:, :2]
     >>> X_pca[:, 3] = linear_drift
     >>> plt.imshow(X_pca, aspect=0.1)
-    ...
+    <...>
 
 .. nbplot::
 
@@ -225,20 +230,24 @@ mask:
 .. nbplot::
 
     >>> plt.imshow(b_pca_vols[:, :, 14, 0])
-    ...
+    <...>
 
 
 .. nbplot::
 
     >>> plt.imshow(b_pca_vols[:, :, 14, 1])
-    ...
+    <...>
 
 .. nbplot::
 
     >>> plt.imshow(b_pca_vols[:, :, 14, 2])
-    ...
+    <...>
 
 .. nbplot::
 
     >>> plt.imshow(b_pca_vols[:, :, 14, 3])
-    ...
+    <...>
+
+.. testcleanup::
+
+    os.chdir('..')
