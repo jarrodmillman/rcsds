@@ -1,3 +1,1 @@
-high_res_durations = cond_data[:, 1] / TR * tr_divs
-high_res_durations
-# array([ 120.,  120.,  120.,  120.,  120.,  120.,  120.,  120.,  120.,  120.])
+high_res_times = np.arange(0, n_trs, 1 / tr_divs) * TR

@@ -74,11 +74,14 @@ design</em> with blocks of length 12 TRs while the subject is doing the task.</p
 <span class="go">       [ 304.76,    3.  ,    2.  ],</span>
 <span class="go">       [ 356.32,    3.  ,    2.  ],</span>
 <span class="go">       [ 372.22,    3.  ,    3.  ]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">onsets_seconds</span> <span class="o">=</span> <span class="n">cond_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">durations_seconds</span> <span class="o">=</span> <span class="n">cond_data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">amplitudes</span> <span class="o">=</span> <span class="n">cond_data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>Notice that the onsets of the events can happen in the middle of the volumes
 (well after the volumes have started).</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">onsets_in_scans</span> <span class="o">=</span> <span class="n">cond_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">TR</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">onsets_in_scans</span> <span class="o">=</span> <span class="n">onsets_seconds</span> <span class="o">/</span> <span class="n">TR</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">onsets_in_scans</span>
 <span class="go">array([   1.34 ,    5.104,   17.308,   30.1  ,   38.192,   67.136,</span>
 <span class="go">        112.944,  121.904,  142.528,  148.888])</span>
@@ -98,33 +101,54 @@ resolution than the TRs, and later sample this regressor at the TR onset
 times.</p>
 <p>This is what we do next.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tr_divs</span> <span class="o">=</span> <span class="mf">100.0</span>  <span class="c"># finer resolution has 100 steps per TR</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">high_res_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_trs</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">tr_divs</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">high_res_onsets</span> <span class="o">=</span> <span class="n">onsets_in_scans</span> <span class="o">*</span> <span class="n">tr_divs</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">high_res_onsets</span>
+</pre></div>
+</div>
+<p>With each TR divided into 100 intervals, one element corresponds to time
+intervals of 1/100 of a TR:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">high_res_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_trs</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">tr_divs</span><span class="p">)</span> <span class="o">*</span> <span class="n">TR</span>
+</pre></div>
+</div>
+<p>We will soon create a new neural prediction time-course where one element
+corresponds to 1 / 100 of a TR:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">high_res_neural</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">high_res_times</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We have the onset indices in terms of TRs, but now we want the onset indices
+in terms of the new vector with 100 elements per TR:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">high_res_onset_indices</span> <span class="o">=</span> <span class="n">onsets_in_scans</span> <span class="o">*</span> <span class="n">tr_divs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">high_res_onset_indices</span>
 <span class="go">array([   134. ,    510.4,   1730.8,   3010. ,   3819.2,   6713.6,</span>
 <span class="go">        11294.4,  12190.4,  14252.8,  14888.8])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">high_res_durations</span> <span class="o">=</span> <span class="n">cond_data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">TR</span> <span class="o">*</span> <span class="n">tr_divs</span>
+<p>In the same way, the durations were in seconds.  We divide by the TR to get
+duration in terms of scans, then multiply by 100 to get the number in terms of
+elements in the new <code class="docutils literal"><span class="pre">high_res_neural</span></code> time-course.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">high_res_durations</span> <span class="o">=</span> <span class="n">durations_seconds</span> <span class="o">/</span> <span class="n">TR</span> <span class="o">*</span> <span class="n">tr_divs</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">high_res_durations</span>
 <span class="go">array([ 120.,  120.,  120.,  120.,  120.,  120.,  120.,  120.,  120.,  120.])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">high_res_neural</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">high_res_times</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">hr_onset</span><span class="p">,</span> <span class="n">hr_duration</span><span class="p">,</span> <span class="n">amplitude</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">high_res_onsets</span><span class="p">,</span> <span class="n">high_res_durations</span><span class="p">,</span> <span class="n">cond_data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]):</span>
-<span class="gp">... </span>    <span class="n">hr_onset</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">hr_onset</span><span class="p">))</span>
-<span class="gp">... </span>    <span class="n">hr_duration</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">hr_duration</span><span class="p">))</span>
+<p>Now we fill in the <code class="docutils literal"><span class="pre">high_res_neural</span></code> time course by setting values between
+the start and the end of each event with the matching amplitudes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">hr_onset</span><span class="p">,</span> <span class="n">hr_duration</span><span class="p">,</span> <span class="n">amplitude</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+<span class="gp">... </span>           <span class="n">high_res_onset_indices</span><span class="p">,</span> <span class="n">high_res_durations</span><span class="p">,</span> <span class="n">amplitudes</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">hr_onset</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">hr_onset</span><span class="p">))</span>  <span class="c"># index - must be int</span>
+<span class="gp">... </span>    <span class="n">hr_duration</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">hr_duration</span><span class="p">))</span>  <span class="c"># makes index - must be int</span>
 <span class="gp">... </span>    <span class="n">high_res_neural</span><span class="p">[</span><span class="n">hr_onset</span><span class="p">:</span><span class="n">hr_onset</span> <span class="o">+</span> <span class="n">hr_duration</span><span class="p">]</span> <span class="o">=</span> <span class="n">amplitude</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">high_res_times</span><span class="p">,</span> <span class="n">high_res_neural</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">high_res_times</span><span class="p">,</span> <span class="n">high_res_neural</span><span class="p">)</span>
 <span class="go">[...]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;Time (seconds)&#39;</span><span class="p">)</span>
+<span class="go">&lt;...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;High resolution neural prediction&#39;</span><span class="p">)</span>
+<span class="go">&lt;...&gt;</span>
 </pre></div>
 </div>
-<p>(<a class="reference external" href="../lectures/non_tr_onsets-8.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-8.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-8.pdf">pdf</a>)</p>
+<p>(<a class="reference external" href="../lectures/non_tr_onsets-10.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-10.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-10.pdf">pdf</a>)</p>
 <div class="figure">
-<img alt="../_images/non_tr_onsets-8.png" src="../_images/non_tr_onsets-8.png" />
+<img alt="../_images/non_tr_onsets-10.png" src="../_images/non_tr_onsets-10.png" />
 </div>
+<p>We can use the hemodynamic response function we created earlier:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">gamma</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">hrf</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>
@@ -139,47 +163,65 @@ times.</p>
 <span class="gp">... </span>    <span class="k">return</span> <span class="n">values</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.6</span>
 </pre></div>
 </div>
+<p>We are going to convolve at this higher time resolution.  First we need to
+sample the HRF at this finer time resolution, to match the neural prediction:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">hrf_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">tr_divs</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hrf_at_hr</span> <span class="o">=</span> <span class="n">hrf</span><span class="p">(</span><span class="n">hrf_times</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">high_res_hemo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">high_res_neural</span><span class="p">,</span> <span class="n">hrf_at_hr</span><span class="p">)[:</span><span class="nb">len</span><span class="p">(</span><span class="n">high_res_neural</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>Next we convolve the sampled HRF with the high resolution neural time course:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">high_res_hemo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">high_res_neural</span><span class="p">,</span> <span class="n">hrf_at_hr</span><span class="p">)[:</span><span class="nb">len</span><span class="p">(</span><span class="n">high_res_neural</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">high_res_times</span><span class="p">,</span> <span class="n">high_res_hemo</span><span class="p">)</span>
 <span class="go">[...]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;Time (seconds)&#39;</span><span class="p">)</span>
+<span class="go">&lt;...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;High resolution convolved values&#39;</span><span class="p">)</span>
+<span class="go">&lt;...&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">high_res_times</span><span class="p">)</span>
 <span class="go">17300</span>
-</pre></div>
-</div>
-<p>(<a class="reference external" href="../lectures/non_tr_onsets-10.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-10.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-10.pdf">pdf</a>)</p>
-<div class="figure">
-<img alt="../_images/non_tr_onsets-10.png" src="../_images/non_tr_onsets-10.png" />
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">high_res_times</span><span class="p">[:</span><span class="mi">20</span> <span class="o">*</span> <span class="n">tr_divs</span><span class="p">],</span> <span class="n">high_res_hemo</span><span class="p">[:</span><span class="mi">20</span> <span class="o">*</span> <span class="n">tr_divs</span><span class="p">])</span>
-<span class="go">[...]</span>
-</pre></div>
-</div>
-<p>(<a class="reference external" href="../lectures/non_tr_onsets-11.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-11.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-11.pdf">pdf</a>)</p>
-<div class="figure">
-<img alt="../_images/non_tr_onsets-11.png" src="../_images/non_tr_onsets-11.png" />
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tr_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_trs</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">hr_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">tr_times</span> <span class="o">*</span> <span class="n">tr_divs</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">tr_hemo</span> <span class="o">=</span> <span class="n">high_res_hemo</span><span class="p">[</span><span class="n">hr_indices</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tr_times</span><span class="p">,</span> <span class="n">tr_hemo</span><span class="p">)</span>
-<span class="go">[...]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">tr_times</span><span class="p">)</span>
-<span class="go">173</span>
-</pre></div>
-</div>
-<p>(<a class="reference external" href="../lectures/non_tr_onsets-12.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-12.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-12.pdf">pdf</a>)</p>
-<div class="figure">
-<img alt="../_images/non_tr_onsets-12.png" src="../_images/non_tr_onsets-12.png" />
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tr_times</span><span class="p">[:</span><span class="mi">20</span><span class="p">],</span> <span class="n">tr_hemo</span><span class="p">[:</span><span class="mi">20</span><span class="p">])</span>
-<span class="go">[...]</span>
 </pre></div>
 </div>
 <p>(<a class="reference external" href="../lectures/non_tr_onsets-13.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-13.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-13.pdf">pdf</a>)</p>
 <div class="figure">
 <img alt="../_images/non_tr_onsets-13.png" src="../_images/non_tr_onsets-13.png" />
+</div>
+<p>We can see that this is sampled at high resolution on the X axis by looking at
+the first 20 seconds-worth of data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">high_res_times</span><span class="p">[:</span><span class="mi">20</span> <span class="o">*</span> <span class="n">tr_divs</span><span class="p">],</span> <span class="n">high_res_hemo</span><span class="p">[:</span><span class="mi">20</span> <span class="o">*</span> <span class="n">tr_divs</span><span class="p">],</span> <span class="s">&#39;x:&#39;</span><span class="p">)</span>
+<span class="go">[...]</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/non_tr_onsets-14.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-14.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-14.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/non_tr_onsets-14.png" src="../_images/non_tr_onsets-14.png" />
+</div>
+<p>We can then subsample this high-resolution time course to get the values
+corresponding to the start of each original TR (volume):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tr_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_trs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hr_tr_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">tr_indices</span> <span class="o">*</span> <span class="n">tr_divs</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tr_hemo</span> <span class="o">=</span> <span class="n">high_res_hemo</span><span class="p">[</span><span class="n">hr_tr_indices</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tr_times</span> <span class="o">=</span> <span class="n">tr_indices</span> <span class="o">*</span> <span class="n">TR</span>  <span class="c"># times of TR onsets in seconds</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tr_times</span><span class="p">,</span> <span class="n">tr_hemo</span><span class="p">)</span>
+<span class="go">[...]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;Time (seconds)&#39;</span><span class="p">)</span>
+<span class="go">&lt;...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Convolved values at TR onsets&#39;</span><span class="p">)</span>
+<span class="go">&lt;...&gt;</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/non_tr_onsets-15.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-15.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-15.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/non_tr_onsets-15.png" src="../_images/non_tr_onsets-15.png" />
+</div>
+<p>The first 20 seconds shows these values are sampled every TR rather than every
+1/100th of a TR:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tr_times</span><span class="p">[:</span><span class="mi">20</span><span class="p">],</span> <span class="n">tr_hemo</span><span class="p">[:</span><span class="mi">20</span><span class="p">],</span> <span class="s">&#39;x:&#39;</span><span class="p">)</span>
+<span class="go">[...]</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/non_tr_onsets-16.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-16.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-16.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/non_tr_onsets-16.png" src="../_images/non_tr_onsets-16.png" />
 </div>
 </div>
 

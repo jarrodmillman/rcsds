@@ -10,3 +10,6 @@ cond_data
 # [ 304.76,    3.  ,    2.  ],
 # [ 356.32,    3.  ,    2.  ],
 # [ 372.22,    3.  ,    3.  ]])
+onsets_seconds = cond_data[:, 0]
+durations_seconds = cond_data[:, 1]
+amplitudes = cond_data[:, 2]
