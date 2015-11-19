@@ -5,7 +5,7 @@ Using onsets that do not start on a TR
 You'll need the file :download:`new_cond.txt` to type along with this
 demonstration.
 
-.. testcode::
+.. testsetup::
 
     import os
     os.chdir('lectures')
