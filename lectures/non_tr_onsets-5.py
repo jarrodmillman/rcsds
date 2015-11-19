@@ -1,4 +1,6 @@
-onsets_in_scans = cond_data[:, 0] / TR
-onsets_in_scans
-# array([   1.34 ,    5.104,   17.308,   30.1  ,   38.192,   67.136,
-# 112.944,  121.904,  142.528,  148.888])
+tr_divs = 100.0  # finer resolution has 100 steps per TR
+high_res_times = np.arange(0, n_trs, 1 / tr_divs)
+high_res_onsets = onsets_in_scans * tr_divs
+high_res_onsets
+# array([   134. ,    510.4,   1730.8,   3010. ,   3819.2,   6713.6,
+# 11294.4,  12190.4,  14252.8,  14888.8])

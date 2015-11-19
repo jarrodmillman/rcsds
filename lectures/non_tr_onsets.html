@@ -47,18 +47,21 @@ demonstration.</p>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">nibabel</span> <span class="kn">as</span> <span class="nn">nib</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;ds114_sub009_t2r1.nii&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">n_trs</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">TR</span> <span class="o">=</span> <span class="mf">2.5</span>
+<p>Imagine we are analyzing our <a class="reference download internal" href="../_downloads/ds114_sub009_t2r1.nii"><code class="xref download docutils literal"><span class="pre">example</span> <span class="pre">image</span></code></a>.  It has a TR of
+2.5, and 173 TRs.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">TR</span> <span class="o">=</span> <span class="mf">2.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_trs</span> <span class="o">=</span> <span class="mi">173</span>
 </pre></div>
 </div>
+<p>The actual condition file for this dataset is
+<a class="reference download internal" href="../_downloads/ds114_sub009_t2r1_cond.txt"><code class="xref download docutils literal"><span class="pre">ds114_sub009_t2r1_cond.txt</span></code></a>. You may remember it has a <em>block
+design</em> with blocks of length 12 TRs while the subject is doing the task.</p>
+<p>What if we had a different <em>event related</em> condition file like this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">cond_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s">&#39;new_cond.txt&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">cond_data</span>
 <span class="go">array([[   3.35,    3.  ,    2.  ],</span>
@@ -73,13 +76,28 @@ demonstration.</p>
 <span class="go">       [ 372.22,    3.  ,    3.  ]])</span>
 </pre></div>
 </div>
+<p>Notice that the onsets of the events can happen in the middle of the volumes
+(well after the volumes have started).</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">onsets_in_scans</span> <span class="o">=</span> <span class="n">cond_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">TR</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">onsets_in_scans</span>
 <span class="go">array([   1.34 ,    5.104,   17.308,   30.1  ,   38.192,   67.136,</span>
 <span class="go">        112.944,  121.904,  142.528,  148.888])</span>
 </pre></div>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tr_divs</span> <span class="o">=</span> <span class="mf">100.0</span>
+<p>Notice also that the events have <em>amplitudes</em> between 1 and 3.  The events of
+amplitude 3 we expect to have an evoked brain response three times higher than
+events with amplitude 1.</p>
+<p>What to do about the events with onsets that don&#8217;t exactly align with the
+start of the TRs (volumes)?</p>
+<p>One option would be to round the event onsets to the nearest TR.  This will
+mean that the event model will be different from our expected response by TR
+seconds / 2 == 1.25 seconds in this case.</p>
+<p>Can we do better than that?</p>
+<p>One option is to make a neural and hemodynamic regressor at a finer time
+resolution than the TRs, and later sample this regressor at the TR onset
+times.</p>
+<p>This is what we do next.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tr_divs</span> <span class="o">=</span> <span class="mf">100.0</span>  <span class="c"># finer resolution has 100 steps per TR</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">high_res_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_trs</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">tr_divs</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">high_res_onsets</span> <span class="o">=</span> <span class="n">onsets_in_scans</span> <span class="o">*</span> <span class="n">tr_divs</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">high_res_onsets</span>
@@ -103,9 +121,9 @@ demonstration.</p>
 <span class="go">[...]</span>
 </pre></div>
 </div>
-<p>(<a class="reference external" href="../lectures/non_tr_onsets-9.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-9.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-9.pdf">pdf</a>)</p>
+<p>(<a class="reference external" href="../lectures/non_tr_onsets-8.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-8.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-8.pdf">pdf</a>)</p>
 <div class="figure">
-<img alt="../_images/non_tr_onsets-9.png" src="../_images/non_tr_onsets-9.png" />
+<img alt="../_images/non_tr_onsets-8.png" src="../_images/non_tr_onsets-8.png" />
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">gamma</span>
 <span class="go">&gt;&gt;&gt;</span>
@@ -130,17 +148,17 @@ demonstration.</p>
 <span class="go">17300</span>
 </pre></div>
 </div>
-<p>(<a class="reference external" href="../lectures/non_tr_onsets-11.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-11.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-11.pdf">pdf</a>)</p>
+<p>(<a class="reference external" href="../lectures/non_tr_onsets-10.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-10.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-10.pdf">pdf</a>)</p>
 <div class="figure">
-<img alt="../_images/non_tr_onsets-11.png" src="../_images/non_tr_onsets-11.png" />
+<img alt="../_images/non_tr_onsets-10.png" src="../_images/non_tr_onsets-10.png" />
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">high_res_times</span><span class="p">[:</span><span class="mi">2000</span><span class="p">],</span> <span class="n">high_res_hemo</span><span class="p">[:</span><span class="mi">2000</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">high_res_times</span><span class="p">[:</span><span class="mi">20</span> <span class="o">*</span> <span class="n">tr_divs</span><span class="p">],</span> <span class="n">high_res_hemo</span><span class="p">[:</span><span class="mi">20</span> <span class="o">*</span> <span class="n">tr_divs</span><span class="p">])</span>
 <span class="go">[...]</span>
 </pre></div>
 </div>
-<p>(<a class="reference external" href="../lectures/non_tr_onsets-12.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-12.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-12.pdf">pdf</a>)</p>
+<p>(<a class="reference external" href="../lectures/non_tr_onsets-11.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-11.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-11.pdf">pdf</a>)</p>
 <div class="figure">
-<img alt="../_images/non_tr_onsets-12.png" src="../_images/non_tr_onsets-12.png" />
+<img alt="../_images/non_tr_onsets-11.png" src="../_images/non_tr_onsets-11.png" />
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tr_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_trs</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hr_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">tr_times</span> <span class="o">*</span> <span class="n">tr_divs</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
@@ -151,17 +169,17 @@ demonstration.</p>
 <span class="go">173</span>
 </pre></div>
 </div>
-<p>(<a class="reference external" href="../lectures/non_tr_onsets-13.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-13.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-13.pdf">pdf</a>)</p>
+<p>(<a class="reference external" href="../lectures/non_tr_onsets-12.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-12.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-12.pdf">pdf</a>)</p>
 <div class="figure">
-<img alt="../_images/non_tr_onsets-13.png" src="../_images/non_tr_onsets-13.png" />
+<img alt="../_images/non_tr_onsets-12.png" src="../_images/non_tr_onsets-12.png" />
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tr_times</span><span class="p">[:</span><span class="mi">20</span><span class="p">],</span> <span class="n">tr_hemo</span><span class="p">[:</span><span class="mi">20</span><span class="p">])</span>
 <span class="go">[...]</span>
 </pre></div>
 </div>
-<p>(<a class="reference external" href="../lectures/non_tr_onsets-14.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-14.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-14.pdf">pdf</a>)</p>
+<p>(<a class="reference external" href="../lectures/non_tr_onsets-13.png">png</a>, <a class="reference external" href="../lectures/non_tr_onsets-13.hires.png">hires.png</a>, <a class="reference external" href="../lectures/non_tr_onsets-13.pdf">pdf</a>)</p>
 <div class="figure">
-<img alt="../_images/non_tr_onsets-14.png" src="../_images/non_tr_onsets-14.png" />
+<img alt="../_images/non_tr_onsets-13.png" src="../_images/non_tr_onsets-13.png" />
 </div>
 </div>
 

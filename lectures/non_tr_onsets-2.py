@@ -1,3 +1,2 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import nibabel as nib
+TR = 2.5
+n_trs = 173

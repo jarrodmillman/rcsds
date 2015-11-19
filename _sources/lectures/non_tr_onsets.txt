@@ -13,19 +13,23 @@ demonstration.
 .. nbplot::
 
     >>> from __future__ import division
-
-.. nbplot::
-
     >>> import numpy as np
     >>> import matplotlib.pyplot as plt
     >>> import nibabel as nib
 
+Imagine we are analyzing our :download:`example image <ds114_sub009_t2r1.nii>`.  It has a TR of
+2.5, and 173 TRs.
 
 .. nbplot::
 
-    >>> img = nib.load('ds114_sub009_t2r1.nii')
-    >>> n_trs = img.shape[-1]
     >>> TR = 2.5
+    >>> n_trs = 173
+
+The actual condition file for this dataset is
+:download:`ds114_sub009_t2r1_cond.txt`. You may remember it has a *block
+design* with blocks of length 12 TRs while the subject is doing the task.
+
+What if we had a different *event related* condition file like this:
 
 .. nbplot::
 
@@ -42,6 +46,9 @@ demonstration.
            [ 356.32,    3.  ,    2.  ],
            [ 372.22,    3.  ,    3.  ]])
 
+Notice that the onsets of the events can happen in the middle of the volumes
+(well after the volumes have started).
+
 .. nbplot::
 
     >>> onsets_in_scans = cond_data[:, 0] / TR
@@ -49,9 +56,28 @@ demonstration.
     array([   1.34 ,    5.104,   17.308,   30.1  ,   38.192,   67.136,
             112.944,  121.904,  142.528,  148.888])
 
+Notice also that the events have *amplitudes* between 1 and 3.  The events of
+amplitude 3 we expect to have an evoked brain response three times higher than
+events with amplitude 1.
+
+What to do about the events with onsets that don't exactly align with the
+start of the TRs (volumes)?
+
+One option would be to round the event onsets to the nearest TR.  This will
+mean that the event model will be different from our expected response by TR
+seconds / 2 == 1.25 seconds in this case.
+
+Can we do better than that?
+
+One option is to make a neural and hemodynamic regressor at a finer time
+resolution than the TRs, and later sample this regressor at the TR onset
+times.
+
+This is what we do next.
+
 .. nbplot::
 
-    >>> tr_divs = 100.0
+    >>> tr_divs = 100.0  # finer resolution has 100 steps per TR
     >>> high_res_times = np.arange(0, n_trs, 1 / tr_divs)
     >>> high_res_onsets = onsets_in_scans * tr_divs
     >>> high_res_onsets
@@ -104,7 +130,7 @@ demonstration.
 
 .. nbplot::
 
-    >>> plt.plot(high_res_times[:2000], high_res_hemo[:2000])
+    >>> plt.plot(high_res_times[:20 * tr_divs], high_res_hemo[:20 * tr_divs])
     [...]
 
 .. nbplot::

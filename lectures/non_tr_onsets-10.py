@@ -1,12 +1,7 @@
-from scipy.stats import gamma
-# >>>
-def hrf(times):
-    """ Return values for HRF at given times """
-    # Gamma pdf for the peak
-    peak_values = gamma.pdf(times, 6)
-    # Gamma pdf for the undershoot
-    undershoot_values = gamma.pdf(times, 12)
-    # Combine them
-    values = peak_values - 0.35 * undershoot_values
-    # Scale max to 0.6
-    return values / np.max(values) * 0.6
+hrf_times = np.arange(0, 24, 1 / tr_divs)
+hrf_at_hr = hrf(hrf_times)
+high_res_hemo = np.convolve(high_res_neural, hrf_at_hr)[:len(high_res_neural)]
+plt.plot(high_res_times, high_res_hemo)
+# [...]
+len(high_res_times)
+# 17300
