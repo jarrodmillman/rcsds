@@ -15,3 +15,4 @@ Labs
    lab09.rst
    lab10.rst
    lab11.rst
+   lab12.rst
