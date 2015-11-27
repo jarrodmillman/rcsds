@@ -25,3 +25,5 @@ Lectures
    day22.rst
    day24.rst
    day25.rst
+
+   extra_pages
