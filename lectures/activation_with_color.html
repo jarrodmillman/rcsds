@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Showing parameter maps with color &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+    <link rel="up" title="More notes" href="extra_pages.html" />
+    <link rel="next" title="Labs" href="../labs/index.html" />
+    <link rel="prev" title="More notes" href="extra_pages.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="showing-parameter-maps-with-color">
+<h1>Showing parameter maps with color<a class="headerlink" href="#showing-parameter-maps-with-color" title="Permalink to this headline">¶</a></h1>
+<p>This page introduces two things:</p>
+<ul class="simple">
+<li>Blending a structural image with a parameter (&#8220;activation&#8221;) image;</li>
+<li>Using spatial smoothing to improve signal to noise.</li>
+</ul>
+<div class="section" id="doing-the-analysis">
+<h2>Doing the analysis<a class="headerlink" href="#doing-the-analysis" title="Permalink to this headline">¶</a></h2>
+<p>This is our familiar analysis for the <a class="reference download internal" href="../_downloads/ds114_sub009_t2r1.nii"><code class="xref download docutils literal"><span class="pre">example</span> <span class="pre">image</span></code></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># import some standard librares</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy.linalg</span> <span class="kn">as</span> <span class="nn">npl</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">nibabel</span> <span class="kn">as</span> <span class="nn">nib</span>
+</pre></div>
+</div>
+<p>We load the image:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;ds114_sub009_t2r1.nii&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Knock off the initial 4 scans because of the signal artefact we&#8217;ve seen
+before:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get_data</span><span class="p">()[</span><span class="o">...</span><span class="p">,</span> <span class="mi">4</span><span class="p">:]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vol_shape</span><span class="p">,</span> <span class="n">n_trs</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Get the mean functional.  We will use this as a structural image on which we
+will display the parameter maps.  We also use it to make a mask of in-brain
+voxels:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">mean_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="n">mean_data</span> <span class="o">&gt;</span> <span class="mi">900</span>
+</pre></div>
+</div>
+<p>Make the data matrix and design matrix.  We use the <a class="reference download internal" href="../_downloads/ds114_sub009_t2r1_conv.txt"><code class="xref download docutils literal"><span class="pre">convolved</span>
+<span class="pre">regressor</span></code></a> that we have <a class="reference internal" href="multi_model_solutions.html"><em>used before</em></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">P</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c"># number of parameters == columns in model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_trs</span><span class="p">,</span> <span class="n">P</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s">&#39;ds114_sub009_t2r1_conv.txt&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">:]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_trs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Estimate the model, and put the parameters back into their image shape:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">betas</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">beta_vols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">vol_shape</span> <span class="o">+</span> <span class="p">(</span><span class="n">P</span><span class="p">,))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">beta_vols</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">betas</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+<p>The signal in the images extends across several voxels, because nearby brain
+locations usually have similar response to the task.  However, the noise in
+the data is mostly independent from one voxel to the next.  Smoothing in space
+therefore reduces the noise by averaging across the independent noise in the
+voxels, while preserving the signal:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">gaussian_filter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">beta_conv</span> <span class="o">=</span> <span class="n">beta_vols</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">beta_conv</span> <span class="o">=</span> <span class="n">gaussian_filter</span><span class="p">(</span><span class="n">beta_conv</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c"># smooth by 2 voxel SD</span>
+</pre></div>
+</div>
+<p>Now we are going to display the image.  First we set the background (outside
+the brain) to <a class="reference external" href="https://en.wikipedia.org/wiki/NaN">not-a-number</a> values
+(<code class="docutils literal"><span class="pre">np.nan</span></code>).  This signals to matplotlib that it should display no color at
+these locations:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># set regions outside mask as missing with np.nan</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mean_data</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">beta_conv</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+</pre></div>
+</div>
+<p>We could use <a class="reference external" href="http://matplotlib.org/examples/color/colormaps_reference.html">any colormap</a> for the
+parameter (beta) image, but we can also make our own.  In this case I am
+recreating the colormap used on <a class="reference external" href="http://imaging.mrc-cbu.cam.ac.uk/imaging/DisplaySlices">this page</a>.  The data to
+recreate the map are at <a class="reference download internal" href="../_downloads/actc.txt"><code class="xref download docutils literal"><span class="pre">actc.txt</span></code></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">colors</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nice_cmap_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s">&#39;actc.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nice_cmap</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">ListedColormap</span><span class="p">(</span><span class="n">nice_cmap_values</span><span class="p">,</span> <span class="s">&#39;actc&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we show the structural image (the mean functional) with the functional
+parameter map image overlaid.  We give the structural half of the intensity
+range, and the functional the other half:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mean_data</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="go">&lt;...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">beta_conv</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="n">nice_cmap</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="go">&lt;...&gt;</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../lectures/activation_with_color-10.png">png</a>, <a class="reference external" href="../lectures/activation_with_color-10.hires.png">hires.png</a>, <a class="reference external" href="../lectures/activation_with_color-10.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/activation_with_color-10.png" src="../_images/activation_with_color-10.png" />
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Lectures</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="day01.html">Day 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day02.html">Day 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day03.html">Day 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day04.html">Day 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day05.html">Day 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day06.html">Day 6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day07.html">Day 7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day08.html">Day 8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day09.html">Day 9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day10.html">Day 10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day11.html">Day 11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day12.html">Day 12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day13.html">Day 13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day14.html">Day 14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day15.html">Day 15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day18.html">Day 18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day19.html">Day 19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day21.html">Day 21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day22.html">Day 22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day24.html">Day 24</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day25.html">Day 25</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="extra_pages.html">More notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/index.html">Labs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>
