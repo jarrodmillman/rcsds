@@ -44,13 +44,25 @@ voxels:
     >>> mean_data = np.mean(data, axis=-1)
     >>> mask = mean_data > 900
 
+The signal in the images extends across several voxels, because nearby brain
+locations usually have similar response to the task.  However, the noise in
+the data is mostly independent from one voxel to the next.  Smoothing in space
+therefore reduces the noise by averaging across the independent noise in the
+voxels, while preserving the signal:
+
+.. nbplot::
+
+    >>> from scipy.ndimage import gaussian_filter
+    >>> # Smooth by 2 voxel SD in all three spatial dimensions
+    >>> smooth_data = gaussian_filter(data, [2, 2, 2, 0])
+
 Make the data matrix and design matrix.  We use the :download:`convolved
 regressor <ds114_sub009_t2r1_conv.txt>` that we have :doc:`used before
 <multi_model_solutions>`.
 
 .. nbplot::
 
-    >>> Y = data[mask].T
+    >>> Y = smooth_data[mask].T
     >>> P = 3  # number of parameters == columns in model
     >>> X = np.ones((n_trs, P))
     >>> X[:, 0] = np.loadtxt('ds114_sub009_t2r1_conv.txt')[4:]
@@ -64,18 +76,6 @@ Estimate the model, and put the parameters back into their image shape:
     >>> beta_vols = np.zeros(vol_shape + (P,))
     >>> beta_vols[mask] = betas.T
 
-The signal in the images extends across several voxels, because nearby brain
-locations usually have similar response to the task.  However, the noise in
-the data is mostly independent from one voxel to the next.  Smoothing in space
-therefore reduces the noise by averaging across the independent noise in the
-voxels, while preserving the signal:
-
-.. nbplot::
-
-    >>> from scipy.ndimage import gaussian_filter
-    >>> beta_conv = beta_vols[..., 0]
-    >>> beta_conv = gaussian_filter(beta_conv, 2)  # smooth by 2 voxel SD
-
 Now we are going to display the image.  First we set the background (outside
 the brain) to `not-a-number <https://en.wikipedia.org/wiki/NaN>`_ values
 (``np.nan``).  This signals to matplotlib that it should display no color at
@@ -85,7 +85,7 @@ these locations:
 
     >>> # set regions outside mask as missing with np.nan
     >>> mean_data[~mask] = np.nan
-    >>> beta_conv[~mask] = np.nan
+    >>> beta_vols[~mask] = np.nan
 
 We could use `any colormap
 <http://matplotlib.org/examples/color/colormaps_reference.html>`_ for the
@@ -108,5 +108,5 @@ range, and the functional the other half:
 
     >>> plt.imshow(mean_data[:, :, 14], cmap='gray', alpha=0.5)
     <...>
-    >>> plt.imshow(beta_conv[:, :, 14], cmap=nice_cmap, alpha=0.5)
+    >>> plt.imshow(beta_vols[:, :, 14, 0], cmap=nice_cmap, alpha=0.5)
     <...>
