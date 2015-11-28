@@ -1,5 +1,3 @@
-Y = data[mask].T
-P = 3  # number of parameters == columns in model
-X = np.ones((n_trs, P))
-X[:, 0] = np.loadtxt('ds114_sub009_t2r1_conv.txt')[4:]
-X[:, 1] = np.linspace(-1, 1, n_trs)
+from scipy.ndimage import gaussian_filter
+# Smooth by 2 voxel SD in all three spatial dimensions
+smooth_data = gaussian_filter(data, [2, 2, 2, 0])

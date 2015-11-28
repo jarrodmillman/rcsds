@@ -1,3 +1,3 @@
-from scipy.ndimage import gaussian_filter
-beta_conv = beta_vols[..., 0]
-beta_conv = gaussian_filter(beta_conv, 2)  # smooth by 2 voxel SD
+betas = npl.pinv(X).dot(Y)
+beta_vols = np.zeros(vol_shape + (P,))
+beta_vols[mask] = betas.T

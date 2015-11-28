@@ -1,3 +1,5 @@
-betas = npl.pinv(X).dot(Y)
-beta_vols = np.zeros(vol_shape + (P,))
-beta_vols[mask] = betas.T
+Y = smooth_data[mask].T
+P = 3  # number of parameters == columns in model
+X = np.ones((n_trs, P))
+X[:, 0] = np.loadtxt('ds114_sub009_t2r1_conv.txt')[4:]
+X[:, 1] = np.linspace(-1, 1, n_trs)

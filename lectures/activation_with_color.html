@@ -75,9 +75,19 @@ voxels:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="n">mean_data</span> <span class="o">&gt;</span> <span class="mi">900</span>
 </pre></div>
 </div>
+<p>The signal in the images extends across several voxels, because nearby brain
+locations usually have similar response to the task.  However, the noise in
+the data is mostly independent from one voxel to the next.  Smoothing in space
+therefore reduces the noise by averaging across the independent noise in the
+voxels, while preserving the signal:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">gaussian_filter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Smooth by 2 voxel SD in all three spatial dimensions</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">smooth_data</span> <span class="o">=</span> <span class="n">gaussian_filter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
 <p>Make the data matrix and design matrix.  We use the <a class="reference download internal" href="../_downloads/ds114_sub009_t2r1_conv.txt"><code class="xref download docutils literal"><span class="pre">convolved</span>
 <span class="pre">regressor</span></code></a> that we have <a class="reference internal" href="multi_model_solutions.html"><em>used before</em></a>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">smooth_data</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">P</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c"># number of parameters == columns in model</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_trs</span><span class="p">,</span> <span class="n">P</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s">&#39;ds114_sub009_t2r1_conv.txt&#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">:]</span>
@@ -90,23 +100,13 @@ voxels:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">beta_vols</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">betas</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 </div>
-<p>The signal in the images extends across several voxels, because nearby brain
-locations usually have similar response to the task.  However, the noise in
-the data is mostly independent from one voxel to the next.  Smoothing in space
-therefore reduces the noise by averaging across the independent noise in the
-voxels, while preserving the signal:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">gaussian_filter</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">beta_conv</span> <span class="o">=</span> <span class="n">beta_vols</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">beta_conv</span> <span class="o">=</span> <span class="n">gaussian_filter</span><span class="p">(</span><span class="n">beta_conv</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c"># smooth by 2 voxel SD</span>
-</pre></div>
-</div>
 <p>Now we are going to display the image.  First we set the background (outside
 the brain) to <a class="reference external" href="https://en.wikipedia.org/wiki/NaN">not-a-number</a> values
 (<code class="docutils literal"><span class="pre">np.nan</span></code>).  This signals to matplotlib that it should display no color at
 these locations:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># set regions outside mask as missing with np.nan</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mean_data</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">beta_conv</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">beta_vols</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
 </pre></div>
 </div>
 <p>We could use <a class="reference external" href="http://matplotlib.org/examples/color/colormaps_reference.html">any colormap</a> for the
@@ -123,7 +123,7 @@ parameter map image overlaid.  We give the structural half of the intensity
 range, and the functional the other half:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mean_data</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="go">&lt;...&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">beta_conv</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="n">nice_cmap</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">beta_vols</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="n">nice_cmap</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="go">&lt;...&gt;</span>
 </pre></div>
 </div>
