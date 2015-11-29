@@ -37,7 +37,6 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.doctest',
     'nb2plots.nbplots',
-    'plot_directive',
     'texext.mathcode',
     'texext.math_dollar',
 ]
@@ -313,12 +312,8 @@ trim_doctest_flags = True
 
 # Config of mathcode directive
 mathcode_use_plot_ns = True
-import plot_directive
-mathcode_plot_directive = plot_directive
-
-# Config of plot_directive
-plot_include_source = True
-plot_html_show_source_link = False
+import nb2plots.nbplots
+mathcode_plot_directive = nb2plots.nbplots
 
 # Add the 'copybutton' javascript, to hide/show the prompt in code
 # examples

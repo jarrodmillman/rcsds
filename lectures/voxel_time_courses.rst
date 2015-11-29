@@ -19,9 +19,7 @@ When we have a 4D image, we can think of the data in several ways.  For example 
 
     import matplotlib.pyplot as plt
 
-.. plot::
-    :context: reset
-    :nofigs:
+.. nbplot::
 
     >>> # Load 4D image file
     >>> import nibabel as nib
@@ -32,9 +30,7 @@ When we have a 4D image, we can think of the data in several ways.  For example 
 We drop the first volume; as you remember, the first volume is very different
 from the rest of the volumes in the series:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Drop the first volume
     >>> data = img.get_data()
@@ -45,9 +41,7 @@ from the rest of the volumes in the series:
 We can think of this 4D data as a series of 3D volumes.  That is the way we
 have been thinking of the 4D data so far:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # This is slicing over the last (time) axis
     >>> vol0 = data[..., 0]
@@ -73,8 +67,7 @@ a little further towards the top of the brain |--| in this image.
 
 This coordinate therefore refers to a particular part of the image:
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> # Where is this in the brain?
     >>> mean_data = np.mean(data, axis=-1)
@@ -85,8 +78,7 @@ This coordinate therefore refers to a particular part of the image:
 
 If I slice into the data array with these coordinates, I will get a vector, with the image value at that position (43, 32, 19), for every point in time:
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> # This is slicing over all three of the space axes
     >>> voxel_time_course = data[42, 32, 19]
@@ -106,8 +98,7 @@ switch off when the task stops (value = 0).
 
 To get this on-off measure, we will use our pre-packaged function for OpenFMRI data:
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> # Load the neural time course using pre-packaged function
     >>> from stimuli import events2neural
@@ -119,8 +110,7 @@ To get this on-off measure, we will use our pre-packaged function for OpenFMRI d
 
 We can plot the voxel time course against this neural prediction:
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> # Plot the neural prediction against the data
     >>> neural = neural[1:]
@@ -130,9 +120,7 @@ We can plot the voxel time course against this neural prediction:
 
 We can do things like get the correlation between the on-off prediction and the voxel time course:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Correlate the neural time course with the voxel time course
     >>> np.corrcoef(neural, voxel_time_course)

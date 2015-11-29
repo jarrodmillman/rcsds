@@ -12,8 +12,7 @@ Let's make a design with a linear trend and a constant term:
     np.random.seed(42)
     import matplotlib.pyplot as plt
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> X = np.ones((12, 2))
     >>> X[:, 0] = np.linspace(-1, 1, 12)
@@ -22,9 +21,7 @@ Let's make a design with a linear trend and a constant term:
 
 To fit this design to any data, we take the pseudoinverse:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> import numpy.linalg as npl
     >>> piX = npl.pinv(X)
@@ -33,9 +30,7 @@ To fit this design to any data, we take the pseudoinverse:
 
 Now let's make some data to fit to:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> y_0 = np.random.normal(size=12)
     >>> beta_0 = piX.dot(y_0)
@@ -44,9 +39,7 @@ Now let's make some data to fit to:
 
 We can fit this same design to another set of data:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> y_1 = np.random.normal(size=12)
     >>> beta_1 = piX.dot(y_1)
@@ -56,9 +49,7 @@ We can fit this same design to another set of data:
 Now the trick. Because of the way that matrix multiplication works, we can fit
 to these two sets of data with the same call to ``dot``:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> Y = np.vstack((y_0, y_1)).T
     >>> betas = piX.dot(Y)

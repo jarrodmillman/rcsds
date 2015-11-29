@@ -17,9 +17,7 @@ Let's get that same voxel time course back again:
     import numpy as np
     np.set_printoptions(precision=6)  # Only show 6 decimals when printing
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> import numpy as np
     >>> import matplotlib.pyplot as plt
@@ -32,8 +30,7 @@ Let's get that same voxel time course back again:
 The voxel coordinate (3D coordinate) that we were looking at before was at
 (42, 32, 19):
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> voxel_time_course = data[42, 32, 19]
     >>> plt.plot(voxel_time_course)
@@ -45,8 +42,7 @@ on this voxel time course.
 If you don't have it already, you will need to download
 :download:`ds114_sub009_t2r1_conv.txt`.
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> convolved = np.loadtxt('ds114_sub009_t2r1_conv.txt')
     >>> # Knock off first 4 elements to match data
@@ -57,8 +53,7 @@ If you don't have it already, you will need to download
 First we make our *design matrix*.  It has a column for the convolved
 regressor, and a column of ones:
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> N = len(convolved)
     >>> X = np.ones((N, 2))
@@ -93,9 +88,7 @@ invertible, the pseudoinverse is given by:
 
 Let's calculate the pseudoinverse for our design:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> import numpy.linalg as npl
     >>> Xp = npl.pinv(X)
@@ -104,9 +97,7 @@ Let's calculate the pseudoinverse for our design:
 
 We calculate $\bhat$:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> beta_hat = Xp.dot(voxel_time_course)
     >>> beta_hat
@@ -114,8 +105,7 @@ We calculate $\bhat$:
 
 We can then calculate $\yhat$ (also called the *fitted data*):
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> y_hat = X.dot(beta_hat)
     >>> e_vec = voxel_time_course - y_hat

@@ -45,9 +45,7 @@ need.
     import numpy as np
     np.set_printoptions(precision=6)  # Only show 6 decimals when printing
 
-.. plot::
-    :context: reset
-    :nofigs:
+.. nbplot::
 
     >>> # Import numerical and plotting libraries
     >>> import numpy as np
@@ -64,9 +62,7 @@ need.
 
 Here are our scores of "psychopathy" from the 12 students:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> psychopathy = [11.416,   4.514,  12.204,  14.835,
     ...                8.416,   6.563,  17.343, 13.02,
@@ -75,9 +71,7 @@ Here are our scores of "psychopathy" from the 12 students:
 These are the skin-conductance scores to get a measure of clamminess for
 the handshakes of each student:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> clammy = [0.389,  0.2  ,  0.241,  0.463,
     ...           4.585,  1.097,  1.642,  4.972,
@@ -86,8 +80,7 @@ the handshakes of each student:
 We happen to believe that there is some relationship between ``clammy``
 and ``psychopathy``. Plotting them together we get:
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> plt.plot(clammy, psychopathy, '+')
     [...]
@@ -100,8 +93,7 @@ It looks like there may be some sort of straight line relationship. We
 could try guessing at a line to fit the data. Let's try an intercept of
 :math:`10` and slope :math:`0.9`:
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> # Plot the data
     >>> plt.plot(clammy, psychopathy, '+')
@@ -254,9 +246,7 @@ Multiple regression
 Let's say we think that psychopathy increases with age. We add the
 student's age as another predictor:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> age = [22.5,  25.3,  24.6,  21.4,
     ...        20.7,  23.3,  23.8,  21.7,
@@ -394,9 +384,7 @@ particular solution. If :math:`\bf{A}^+` is the pseudoinverse of matrix
 Using this matrix algebra, what line do we estimate for ``psychopathy``
 and ``clammy``?
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> X = np.column_stack((np.ones(12), clammy))
     >>> X
@@ -413,8 +401,7 @@ and ``clammy``?
            [ 1.   ,  5.527],
            [ 1.   ,  6.964]])
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> # Use the pseudoinverse to get estimated B
     >>> B = npl.pinv(X).dot(psychopathy)
@@ -442,9 +429,7 @@ and ``clammy``?
 Our claim was that this estimate for slope and intercept minimize the sum of
 squared error:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> fitted = X.dot(B)
     >>> errors = psychopathy - fitted
@@ -454,9 +439,7 @@ squared error:
 Is this sum of squared errors smaller than our earlier guess of an
 intercept of 10 and a slope of 0.9?
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> fitted = X.dot([10, 0.9])
     >>> errors = psychopathy - fitted
@@ -515,9 +498,7 @@ With that introduction, here's how to do the estimation and a t statistic given
 the data :math:`\yvec`, the design :math:`\Xmat`, and a contrast vector
 :math:`\cvec`.
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Get t distribution code from scipy library
     >>> from scipy.stats import t as t_dist
@@ -565,9 +546,7 @@ test divides our estimate of the slope by the error in the estimate;
 large values mean that the slope is large compared to the error in the
 estimate.
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> X = np.column_stack((np.ones(12), clammy))
     >>> Y = np.asarray(psychopathy)
@@ -616,9 +595,7 @@ variables*. The "Berkeley" indicator variable vector is 1 when the
 student is from Berkeley and zero otherwise. Similarly for the other two
 schools:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> berkeley_indicator = [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0]
     >>> stanford_indicator = [0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0]
@@ -658,17 +635,13 @@ Now the :math:`\bvec` vector will be:
 When we estimate these using the least squares method, what estimates
 will we get for :math:`\bhat`?
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> B = npl.pinv(X).dot(psychopathy)
     >>> B
     array([ 10.74225,  11.3355 ,  18.03425])
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> np.mean(psychopathy[:4])
     10.74225
@@ -683,9 +656,7 @@ psychopathic than Berkeley and Stanford?
 We can use a contrast to test whether the mean for the MIT students is greater
 than the mean of (mean for Berkeley, mean for Stanford):
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> B, t, df, p = t_stat(psychopathy, X, [-0.5, -0.5, 1])
     >>> t, p
@@ -711,9 +682,7 @@ group membership (ANOVA model) and one or more continuous covariates.
 For example, we can add back our clamminess score to the mix. Does it
 explain anything once we know which school the student is at?
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> X = np.column_stack((berkeley_indicator,
     ...                      stanford_indicator,
@@ -736,9 +705,7 @@ explain anything once we know which school the student is at?
 We test the independent effect of the clamminess score with a contrast
 on the clammy slope parameter:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> B, t, df, p = t_stat(psychopathy, X, [0, 0, 0, 1])
     >>> t, p
@@ -760,9 +727,7 @@ regressor varying between 0 and 1, and another between 0 and 1000,
 without scaling, the column with the larger numbers will swamp the
 variation in the column with the smaller numbers.
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> def scale_design_mtx(X):
     ...     """utility to scale the design matrix for display
@@ -786,9 +751,7 @@ variation in the column with the smaller numbers.
 Then we can display this scaled design with a title and some default
 image display parameters:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> def show_design(X, design_title):
     ...     """ Show the design matrix nicely """
@@ -799,8 +762,7 @@ image display parameters:
 
 We can then see our ANCOVA design above at a glance:
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> show_design(X, 'ANCOVA')
 
