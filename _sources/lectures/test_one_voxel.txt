@@ -17,9 +17,7 @@ Let's get that same voxel time course back again:
     import numpy as np
     np.set_printoptions(precision=6)  # Only show 6 decimals when printing
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> import numpy as np
     >>> import matplotlib.pyplot as plt
@@ -32,8 +30,7 @@ Let's get that same voxel time course back again:
 The voxel coordinate (3D coordinate) that we were looking at before was at
 (42, 32, 19):
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> voxel_time_course = data[42, 32, 19]
     >>> plt.plot(voxel_time_course)
@@ -44,8 +41,7 @@ We then compiled a design for this time-course and estimated it.
 We used the :download:`convolved regressor <ds114_sub009_t2r1_conv.txt>` from
 :doc:`convolution_background` in a simple regression.
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> convolved = np.loadtxt('ds114_sub009_t2r1_conv.txt')
     >>> # Knock off first 4 elements to match data
@@ -83,9 +79,7 @@ invertible, the pseudoinverse is given by:
 
 We find the $\bhat$ for our data and design:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> import numpy.linalg as npl
     >>> Xp = npl.pinv(X)
@@ -118,9 +112,7 @@ and `stackoverflow proof
 We can use an estimate $s^2$ of $\sigma^2$ to give us estimated standard
 errors of the variance covariance:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> y = voxel_time_course
     >>> y_hat = X.dot(beta_hat)
@@ -140,18 +132,14 @@ errors of the variance covariance:
 
 We now have an standard estimate of the variance / covariance of the $\bhat$:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> v_cov = s2 * npl.inv(X.T.dot(X))
 
 In particular, I can now divide my estimate for the first parameter, by the
 standard error of that estimate:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> numerator = beta_hat[0]
     >>> denominator = np.sqrt(v_cov[0, 0])
@@ -161,9 +149,7 @@ standard error of that estimate:
 
 I can look up the probability of this t statistic using ``scipy.stats``:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> from scipy.stats import t as t_dist
     >>> # Get p value for t value using cumulative density dunction
@@ -175,9 +161,7 @@ I can look up the probability of this t statistic using ``scipy.stats``:
 
 Finally let's save the voxel time course for us to use in R:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> np.savetxt('voxel_time_course.txt', voxel_time_course)
 

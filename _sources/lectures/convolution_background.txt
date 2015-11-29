@@ -4,9 +4,7 @@ Convolving with the hemodyamic response function
 
 Start with our usual imports:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> import numpy as np  # the Python array package
     >>> import matplotlib.pyplot as plt  # the Python plotting package
@@ -32,9 +30,7 @@ files (``scipy.io``) or working with sparse matrices (``scipy.sparse``). We
 are going to be using the functions and objects for working with statistical
 distributions in ``scipy.stats``:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> import scipy.stats
 
@@ -43,9 +39,7 @@ distributions. We are going to be working with ``scipy.stats.gamma``, which
 implements the `gamma distribution
 <https://en.wikipedia.org/wiki/Gamma_distribution>`__.
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> from scipy.stats import gamma
 
@@ -65,16 +59,13 @@ array) known as the `shape parameter
 
 First we chose some x values at which to sample from the gamma PDF:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> x = np.arange(0, 25, 0.1)
 
 Next we plot the gamma PDF for shape values of 2, 4, 8, 12.
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> plt.plot(x, gamma.pdf(x, 2), label='k=2')
     [...]
@@ -106,8 +97,7 @@ functions.
 
 Here is one example of such a function:
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> def hrf(times):
     ...     """ Return values for HRF at given times """
@@ -131,8 +121,7 @@ We can sample from the function, to get the estimates at the times of our TRs.
 Remember, the TR is 2.5 for our example data, meaning the scans were 2.5
 seconds apart.
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> TR = 2.5
     >>> tr_times = np.arange(0, 30, TR)
@@ -150,8 +139,7 @@ We can use this to convolve our neural (on-off) prediction.  This will give us
 a hemodynamic prediction, under the linear-time-invariant assumptions of the
 convolution:
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> from stimuli import events2neural
     >>> n_vols = 173
@@ -166,9 +154,7 @@ values in the vector we convolved, and M is the length of the convolution
 kernel (``hrf_at_trs`` in our case).  For a reminder of why this is, see the
 `tutorial on convolution`_.
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> convolved = np.convolve(neural_prediction, hrf_at_trs)
     >>> N = len(neural_prediction)  # M == n_vols == 173
@@ -183,15 +169,12 @@ just after the end of the scanning run. To retain only the values in the new
 hemodynamic vector that refer to times up to (and including) 430s, we can just
 drop the last ``len(hrf_at_trs) - 1 == M - 1`` values:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> n_to_remove = len(hrf_at_trs) - 1
     >>> convolved = convolved[:-n_to_remove]
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> plt.plot(all_tr_times, neural_prediction)
     [...]
@@ -215,9 +198,7 @@ in memory:
 This is also the default format that ``np.savetxt`` uses.  For example, let's
 save our convolved time course:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> np.savetxt('ds114_sub009_t2r1_conv.txt', convolved)
     >>> back = np.loadtxt('ds114_sub009_t2r1_conv.txt')
@@ -226,9 +207,7 @@ save our convolved time course:
 
 Why might the saved, reloaded numbers not be *exactly* the same?
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> fobj = open('ds114_sub009_t2r1_conv.txt', 'rt')
     >>> lines = fobj.readlines()

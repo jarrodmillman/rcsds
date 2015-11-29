@@ -15,9 +15,7 @@ have two variables for each of the 50 samples.
 Each column is one sample (I have 50 columns). Each row is one variable (I
 have two rows).
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> import numpy as np
     >>> # Make some random, but predictable data
@@ -29,9 +27,7 @@ have two rows).
 To make things simpler, I will subtract the mean across samples from each
 variable:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Subtract mean across samples (mean of each variable)
     >>> x_mean = X.mean(axis=1)
@@ -41,8 +37,7 @@ variable:
 The values for the two variables (rows) in :math:`\mathbf{X}` are somewhat
 correlated:
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> import matplotlib.pyplot as plt
     >>> plt.scatter(X[0], X[1])
@@ -55,9 +50,7 @@ We want to explain the variation in these data.
 The variation we want to explain is given by the sum of squares of the data
 values.
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> squares = X ** 2
     >>> print(np.sum(squares))
@@ -80,16 +73,13 @@ as :math:`\|\vec{v_j}\|^2`
 
 Take the first column / point / vector as an example (:math:`\vec{v_1}`):
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> v1 = X[:, 0]
     >>> v1
     array([ 3.378322,  2.068158])
 
-.. plot::
-    :context:
+.. nbplot::
     :include-source: false
 
     # Show first vector as sum of x and y axis vectors
@@ -128,8 +118,7 @@ So, the sums of squares we are trying to explain can be expressed as the sum
 of the squared distance of each point from the origin, where the points
 (vectors) are the columns of :math:`\mathbf{X}`:
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> # Plot points and lines connecting points to origin
     >>> plt.scatter(X[0], X[1])
@@ -147,9 +136,7 @@ dotted red lines on the plot.
 At the moment, we have not explained anything, so our current unexplained sum
 of squares is:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> print(np.sum(X ** 2))
     155.669289858
@@ -191,9 +178,7 @@ the line defined by :math:`\hat{u}` is, as we remember, given by
 Looking at the scatterplot, we might consider trying a unit vector at 45
 degrees angle to the x axis:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> u_guessed = np.array([np.cos(np.pi / 4), np.sin(np.pi / 4)])
     >>> u_guessed
@@ -201,15 +186,12 @@ degrees angle to the x axis:
 
 This is a unit vector:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> np.sum(u_guessed ** 2)
     1.0
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> plt.scatter(X[0], X[1])
     <...>
@@ -222,8 +204,7 @@ This is a unit vector:
 
 Let's project all the points onto that line:
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> u_guessed_row = u_guessed.reshape(1, 2)  # A row vector
     >>> c_values = u_guessed_row.dot(X)  # c values for scaling u
@@ -250,9 +231,7 @@ The projected points (in red), are the positions of the points that can be
 explained by projection onto the guessed line defined by :math:`\hat{u}`. The
 red projected points also have their own sum of squares:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> print(np.sum(projected ** 2))
     133.381320743
@@ -263,9 +242,7 @@ Because we are projecting onto a unit vector, :math:`\|c\hat{u}\|^2 = c\hat{u}
 squares of the ``c_values`` also gives us the sum of squares of the projected
 points:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> print(np.sum(c_values ** 2))
     133.381320743
@@ -276,9 +253,7 @@ have been explained by projection onto :math:`\hat{u}`.
 Once I have the projected points, I can calculate the remaining distance of
 the actual points from the projected points:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> remaining = X - projected
     >>> distances = np.sqrt(np.sum(remaining ** 2, axis=0))
@@ -296,9 +271,7 @@ the actual points from the projected points:
 I can also express the overall (squared) remaining distance as the sum
 of squares:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> print(np.sum(remaining ** 2))
     22.2879691152
@@ -307,9 +280,7 @@ I'm going to try a whole lot of different values for :math:`\hat{u}`, so
 I will make a function to calculate the result of projecting the data
 onto a line defined by a unit vector :math:`\hat{u}`:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> def line_projection(u, X):
     ...     """ Return columns of X projected onto line defined by u
@@ -322,9 +293,7 @@ onto a line defined by a unit vector :math:`\hat{u}`:
 Next a small function to return the vectors remaining after removing the
 projections:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> def line_remaining(u, X):
     ...     """ Return vectors remaining after removing cols of X projected onto u
@@ -335,18 +304,14 @@ projections:
 
 Using these little functions, I get the same answer as before:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> print(np.sum(line_remaining(u_guessed, X) ** 2))
     22.2879691152
 
 Now I will make lots of :math:`\hat{u}` vectors spanning half the circle:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> angles = np.linspace(0, np.pi, 10000)
     >>> x = np.cos(angles)
@@ -355,8 +320,7 @@ Now I will make lots of :math:`\hat{u}` vectors spanning half the circle:
     >>> u_vectors.shape
     (2, 10000)
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> plt.plot(u_vectors[0], u_vectors[1], '+')
     [...]
@@ -367,8 +331,7 @@ Now I will make lots of :math:`\hat{u}` vectors spanning half the circle:
 I then get the remaining sum of squares after projecting onto each of these
 unit vectors:
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> remaining_ss = []
     >>> for u in u_vectors.T: # iterate over columns
@@ -384,25 +347,20 @@ unit vectors:
 It looks like the minimum value is for a unit vector at around angle 0.5
 radians:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> min_i = np.argmin(remaining_ss)
     >>> angle_best = angles[min_i]
     >>> print(angle_best)
     0.498620616186
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> u_best = u_vectors[:, min_i]
     >>> u_best
     array([ 0.878243,  0.478215])
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> plt.scatter(X[0], X[1])
     <...>
@@ -415,8 +373,7 @@ radians:
 
 Do the projections for this best line look better than before?
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> projected = line_projection(u_best, X)
     >>> plt.scatter(X[0], X[1], label='actual')
@@ -440,8 +397,7 @@ Now we have found a reasonable choice for our first best fitting line, we have
 a set of remaining vectors that we have not explained. These are the vectors
 between the projected and actual points.
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> remaining = X - projected
     >>> plt.scatter(remaining[0], remaining[1], label='remaining')
@@ -461,8 +417,7 @@ we have already explained everything that can be explained along the direction
 of :math:`\hat{u_{best}}`, and we only have two dimensions, so there is only
 one remaining direction along which the variation can occur.
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> u_best_orth = np.array([np.cos(angle_best + np.pi / 2), np.sin(angle_best + np.pi / 2)])
     >>> plt.scatter(remaining[0], remaining[1], label='remaining')
@@ -482,9 +437,7 @@ Now the projections onto :math:`\hat{u_{orth}}` are the same as the
 remaining points, because the remaining points already lie along the
 line defined by :math:`\hat{u_{orth}}`.
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> projected_onto_orth = line_projection(u_best_orth, remaining)
     >>> np.allclose(projected_onto_orth, remaining)
@@ -504,9 +457,7 @@ pick up no component of the columns of :math:`\mathbf{X}` that is colinear
 This means that I can go straight to the projection onto the second component,
 from the original array :math:`\mathbf{X}`.
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # project onto second component direct from data
     >>> projected_onto_orth_again = line_projection(u_best_orth, X)
@@ -517,9 +468,7 @@ from the original array :math:`\mathbf{X}`.
 For the same reason, I can calculate the projection coefficients :math:`c` for
 both components at the same time, by doing matrix multiplication:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Components as rows in a 2 by 2 array
     >>> components = np.vstack((u_best, u_best_orth))
@@ -527,9 +476,7 @@ both components at the same time, by doing matrix multiplication:
     array([[ 0.878243,  0.478215],
            [-0.478215,  0.878243]])
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Calculating projection coefficients with array dot
     >>> c_values = components.dot(X)
@@ -541,9 +488,7 @@ both components at the same time, by doing matrix multiplication:
     >>> np.allclose(projected_1, line_projection(u_best, X))
     True
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Result of projecting on second component, via array dot
     >>> u = u_best_orth.reshape(1, 2)  # second component as row vector
@@ -566,8 +511,7 @@ projections of :math:`\vec{v_1}` onto the first and second components:
 For example, here is my original first point :math:`\vec{v_1}` expressed using
 the projections onto the principal component axes:
 
-.. plot::
-    :context:
+.. nbplot::
     :include-source: false
 
     # Show v1 as sum of projections onto components 1 and 2
@@ -618,9 +562,7 @@ the original vectors (points).
 Sure enough, if I sum up the data projected onto the first component and the
 data projected onto the second, I get back the original data:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> np.allclose(projected_1 + projected_2, X)
     True
@@ -630,9 +572,7 @@ transpose of the components with the projection coefficients (seeing that this
 is so involves writing out a few cells of the matrix multiplication in symbols
 and staring at it for a while):
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> data_again = components.T.dot(c_values)
     >>> np.allclose(data_again, X)
@@ -646,17 +586,13 @@ Notice also that I have partititioned the sums of squares of the data into a
 part that can be explained by the first component, and a part that can be
 explained by the second:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Total sum of squares
     >>> print(np.sum(X ** 2))
     155.669289858
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # The data projected onto the first component
     >>> proj_onto_first = line_projection(u_best, X)
@@ -711,9 +647,7 @@ variables.
 
 See http://arxiv.org/abs/1404.1100 for a detailed explanation.
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> import numpy.linalg as npl
     >>> # Finding principal components using SVD
@@ -727,9 +661,7 @@ matters little in our case, but see below for more detail.
 
 The components are in the rows of the returned matrix :math:`\mathbf{V}`:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> V
     array([[-0.878298, -0.478114],
@@ -739,16 +671,12 @@ Remember that a vector :math:`\vec{r}` defines the same line as the vector
 :math:`-\vec{r}`, so we do not care about a flip in the sign of the principal
 components:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> u_best
     array([ 0.878243,  0.478215])
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> u_best_orth
     array([-0.478215,  0.878243])
@@ -756,9 +684,7 @@ components:
 The returned vector :math:`\vec{S}` contains the explained sum of squares for
 each component:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> S
     array([ 143.973173,   11.696117])
@@ -792,9 +718,7 @@ get the true variance / covariance.
 For example, the standard numpy covariance function ``np.cov`` completes the
 calculation of true covariance by dividing by :math:`N-1`.
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Calculate unscaled variance covariance again
     >>> unscaled_cov = X.dot(X.T)
@@ -807,9 +731,7 @@ We could have run our SVD on the true variance covariance matrix. The result
 would give us exactly the same components. This might make sense from the fact
 that the lengths of the components are always scaled to 1 (unit vectors):
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> scaled_U, scaled_S, scaled_V = npl.svd(np.cov(X))
     >>> np.allclose(scaled_V, V)
@@ -817,16 +739,12 @@ that the lengths of the components are always scaled to 1 (unit vectors):
 
 The difference is only in the *singular values* in the vector ``S``:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> S
     array([ 143.973173,   11.696117])
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> scaled_S
     array([ 2.938228,  0.238696])
@@ -837,9 +755,7 @@ true covariance matrix are the *variances* explained by each component. The
 variances are just the sum of squares divided by the correction in the
 denominator, in our case, :math:`N-1`:
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> S / (N - 1)
     array([ 2.938228,  0.238696])

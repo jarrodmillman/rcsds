@@ -5,9 +5,7 @@ Basic linear modeling
 In this exercise we will run a simple regression on all voxels in a 4D
 FMRI image.
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # import some standard librares
     >>> import numpy as np
@@ -15,61 +13,45 @@ FMRI image.
     >>> import matplotlib.pyplot as plt
     >>> import nibabel as nib
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Load the image as an image object
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Load the image data as an array
     >>> # Drop the first 4 3D volumes from the array
     >>> # (We already saw that these were abnormal)
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Load the pre-written convolved time course
     >>> # Knock off the first four elements
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Compile the design matrix
     >>> # First column is convolved regressor
     >>> # Second column all ones
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Reshape the 4D data to voxel by time 2D
     >>> # Transpose to give time by voxel 2D
     >>> # Calculate the pseudoinverse of the design
     >>> # Apply to time by voxel array to get betas
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Tranpose betas to give voxels by 2 array
     >>> # Reshape into 4D array, with same 3D shape as original data,
     >>> # last dimension length 2
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Show the middle slice from the first beta volume
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Show the middle slice from the second beta volume
 

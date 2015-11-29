@@ -8,9 +8,7 @@ Indexing with boolean masks
     np.set_printoptions(precision=6)  # Only show 6 decimals when printing
     import matplotlib.pyplot as plt
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # - import common modules
     >>> import numpy as np  # the Python array package
@@ -18,9 +16,7 @@ Indexing with boolean masks
 
 First we make a 3D array of shape (4, 3, 2)
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> slab0 = np.reshape(np.arange(12), (4, 3))
     >>> slab0
@@ -29,9 +25,7 @@ First we make a 3D array of shape (4, 3, 2)
            [ 6,  7,  8],
            [ 9, 10, 11]])
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> slab1 = np.reshape(np.arange(100, 112), (4, 3))
     >>> slab1
@@ -40,9 +34,7 @@ First we make a 3D array of shape (4, 3, 2)
            [106, 107, 108],
            [109, 110, 111]])
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> arr_3d = np.zeros((4, 3, 2))
     >>> arr_3d[:, :, 0] = slab0
@@ -67,9 +59,7 @@ First we make a 3D array of shape (4, 3, 2)
 We can index this with a one-dimensional boolean array. This selects
 elements from the first axis.
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> bool_1d = np.array([False, True, True, False])
     >>> arr_3d[bool_1d]
@@ -84,9 +74,7 @@ elements from the first axis.
 We can also index with a two-dimensional boolean array, this selects elements
 from the first two axes.
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> bool_2d = np.array([[False, True, False],
     ...                     [True, False, True],
@@ -99,9 +87,7 @@ from the first two axes.
            [ True, False, False],
            [False, False,  True]], dtype=bool)
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> arr_3d[bool_2d]
     array([[   1.,  101.],
@@ -113,9 +99,7 @@ from the first two axes.
 We can even index with a 3D array, this selects elements over all three
 dimensions.  In which order does it get the elements?
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> arr_is_odd = (arr_3d % 2) == 1
     >>> arr_is_odd
@@ -141,9 +125,7 @@ dimensions.  In which order does it get the elements?
 We can mix 1D boolean arrays with ordinary slicing to select elements on
 a single axis.
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> bool_1d_dim3 = np.array([False, True])
     >>> arr_3d[:, :, bool_1d_dim3]

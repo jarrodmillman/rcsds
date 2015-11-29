@@ -15,9 +15,7 @@ FMRI image.
     import numpy as np
     np.set_printoptions(precision=6)  # Only show 6 decimals when printing
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # import some standard librares
     >>> import numpy as np
@@ -25,24 +23,19 @@ FMRI image.
     >>> import matplotlib.pyplot as plt
     >>> import nibabel as nib
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Load the image as an image object
     >>> img = nib.load('ds114_sub009_t2r1.nii')
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Load the image data as an array
     >>> # Drop the first 4 3D volumes from the array
     >>> # (We already saw that these were abnormal)
     >>> data = img.get_data()[..., 4:]
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> # Load the pre-written convolved time course
     >>> # Knock off the first four elements
@@ -50,8 +43,7 @@ FMRI image.
     >>> plt.plot(convolved)
     [...]
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> # Compile the design matrix
     >>> # First column is convolved regressor
@@ -61,9 +53,7 @@ FMRI image.
     >>> plt.imshow(design, aspect=0.1, interpolation='nearest', cmap='gray')
     <...>
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Reshape the 4D data to voxel by time 2D
     >>> # Transpose to give time by voxel 2D
@@ -74,24 +64,20 @@ FMRI image.
     >>> betas.shape
     (2, 122880)
 
-.. plot::
-    :context:
-    :nofigs:
+.. nbplot::
 
     >>> # Tranpose betas to give voxels by 2 array
     >>> # Reshape into 4D array, with same 3D shape as original data,
     >>> # last dimension length 2
     >>> betas_4d = np.reshape(betas.T, img.shape[:-1] + (-1,))
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> # Show the middle slice from the first beta volume
     >>> plt.imshow(betas_4d[:, :, 14, 0], interpolation='nearest', cmap='gray')
     <...>
 
-.. plot::
-    :context:
+.. nbplot::
 
     >>> # Show the middle slice from the second beta volume
     >>> plt.imshow(betas_4d[:, :, 14, 1], interpolation='nearest', cmap='gray')

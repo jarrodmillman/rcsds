@@ -7,6 +7,13 @@ This page introduces two things:
 * Blending a structural image with a parameter ("activation") image;
 * Using spatial smoothing to improve signal to noise.
 
+.. testsetup::
+
+    import os
+    import sys
+    os.chdir('lectures')
+    sys.path.insert(0, os.path.abspath('.'))
+
 ******************
 Doing the analysis
 ******************
@@ -110,3 +117,7 @@ range, and the functional the other half:
     <...>
     >>> plt.imshow(beta_vols[:, :, 14, 0], cmap=nice_cmap, alpha=0.5)
     <...>
+
+.. testcleanup::
+
+    os.chdir('..')
