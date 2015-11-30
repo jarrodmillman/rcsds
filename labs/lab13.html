@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lab 13 &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Labs" href="index.html" />
+    <link rel="next" title="Appendices" href="../append/index.html" />
+    <link rel="prev" title="Lab 12" href="lab12.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="lab-13">
+<h1>Lab 13<a class="headerlink" href="#lab-13" title="Permalink to this headline">¶</a></h1>
+<p>Stats 159/259 - Lab 13 - 11/30/15</p>
+<div class="section" id="agenda">
+<h2>Agenda<a class="headerlink" href="#agenda" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Quiz 5</li>
+<li>Quick talk on Latex</li>
+<li>Work on your projects<ul>
+<li>Drafts of final report are due tonight by 9:00 PM if you want feedback
+from Jarrod, Matthew, JB, and I. You are <em>very strongly</em> encouraged to
+take advantage of this!</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="quiz-5">
+<h2>Quiz 5<a class="headerlink" href="#quiz-5" title="Permalink to this headline">¶</a></h2>
+<p>Same deal as qz4:</p>
+<blockquote>
+<div><ul class="simple">
+<li>10 Questions, 5 MC, 5 TF</li>
+<li>MC questions worth 4 pts each, TF worth 2 pts each (manage time accordingly)</li>
+<li>20 min to complete<ul>
+<li>Commit on time or lose points!</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="latex">
+<h2>LaTeX<a class="headerlink" href="#latex" title="Permalink to this headline">¶</a></h2>
+<p>You should all have used LaTeX (or some other markup language + pandoc to
+convert to LaTeX) for this class, but we never gave you any specific lectures
+about it. Since you will likely be doing a lot of writing for your reports in
+the near future, I figured I would give you a high-level overview of some
+practical things that may not be clear from the template we gave you.</p>
+<p>If you want a more detailed and methodical introduction to LaTeX or are an
+absolute beginner, you might want to check out <em>Introducton to LaTeX</em> on the
+<a class="reference external" href="http://statistics.berkeley.edu/computing/training/tutorials">berkeley SCF tutorials page</a>.</p>
+<p>N.B. The following notes are derived from Chapter 20 of
+<a class="reference external" href="http://shop.oreilly.com/product/0636920033424.do">Effective Computation in Physics</a>.
+I know I&#8217;ve plugged it before, but this really is a fantastic book for the
+stuff that we cover in this class. If you are planning on doing computation in
+the future, especially if you&#8217;re going to (or are currently in)
+graduate school, I strongly recommend checking this book out!</p>
+<p>A LaTeX document is built from several different types of files:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>.tex</em>: This is the main document file and is the only one that is absolutely
+necessary to create a document. In order to take full advantage of
+LaTeX, you will likely have other source files as well, perhaps
+including:</li>
+<li><em>.cls</em>: Class files. These specify top-level document classes. There are
+many by default (e.g. article, letter, book) but a really nice thing is
+that many journals provide class files for articles that are
+compliant with their publication requirements.</li>
+<li><em>.sty</em>: Style files. These specify many things about the overall design and
+formatting of a document.</li>
+<li><em>.bib</em>: A file containing bibliography entries and information. Various
+different tools will automatically compile a bibliography from the
+source material contained in the .bib file</li>
+</ul>
+</div></blockquote>
+<p>When you build a LaTeX document from source files, a bunch of other files are
+generated in the build process, such as <em>.aux</em>, <em>.log</em>, <em>.bbl</em>, and other types
+of files. These files are generated in the build process, and thus should NOT
+be tracked by version control &#8212; they are merely there to record and help
+debug the document building process. After a successful build, they can be
+removed without affecting the document itself: it is very common to add these
+files to .gitignore, as well as have a target for a Makefile called <em>clean</em> that
+will automatically remove these types of files.</p>
+<p><strong>Latex Environments</strong></p>
+<p>LaTeX builds off the idea that the content you are trying to present generally
+falls into some kind of category, which may have some additional features
+associated with it. For example, a figure may have attributes such as a
+caption, and some formatting information (like &#8220;make this figure
+left-justified&#8221;). LaTeX handles these categories by having
+the user specify <em>environments</em>. In fact, the first (and only required)
+environment in any document is the document environment, which is specified as
+follows:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="c">% Note the &#39;%&#39; sign denotes comments in LaTeX source files</span>
+<span class="k">\begin</span><span class="nb">{</span>document<span class="nb">}</span>              <span class="c">% Start the document environment</span>
+Document content goes here
+<span class="k">\end</span><span class="nb">{</span>document<span class="nb">}</span>                <span class="c">% End the document environment</span>
+</pre></div>
+</div>
+<p>LaTeX environments are all specified in the same manner, with a <em>begin{}</em> and
+<em>end{}</em> to delimit them. Other common environments include <em>enumerate</em> for
+numbered lists, <em>itemize</em> for bulleted lists, <em>table</em> for formatted tables,
+<em>figure</em> for graphics, and <em>equation</em> for numbered equations.</p>
+<p>N.B. &#8212; the user can specify their own environment and environments may be
+slightly different between document types!</p>
+<p><strong>General structure of a LaTeX document</strong></p>
+<p>Here is a skeleton LaTeX document that shows a common layout for article/report
+documents created in LateX:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="c">% The top non-comment line specifies the type of the document. The format for</span>
+<span class="c">% the command that does this is \documentclass[options]{class_type}</span>
+<span class="k">\documentclass</span><span class="na">[11pt]</span><span class="nb">{</span>article<span class="nb">}</span>
+
+<span class="c">% Before we even get to the content, there is usually a list of packages that</span>
+<span class="c">% are being used to build the given document. This is analogous to</span>
+<span class="c">% import statements in a python script --- you are specifying which tools</span>
+<span class="c">% you will be using for the current document</span>
+<span class="k">\usepackage</span><span class="nb">{</span>graphicx<span class="nb">}</span>      <span class="c">% For including figures</span>
+<span class="k">\usepackage</span><span class="nb">{</span>amsmath<span class="nb">}</span>       <span class="c">% Ability to align equations and other math helpers</span>
+<span class="k">\usepackage</span><span class="nb">{</span>amssymb<span class="nb">}</span>       <span class="c">% An extended list of math symbols</span>
+
+<span class="c">% Next comes some metadata about the document, often called the preamble.</span>
+<span class="c">% The preamble includes things like the author(s), title, date, etc.</span>
+<span class="c">% Note that this is *metadata* so it is not automatically rendered into the</span>
+<span class="c">% final document. The \maketitle command, if called within the document</span>
+<span class="c">% environment, will collect this metadata and add it to the content of the</span>
+<span class="c">% document</span>
+<span class="k">\author</span><span class="nb">{</span>Ross B.<span class="nb">}</span>
+<span class="k">\title</span><span class="nb">{</span>On Using <span class="k">\LaTeX</span>~<span class="nb">}</span>
+
+<span class="c">% Now we FINALLY get to the actual document</span>
+<span class="k">\begin</span><span class="nb">{</span>document<span class="nb">}</span>
+
+<span class="c">% Take all the metadata above and convert it into a pretty title for our</span>
+<span class="c">% document</span>
+<span class="k">\maketitle</span>
+
+<span class="c">% Document structure</span>
+<span class="c">% Any document is usually broken up into subparts. For example, articles are</span>
+<span class="c">% broken up into sections, subsections, subsubsections etc. while books are</span>
+<span class="c">% broken up into chapters. Depending on the document class, we can break up</span>
+<span class="c">% our document accordingly. For example, since we used the article class:</span>
+<span class="k">\section</span><span class="nb">{</span>Intro<span class="nb">}</span>
+<span class="k">\section</span><span class="nb">{</span>Theory<span class="nb">}</span>
+<span class="k">\section</span><span class="nb">{</span>Methods<span class="nb">}</span>
+<span class="k">\section</span><span class="nb">{</span>Results<span class="nb">}</span>
+<span class="k">\section</span><span class="nb">{</span>Conclusion<span class="nb">}</span>
+<span class="k">\section</span><span class="nb">{</span>Acknowledgements<span class="nb">}</span>
+
+<span class="c">% Our template is finished, so we end the document</span>
+<span class="k">\end</span><span class="nb">{</span>document<span class="nb">}</span>
+</pre></div>
+</div>
+<p>That&#8217;s a nice layout for a scientific article. A couple notes: by default, the
+sections and subsections will be numbered: to suppress the numbering, you can
+add a &#8216;*&#8217; to the section commands, like so:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="k">\section*</span><span class="nb">{</span>Intro<span class="nb">}</span>
+</pre></div>
+</div>
+<p>Now what about content? The simplest thing to do would just be to add the
+content directly to the main <em>.tex</em> file. Using the last example:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="k">\section</span><span class="nb">{</span>Intro<span class="nb">}</span>
+Once upon a time, Seiji Ogawa discovered blood oxygen level dependent
+contrast...
+</pre></div>
+</div>
+<p>This works just fine; however, another option is to but the latex source in a
+separate file, and use another LaTeX command to add it to the main document.
+For example, we could create a file called <em>intro.tex</em> that has the content for
+the introduction in it and do the following:</p>
+<div class="highlight-latex"><div class="highlight"><pre><span class="k">\section</span><span class="nb">{</span>Intro<span class="nb">}</span>
+<span class="k">\input</span><span class="nb">{</span>intro<span class="nb">}</span>
+</pre></div>
+</div>
+<p>For non-trivial documents, this is the preferred method as it further separates
+formatting from content (now the main <em>.tex</em> file deals with only the
+layout of the document) and increases the reusability of the content.</p>
+<p><strong>Math in LaTeX</strong></p>
+<p>The rendering of mathematical equations and concepts is so central to LaTeX that
+it has its own special syntax for doing so. I will not cover that syntax here,
+but I do want to specify how to get into <em>math mode</em>. The simplest way is to
+use &#8216;$&#8217;. LaTeX will treat anything between two &#8216;$&#8217;s as mathematical input:</p>
+<div class="highlight-latex"><div class="highlight"><pre>For example, if you want to render some math in the current line without any
+special breaks, you can do something like <span class="s">$</span><span class="nv">\frac</span><span class="nb">{</span><span class="m">1</span><span class="nb">}{r</span><span class="o">**</span><span class="nb">{</span><span class="m">2</span><span class="nb">}}</span><span class="s">$</span>
+</pre></div>
+</div>
+<p>The single &#8216;$&#8217; notation works for inline equations, allowing you to pop into
+the math environment in the middle of a line of text. If you want to make an
+equation stand out, you can use two &#8216;$$&#8217; instead. Better yet, you can use the
+<em>equation</em> environment and add a <em>label</em> to reference that equation later:</p>
+<div class="highlight-latex"><div class="highlight"><pre>Here are arguably the most famous equivalancies in the history of physics
+
+<span class="k">\begin</span><span class="nb">{</span>equation<span class="nb">}</span>
+<span class="k">\label</span><span class="nb">{</span>newton2law<span class="nb">}</span>
+F = ma
+<span class="k">\end</span><span class="nb">{</span>equation<span class="nb">}</span>
+
+<span class="k">\begin</span><span class="nb">{</span>equation<span class="nb">}</span>
+<span class="k">\label</span><span class="nb">{</span>einstein<span class="nb">}</span>
+E = mc**2
+<span class="k">\end</span><span class="nb">{</span>equation<span class="nb">}</span>
+</pre></div>
+</div>
+<p>There are many, many other things we could talk about, but with this basic
+intro to environments, document structure, and math, you should be able to at
+the very least navigate a LaTeX document.</p>
+</div>
+<div class="section" id="rest-of-lab">
+<h2>Rest of Lab<a class="headerlink" href="#rest-of-lab" title="Permalink to this headline">¶</a></h2>
+<p>Work on your projects, with special emphasis on the draft to be handed in later
+today.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lectures/index.html">Lectures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Labs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lab01.html">Lab 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab02.html">Lab 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab03.html">Lab 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab04.html">Lab 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab05.html">Lab 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab06.html">Lab 6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab07.html">Lab 7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab08.html">Lab 8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab09.html">Lab 9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab10.html">Lab 10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab11.html">Lab 11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lab12.html">Lab 12</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Lab 13</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>
