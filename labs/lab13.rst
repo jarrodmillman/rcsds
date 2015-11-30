@@ -17,7 +17,7 @@ Agenda
      from Jarrod, Matthew, JB, and I. You are *very strongly* encouraged to
      take advantage of this!
 
-Quiz 4
+Quiz 5
 ++++++
 
 Same deal as qz4:
@@ -37,7 +37,7 @@ You should all have used LaTeX (or some other markup language + pandoc to
 convert to LaTeX) for this class, but we never gave you any specific lectures
 about it. Since you will likely be doing a lot of writing for your reports in
 the near future, I figured I would give you a high-level overview of some
-practical things that may not be clear from the provided template itself.
+practical things that may not be clear from the template we gave you.
 
 If you want a more detailed and methodical introduction to LaTeX or are an
 absolute beginner, you might want to check out *Introducton to LaTeX* on the
@@ -47,24 +47,24 @@ N.B. The following notes are derived from Chapter 20 of
 `Effective Computation in Physics <http://shop.oreilly.com/product/0636920033424.do>`_.
 I know I've plugged it before, but this really is a fantastic book for the 
 stuff that we cover in this class. If you are planning on doing computation in
-the future, especially if you're going to or are in graduate school, I strongly
-recommend checking this book out!
+the future, especially if you're going to (or are currently in)
+graduate school, I strongly recommend checking this book out!
 
 A LaTeX document is built from several different types of files:
 
  - *.tex*: This is the main document file and is the only one that is absolutely
-           necessary to create a document. In order to take full advantage of
-           LaTeX, you will likely have other source files as well, perhaps 
-           including:
+   necessary to create a document. In order to take full advantage of
+   LaTeX, you will likely have other source files as well, perhaps 
+   including:
  - *.cls*: Class files. These specify top-level document classes. There are 
-           many by default (article, letter, book) but a really nice thing is
-           that many journals provide class files for articles that are 
-           compliant with their publication requirements.
+   many by default (e.g. article, letter, book) but a really nice thing is
+   that many journals provide class files for articles that are 
+   compliant with their publication requirements.
  - *.sty*: Style files. These specify many things about the overall design and
-           formatting of a document.
+   formatting of a document.
  - *.bib*: A file containing bibliography entries and information. Various 
-           different tools will automatically compile a bibliography from the
-           source material contained in the .bib file
+   different tools will automatically compile a bibliography from the
+   source material contained in the .bib file
 
 When you build a LaTeX document from source files, a bunch of other files are
 generated in the build process, such as *.aux*, *.log*, *.bbl*, and other types
@@ -79,11 +79,14 @@ will automatically remove these types of files.
 
 LaTeX builds off the idea that the content you are trying to present generally
 falls into some kind of category, which may have some additional features
-associated with it. For example, a figure may have many attributes and 
-features, such as an associated caption, and some formatting information (like
-"make this figure left-justified"). LaTeX handles these categories by having
-the user specify *environments*. In fact, the first (and required) environment
-in any document is the document environment, which is specified as follows::
+associated with it. For example, a figure may have attributes such as a
+caption, and some formatting information (like "make this figure 
+left-justified"). LaTeX handles these categories by having
+the user specify *environments*. In fact, the first (and only required) 
+environment in any document is the document environment, which is specified as
+follows:
+
+.. code-block:: latex
 
   % Note the '%' sign denotes comments in LaTeX source files
   \begin{document}              % Start the document environment
@@ -101,14 +104,16 @@ slightly different between document types!
 **General structure of a LaTeX document**
 
 Here is a skeleton LaTeX document that shows a common layout for article/report
-documents created in LateX::
+documents created in LateX:
+
+.. code-block:: latex
 
   % The top non-comment line specifies the type of the document. The format for
   % the command that does this is \documentclass[options]{class_type}
   \documentclass[11pt]{article}
 
   % Before we even get to the content, there is usually a list of packages that
-  % are being used to build the given document. This is sort of analogous to 
+  % are being used to build the given document. This is analogous to 
   % import statements in a python script --- you are specifying which tools
   % you will be using for the current document
   \usepackage{graphicx}      % For including figures
@@ -148,12 +153,16 @@ documents created in LateX::
 
 That's a nice layout for a scientific article. A couple notes: by default, the
 sections and subsections will be numbered: to suppress the numbering, you can
-add a '*' to the section commands, like so::
+add a '*' to the section commands, like so:
+
+.. code-block:: latex
 
   \section*{Intro}
 
 Now what about content? The simplest thing to do would just be to add the 
-content directly to the main *.tex* file. Using the last example::
+content directly to the main *.tex* file. Using the last example:
+
+.. code-block:: latex
 
   \section{Intro}
   Once upon a time, Seiji Ogawa discovered blood oxygen level dependent
@@ -162,29 +171,35 @@ content directly to the main *.tex* file. Using the last example::
 This works just fine; however, another option is to but the latex source in a
 separate file, and use another LaTeX command to add it to the main document.
 For example, we could create a file called *intro.tex* that has the content for
-the introduction in it and do the following::
+the introduction in it and do the following:
+
+.. code-block:: latex
 
   \section{Intro}
   \input{intro}
 
 For non-trivial documents, this is the preferred method as it further separates
-formatting from content (now the main *.tex* file largely deals with only the
-layout of the content) and increases the reusability of the content.
+formatting from content (now the main *.tex* file deals with only the
+layout of the document) and increases the reusability of the content.
 
 **Math in LaTeX**
 
 The rendering of mathematical equations and concepts is so central to LaTeX that
 it has its own special syntax for doing so. I will not cover that syntax here,
 but I do want to specify how to get into *math mode*. The simplest way is to
-use '$'. LaTeX will treat anything between two '$'s as mathematical input::
+use '\$'. LaTeX will treat anything between two '\$'s as mathematical input:
+
+.. code-block:: latex
 
   For example, if you want to render some math in the current line without any
   special breaks, you can do something like $\frac{1}{r**{2}}$
 
-The single '$' notation works for inline equations, allowing you to pop into 
+The single '\$' notation works for inline equations, allowing you to pop into 
 the math environment in the middle of a line of text. If you want to make an
-equation stand out, you can use two '$$' instead. Better yet, you can use the
-*equation* environment and add a *\label* to reference that equation later::
+equation stand out, you can use two '\$\$' instead. Better yet, you can use the
+*equation* environment and add a *\label* to reference that equation later:
+
+.. code-block:: latex
 
   Here are arguably the most famous equivalancies in the history of physics
 
