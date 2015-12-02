@@ -51,6 +51,7 @@ have two variables for each of the 50 samples.</p>
 <p>Each column is one sample (I have 50 columns). Each row is one variable (I
 have two rows).</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy.linalg</span> <span class="kn">as</span> <span class="nn">npl</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># Make some random, but predictable data</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1966</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[[</span><span class="mi">3</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">size</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
@@ -548,64 +549,119 @@ principal components.</p>
 <p>It turns out there is a much quicker way to find the components than the slow
 and dumb search that I did above.</p>
 <p>For reasons that we don&#8217;t have space to go into, we can get the components
-using Singular Value Decomposition (SVD).</p>
-<p>In fact we need to do SVD on the variance / covariance matrix of the
-variables.</p>
-<p>See <a class="reference external" href="http://arxiv.org/abs/1404.1100">http://arxiv.org/abs/1404.1100</a> for a detailed explanation.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy.linalg</span> <span class="kn">as</span> <span class="nn">npl</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># Finding principal components using SVD</span>
+using <a class="reference external" href="https://en.wikipedia.org/wiki/Singular_value_decomposition">Singular Value Decomposition</a> (SVD) of
+<span class="math">\(\mathbf{X}\)</span>.</p>
+<p>See <a class="reference external" href="http://arxiv.org/abs/1404.1100">http://arxiv.org/abs/1404.1100</a> for more detail. <span class="math">\(\newcommand{\X}{\mathbf{X}}\newcommand{\U}{\mathbf{U}}\newcommand{\S}{\mathbf{\Sigma}}\newcommand{\V}{\mathbf{V}}\)</span></p>
+<p>The SVD on an array containing only real (not complex) values such as
+<span class="math">\(\mathbf{X}\)</span> is defined as:</p>
+<div class="math">
+\[\X = \U \Sigma \V^T\]</div>
+<p>If <span class="math">\(\X\)</span> is shape <span class="math">\(M\)</span> by <span class="math">\(N\)</span> then <span class="math">\(\U\)</span> is an <span class="math">\(M\)</span> by <span class="math">\(N\)</span> <a class="reference external" href="https://en.wikipedia.org/wiki/Orthogonal_matrix">orthogonal
+matrix</a>, <span class="math">\(\S\)</span> is a
+<a class="reference external" href="https://en.wikipedia.org/wiki/Diagonal_matrix">diagonal matrix</a> shape <span class="math">\(M\)</span>
+by <span class="math">\(N\)</span>, and <span class="math">\(\V^T\)</span> is an <span class="math">\(N\)</span> by <span class="math">\(N\)</span> orthogonal matrix.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">VT</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">U</span>
+<span class="go">array([[-0.87829753, -0.47811447],</span>
+<span class="go">       [-0.47811447,  0.87829753]])</span>
+</pre></div>
+</div>
+<p>The components are in the columns of the returned matrix <span class="math">\(\U\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">U</span>
+<span class="go">array([[-0.87829753, -0.47811447],</span>
+<span class="go">       [-0.47811447,  0.87829753]])</span>
+</pre></div>
+</div>
+<p>Remember that a vector <span class="math">\(\vec{r}\)</span> defines the same line as the
+vector <span class="math">\(-\vec{r}\)</span>, so we do not care about a flip in the sign of
+the principal components:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">u_best</span>
+<span class="go">array([ 0.87824304,  0.47821456])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">u_best_orth</span>
+<span class="go">array([-0.47821456,  0.87824304])</span>
+</pre></div>
+</div>
+<p>The returned vector <code class="docutils literal"><span class="pre">S</span></code> gives the <span class="math">\(M\)</span> <a class="reference external" href="https://en.wikipedia.org/wiki/Singular_value">singular
+values</a> that form the
+main diagonal of the <span class="math">\(M\)</span> by <span class="math">\(N\)</span> diagonal matrix <span class="math">\(\S\)</span>. The values in <code class="docutils literal"><span class="pre">S</span></code> give
+the square root of the explained sum of squares for each component:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="go">array([ 143.97317326,   11.6961166 ])</span>
+</pre></div>
+</div>
+<p>The SVD is quick to compute for <code class="docutils literal"><span class="pre">X</span></code>, but notice that the returned
+array <code class="docutils literal"><span class="pre">VT</span></code> is <span class="math">\(N\)</span> by <span class="math">\(N\)</span>, and isn&#8217;t of much use to us for our PCA:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">VT</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(50, 50)</span>
+</pre></div>
+</div>
+<p>In fact we can get our <span class="math">\(\U\)</span> and <span class="math">\(\S\)</span> without calculating <span class="math">\(\V^T\)</span> by doing SVD
+on the variance / covariance matrix of the variables. If <span class="math">\(M\)</span> is much smaller
+than <span class="math">\(N\)</span> this saves a lot of time and memory.</p>
+<p>Here&#8217;s why that works:</p>
+<div class="math">
+\[\begin{split}\U \S \V^T = \X \\
+(\U \S \V^T)(\U \S \V^T)^T = \X \X^T\end{split}\]</div>
+<p>By the matrix transpose rule and associativity of matrix multiplication:</p>
+<div class="math">
+\[\U \S \V^T \V \S^T \U^T = \X \X^T\]</div>
+<p>By the definition of the SVD, <span class="math">\(\V^T\)</span> is an orthogonal matrix, so <span class="math">\(\V\)</span> is
+the inverse of <span class="math">\(\V^T\)</span> and <span class="math">\(\V^T \V = I\)</span>. <span class="math">\(\S\)</span> is a diagonal
+matrix so <span class="math">\(\S \S^T = \S^2\)</span>, where <span class="math">\(\S^2\)</span> is a square diagonal matrix shape
+<span class="math">\(M\)</span> by <span class="math">\(M\)</span> containing the squares of the singular values from <span class="math">\(\S\)</span>:</p>
+<div class="math">
+\[\U \S^2 \U^T = \X \X^T\]</div>
+<p>This last formula is the formula for the SVD of <span class="math">\(\X \X^T\)</span>. So, we can get our
+<span class="math">\(\U\)</span> and <span class="math">\(S\)</span> from the SVD on <span class="math">\(\X \X^T\)</span>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Finding principal components using SVD on X X^T</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">unscaled_cov</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">unscaled_cov</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">U_again</span><span class="p">,</span> <span class="n">S_again</span><span class="p">,</span> <span class="n">VT_again</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">unscaled_cov</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">U_again</span>
+<span class="go">array([[-0.87829753, -0.47811447],</span>
+<span class="go">       [-0.47811447,  0.87829753]])</span>
+</pre></div>
+</div>
+<p>We know from the derivation above that <code class="docutils literal"><span class="pre">VT_again</span></code> is just the transpose of
+<span class="math">\(\U\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">VT_again</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>The returned vector <code class="docutils literal"><span class="pre">S_again</span></code> from the SVD on <span class="math">\(\X \X^T\)</span> now contains the
+explained sum of squares for each component:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">S_again</span>
+<span class="go">array([ 143.97317326,   11.6961166 ])</span>
 </pre></div>
 </div>
 <p>As a side note, we have done the SVD on the <em>unscaled</em> variance / covariance
 matrix. <em>Unscaled</em> means that the values in the matrix have not been divided
 by <span class="math">\(N\)</span>, or <span class="math">\(N-1\)</span>, where <span class="math">\(N\)</span> is the number of samples. This
 matters little in our case, but see below for more detail.</p>
-<p>The components are in the rows of the returned matrix <span class="math">\(\mathbf{V}\)</span>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">V</span>
-<span class="go">array([[-0.878298, -0.478114],</span>
-<span class="go">       [-0.478114,  0.878298]])</span>
-</pre></div>
-</div>
-<p>Remember that a vector <span class="math">\(\vec{r}\)</span> defines the same line as the vector
-<span class="math">\(-\vec{r}\)</span>, so we do not care about a flip in the sign of the principal
-components:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">u_best</span>
-<span class="go">array([ 0.878243,  0.478215])</span>
-</pre></div>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">u_best_orth</span>
-<span class="go">array([-0.478215,  0.878243])</span>
-</pre></div>
-</div>
-<p>The returned vector <span class="math">\(\vec{S}\)</span> contains the explained sum of squares for
-each component:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">S</span>
-<span class="go">array([ 143.973173,   11.696117])</span>
-</pre></div>
-</div>
-</div>
 <div class="section" id="sums-of-squares-and-variance-from-pca">
-<h2>Sums of squares and variance from PCA<a class="headerlink" href="#sums-of-squares-and-variance-from-pca" title="Permalink to this headline">¶</a></h2>
-<p>As we said above, we have done our SVD on the unscaled variance covariance
-matrix.</p>
-<p>The standard <em>variance</em> of a vector <span class="math">\(\vec{x}\)</span> with <span class="math">\(N\)</span> elements
-<span class="math">\(x_1, x_2, ... x_N\)</span> indexed by <span class="math">\(i\)</span> is given by
-<span class="math">\(\frac{1}{N-1} \sum_i \left( x_i - \bar{x} \right)^2\)</span>.  <span class="math">\(\bar{x}\)</span>
-is the mean of <span class="math">\(\vec{x}\)</span>: <span class="math">\(\bar{x} = \frac{1}{N} \sum_i x_i\)</span>. If
-<span class="math">\(\vec{q}\)</span> already has zero mean, then the variance of <span class="math">\(\vec{q}\)</span> is
-also given by <span class="math">\(\frac{1}{N-1} \vec{q} \cdot \vec{q}\)</span>.</p>
-<p>The <span class="math">\(N-1\)</span> divisor for the variance comes from <a class="reference external" href="http://en.wikipedia.org/wiki/Bessel%27s_correction">Bessel&#8217;s correction</a> for bias.</p>
+<h3>Sums of squares and variance from PCA<a class="headerlink" href="#sums-of-squares-and-variance-from-pca" title="Permalink to this headline">¶</a></h3>
+<p>As we said above, we have done our SVD on the unscaled variance
+covariance matrix.</p>
+<p>The standard <em>variance</em> of a vector <span class="math">\(\vec{x}\)</span> with <span class="math">\(N\)</span>
+elements <span class="math">\(x_1, x_2, ... x_N\)</span> indexed by <span class="math">\(i\)</span> is given by
+<span class="math">\(\frac{1}{N-1} \sum_i \left( x_i - \bar{x} \right)^2\)</span>.
+<span class="math">\(\bar{x}\)</span> is the mean of <span class="math">\(\vec{x}\)</span>:
+<span class="math">\(\bar{x} = \frac{1}{N} \sum_i x_i\)</span>. If <span class="math">\(\vec{q}\)</span> already has
+zero mean, then the variance of <span class="math">\(\vec{q}\)</span> is also given by
+<span class="math">\(\frac{1}{N-1} \vec{q} \cdot \vec{q}\)</span>.</p>
+<p>The <span class="math">\(N-1\)</span> divisor for the variance comes from <a class="reference external" href="http://en.wikipedia.org/wiki/Bessel%27s_correction">Bessel&#8217;s
+correction</a> for
+bias.</p>
 <p>The covariance between two vectors <span class="math">\(\vec{x}, \vec{y}\)</span> is
-<span class="math">\(\frac{1}{N-1} \sum_i \left( x_i - \bar{x} \right) \left( y_i - \bar{y}
-\right)\)</span>.  If vectors <span class="math">\(\vec{q}, \vec{p}\)</span> already both have zero mean,
-then the covariance is given by <span class="math">\(\frac{1}{N-1} \vec{q} \cdot \vec{p}\)</span>.</p>
+<span class="math">\(\frac{1}{N-1} \sum_i \left( x_i - \bar{x} \right) \left( y_i - \bar{y} \right)\)</span>.
+If vectors <span class="math">\(\vec{q}, \vec{p}\)</span> already both have zero mean, then
+the covariance is given by <span class="math">\(\frac{1}{N-1} \vec{q} \cdot \vec{p}\)</span>.</p>
 <p>Our unscaled variance covariance has removed the mean and done the dot
-products above, but it has not applied the <span class="math">\(\frac{1}{N-1}\)</span> scaling, to
-get the true variance / covariance.</p>
-<p>For example, the standard numpy covariance function <code class="docutils literal"><span class="pre">np.cov</span></code> completes the
-calculation of true covariance by dividing by <span class="math">\(N-1\)</span>.</p>
+products above, but it has not applied the <span class="math">\(\frac{1}{N-1}\)</span>
+scaling, to get the true variance / covariance.</p>
+<p>For example, the standard numpy covariance function <code class="docutils literal"><span class="pre">np.cov</span></code> completes
+the calculation of true covariance by dividing by <span class="math">\(N-1\)</span>.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Calculate unscaled variance covariance again</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">unscaled_cov</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># When divided by N-1, same as result of &#39;np.cov&#39;</span>
@@ -614,20 +670,22 @@ calculation of true covariance by dividing by <span class="math">\(N-1\)</span>.
 <span class="go">True</span>
 </pre></div>
 </div>
-<p>We could have run our SVD on the true variance covariance matrix. The result
-would give us exactly the same components. This might make sense from the fact
-that the lengths of the components are always scaled to 1 (unit vectors):</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">scaled_U</span><span class="p">,</span> <span class="n">scaled_S</span><span class="p">,</span> <span class="n">scaled_V</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">scaled_V</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
-<span class="go">True</span>
+<p>We could have run our SVD on the true variance covariance matrix. The
+result would give us exactly the same components. This might make sense
+from the fact that the lengths of the components are always scaled to 1
+(unit vectors):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">scaled_U</span><span class="p">,</span> <span class="n">scaled_S</span><span class="p">,</span> <span class="n">scaled_VT</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">scaled_U</span><span class="p">,</span> <span class="n">U</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">scaled_VT</span><span class="p">,</span> <span class="n">VT_again</span><span class="p">)</span>
+<span class="go">(True, True)</span>
 </pre></div>
 </div>
 <p>The difference is only in the <em>singular values</em> in the vector <code class="docutils literal"><span class="pre">S</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">S</span>
-<span class="go">array([ 143.973173,   11.696117])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">S_again</span>
+<span class="go">array([ 143.97317326,   11.6961166 ])</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">scaled_S</span>
+<span class="go">array([ 2.93822803,  0.23869626])</span>
 <span class="go">array([ 2.938228,  0.238696])</span>
 </pre></div>
 </div>
@@ -645,6 +703,7 @@ explained by the components. If we do the SVD on the true covariance matrix,
 then we can describe the PCA as breaking up the <em>variance</em> of the data (across
 samples) into parts explained by the components. The only difference between
 these two is the scaling of the <code class="docutils literal"><span class="pre">S</span></code> vector.</p>
+</div>
 </div>
 </div>
 

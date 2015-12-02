@@ -1,7 +1,0 @@
-#########
-Downloads
-#########
-
-.. toctree::
-
-   downloads.rst

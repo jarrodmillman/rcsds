@@ -18,6 +18,7 @@ have two rows).
 .. nbplot::
 
     >>> import numpy as np
+    >>> import numpy.linalg as npl
     >>> # Make some random, but predictable data
     >>> np.random.seed(1966)
     >>> X = np.random.multivariate_normal([0, 0], [[3, 1.5], [1.5, 1]], size=50).T
@@ -640,83 +641,159 @@ It turns out there is a much quicker way to find the components than the slow
 and dumb search that I did above.
 
 For reasons that we don't have space to go into, we can get the components
-using Singular Value Decomposition (SVD).
+using `Singular Value Decomposition
+<https://en.wikipedia.org/wiki/Singular_value_decomposition>`__ (SVD) of
+:math:`\mathbf{X}`.
 
-In fact we need to do SVD on the variance / covariance matrix of the
-variables.
+See http://arxiv.org/abs/1404.1100 for more detail. :math:`\newcommand{\X}{\mathbf{X}}\newcommand{\U}{\mathbf{U}}\newcommand{\S}{\mathbf{\Sigma}}\newcommand{\V}{\mathbf{V}}`
 
-See http://arxiv.org/abs/1404.1100 for a detailed explanation.
+The SVD on an array containing only real (not complex) values such as
+:math:`\mathbf{X}` is defined as:
+
+.. math::
+
+   \X = \U \Sigma \V^T
+
+If $\X$ is shape $M$ by $N$ then $\U$ is an $M$ by $N$ `orthogonal
+matrix <https://en.wikipedia.org/wiki/Orthogonal_matrix>`__, $\S$ is a
+`diagonal matrix <https://en.wikipedia.org/wiki/Diagonal_matrix>`__ shape $M$
+by $N$, and $\V^T$ is an $N$ by $N$ orthogonal matrix.
 
 .. nbplot::
 
-    >>> import numpy.linalg as npl
-    >>> # Finding principal components using SVD
+    >>> U, S, VT = npl.svd(X)
+    >>> U
+    array([[-0.87829753, -0.47811447],
+           [-0.47811447,  0.87829753]])
+
+The components are in the columns of the returned matrix $\U$:
+
+.. nbplot::
+
+    >>> U
+    array([[-0.87829753, -0.47811447],
+           [-0.47811447,  0.87829753]])
+
+Remember that a vector :math:`\vec{r}` defines the same line as the
+vector :math:`-\vec{r}`, so we do not care about a flip in the sign of
+the principal components:
+
+.. nbplot::
+
+    >>> u_best
+    array([ 0.87824304,  0.47821456])
+
+.. nbplot::
+
+    >>> u_best_orth
+    array([-0.47821456,  0.87824304])
+
+The returned vector ``S`` gives the :math:`M` `singular
+values <https://en.wikipedia.org/wiki/Singular_value>`__ that form the
+main diagonal of the $M$ by $N$ diagonal matrix $\S$. The values in ``S`` give
+the square root of the explained sum of squares for each component:
+
+.. nbplot::
+
+    >>> S ** 2
+    array([ 143.97317326,   11.6961166 ])
+
+The SVD is quick to compute for ``X``, but notice that the returned
+array ``VT`` is $N$ by $N$, and isn't of much use to us for our PCA:
+
+.. nbplot::
+
+    >>> VT.shape
+    (50, 50)
+
+In fact we can get our $\U$ and $\S$ without calculating $\V^T$ by doing SVD
+on the variance / covariance matrix of the variables. If $M$ is much smaller
+than $N$ this saves a lot of time and memory.
+
+Here's why that works:
+
+.. math::
+
+   \U \S \V^T = \X \\
+   (\U \S \V^T)(\U \S \V^T)^T = \X \X^T
+
+By the matrix transpose rule and associativity of matrix multiplication:
+
+.. math::
+
+   \U \S \V^T \V \S^T \U^T = \X \X^T
+
+By the definition of the SVD, $\V^T$ is an orthogonal matrix, so $\V$ is
+the inverse of $\V^T$ and $\V^T \V = I$. $\S$ is a diagonal
+matrix so $\S \S^T = \S^2$, where $\S^2$ is a square diagonal matrix shape
+$M$ by $M$ containing the squares of the singular values from $\S$:
+
+.. math::
+
+   \U \S^2 \U^T = \X \X^T
+
+This last formula is the formula for the SVD of $\X \X^T$. So, we can get our
+$\U$ and $S$ from the SVD on $\X \X^T$.
+
+.. nbplot::
+
+    >>> # Finding principal components using SVD on X X^T
     >>> unscaled_cov = X.dot(X.T)
-    >>> U, S, V = npl.svd(unscaled_cov)
+    >>> U_again, S_again, VT_again = npl.svd(unscaled_cov)
+    >>> U_again
+    array([[-0.87829753, -0.47811447],
+           [-0.47811447,  0.87829753]])
+
+We know from the derivation above that ``VT_again`` is just the transpose of
+$\U$:
+
+.. nbplot::
+
+    >>> np.allclose(U, VT_again.T)
+    True
+
+The returned vector ``S_again`` from the SVD on $\X \X^T$ now contains the
+explained sum of squares for each component:
+
+.. nbplot::
+
+    >>> S_again
+    array([ 143.97317326,   11.6961166 ])
 
 As a side note, we have done the SVD on the *unscaled* variance / covariance
 matrix. *Unscaled* means that the values in the matrix have not been divided
 by :math:`N`, or :math:`N-1`, where :math:`N` is the number of samples. This
 matters little in our case, but see below for more detail.
 
-The components are in the rows of the returned matrix :math:`\mathbf{V}`:
-
-.. nbplot::
-
-    >>> V
-    array([[-0.878298, -0.478114],
-           [-0.478114,  0.878298]])
-
-Remember that a vector :math:`\vec{r}` defines the same line as the vector
-:math:`-\vec{r}`, so we do not care about a flip in the sign of the principal
-components:
-
-.. nbplot::
-
-    >>> u_best
-    array([ 0.878243,  0.478215])
-
-.. nbplot::
-
-    >>> u_best_orth
-    array([-0.478215,  0.878243])
-
-The returned vector :math:`\vec{S}` contains the explained sum of squares for
-each component:
-
-.. nbplot::
-
-    >>> S
-    array([ 143.973173,   11.696117])
-
-*************************************
 Sums of squares and variance from PCA
-*************************************
+-------------------------------------
 
-As we said above, we have done our SVD on the unscaled variance covariance
-matrix.
+As we said above, we have done our SVD on the unscaled variance
+covariance matrix.
 
-The standard *variance* of a vector :math:`\vec{x}` with :math:`N` elements
-:math:`x_1, x_2, ... x_N` indexed by :math:`i` is given by
-:math:`\frac{1}{N-1} \sum_i \left( x_i - \bar{x} \right)^2`.  :math:`\bar{x}`
-is the mean of :math:`\vec{x}`: :math:`\bar{x} = \frac{1}{N} \sum_i x_i`. If
-:math:`\vec{q}` already has zero mean, then the variance of :math:`\vec{q}` is
-also given by :math:`\frac{1}{N-1} \vec{q} \cdot \vec{q}`.
+The standard *variance* of a vector :math:`\vec{x}` with :math:`N`
+elements :math:`x_1, x_2, ... x_N` indexed by :math:`i` is given by
+:math:`\frac{1}{N-1} \sum_i \left( x_i - \bar{x} \right)^2`.
+:math:`\bar{x}` is the mean of :math:`\vec{x}`:
+:math:`\bar{x} = \frac{1}{N} \sum_i x_i`. If :math:`\vec{q}` already has
+zero mean, then the variance of :math:`\vec{q}` is also given by
+:math:`\frac{1}{N-1} \vec{q} \cdot \vec{q}`.
 
-The :math:`N-1` divisor for the variance comes from `Bessel's correction
-<http://en.wikipedia.org/wiki/Bessel%27s_correction>`__ for bias.
+The :math:`N-1` divisor for the variance comes from `Bessel's
+correction <http://en.wikipedia.org/wiki/Bessel%27s_correction>`__ for
+bias.
 
 The covariance between two vectors :math:`\vec{x}, \vec{y}` is
-:math:`\frac{1}{N-1} \sum_i \left( x_i - \bar{x} \right) \left( y_i - \bar{y}
-\right)`.  If vectors :math:`\vec{q}, \vec{p}` already both have zero mean,
-then the covariance is given by :math:`\frac{1}{N-1} \vec{q} \cdot \vec{p}`.
+:math:`\frac{1}{N-1} \sum_i \left( x_i - \bar{x} \right) \left( y_i - \bar{y} \right)`.
+If vectors :math:`\vec{q}, \vec{p}` already both have zero mean, then
+the covariance is given by :math:`\frac{1}{N-1} \vec{q} \cdot \vec{p}`.
 
 Our unscaled variance covariance has removed the mean and done the dot
-products above, but it has not applied the :math:`\frac{1}{N-1}` scaling, to
-get the true variance / covariance.
+products above, but it has not applied the :math:`\frac{1}{N-1}`
+scaling, to get the true variance / covariance.
 
-For example, the standard numpy covariance function ``np.cov`` completes the
-calculation of true covariance by dividing by :math:`N-1`.
+For example, the standard numpy covariance function ``np.cov`` completes
+the calculation of true covariance by dividing by :math:`N-1`.
 
 .. nbplot::
 
@@ -727,26 +804,28 @@ calculation of true covariance by dividing by :math:`N-1`.
     >>> np.allclose(unscaled_cov / (N - 1), np.cov(X))
     True
 
-We could have run our SVD on the true variance covariance matrix. The result
-would give us exactly the same components. This might make sense from the fact
-that the lengths of the components are always scaled to 1 (unit vectors):
+We could have run our SVD on the true variance covariance matrix. The
+result would give us exactly the same components. This might make sense
+from the fact that the lengths of the components are always scaled to 1
+(unit vectors):
 
 .. nbplot::
 
-    >>> scaled_U, scaled_S, scaled_V = npl.svd(np.cov(X))
-    >>> np.allclose(scaled_V, V)
-    True
+    >>> scaled_U, scaled_S, scaled_VT = npl.svd(np.cov(X))
+    >>> np.allclose(scaled_U, U), np.allclose(scaled_VT, VT_again)
+    (True, True)
 
 The difference is only in the *singular values* in the vector ``S``:
 
 .. nbplot::
 
-    >>> S
-    array([ 143.973173,   11.696117])
+    >>> S_again
+    array([ 143.97317326,   11.6961166 ])
 
 .. nbplot::
 
     >>> scaled_S
+    array([ 2.93822803,  0.23869626])
     array([ 2.938228,  0.238696])
 
 As you remember, the singular values from the unscaled covariance matrix were
@@ -765,4 +844,3 @@ explained by the components. If we do the SVD on the true covariance matrix,
 then we can describe the PCA as breaking up the *variance* of the data (across
 samples) into parts explained by the components. The only difference between
 these two is the scaling of the ``S`` vector.
-
