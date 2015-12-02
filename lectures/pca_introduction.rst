@@ -662,11 +662,8 @@ by $N$, and $\V^T$ is an $N$ by $N$ orthogonal matrix.
 .. nbplot::
 
     >>> U, S, VT = npl.svd(X)
-    >>> U
-    array([[-0.87829753, -0.47811447],
-           [-0.47811447,  0.87829753]])
 
-The components are in the columns of the returned matrix $\U$:
+The components are in the columns of the returned matrix $\U$.
 
 .. nbplot::
 
