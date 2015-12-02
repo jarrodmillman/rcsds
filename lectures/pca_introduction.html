@@ -565,19 +565,19 @@ by <span class="math">\(N\)</span>, and <span class="math">\(\V^T\)</span> is an
 </div>
 <p>The components are in the columns of the returned matrix <span class="math">\(\U\)</span>.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">U</span>
-<span class="go">array([[-0.87829753, -0.47811447],</span>
-<span class="go">       [-0.47811447,  0.87829753]])</span>
+<span class="go">array([[-0.878298, -0.478114],</span>
+<span class="go">       [-0.478114,  0.878298]])</span>
 </pre></div>
 </div>
 <p>Remember that a vector <span class="math">\(\vec{r}\)</span> defines the same line as the
 vector <span class="math">\(-\vec{r}\)</span>, so we do not care about a flip in the sign of
 the principal components:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">u_best</span>
-<span class="go">array([ 0.87824304,  0.47821456])</span>
+<span class="go">array([ 0.878243,  0.478215])</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">u_best_orth</span>
-<span class="go">array([-0.47821456,  0.87824304])</span>
+<span class="go">array([-0.478215,  0.878243])</span>
 </pre></div>
 </div>
 <p>The returned vector <code class="docutils literal"><span class="pre">S</span></code> gives the <span class="math">\(M\)</span> <a class="reference external" href="https://en.wikipedia.org/wiki/Singular_value">singular
@@ -585,7 +585,7 @@ values</a> that form the
 main diagonal of the <span class="math">\(M\)</span> by <span class="math">\(N\)</span> diagonal matrix <span class="math">\(\S\)</span>. The values in <code class="docutils literal"><span class="pre">S</span></code> give
 the square root of the explained sum of squares for each component:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">**</span> <span class="mi">2</span>
-<span class="go">array([ 143.97317326,   11.6961166 ])</span>
+<span class="go">array([ 143.973173,   11.696117])</span>
 </pre></div>
 </div>
 <p>The SVD is quick to compute for <code class="docutils literal"><span class="pre">X</span></code>, but notice that the returned
@@ -614,22 +614,22 @@ matrix so <span class="math">\(\S \S^T = \S^2\)</span>, where <span class="math"
 <span class="math">\(\U\)</span> and <span class="math">\(\S\)</span> from the SVD on <span class="math">\(\X \X^T\)</span>.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Finding principal components using SVD on X X^T</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">unscaled_cov</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">U_again</span><span class="p">,</span> <span class="n">S_again</span><span class="p">,</span> <span class="n">VT_again</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">unscaled_cov</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">U_again</span>
-<span class="go">array([[-0.87829753, -0.47811447],</span>
-<span class="go">       [-0.47811447,  0.87829753]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">U_vcov</span><span class="p">,</span> <span class="n">S_vcov</span><span class="p">,</span> <span class="n">VT_vcov</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">unscaled_cov</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">U_vcov</span>
+<span class="go">array([[-0.878298, -0.478114],</span>
+<span class="go">       [-0.478114,  0.878298]])</span>
 </pre></div>
 </div>
-<p>We know from the derivation above that <code class="docutils literal"><span class="pre">VT_again</span></code> is just the transpose of
+<p>We know from the derivation above that <code class="docutils literal"><span class="pre">VT_vcov</span></code> is just the transpose of
 <span class="math">\(\U\)</span>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">VT_again</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">VT_vcov</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
 </div>
-<p>The returned vector <code class="docutils literal"><span class="pre">S_again</span></code> from the SVD on <span class="math">\(\X \X^T\)</span> now contains the
+<p>The returned vector <code class="docutils literal"><span class="pre">S_vcov</span></code> from the SVD on <span class="math">\(\X \X^T\)</span> now contains the
 explained sum of squares for each component:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">S_again</span>
-<span class="go">array([ 143.97317326,   11.6961166 ])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">S_vcov</span>
+<span class="go">array([ 143.973173,   11.696117])</span>
 </pre></div>
 </div>
 <p>As a side note, we have done the SVD on the <em>unscaled</em> variance / covariance
@@ -672,13 +672,13 @@ result would give us exactly the same components. This might make sense
 from the fact that the lengths of the components are always scaled to 1
 (unit vectors):</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">scaled_U</span><span class="p">,</span> <span class="n">scaled_S</span><span class="p">,</span> <span class="n">scaled_VT</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">scaled_U</span><span class="p">,</span> <span class="n">U</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">scaled_VT</span><span class="p">,</span> <span class="n">VT_again</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">scaled_U</span><span class="p">,</span> <span class="n">U</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">scaled_VT</span><span class="p">,</span> <span class="n">VT_vcov</span><span class="p">)</span>
 <span class="go">(True, True)</span>
 </pre></div>
 </div>
 <p>The difference is only in the <em>singular values</em> in the vector <code class="docutils literal"><span class="pre">S</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">S_again</span>
-<span class="go">array([ 143.97317326,   11.6961166 ])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">S_vcov</span>
+<span class="go">array([ 143.973173,   11.696117])</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">scaled_S</span>
@@ -690,7 +690,7 @@ the sum of squares explained by each component. The singular values from the
 true covariance matrix are the <em>variances</em> explained by each component. The
 variances are just the sum of squares divided by the correction in the
 denominator, in our case, <span class="math">\(N-1\)</span>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">S</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">S_vcov</span> <span class="o">/</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">array([ 2.938228,  0.238696])</span>
 </pre></div>
 </div>

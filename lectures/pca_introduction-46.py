@@ -1,2 +1,2 @@
-np.allclose(U, VT_again.T)
+np.allclose(U, VT_vcov.T)
 # True

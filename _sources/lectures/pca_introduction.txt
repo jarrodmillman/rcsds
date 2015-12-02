@@ -668,8 +668,8 @@ The components are in the columns of the returned matrix $\U$.
 .. nbplot::
 
     >>> U
-    array([[-0.87829753, -0.47811447],
-           [-0.47811447,  0.87829753]])
+    array([[-0.878298, -0.478114],
+           [-0.478114,  0.878298]])
 
 Remember that a vector :math:`\vec{r}` defines the same line as the
 vector :math:`-\vec{r}`, so we do not care about a flip in the sign of
@@ -678,12 +678,12 @@ the principal components:
 .. nbplot::
 
     >>> u_best
-    array([ 0.87824304,  0.47821456])
+    array([ 0.878243,  0.478215])
 
 .. nbplot::
 
     >>> u_best_orth
-    array([-0.47821456,  0.87824304])
+    array([-0.478215,  0.878243])
 
 The returned vector ``S`` gives the :math:`M` `singular
 values <https://en.wikipedia.org/wiki/Singular_value>`__ that form the
@@ -693,7 +693,7 @@ the square root of the explained sum of squares for each component:
 .. nbplot::
 
     >>> S ** 2
-    array([ 143.97317326,   11.6961166 ])
+    array([ 143.973173,   11.696117])
 
 The SVD is quick to compute for ``X``, but notice that the returned
 array ``VT`` is $N$ by $N$, and isn't of much use to us for our PCA:
@@ -736,26 +736,26 @@ $\U$ and $\S$ from the SVD on $\X \X^T$.
 
     >>> # Finding principal components using SVD on X X^T
     >>> unscaled_cov = X.dot(X.T)
-    >>> U_again, S_again, VT_again = npl.svd(unscaled_cov)
-    >>> U_again
-    array([[-0.87829753, -0.47811447],
-           [-0.47811447,  0.87829753]])
+    >>> U_vcov, S_vcov, VT_vcov = npl.svd(unscaled_cov)
+    >>> U_vcov
+    array([[-0.878298, -0.478114],
+           [-0.478114,  0.878298]])
 
-We know from the derivation above that ``VT_again`` is just the transpose of
+We know from the derivation above that ``VT_vcov`` is just the transpose of
 $\U$:
 
 .. nbplot::
 
-    >>> np.allclose(U, VT_again.T)
+    >>> np.allclose(U, VT_vcov.T)
     True
 
-The returned vector ``S_again`` from the SVD on $\X \X^T$ now contains the
+The returned vector ``S_vcov`` from the SVD on $\X \X^T$ now contains the
 explained sum of squares for each component:
 
 .. nbplot::
 
-    >>> S_again
-    array([ 143.97317326,   11.6961166 ])
+    >>> S_vcov
+    array([ 143.973173,   11.696117])
 
 As a side note, we have done the SVD on the *unscaled* variance / covariance
 matrix. *Unscaled* means that the values in the matrix have not been divided
@@ -809,15 +809,15 @@ from the fact that the lengths of the components are always scaled to 1
 .. nbplot::
 
     >>> scaled_U, scaled_S, scaled_VT = npl.svd(np.cov(X))
-    >>> np.allclose(scaled_U, U), np.allclose(scaled_VT, VT_again)
+    >>> np.allclose(scaled_U, U), np.allclose(scaled_VT, VT_vcov)
     (True, True)
 
 The difference is only in the *singular values* in the vector ``S``:
 
 .. nbplot::
 
-    >>> S_again
-    array([ 143.97317326,   11.6961166 ])
+    >>> S_vcov
+    array([ 143.973173,   11.696117])
 
 .. nbplot::
 
@@ -832,7 +832,7 @@ denominator, in our case, :math:`N-1`:
 
 .. nbplot::
 
-    >>> S / (N - 1)
+    >>> S_vcov / (N - 1)
     array([ 2.938228,  0.238696])
 
 So far we have described the PCA as breaking up the sum of squares into parts
