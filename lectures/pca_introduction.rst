@@ -733,7 +733,7 @@ $M$ by $M$ containing the squares of the singular values from $\S$:
    \U \S^2 \U^T = \X \X^T
 
 This last formula is the formula for the SVD of $\X \X^T$. So, we can get our
-$\U$ and $S$ from the SVD on $\X \X^T$.
+$\U$ and $\S$ from the SVD on $\X \X^T$.
 
 .. nbplot::
 
@@ -825,7 +825,6 @@ The difference is only in the *singular values* in the vector ``S``:
 .. nbplot::
 
     >>> scaled_S
-    array([ 2.93822803,  0.23869626])
     array([ 2.938228,  0.238696])
 
 As you remember, the singular values from the unscaled covariance matrix were
