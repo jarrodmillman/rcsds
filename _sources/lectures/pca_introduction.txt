@@ -757,16 +757,14 @@ explained sum of squares for each component:
     >>> S_vcov
     array([ 143.973173,   11.696117])
 
-As a side note, we have done the SVD on the *unscaled* variance / covariance
-matrix. *Unscaled* means that the values in the matrix have not been divided
-by :math:`N`, or :math:`N-1`, where :math:`N` is the number of samples. This
-matters little in our case, but see below for more detail.
-
 Sums of squares and variance from PCA
 -------------------------------------
 
-As we said above, we have done our SVD on the unscaled variance
-covariance matrix.
+We have done the SVD on the *unscaled* variance / covariance matrix.
+*Unscaled* means that the values in the matrix have not been divided by
+:math:`N`, or :math:`N-1`, where :math:`N` is the number of samples.  This
+matters little for our case, but sometimes it is useful to think in terms of
+the variance explained by the components, rather than the sums of squares.
 
 The standard *variance* of a vector :math:`\vec{x}` with :math:`N`
 elements :math:`x_1, x_2, ... x_N` indexed by :math:`i` is given by

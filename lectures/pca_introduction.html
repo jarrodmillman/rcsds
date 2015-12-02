@@ -632,14 +632,13 @@ explained sum of squares for each component:</p>
 <span class="go">array([ 143.973173,   11.696117])</span>
 </pre></div>
 </div>
-<p>As a side note, we have done the SVD on the <em>unscaled</em> variance / covariance
-matrix. <em>Unscaled</em> means that the values in the matrix have not been divided
-by <span class="math">\(N\)</span>, or <span class="math">\(N-1\)</span>, where <span class="math">\(N\)</span> is the number of samples. This
-matters little in our case, but see below for more detail.</p>
 <div class="section" id="sums-of-squares-and-variance-from-pca">
 <h3>Sums of squares and variance from PCA<a class="headerlink" href="#sums-of-squares-and-variance-from-pca" title="Permalink to this headline">¶</a></h3>
-<p>As we said above, we have done our SVD on the unscaled variance
-covariance matrix.</p>
+<p>We have done the SVD on the <em>unscaled</em> variance / covariance matrix.
+<em>Unscaled</em> means that the values in the matrix have not been divided by
+<span class="math">\(N\)</span>, or <span class="math">\(N-1\)</span>, where <span class="math">\(N\)</span> is the number of samples.  This
+matters little for our case, but sometimes it is useful to think in terms of
+the variance explained by the components, rather than the sums of squares.</p>
 <p>The standard <em>variance</em> of a vector <span class="math">\(\vec{x}\)</span> with <span class="math">\(N\)</span>
 elements <span class="math">\(x_1, x_2, ... x_N\)</span> indexed by <span class="math">\(i\)</span> is given by
 <span class="math">\(\frac{1}{N-1} \sum_i \left( x_i - \bar{x} \right)^2\)</span>.
