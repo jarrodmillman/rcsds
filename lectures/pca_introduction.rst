@@ -654,7 +654,7 @@ The SVD on an array containing only real (not complex) values such as
 
    \X = \U \Sigma \V^T
 
-If $\X$ is shape $M$ by $N$ then $\U$ is an $M$ by $N$ `orthogonal
+If $\X$ is shape $M$ by $N$ then $\U$ is an $M$ by $M$ `orthogonal
 matrix <https://en.wikipedia.org/wiki/Orthogonal_matrix>`__, $\S$ is a
 `diagonal matrix <https://en.wikipedia.org/wiki/Diagonal_matrix>`__ shape $M$
 by $N$, and $\V^T$ is an $N$ by $N$ orthogonal matrix.
