@@ -614,7 +614,7 @@ matrix so <span class="math">\(\S \S^T = \S^2\)</span>, where <span class="math"
 <div class="math">
 \[\U \S^2 \U^T = \X \X^T\]</div>
 <p>This last formula is the formula for the SVD of <span class="math">\(\X \X^T\)</span>. So, we can get our
-<span class="math">\(\U\)</span> and <span class="math">\(S\)</span> from the SVD on <span class="math">\(\X \X^T\)</span>.</p>
+<span class="math">\(\U\)</span> and <span class="math">\(\S\)</span> from the SVD on <span class="math">\(\X \X^T\)</span>.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Finding principal components using SVD on X X^T</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">unscaled_cov</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">U_again</span><span class="p">,</span> <span class="n">S_again</span><span class="p">,</span> <span class="n">VT_again</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">unscaled_cov</span><span class="p">)</span>
@@ -685,7 +685,6 @@ from the fact that the lengths of the components are always scaled to 1
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">scaled_S</span>
-<span class="go">array([ 2.93822803,  0.23869626])</span>
 <span class="go">array([ 2.938228,  0.238696])</span>
 </pre></div>
 </div>

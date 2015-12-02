@@ -825,7 +825,6 @@ The difference is only in the *singular values* in the vector ``S``:
 .. nbplot::
 
     >>> scaled_S
-    array([ 2.93822803,  0.23869626])
     array([ 2.938228,  0.238696])
 
 As you remember, the singular values from the unscaled covariance matrix were
