@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Making sure you have floating point data &mdash; RCSDS 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RCSDS 0.1 documentation" href="../index.html" />
+    <link rel="up" title="More notes" href="extra_pages.html" />
+    <link rel="next" title="Labs" href="../labs/index.html" />
+    <link rel="prev" title="Showing parameter maps with color" href="activation_with_color.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="making-sure-you-have-floating-point-data">
+<h1>Making sure you have floating point data<a class="headerlink" href="#making-sure-you-have-floating-point-data" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>Always convert your image data to floating point number format, before doing
+numerical operations.</p>
+</div>
+<div class="section" id="explanation">
+<h2>Explanation<a class="headerlink" href="#explanation" title="Permalink to this headline">¶</a></h2>
+<p>When you load use <a href="#id1"><span class="problematic" id="id2">nibabel_</span></a> to load the image data, you need to be careful
+about the array data type.</p>
+<p>Remember that <a href="#id3"><span class="problematic" id="id4">numpy_</span></a> arrays have a <code class="docutils literal"><span class="pre">dtype</span></code>.  This is the type of the element
+in the array.  See the <a class="reference external" href="http://www.scipy-lectures.org/intro/numpy/array_object.html#basic-data-types">scipy lecture notes on dtypes</a>
+for more detail.</p>
+<p>When you load the image data from disk, the array has a <code class="docutils literal"><span class="pre">dtype</span></code>, that
+depends on the way the data was stored on disk.  For example, nibabel returns
+our example image data as an array of signed 16-bit integers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">nibabel</span> <span class="kn">as</span> <span class="nn">nib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s">&#39;ds114_sub009_t2r1.nii&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span>
+<span class="go">dtype(&#39;&lt;i2&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span>
+<span class="go">&lt;type &#39;numpy.int16&#39;&gt;</span>
+</pre></div>
+</div>
+<p>A 16-bit integer is an integer that can store the numbers from <span class="math">\(-2^{15}\)</span> to
+<span class="math">\(2^{15}-1\)</span>.   Unfortunately, you have to be very careful when using arrays
+like this, because if you do operations that generate a number outside this
+range, strange things will happen.  This is due to <a class="reference external" href="https://en.wikipedia.org/wiki/Integer_overflow">integer overflow</a></p>
+<p>For example, let&#8217;s make an array with the maximum and minimum numbers that the
+np.int16 datatype can store:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">int_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span><span class="o">**</span><span class="mi">15</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">15</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">int_arr</span>
+<span class="go">array([-32768,  32767], dtype=int16)</span>
+</pre></div>
+</div>
+<p>Now if we add 1, the max value is outside the range that can be stored in this
+datatype, and we get integer overflow.  The max number wraps round to give the
+most negative number the type can store:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">int_arr</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+<span class="go">array([-32767,  -32768], dtype=int16)</span>
+</pre></div>
+</div>
+<p>The same kind of thing happens when we subtract 1:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">int_arr</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+<span class="go">array([32767,  32766], dtype=int16)</span>
+</pre></div>
+</div>
+<p>One operation where this can cause severe problems is the dot product of one
+integer matrix with another.  The result will all be integers, but because we
+are doing many multiplications and sums, the dot product result very often
+overflows the values the datatype can contain, and therefore gives nonsense
+answers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">int_arr2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">(</span><span class="mi">3201</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">int_arr2</span>
+<span class="go">array([[3201, 3201, 3201],</span>
+<span class="go">       [3201, 3201, 3201]], dtype=int16)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">int_arr2</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">int_arr2</span><span class="p">)</span>
+<span class="go">array([[-19966, -19966, -19966],</span>
+<span class="go">       [-19966, -19966, -19966],</span>
+<span class="go">       [-19966, -19966, -19966]], dtype=int16)</span>
+</pre></div>
+</div>
+<p>The best way to avoid this, is to default to casting the integer numbers into
+floating point numbers.  These can store much wider range of numbers to a
+reasonable precision, and the calculations are usually very quick because
+modern computers are highly optimized for floating point values:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">float_arr2</span> <span class="o">=</span> <span class="n">int_arr2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">float_arr2</span>
+<span class="go">array([[ 3201.,  3201.,  3201.],</span>
+<span class="go">       [ 3201.,  3201.,  3201.]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">float_arr2</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">float_arr2</span><span class="p">)</span>
+<span class="go">array([[ 20492802.,  20492802.,  20492802.],</span>
+<span class="go">       [ 20492802.,  20492802.,  20492802.],</span>
+<span class="go">       [ 20492802.,  20492802.,  20492802.]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">3201</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="go">20492802</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">RCSDS</a></h1>
+
+
+
+<p class="blurb">Fall 2015</p>
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../standard/index.html">Core Topics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Lectures</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="day01.html">Day 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day02.html">Day 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day03.html">Day 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day04.html">Day 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day05.html">Day 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day06.html">Day 6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day07.html">Day 7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day08.html">Day 8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day09.html">Day 9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day10.html">Day 10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day11.html">Day 11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day12.html">Day 12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day13.html">Day 13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day14.html">Day 14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day15.html">Day 15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day18.html">Day 18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day19.html">Day 19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day21.html">Day 21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day22.html">Day 22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day24.html">Day 24</a></li>
+<li class="toctree-l2"><a class="reference internal" href="day25.html">Day 25</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="extra_pages.html">More notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../labs/index.html">Labs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../append/index.html">Appendices</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="http://www.jarrodmillman.com/stat159-fall2015/">Course home</a></li>
+    
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+      &copy;2015, K. Jarrod Millman.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+        <p><small>  <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+    Content
+  licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>, except where indicated otherwise.
+</small></p>
+    </div>
+
+  </body>
+</html>
