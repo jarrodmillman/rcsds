@@ -50,9 +50,9 @@ numerical operations.</p>
 </div>
 <div class="section" id="explanation">
 <h2>Explanation<a class="headerlink" href="#explanation" title="Permalink to this headline">¶</a></h2>
-<p>When you load use <a href="#id1"><span class="problematic" id="id2">nibabel_</span></a> to load the image data, you need to be careful
+<p>When you use <a class="reference external" href="http://nipy.org/nibabel">nibabel</a> to load the image data, you need to be careful
 about the array data type.</p>
-<p>Remember that <a href="#id3"><span class="problematic" id="id4">numpy_</span></a> arrays have a <code class="docutils literal"><span class="pre">dtype</span></code>.  This is the type of the element
+<p>Remember that <a class="reference external" href="http://www.numpy.org">numpy</a> arrays have a <code class="docutils literal"><span class="pre">dtype</span></code>.  This is the type of the element
 in the array.  See the <a class="reference external" href="http://www.scipy-lectures.org/intro/numpy/array_object.html#basic-data-types">scipy lecture notes on dtypes</a>
 for more detail.</p>
 <p>When you load the image data from disk, the array has a <code class="docutils literal"><span class="pre">dtype</span></code>, that
@@ -70,7 +70,7 @@ our example image data as an array of signed 16-bit integers:</p>
 <p>A 16-bit integer is an integer that can store the numbers from <span class="math">\(-2^{15}\)</span> to
 <span class="math">\(2^{15}-1\)</span>.   Unfortunately, you have to be very careful when using arrays
 like this, because if you do operations that generate a number outside this
-range, strange things will happen.  This is due to <a class="reference external" href="https://en.wikipedia.org/wiki/Integer_overflow">integer overflow</a></p>
+range, strange things will happen.  This is due to <a class="reference external" href="https://en.wikipedia.org/wiki/Integer_overflow">integer overflow</a>.</p>
 <p>For example, let&#8217;s make an array with the maximum and minimum numbers that the
 np.int16 datatype can store:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
@@ -83,12 +83,12 @@ np.int16 datatype can store:</p>
 datatype, and we get integer overflow.  The max number wraps round to give the
 most negative number the type can store:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">int_arr</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
-<span class="go">array([-32767,  -32768], dtype=int16)</span>
+<span class="go">array([-32767, -32768], dtype=int16)</span>
 </pre></div>
 </div>
 <p>The same kind of thing happens when we subtract 1:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">int_arr</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
-<span class="go">array([32767,  32766], dtype=int16)</span>
+<span class="go">array([32767, 32766], dtype=int16)</span>
 </pre></div>
 </div>
 <p>One operation where this can cause severe problems is the dot product of one
@@ -107,9 +107,9 @@ answers:</p>
 </pre></div>
 </div>
 <p>The best way to avoid this, is to default to casting the integer numbers into
-floating point numbers.  These can store much wider range of numbers to a
-reasonable precision, and the calculations are usually very quick because
-modern computers are highly optimized for floating point values:</p>
+floating point numbers.  Floating point numbers can store much wider range of
+values to a reasonable precision, and the calculations are usually very quick
+because modern computers are highly optimized for floating point values:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">float_arr2</span> <span class="o">=</span> <span class="n">int_arr2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">float_arr2</span>
 <span class="go">array([[ 3201.,  3201.,  3201.],</span>
@@ -120,6 +120,16 @@ modern computers are highly optimized for floating point values:</p>
 <span class="go">       [ 20492802.,  20492802.,  20492802.]])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="mi">3201</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">2</span>
 <span class="go">20492802</span>
+</pre></div>
+</div>
+<p>These problems only occur when the output array is also the integer type.  For
+example, if I did a dot product of an integer array with a floating point
+array, numpy is intelligent enough to know it will need a floating point array
+as output, and you do not get overflow:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">int_arr2</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">float_arr2</span><span class="p">)</span>
+<span class="go">array([[ 20492802.,  20492802.,  20492802.],</span>
+<span class="go">       [ 20492802.,  20492802.,  20492802.],</span>
+<span class="go">       [ 20492802.,  20492802.,  20492802.]])</span>
 </pre></div>
 </div>
 </div>

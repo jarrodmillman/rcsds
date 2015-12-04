@@ -13,7 +13,7 @@ numerical operations.
 Explanation
 ***********
 
-When you load use nibabel_ to load the image data, you need to be careful
+When you use nibabel_ to load the image data, you need to be careful
 about the array data type.
 
 Remember that numpy_ arrays have a ``dtype``.  This is the type of the element
@@ -24,6 +24,11 @@ for more detail.
 When you load the image data from disk, the array has a ``dtype``, that
 depends on the way the data was stored on disk.  For example, nibabel returns
 our example image data as an array of signed 16-bit integers:
+
+.. testsetup::
+
+    import os
+    os.chdir('lectures')
 
 >>> import nibabel as nib
 >>> img = nib.load('ds114_sub009_t2r1.nii')
@@ -37,7 +42,7 @@ A 16-bit integer is an integer that can store the numbers from $-2^{15}$ to
 $2^{15}-1$.   Unfortunately, you have to be very careful when using arrays
 like this, because if you do operations that generate a number outside this
 range, strange things will happen.  This is due to `integer overflow
-<https://en.wikipedia.org/wiki/Integer_overflow>`_
+<https://en.wikipedia.org/wiki/Integer_overflow>`_.
 
 For example, let's make an array with the maximum and minimum numbers that the
 np.int16 datatype can store:
@@ -52,12 +57,12 @@ datatype, and we get integer overflow.  The max number wraps round to give the
 most negative number the type can store:
 
 >>> int_arr + np.array(1, dtype=np.int16)
-array([-32767,  -32768], dtype=int16)
+array([-32767, -32768], dtype=int16)
 
 The same kind of thing happens when we subtract 1:
 
 >>> int_arr - np.array(1, dtype=np.int16)
-array([32767,  32766], dtype=int16)
+array([32767, 32766], dtype=int16)
 
 One operation where this can cause severe problems is the dot product of one
 integer matrix with another.  The result will all be integers, but because we
@@ -75,9 +80,9 @@ array([[-19966, -19966, -19966],
        [-19966, -19966, -19966]], dtype=int16)
 
 The best way to avoid this, is to default to casting the integer numbers into
-floating point numbers.  These can store much wider range of numbers to a
-reasonable precision, and the calculations are usually very quick because
-modern computers are highly optimized for floating point values:
+floating point numbers.  Floating point numbers can store much wider range of
+values to a reasonable precision, and the calculations are usually very quick
+because modern computers are highly optimized for floating point values:
 
 >>> float_arr2 = int_arr2.astype(float)
 >>> float_arr2
@@ -89,3 +94,19 @@ array([[ 20492802.,  20492802.,  20492802.],
        [ 20492802.,  20492802.,  20492802.]])
 >>> 3201**2 * 2
 20492802
+
+These problems only occur when the output array is also the integer type.  For
+example, if I did a dot product of an integer array with a floating point
+array, numpy is intelligent enough to know it will need a floating point array
+as output, and you do not get overflow:
+
+>>> int_arr2.T.dot(float_arr2)
+array([[ 20492802.,  20492802.,  20492802.],
+       [ 20492802.,  20492802.,  20492802.],
+       [ 20492802.,  20492802.,  20492802.]])
+
+.. testcleanup::
+
+    os.chdir('..')
+
+.. include:: ../links_names.inc
