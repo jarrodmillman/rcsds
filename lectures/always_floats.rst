@@ -25,6 +25,11 @@ When you load the image data from disk, the array has a ``dtype``, that
 depends on the way the data was stored on disk.  For example, nibabel returns
 our example image data as an array of signed 16-bit integers:
 
+.. testsetup::
+
+    import os
+    os.chdir('lectures')
+
 >>> import nibabel as nib
 >>> img = nib.load('ds114_sub009_t2r1.nii')
 >>> data = img.get_data()
@@ -52,12 +57,12 @@ datatype, and we get integer overflow.  The max number wraps round to give the
 most negative number the type can store:
 
 >>> int_arr + np.array(1, dtype=np.int16)
-array([-32767,  -32768], dtype=int16)
+array([-32767, -32768], dtype=int16)
 
 The same kind of thing happens when we subtract 1:
 
 >>> int_arr - np.array(1, dtype=np.int16)
-array([32767,  32766], dtype=int16)
+array([32767, 32766], dtype=int16)
 
 One operation where this can cause severe problems is the dot product of one
 integer matrix with another.  The result will all be integers, but because we
@@ -89,5 +94,19 @@ array([[ 20492802.,  20492802.,  20492802.],
        [ 20492802.,  20492802.,  20492802.]])
 >>> 3201**2 * 2
 20492802
+
+These problems only occur when the output array is also the integer type.  For
+example, if I did a dot product of an integer array with a floating point
+array, numpy is intelligent enough to know it will need a floating point array
+as output, and you do not get overflow:
+
+>>> int_arr2.T.dot(float_arr2)
+array([[ 20492802.,  20492802.,  20492802.],
+       [ 20492802.,  20492802.,  20492802.],
+       [ 20492802.,  20492802.,  20492802.]])
+
+.. testcleanup::
+
+    os.chdir('..')
 
 .. include:: ../links_names.inc
