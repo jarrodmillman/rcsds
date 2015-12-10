@@ -13,7 +13,7 @@ numerical operations.
 Explanation
 ***********
 
-When you load use nibabel_ to load the image data, you need to be careful
+When you use nibabel_ to load the image data, you need to be careful
 about the array data type.
 
 Remember that numpy_ arrays have a ``dtype``.  This is the type of the element
@@ -42,7 +42,7 @@ A 16-bit integer is an integer that can store the numbers from $-2^{15}$ to
 $2^{15}-1$.   Unfortunately, you have to be very careful when using arrays
 like this, because if you do operations that generate a number outside this
 range, strange things will happen.  This is due to `integer overflow
-<https://en.wikipedia.org/wiki/Integer_overflow>`_
+<https://en.wikipedia.org/wiki/Integer_overflow>`_.
 
 For example, let's make an array with the maximum and minimum numbers that the
 np.int16 datatype can store:
@@ -80,9 +80,9 @@ array([[-19966, -19966, -19966],
        [-19966, -19966, -19966]], dtype=int16)
 
 The best way to avoid this, is to default to casting the integer numbers into
-floating point numbers.  These can store much wider range of numbers to a
-reasonable precision, and the calculations are usually very quick because
-modern computers are highly optimized for floating point values:
+floating point numbers.  Floating point numbers can store much wider range of
+values to a reasonable precision, and the calculations are usually very quick
+because modern computers are highly optimized for floating point values:
 
 >>> float_arr2 = int_arr2.astype(float)
 >>> float_arr2
